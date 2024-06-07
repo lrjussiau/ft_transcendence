@@ -1,31 +1,30 @@
-<!-- frontend/website/index.html -->
+<!-- frontend/website/auth.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong Game API</title>
+    <title>Auth Page</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Welcome to the Pong Game</h1>
-    <div id="message"></div>
-    <a href="auth.html">Go to Auth Page</a>
+    <h1>Auth Page</h1>
+    <div id="auth-message"></div>
     
     <script>
         // Function to fetch JSON data from the backend and display it
-        async function fetchMessage() {
+        async function fetchAuthMessage() {
             try {
-                const response = await fetch('/api/');
+                const response = await fetch('/api/authentication/');
                 const data = await response.json();
-                document.getElementById('message').innerText = data.message;
+                document.getElementById('auth-message').innerText = data.message;
             } catch (error) {
-                console.error('Error fetching message:', error);
+                console.error('Error fetching auth message:', error);
             }
         }
 
         // Fetch the message when the page loads
-        window.onload = fetchMessage;
+        window.onload = fetchAuthMessage;
     </script>
 </body>
 </html>

@@ -12,3 +12,7 @@ class RootView(APIView):
 class FileListCreate(generics.ListCreateAPIView):
     queryset = File.objects.all()
     serializer_class = FileSerializer
+
+class AuthView(APIView):
+    def get(self, request):
+        return Response({"message": "Welcome to the Auth Page"})

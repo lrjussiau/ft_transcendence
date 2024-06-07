@@ -1,17 +1,16 @@
-SRC_DIR := .
 DOCKER_COMPOSE_FILE := docker-compose.yml
 
 build:
 	@echo "Construction des images Docker..."
-	docker-compose -f $(SRC_DIR)/$(DOCKER_COMPOSE_FILE) build
+	docker-compose -f $(DOCKER_COMPOSE_FILE) build
 
 up:
 	@echo "Démarrage des conteneurs..."
-	docker-compose -f $(SRC_DIR)/$(DOCKER_COMPOSE_FILE) up -d
+	docker-compose -f $(DOCKER_COMPOSE_FILE) up -d
 
 down:
 	@echo "Arrêt et suppression des conteneurs..."
-	docker-compose -f $(SRC_DIR)/$(DOCKER_COMPOSE_FILE) down
+	docker-compose -f $(DOCKER_COMPOSE_FILE) down
 
 nuke:
 	@docker stop $$(docker ps -qa);\
