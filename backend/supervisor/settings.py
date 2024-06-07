@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-keh#7$_@3_%#f*@+#bj*cr%=dqld-=#&j#^s4k62sef#wytfz*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend']
 
 
 # Application definition
@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'custom_auth',
+	'db',
+	'livechat',
+	'monitoring',
+	'pongengine',
 ]
 
 MIDDLEWARE = [
