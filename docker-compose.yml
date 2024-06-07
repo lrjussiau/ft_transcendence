@@ -1,3 +1,4 @@
+# docker-compose.yml
 version: '3.8'
 
 services:
@@ -15,8 +16,8 @@ services:
 
   nginx:
     build:
-      context: ./nginx
-      dockerfile: Dockerfile
+      context: .  # Build context set to the root of the project
+      dockerfile: ./nginx/Dockerfile
     ports:
       - "80:80"
     depends_on:
