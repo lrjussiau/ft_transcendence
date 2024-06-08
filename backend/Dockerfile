@@ -1,16 +1,19 @@
-# backend/Dockerfile
 FROM python:3.9
 
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set work directory
 WORKDIR /app
 
+# Install dependencies
 COPY requirements.txt /app/
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+# Copy project
 COPY . /app/
 
-ENV DJANGO_SETTINGS_MODULE=pong_game.settings
-
-RUN python manage.py migrate
-RUN python manage.py createsuperuser --no-input --username admin --email admin@example.com || true
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Command to run Daphne server
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "pong_game.asgi:application"]
