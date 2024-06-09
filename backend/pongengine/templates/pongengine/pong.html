@@ -17,7 +17,7 @@
         .middle-line {
             position: absolute;
             width: 2px;
-            height: 100%;
+            height: 360px; /* Ajustez la hauteur pour qu'elle corresponde à celle du canvas */
             background: white;
             left: 50%;
             transform: translateX(-50%);
@@ -59,7 +59,9 @@
                 socket.send(JSON.stringify({ type: 'start_game' }));
                 gameStarted = true;
                 gameOver = false;
-                requestAnimationFrame(update);
+                if (!animationFrameRequest) {
+                    requestAnimationFrame(update);
+                }
             });
 
             function draw() {
@@ -81,9 +83,14 @@
                 ctx.fillText(gameState.player2_score, 30, 30);
             }
 
+            let animationFrameRequest;
+
             function update() {
                 if (gameStarted) {
-                    requestAnimationFrame(update);
+                    animationFrameRequest = requestAnimationFrame(update);
+                } else {
+                    cancelAnimationFrame(animationFrameRequest);
+                    animationFrameRequest = null;
                 }
                 socket.send(JSON.stringify({ type: 'request_state' }));
             }
@@ -105,9 +112,14 @@
             }
 
             function updateSpeeds() {
-                player1Speed = (keys['ArrowDown'] ? 7 : 0) + (keys['ArrowUp'] ? -7 : 0);
-                player2Speed = (keys['s'] ? 7 : 0) + (keys['w'] ? -7 : 0);
-                socket.send(JSON.stringify({ type: 'player_input', player1Speed, player2Speed }));
+                const newPlayer1Speed = (keys['ArrowDown'] ? 7 : 0) + (keys['ArrowUp'] ? -7 : 0);
+                const newPlayer2Speed = (keys['s'] ? 7 : 0) + (keys['w'] ? -7 : 0);
+
+                if (newPlayer1Speed !== player1Speed || newPlayer2Speed !== player2Speed) {
+                    player1Speed = newPlayer1Speed;
+                    player2Speed = newPlayer2Speed;
+                    socket.send(JSON.stringify({ type: 'player_input', player1Speed, player2Speed }));
+                }
             }
 
             document.addEventListener('keydown', handleKeyDown);

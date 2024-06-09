@@ -1,16 +1,16 @@
-# backend/pongengine/consumers.py
-
 import json
 import random
 import asyncio
+import logging
 from channels.generic.websocket import AsyncWebsocketConsumer
+
+logger = logging.getLogger(__name__)
 
 class PongConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
         self.init_game_state()
         await self.send_state()
-        await self.game_loop()
 
     async def disconnect(self, close_code):
         self.game_started = False
@@ -24,9 +24,12 @@ class PongConsumer(AsyncWebsocketConsumer):
             self.player2_score = 0
             self.ball_restart()
             await self.send_state()
+            asyncio.create_task(self.game_loop())  # Démarre la boucle de jeu
         elif data['type'] == 'player_input':
             self.player1["speed"] = data.get('player1Speed', 0)
             self.player2["speed"] = data.get('player2Speed', 0)
+            # Log the received player input speeds
+            logger.debug(f"Received player input: player1Speed={self.player1['speed']}, player2Speed={self.player2['speed']}")
 
     def init_game_state(self):
         self.ball = {"x": 320, "y": 180, "vx": 7 * random.choice((1, -1)), "vy": 7 * random.choice((1, -1))}
@@ -68,8 +71,10 @@ class PongConsumer(AsyncWebsocketConsumer):
         # Ball collision with paddles
         if self.ball["x"] <= 15 and self.player2["y"] <= self.ball["y"] <= self.player2["y"] + 70:
             self.ball["vx"] *= -1
+            self.ball["x"] = 15  # Réinitialiser la position de la balle pour éviter le glissement
         if self.ball["x"] >= 625 and self.player1["y"] <= self.ball["y"] <= self.player1["y"] + 70:
             self.ball["vx"] *= -1
+            self.ball["x"] = 625  # Réinitialiser la position de la balle pour éviter le glissement
 
         # Ball out of bounds (left/right)
         if self.ball["x"] <= 0:
@@ -82,6 +87,10 @@ class PongConsumer(AsyncWebsocketConsumer):
         # Update player positions
         self.player1["y"] += self.player1["speed"]
         self.player2["y"] += self.player2["speed"]
+
+        # Log player positions and speeds
+        logger.debug(f"Player 1 position: {self.player1['y']}, speed: {self.player1['speed']}")
+        logger.debug(f"Player 2 position: {self.player2['y']}, speed: {self.player2['speed']}")
 
         # Keep paddles within the screen
         self.player1["y"] = max(0, min(self.player1["y"], 290))
