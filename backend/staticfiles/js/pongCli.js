@@ -65,12 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(5, gameState.p2.y, 10, 70);  // player2
 
         // Draw scores
-        ctx.font = '20px Arial';
+        ctx.font = '20px Poppins';
         ctx.fillText(gameState.s1, canvas.width - 50, 30);  // player1_score
         ctx.fillText(gameState.s2, 30, 30);  // player2_score
 
         // Draw round trip time (delta) in the bottom right corner
-        ctx.font = '12px Arial';
+        ctx.font = '12px Poppins';
         ctx.fillText(`Delta: ${roundTripTime.toFixed(0)} ms`, canvas.width - 100, canvas.height - 10);
     }
 
@@ -127,4 +127,17 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.onclose = () => {
         console.log('Disconnected from server');
     };
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function resizeCanvas() {
+        const aspectRatio = 640 / 360;
+        const newWidth = Math.min(window.innerWidth, window.innerHeight * aspectRatio);
+        const newHeight = newWidth / aspectRatio;
+
+        canvas.style.width = newWidth + 'px';
+        canvas.style.height = newHeight + 'px';
+    }
+
+    resizeCanvas();
 });

@@ -1,10 +1,7 @@
 import json
 import random
 import asyncio
-import logging
 from channels.generic.websocket import AsyncWebsocketConsumer
-
-logger = logging.getLogger(__name__)
 
 class PongConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -29,8 +26,6 @@ class PongConsumer(AsyncWebsocketConsumer):
         elif data['t'] == 'pi':  # player_input
             self.player1["speed"] = data.get('p1', 0)  # player1Speed
             self.player2["speed"] = data.get('p2', 0)  # player2Speed
-            logger.debug(f"Received player input: player1Speed={self.player1['speed']}, player2Speed={self.player2['speed']}")
-            # Log request_id for round-trip time measurement
             if 'rid' in data:
                 self.request_id = data['rid']
 
@@ -99,10 +94,6 @@ class PongConsumer(AsyncWebsocketConsumer):
         # Update player positions
         self.player1["y"] += self.player1["speed"]
         self.player2["y"] += self.player2["speed"]
-
-        # Log player positions and speeds
-        logger.debug(f"Player 1 position: {self.player1['y']}, speed: {self.player1['speed']}")
-        logger.debug(f"Player 2 position: {self.player2['y']}, speed: {self.player2['speed']}")
 
         # Keep paddles within the screen
         self.player1["y"] = max(0, min(self.player1["y"], 290))
