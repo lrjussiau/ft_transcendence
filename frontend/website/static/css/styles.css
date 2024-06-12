@@ -1,51 +1,295 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
-@import url('https://cdn-uicons.flaticon.com/2.4.0/uicons-bold-straight/css/uicons-bold-straight.css');
 
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+    
 body {
-    margin: 0;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F6F6;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar {
+    position: absolute;
+    left: -20px;
+}
+
+.sidebar {
+    width: 100px;
+    background-color: #F6F6F6;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #282c34;
-    color: white;
+    font-weight: bold;
+    user-select: none;
+    z-index: 0;
+    mask-composite: exclude
 }
 
-* {
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-}
-
-canvas {
-    display: block;
-    background-color: black;
-    max-width: 100%;
-    height: auto;
-}
-
-#startButton {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #61dafb;
-    color: #282c34;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#startButton:hover {
-    background-color: #21a1f1;
-}
-
-.middle-line {
+.sidebar::before {
+    content: '';
     position: absolute;
-    width: 2px;
-    height: 100%;
-    background: white;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.4;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(180deg, rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255), rgb(255, 0, 255)) 0% 0% / 100% 200% no-repeat;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    z-index: -1;
+    animation: 5s ease 0s infinite normal none running nav-animation;
+}
+
+    @keyframes nav-animation {
+        0% {
+          background-position: 0% 0%;
+        }
+        50% {
+          background-position: 0% 40%;
+        }
+        100% {
+          background-position: 0% 0%;
+        }
+    }
+      
+    .nav-item {
+      margin: 10px 0;
+      opacity: 0.4;
+      color: #333;
+      text-decoration: none;
+      font-size: 40px;
+      color: transparent;
+      background: linear-gradient(180deg, rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255), rgb(255, 0, 255)) 0% 0% / 100% 200% no-repeat;
+      -webkit-background-clip: text;
+    }
+
+    @keyframes sidebar-animation-1 {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 0% 20%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }
+    
+    @keyframes sidebar-animation-2 {
+        0% {
+            background-position: 0% 20%;
+        }
+        50% {
+            background-position: 0% 40%;
+        }
+        100% {
+            background-position: 0% 20%;
+        }
+    }
+    
+    @keyframes sidebar-animation-3 {
+        0% {
+            background-position: 0% 40%;
+        }
+        50% {
+            background-position: 0% 60%;
+        }
+        100% {
+            background-position: 0% 40%;
+        }
+    }
+    
+    @keyframes sidebar-animation-4 {
+        0% {
+            background-position: 0% 60%;
+        }
+        50% {
+            background-position: 0% 80%;
+        }
+        100% {
+            background-position: 0% 60%;
+        }
+    }
+    
+    @keyframes sidebar-animation-5 {
+        0% {
+            background-position: 0% 80%;
+        }
+        50% {
+            background-position: 0% 100%;
+        }
+        100% {
+            background-position: 0% 80%;
+        }
+    }
+    
+    @keyframes sidebar-animation-6 {
+        0% {
+            background-position: 0% 100%;
+        }
+        50% {
+            background-position: 0% 120%;
+        }
+        100% {
+            background-position: 0% 100%;
+        }
+    }
+    
+    .nav-item:nth-child(1) {
+        animation: sidebar-animation-1 5s ease infinite;
+    }
+    
+    .nav-item:nth-child(2) {
+        animation: sidebar-animation-2 5s ease infinite;
+    }
+    
+    .nav-item:nth-child(3) {
+        animation: sidebar-animation-3 5s ease infinite;
+    }
+    
+    .nav-item:nth-child(4) {
+        animation: sidebar-animation-4 5s ease infinite;
+    }
+    
+    .nav-item:nth-child(5) {
+        animation: sidebar-animation-5 5s ease infinite;
+    }
+    
+    .nav-item:nth-child(6) {
+        animation: sidebar-animation-6 5s ease infinite;
+    }
+    
+    .title {
+        font-size: 180px;
+        margin-bottom: 80px;
+        opacity: 0.4;
+        font-weight: 900;
+        width: 100%;
+        user-select: none;
+        z-index: 0;
+        -webkit-text-fill-color: transparent;
+        background: linear-gradient(90deg, rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255), rgb(255, 0, 255)) 0% 0% / 200% 100% repeat text;
+        animation: 10s ease 0s infinite normal none running title-animation;
+    }
+
+    @keyframes title-animation {
+        0% {
+          background-position: 0% center;
+        }
+        50% {
+          background-position: 100% center;
+        }
+        100% {
+          background-position: 0% center;
+        }
+    }
+
+    .btn-play {
+      border: 2px solid #00FF00;
+      color: #00FF00;
+      opacity: 0.4;
+      font-size: 60px;
+      font-weight: bold;
+      padding: 10px 30px;
+      width: 50%;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .btn-play:hover {
+      background-color: #00FF00;
+      color: #F6F6F6;
+    }
+
+    .instruction {
+        position: absolute;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .message-front {
+      position: relative;
+      top: 80px;
+      right: -290px;
+      font-family: "Playwrite US Trad", cursive;;
+      font-weight: 300;
+      font-size: 24px;
+      opacity: 0.7;
+      rotate: 345deg;
+    }
+
+    .arrow {
+      position: relative;
+      top: -80px;
+      right: -350px;
+      rotate: 220deg;
+      opacity: 0.6;
+      z-index: -1;
+    }
+
+    .modal-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000; /* Ensure it's on top of other content */
+  }
+  
+  .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+  }
+  
+  .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+  }
+.modal-dialog {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.modal-button {
+    border: 2px solid #1c221c;
+    color: #1c221c;
+    opacity: 0.4;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 30px;
+    width: 45%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.modal-button:hover {
+    background-color: #1c221c;
+    color: #F6F6F6;
 }
