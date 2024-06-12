@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from .models import File
 from .serializers import FileSerializer
+from authentication.serializers import UserSerializer
 
 class RootView(APIView):
     def get(self, request):
@@ -13,6 +14,3 @@ class FileListCreate(generics.ListCreateAPIView):
     queryset = File.objects.all()
     serializer_class = FileSerializer
 
-class AuthView(APIView):
-    def get(self, request):
-        return Response({"message": "Welcome to the Auth Page"})
