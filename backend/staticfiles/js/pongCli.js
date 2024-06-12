@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const requestTimestamps = {};
     let roundTripTime = 0;
 
-    const socket = new WebSocket('ws://localhost/ws/pong/');
+    const socket = new WebSocket('ws://localhost:8080/ws/pong/');
 
     socket.onopen = () => {
         console.log('Connected to server');
@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
             delete requestTimestamps[data.rid];
         }
         gameState = data;
-        gameState.ball = decodeBallPosition(data.b);  // Decode the ball position
         draw();
         if (gameState.gs) {  // game_started
             gameStarted = true;
@@ -112,13 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
             requestTimestamps[requestId] = performance.now();
             socket.send(JSON.stringify({ t: 'pi', p1: player1Speed, p2: player2Speed, rid: requestId }));  // player_input
         }
-    }
-
-    function decodeBallPosition(position) {
-        return {
-            x: (position >> 16) & 0xFFFF,
-            y: position & 0xFFFF
-        };
     }
 
     document.addEventListener('keydown', handleKeyDown);

@@ -4,12 +4,11 @@ services:
   backend:
     build:
       context: ./backend
-    command: sh -c "iperf3 -s & daphne -b 0.0.0.0 -p 8000 pong_game.asgi:application"
+    command: daphne -b 0.0.0.0 -p 8000 pong_game.asgi:application
     volumes:
       - ./backend:/app
     expose:
       - "8000"
-      - "5201"  # Port par défaut pour iperf3
     depends_on:
       - redis
     networks:
@@ -32,7 +31,7 @@ services:
       - ./frontend/website:/usr/share/nginx/html
       - ./backend/staticfiles:/usr/share/nginx/html/static
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       - backend
       - frontend
@@ -41,16 +40,6 @@ services:
 
   redis:
     image: redis:7.2.5
-    networks:
-      - webnet
-
-  tc:
-    build:
-      context: ./tc-scripts
-    container_name: tc-container
-    privileged: true
-    volumes:
-      - ./tc-scripts:/tc-scripts
     networks:
       - webnet
 
