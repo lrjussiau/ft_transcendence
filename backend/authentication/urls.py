@@ -1,7 +1,7 @@
-# backend/authentication/urls.py
+# authentication/urls.py
 from django.urls import path
-from .views import AuthView
+from .views import UserListCreate
 
 urlpatterns = [
-    path('auth/', AuthView.as_view(), name='auth'),
+    path('users/', UserListCreate.as_view(), name='user-list-create'),
 ]

@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'pongengine',
     'rest_framework',
     'supervisor',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -93,6 +94,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+AUTH_USER_MODEL = 'authentication.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
