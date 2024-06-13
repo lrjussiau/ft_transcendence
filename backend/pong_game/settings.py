@@ -19,9 +19,16 @@ INSTALLED_APPS = [
     'corsheaders',
     'pongengine',
     'rest_framework',
+    'rest_framework.authtoken',
     'supervisor',
     'authentication',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
