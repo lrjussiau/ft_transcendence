@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'supervisor',
     'authentication',
+    'db',
 ]
 
 REST_FRAMEWORK = {
