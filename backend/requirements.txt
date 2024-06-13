@@ -8,3 +8,4 @@ daphne
 python-socketio
 eventlet
 socketio
+psycopg2
