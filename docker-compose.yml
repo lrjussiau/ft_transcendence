@@ -1,47 +1,61 @@
 version: '3'
 
 services:
+  db:
+    build: ./db
+    container_name: postgres_container
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+    ports:
+      - "5432:5432"
+
   backend:
-    build:
-      context: ./backend
-    command: daphne -b 0.0.0.0 -p 8000 pong_game.asgi:application
+    build: ./backend
+    container_name: backend_container
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/app
-    expose:
-      - "8000"
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://myuser:mypassword@db:5432/mydatabase
     depends_on:
-      - redis
+      - db
     networks:
-      - webnet
+      - mynetwork
 
   frontend:
-    build:
-      context: ./frontend
-    volumes:
-      - ./frontend:/app
+    build: ./frontend
+    container_name: frontend_container
+    ports:
+      - "3000:3000"
     networks:
-      - webnet
+      - mynetwork
 
   nginx:
-    build:
-      context: .
-      dockerfile: ./nginx/Dockerfile
+    image: nginx:latest
+    container_name: nginx_container
+    ports:
+      - "8080:8080"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./frontend/website:/usr/share/nginx/html
-      - ./backend/staticfiles:/usr/share/nginx/html/static
-    ports:
-      - "8080:80"
     depends_on:
-      - backend
       - frontend
+      - backend
     networks:
-      - webnet
+      - mynetwork
 
-  redis:
-    image: redis:7.2.5
-    networks:
-      - webnet
+volumes:
+  postgres_data:
 
 networks:
-  webnet:
+  mynetwork:
+    driver: bridge

@@ -9,3 +9,5 @@ python-socketio
 eventlet
 socketio
 psycopg2
+dj-database-url
+gunicorn

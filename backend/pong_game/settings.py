@@ -1,4 +1,6 @@
 from pathlib import Path
+import os
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +24,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'supervisor',
     'authentication',
-    'db',
 ]
 
 REST_FRAMEWORK = {
@@ -97,14 +98,9 @@ CHANNEL_LAYERS = {
 }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': BASE_DIR/'db',
-        'USER': 'val',
-        'PASSWORD': 'val_secure',
-        'HOST': 'db',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default=str(os.environ.get('DATABASE_URL'))
+    )
 }
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
