@@ -3,6 +3,7 @@ import json
 import random
 import asyncio
 import logging
+from math import cos, sin, radians
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 logger = logging.getLogger(__name__)
@@ -94,23 +95,45 @@ class PongConsumer(AsyncWebsocketConsumer):
             logger.error(f"Error during game loop: {str(e)}")
             await self.close(code=1011)
 
+    def padel_colider(self):
+        speed_buff = 8 / 5
+        paddle_height = 70
+        center_paddle_offset = paddle_height / 2
+        max_angle = 45  # Angle maximum de réflexion en degrés
+
+        if self.ball["x"] <= 15:  # Collision avec le padel de gauche
+            relative_intercept = (self.player2["y"] + center_paddle_offset) - self.ball["y"]
+            normalized_relative_intercept = relative_intercept / center_paddle_offset
+            bounce_angle = normalized_relative_intercept * max_angle
+            # self.ball["vx"] = abs(self.ball["vx"]) * cos(radians(bounce_angle)) * speed_buff
+            self.ball["vx"] *= -1 
+            self.ball["vy"] += abs(self.ball["vy"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * speed_buff 
+            self.ball["x"] = 15  # Réinitialiser la position de la balle pour éviter le glissement
+
+        elif self.ball["x"] >= 625:  # Collision avec le padel de droite
+            relative_intercept = (self.player1["y"] + center_paddle_offset) - self.ball["y"]
+            normalized_relative_intercept = relative_intercept / center_paddle_offset
+            bounce_angle = normalized_relative_intercept * max_angle
+            # self.ball["vx"] = -abs(self.ball["vx"]) * cos(radians(bounce_angle)) * speed_buff
+            self.ball["vx"] *= -1 
+            self.ball["vy"] += abs(self.ball["vy"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * speed_buff
+            self.ball["x"] = 625  # Réinitialiser la position de la balle pour éviter le glissement
+
     def update_game_state(self):
         self.ball["x"] += self.ball["vx"]
         self.ball["y"] += self.ball["vy"]
 
-        # Ball collision with top/bottom walls
+        # Collision avec les murs supérieur et inférieur
         if self.ball["y"] <= 0 or self.ball["y"] >= 360:
             self.ball["vy"] *= -1
 
-        # Ball collision with paddles
+        # Collision avec les padels
         if self.ball["x"] <= 15 and self.player2["y"] <= self.ball["y"] <= self.player2["y"] + 70:
-            self.ball["vx"] *= -1
-            self.ball["x"] = 15  # Reset ball position to avoid sliding
+            self.padel_colider()
         if self.ball["x"] >= 625 and self.player1["y"] <= self.ball["y"] <= self.player1["y"] + 70:
-            self.ball["vx"] *= -1
-            self.ball["x"] = 625  # Reset ball position to avoid sliding
+            self.padel_colider()
 
-        # Ball out of bounds (left/right)
+        # Ballon hors des limites (gauche/droite)
         if self.ball["x"] <= 0:
             self.player2_score += 1
             self.ball_restart()
@@ -118,15 +141,15 @@ class PongConsumer(AsyncWebsocketConsumer):
             self.player1_score += 1
             self.ball_restart()
 
-        # Update player positions
+        # Mise à jour des positions des joueurs
         self.player1["y"] += self.player1["speed"]
         self.player2["y"] += self.player2["speed"]
 
-        # Keep paddles within the screen
+        # Garder les padels dans l'écran
         self.player1["y"] = max(0, min(self.player1["y"], 290))
         self.player2["y"] = max(0, min(self.player2["y"], 290))
 
-        # Check for game over
+        # Vérification de fin de partie
         if self.player1_score == 5 or self.player2_score == 5:
             self.game_over = True
             self.game_started = False
