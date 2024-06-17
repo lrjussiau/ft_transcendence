@@ -7,5 +7,5 @@ urlpatterns = [
     path('files/', FileListCreate.as_view(), name='file-list-create'),
     path('authentication/', include('authentication.urls')),
     path('db/', include('db.urls')),
-    path('pong/', include('pongengine.urls')),
+    # path('pong/', include('pongengine.urls')),
 ]

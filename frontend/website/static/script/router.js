@@ -1,9 +1,8 @@
 const routes = {
-    '/': 'static/partials/home.html', // Change to load partial for the home section
+    '/': 'static/partials/home.html',
     '/login': 'static/partials/login.html',
     '/register': 'static/partials/register.html',
     '/game': 'static/partials/game.html',
-    '/pong': 'static/partials/_pong.html'
 };
 
 const loadContent = async (path) => {
@@ -24,13 +23,18 @@ const loadContent = async (path) => {
         if (appDiv) {
             appDiv.innerHTML = content;
 
+            // Display the canvas container if path is /game
+            const gameCanvasContainer = document.getElementById('gameCanvasContainer');
+            if (gameCanvasContainer) {
+                gameCanvasContainer.style.display = (path === '/game') ? 'block' : 'none';
+            }
+
             // Execute any scripts in the loaded content
             const scripts = appDiv.querySelectorAll('script');
             scripts.forEach(script => {
                 const newScript = document.createElement('script');
                 newScript.text = script.text;
-                document.body.appendChild(newScript);
-                document.body.removeChild(newScript);
+                document.body.appendChild(newScript).parentNode.removeChild(newScript);
             });
         } else {
             console.error('#app element not found');
