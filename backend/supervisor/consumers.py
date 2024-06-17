@@ -96,28 +96,28 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.close(code=1011)
 
     def padel_colider(self):
-        speed_buff = 8 / 5
+        speed_buff = 6 / 5
         paddle_height = 70
         center_paddle_offset = paddle_height / 2
         max_angle = 45  # Angle maximum de réflexion en degrés
 
         if self.ball["x"] <= 15:  # Collision avec le padel de gauche
-            relative_intercept = (self.player2["y"] + center_paddle_offset) - self.ball["y"]
-            normalized_relative_intercept = relative_intercept / center_paddle_offset
-            bounce_angle = normalized_relative_intercept * max_angle
-            # self.ball["vx"] = abs(self.ball["vx"]) * cos(radians(bounce_angle)) * speed_buff
-            self.ball["vx"] *= -1 
-            self.ball["vy"] += abs(self.ball["vy"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * speed_buff 
-            self.ball["x"] = 15  # Réinitialiser la position de la balle pour éviter le glissement
+            if self.player2["y"] <= self.ball["y"] <= self.player2["y"] + paddle_height:
+                relative_intercept = (self.player2["y"] + center_paddle_offset) - self.ball["y"]
+                normalized_relative_intercept = relative_intercept / center_paddle_offset
+                bounce_angle = normalized_relative_intercept * max_angle
+                self.ball["vx"] = abs(self.ball["vx"]) * cos(radians(bounce_angle)) * speed_buff
+                self.ball["vy"] = abs(self.ball["vx"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * speed_buff
+                self.ball["x"] = 15  # Réinitialiser la position de la balle pour éviter le glissement
 
         elif self.ball["x"] >= 625:  # Collision avec le padel de droite
-            relative_intercept = (self.player1["y"] + center_paddle_offset) - self.ball["y"]
-            normalized_relative_intercept = relative_intercept / center_paddle_offset
-            bounce_angle = normalized_relative_intercept * max_angle
-            # self.ball["vx"] = -abs(self.ball["vx"]) * cos(radians(bounce_angle)) * speed_buff
-            self.ball["vx"] *= -1 
-            self.ball["vy"] += abs(self.ball["vy"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * speed_buff
-            self.ball["x"] = 625  # Réinitialiser la position de la balle pour éviter le glissement
+            if self.player1["y"] <= self.ball["y"] <= self.player1["y"] + paddle_height:
+                relative_intercept = (self.player1["y"] + center_paddle_offset) - self.ball["y"]
+                normalized_relative_intercept = relative_intercept / center_paddle_offset
+                bounce_angle = normalized_relative_intercept * max_angle
+                self.ball["vx"] = -abs(self.ball["vx"]) * cos(radians(bounce_angle)) * speed_buff
+                self.ball["vy"] = abs(self.ball["vx"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * speed_buff
+                self.ball["x"] = 625  # Réinitialiser la position de la balle pour éviter le glissement
 
     def update_game_state(self):
         self.ball["x"] += self.ball["vx"]

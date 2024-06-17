@@ -154,7 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         canvas.style.width = newWidth + 'px';
         canvas.style.height = newHeight + 'px';
+
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        draw();  // Redraw the canvas after resizing
     }
 
-    resizeCanvas();
+    resizeCanvas();  // Initial call to set the canvas size
 });
