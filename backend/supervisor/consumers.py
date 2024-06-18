@@ -1,4 +1,5 @@
 import json
+import time
 import random
 import asyncio
 import logging
@@ -68,7 +69,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.close(code=1011)
 
     def init_game_state(self):
-        self.ball = {"x": 320, "y": 180, "vx": 7 * random.choice((1, -1)), "vy": 7 * random.choice((1, -1))}
+        self.ball = {"x": 320, "y": 180, "vx": 3 * random.choice((1, -1)), "vy": 3 * random.choice((1, -1))}
         self.player1 = {"y": 160, "speed": 0}
         self.player2 = {"y": 160, "speed": 0}
         self.player1_score = 0
@@ -162,11 +163,12 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.player2["y"] = max(0, min(self.player2["y"], 290))
 
         # Vérification de fin de partie
-        if self.player1_score == 5 or self.player2_score == 5:
+        if self.player1_score == 50 or self.player2_score == 50:
             self.game_over = True
             self.game_started = False
 
     async def start_game(self):
+        time.sleep(3)
         self.init_game_state()  # Reset paddle positions at the start of the game
         self.game_started = True
         self.game_over = False

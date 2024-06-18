@@ -4,38 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Game</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f4f4f4;
-    }
-    .container {
-      background: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
-    <h2>Select Game Type</h2>
     <button class="btn btn-primary m-2" onclick="selectGameType('solo')">Solo</button>
     <button class="btn btn-primary m-2" onclick="selectGameType('1v1')">1v1</button>
     <button class="btn btn-primary m-2" onclick="selectGameType('local_1v1')">Local 1v1</button>
     <button class="btn btn-primary m-2" onclick="selectGameType('tournament')">Tournament</button>
   </div>
   <div class="container">
-    <canvas id="gameCanvas" width="640" height="360"></canvas>
+    <canvas class="canvas" id="gameCanvas" width="640" height="360"></canvas>
     <button id="startButton" class="btn btn-success">Start Game</button>
-    <button id="logout" class="btn btn-danger">Logout</button>
   </div>
   <script>
     let selectedGameType = null;
@@ -65,6 +44,7 @@
     });
 
     function startGame() {
+      document.querySelector('.canvas').style.display = 'block';
       if (!ws) {
         ws = new WebSocket('ws://localhost:8000/ws/pong/');
         ws.onopen = () => {
@@ -140,3 +120,4 @@
   </script>
 </body>
 </html>
+<!--  -->

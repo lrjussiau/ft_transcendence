@@ -1,60 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pong Game</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="static/css/styles.css">
-  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.0/uicons-bold-straight/css/uicons-bold-straight.css'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="static/css/styles.css">
 </head>
 <body>
-  <header class="bg-primary text-white p-3">
-    <div class="container d-flex justify-content-between">
-      <h1>Pong Game</h1>
-      <nav>
-        <a href="/" class="text-white"><i class="fi fi-bs-user"></i></a>
-        <a href="/login" class="text-white ml-3">Login</a>
-        <a href="/register" class="text-white ml-3">Register</a>
-      </nav>
+    <div class="navbar">
+        <div class="sidebar">
+            <a href="/" class="nav-item"><i class="bi bi-person"></i></a>
+            <a href="/trophy" class="nav-item"><i class="bi bi-trophy"></i></a>
+            <a href="/controller" class="nav-item"><i class="bi bi-controller"></i></a>
+            <a href="/menu" class="nav-item"><i class="bi bi-menu-button-wide"></i></a>
+            <a href="/settings" class="nav-item"><i class="bi bi-gear"></i></a>
+            <a href="/logout" class="nav-item"><i class="bi bi-arrow-right"></i></a>
+        </div>
     </div>
-  </header>
-  <main class="container my-5" id="app" data-path="/">
-    <section class="hero text-center mb-5">
-      <h2 class="display-4">Welcome to the Pong Game</h2>
-      <p class="lead">Join the most exciting pong game ever!</p>
-      <a href="/game" class="btn btn-success btn-lg">Play Now</a>
-    </section>
-    <section class="features row">
-      <div class="col-md-4">
-        <h3>Feature 1</h3>
-        <p>Exciting gameplay and challenges.</p>
-      </div>
-      <div class="col-md-4">
-        <h3>Feature 2</h3>
-        <p>Multiplayer mode to play with friends.</p>
-      </div>
-      <div class="col-md-4">
-        <h3>Feature 3</h3>
-        <p>Leaderboards to track your progress.</p>
-      </div>
-    </section>
-    <!-- Ajout du canvas pour le jeu Pong -->
-    <div class="container">
-      <canvas id="gameCanvas" width="0" height="0"></canvas>
-      <button id="logout" class="btn btn-danger">Logout</button>
-    </div>
-  </main>
-  <footer class="bg-dark text-white p-3 text-center">
-    <p>&copy; 2024 Pong Game. All rights reserved.</p>
-    <p>
-      <a href="#" class="text-white">Privacy Policy</a> |
-      <a href="#" class="text-white">Terms of Service</a>
-    </p>
-  </footer>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="static/script/router.js"></script>
+    <!-- <div class="container">
+      <canvas class="canvas" id="gameCanvas" width="0" height="0"></canvas>
+    </div> -->
+    <div id="app" data-path="/"></div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="static/script/router.js"></script>
 </body>
 </html>
