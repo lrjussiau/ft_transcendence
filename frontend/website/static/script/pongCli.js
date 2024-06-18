@@ -68,23 +68,23 @@ function initPongClient(ws) {
       }
     }
   
-    window.addEventListener('resize', resizeCanvas);
+    // window.addEventListener('resize', resizeCanvas);
   
-    function resizeCanvas() {
-      const aspectRatio = 640 / 360;
-      const newWidth = Math.min(window.innerWidth, window.innerHeight * aspectRatio);
-      const newHeight = newWidth / aspectRatio;
+    // function resizeCanvas() {
+    //   const aspectRatio = 640 / 360;
+    //   const newWidth = Math.min(window.innerWidth, window.innerHeight * aspectRatio);
+    //   const newHeight = newWidth / aspectRatio;
   
-      canvas.style.width = newWidth + 'px';
-      canvas.style.height = newHeight + 'px';
+    //   canvas.style.width = newWidth + 'px';
+    //   canvas.style.height = newHeight + 'px';
   
-      canvas.width = newWidth;
-      canvas.height = newHeight;
+    //   canvas.width = newWidth;
+    //   canvas.height = newHeight;
   
-      draw();
-    }
+    //   draw();
+    // }
   
-    resizeCanvas();
+    // resizeCanvas();
   
     window.updateGameStateFromServer = function(data) {
       if (data.ball) {

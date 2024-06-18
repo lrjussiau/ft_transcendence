@@ -7,14 +7,14 @@
 </head>
 <body>
   <div class="container">
+    <canvas class="canvas" id="gameCanvas" width="640" height="360"></canvas>
     <button class="btn btn-primary m-2" onclick="selectGameType('solo')">Solo</button>
     <button class="btn btn-primary m-2" onclick="selectGameType('1v1')">1v1</button>
     <button class="btn btn-primary m-2" onclick="selectGameType('local_1v1')">Local 1v1</button>
     <button class="btn btn-primary m-2" onclick="selectGameType('tournament')">Tournament</button>
+  <button id="startButton" class="btn btn-success">Start Game</button>
   </div>
   <div class="container">
-    <canvas class="canvas" id="gameCanvas" width="640" height="360"></canvas>
-    <button id="startButton" class="btn btn-success">Start Game</button>
   </div>
   <script>
     let selectedGameType = null;
@@ -53,13 +53,21 @@
           ws.send(JSON.stringify({ t: 'sg' }));
         };
         ws.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          console.log('Received update:', data);
-          if (data.ball) {
-            // Handle game state updates
-            updateGameState(data);
-          }
-        };
+        const data = JSON.parse(event.data);
+        console.log('Received update:', data);
+
+        if (data.rid !== undefined && requestTimestamps[data.rid]) {
+          const latency = performance.now() - requestTimestamps[data.rid];
+          roundTripTime = latency;
+          delete requestTimestamps[data.rid];
+          console.log(`Round-Trip Time (RTT): ${roundTripTime} ms`);
+        }
+
+        if (data.ball) {
+          // Handle game state updates
+          updateGameState(data);
+        }
+      };
         ws.onerror = (error) => {
           console.error('WebSocket error:', error);
         };

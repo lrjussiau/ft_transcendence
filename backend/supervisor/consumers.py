@@ -69,7 +69,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.close(code=1011)
 
     def init_game_state(self):
-        self.ball = {"x": 320, "y": 180, "vx": 3 * random.choice((1, -1)), "vy": 3 * random.choice((1, -1))}
+        self.ball = {"x": 320, "y": 180, "vx": 4 * random.choice((1, -1)), "vy": 4 * random.choice((1, -1))}
         self.player1 = {"y": 160, "speed": 0}
         self.player2 = {"y": 160, "speed": 0}
         self.player1_score = 0
@@ -96,7 +96,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     def ball_restart(self):
         logger.info("Restarting ball position")
-        self.ball = {"x": 320, "y": 180, "vx": 7 * random.choice((1, -1)), "vy": 7 * random.choice((1, -1))}
+        self.ball = {"x": 320, "y": 180, "vx": 4 * random.choice((1, -1)), "vy": 4 * random.choice((1, -1))}
 
     async def game_loop(self):
         try:
@@ -109,7 +109,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.close(code=1011)
 
     def padel_colider(self):
-        speed_buff = 5 / 5
+        speed_buff = 6 / 5
         paddle_height = 70
         center_paddle_offset = paddle_height / 2
         max_angle = 45  # Angle maximum de réflexion en degrés
