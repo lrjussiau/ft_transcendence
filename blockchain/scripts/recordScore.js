@@ -6,8 +6,8 @@ const   fs = require("fs");
         const   provider = new ethers.JsonRpcProvider("http://localhost:8545");
         const   signer = await provider.getSigner();
 
-        const   contractAddress = JSON.parse(fs.readFileSync("./contractAdress.json"));
-        const   abi = JSON.parse(fs.readFileSync("contractABI.json"));
+        const   contractAddress = JSON.parse(fs.readFileSync("/app/contractAdress.json"));
+        const   abi = JSON.parse(fs.readFileSync("/app/contractABI.json"));
 
         const   contract = new ethers.Contract(contractAddress, abi, signer);
         const   gameHash = ethers.encodeBytes32String(process.argv[2]);

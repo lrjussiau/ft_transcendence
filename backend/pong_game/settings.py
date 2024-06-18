@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'supervisor',
     'authentication',
     'db',
+    'blockchain',
 ]
 
 REST_FRAMEWORK = {

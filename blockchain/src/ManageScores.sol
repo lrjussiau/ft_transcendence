@@ -1,4 +1,4 @@
-pragma solidity ^0.8.26;
+pragma solidity ^0.8.25;
 
 struct Score {
         uint8           score_loser;

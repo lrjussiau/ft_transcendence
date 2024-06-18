@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import GenericModelView
+from . import views
 
 urlpatterns = [
-    path('blockchain/', GenericModelView.as_view(), name='generic_model_view'),
+    path('<str:operation_requested>/', views.endpoint_handler, name='endpoint_handler'),
 ]

@@ -37,7 +37,7 @@ app.post('/retrieve_score', async (req, res) => {
 
     try {
         // Path to your script
-        const scriptPath = path.join(__dirname, 'scripts', 'retrievScore.js');
+        const scriptPath = path.join(__dirname, 'scripts', 'retrieveScore.js');
 
         // Execute the script
         exec(`node ${scriptPath} ${game_id}`, (error, stdout, stderr) => {

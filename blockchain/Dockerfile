@@ -6,10 +6,11 @@ WORKDIR /app
 
 # Install necessary Node.js packages
 RUN apk update && apk add nodejs npm
-
+RUN npm install express body-parser ethers
 # Copy Foundry project files
 COPY src /app/src
 COPY scripts /app/scripts
+RUN chmod -R +x /app/scripts
 COPY foundry.toml /app/foundry.toml
 # COPY lib /app/lib # Uncomment if you have libraries in the lib directory
 
@@ -24,4 +25,4 @@ RUN chmod +x /app/server.js
 EXPOSE 3000
 
 # Start the blockchain services
-CMD ["sh", "/start_blockchain.sh"]
+CMD ["/start_blockchain.sh"]
