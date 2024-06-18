@@ -31,6 +31,7 @@
       selectedGameType = gameType;
       console.log(`Game type selected: ${gameType}`);
       loadPongCliScript();
+      document.querySelector('.canvas').style.display = 'block';
     }
 
     document.getElementById('startButton').addEventListener('click', () => {
@@ -44,7 +45,6 @@
     });
 
     function startGame() {
-      document.querySelector('.canvas').style.display = 'block';
       if (!ws) {
         ws = new WebSocket('ws://localhost:8000/ws/pong/');
         ws.onopen = () => {
