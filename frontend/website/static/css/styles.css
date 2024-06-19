@@ -4,11 +4,28 @@
     
 body {
     display: flex;
+    flex-direction: column;
     height: 100vh;
     justify-content: center;
     align-items: center;
     background-color: #F6F6F6;
     font-family: 'Roboto', sans-serif;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #0000000f;
+}
+
+.headers.title {
+    padding-top : 10px;
+    color: black;
+    opacity: 0.4;
+    font-size: 60px;
+    font-weight: bold;
 }
 
 .navbar {
@@ -292,4 +309,16 @@ body {
 .modal-button:hover {
     background-color: #1c221c;
     color: #F6F6F6;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    color: black;
+    opacity: 0.4;
+    font-size: 20px;
+    font-weight: bold;
 }

@@ -1,87 +1,125 @@
-const routes = {
-    '/': 'static/partials/home.html',
-    '/login': 'static/partials/login.html',
-    '/register': 'static/partials/register.html',
-    '/game': 'static/partials/game.html',
-};
+console.log("router.js loaded");
 
-let isFetching = false;
+// Function to get the current route
+function getCurrentRoute() {
+  const path = window.location.pathname;
+  const route = path.split('/')[1];
+  return route;
+}
 
-const loadContent = async (path) => {
-    if (isFetching) {
-        return;
+// Function to load HTML partials
+async function loadPartial(partial) {
+  try {
+    const response = await fetch(`/static/partials/${partial}.html`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-    isFetching = true;
-    
-    if (!routes[path]) {
-        console.error('Path not found:', path);
-        isFetching = false;
-        return;
-    }
+    const html = await response.text();
+    document.getElementById('content').innerHTML = html;
+    console.log(`Loaded partial: ${partial}`);
+  } catch (error) {
+    console.error('Failed to load partial:', error);
+    loadPartial('404'); // Load 404 page in case of an error
+  }
+}
 
-    try {
-        const response = await fetch(routes[path]);
-        if (!response.ok) {
-            console.error('Failed to load content:', response.statusText);
-            isFetching = false;
-            return;
-        }
-        const content = await response.text();
+// Function to check authentication
+function isAuthenticated() {
+  return localStorage.getItem('authToken') !== null;
+}
 
-        const appDiv = document.getElementById('app');
-        if (appDiv) {
-            appDiv.innerHTML = content;
+// Function to display the header based on the route
+function toggleHeaderDisplay(route) {
+  const header = document.querySelector('header');
+  if (route === 'home') {
+    header.style.display = 'none';
+  } else {
+    header.style.display = 'block';
+  }
+}
 
-            const scripts = appDiv.querySelectorAll('script');
-            scripts.forEach(script => {
-                const newScript = document.createElement('script');
-                newScript.text = script.text;
-                document.body.appendChild(newScript).parentNode.removeChild(newScript);
-            });
-        } else {
-            console.error('#app element not found');
-        }
-    } catch (error) {
-        console.error('Error loading content:', error);
-    }
+// Function to handle routes
+async function handleRoute(route) {
+  toggleHeaderDisplay(route);
+  switch (route) {
+    case 'home':
+      await loadPartial('home');
+      break;
+    case 'login':
+      await loadPartial('login');
+      setupLoginForm(); // Set up the login form when loading the login partial
+      break;
+    case 'register':
+      await loadPartial('register');
+      setupRegisterForm(); // Set up the register form when loading the register partial
+      break;
+    case 'game':
+      if (isAuthenticated()) {
+        await loadPartial('game');
+      } else {
+        // Store the attempted route and redirect to login
+        localStorage.setItem('initialRoute', '/game');
+        window.history.pushState({}, '', '/login');
+        await loadPartial('login');
+        setupLoginForm(); // Set up the login form when loading the login partial
+      }
+      break;
+    default:
+      await loadPartial('404');
+      break;
+  }
+}
 
-    isFetching = false;
-};
-
-const handleRouteChange = () => {
-    let path = window.location.pathname;
-
-    if (path === '') {
-        path = '/';
-    }
-    
-    const appDiv = document.getElementById('app');
-    const currentPath = appDiv.getAttribute('data-path');
-
-    appDiv.setAttribute('data-path', path);
-    loadContent(path);
-};
-
+// Initialize the router
 document.addEventListener('DOMContentLoaded', () => {
-    handleRouteChange();
-    document.body.addEventListener('click', (e) => {
-        if (e.target.tagName === 'A' && e.target.href.startsWith(window.location.origin)) {
-            e.preventDefault();
-            const href = e.target.getAttribute('href');
-            console.log('Navigation link clicked, href:', href);
-            window.history.pushState({}, '', href);
-            handleRouteChange();
-        }
-    });
+  let route = getCurrentRoute();
+  console.log("Initial route:", route);
+  // Redirect to /home if the route is empty (i.e., root path)
+  if (route === '') {
+    window.history.pushState({}, '', '/home');
+    route = 'home';
+  }
 
-    const closeModalButton = document.getElementById('close-modal-button');
-    if (closeModalButton) {
-        closeModalButton.addEventListener('click', () => {
-            console.log('Close button clicked, redirecting to /');
-            window.history.pushState({}, '', '/');
-            handleRouteChange();
-        });
-    }
+  handleRoute(route);
+
+  // Add event listeners to links for client-side routing
+  document.querySelectorAll('a[data-link]').forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      const href = link.getAttribute('href');
+      window.history.pushState({}, '', href);
+      handleRoute(href.split('/')[1]);
+    });
+  });
 });
 
-window.onpopstate = handleRouteChange;
+// Handle browser navigation events
+window.addEventListener('popstate', () => {
+  const route = getCurrentRoute();
+  handleRoute(route);
+});
+
+// Simplified helper functions
+function getCurrentRoute() {
+  const path = window.location.pathname;
+  const route = path.split('/')[1];
+  return route;
+}
+
+function isAuthenticated() {
+  return localStorage.getItem('authToken') !== null;
+}
+
+async function loadPartial(partial) {
+  try {
+    const response = await fetch(`/static/partials/${partial}.html`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const html = await response.text();
+    document.getElementById('content').innerHTML = html;
+  } catch (error) {
+    console.error('Failed to load partial:', error);
+    // Load 404 page in case of an error
+  }
+}
