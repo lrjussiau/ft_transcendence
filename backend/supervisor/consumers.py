@@ -36,13 +36,12 @@ class PongConsumer(AsyncWebsocketConsumer):
                 raise ValueError("Empty message received")
             data = json.loads(text_data)
             logger.info(f"Decoded JSON: {data}")
-            if data['t'] == 'select_game_type':
-                self.game_type = data.get('game_type')
-                if self.game_type == 'local_1v1':
-                    await self.start_game()
-                else:
-                    self.init_game_state()
-                    await self.send_state()
+            if data['t'] == 'pi':  # player_input
+                logger.info("Processing player input")
+                self.player1["speed"] = data.get('p1', 0)  # player1Speed
+                self.player2["speed"] = data.get('p2', 0)  # player2Speed
+                if 'rid' in data:
+                    self.request_id = data['rid']
             elif data['t'] == 'sg':  # start_game
                 logger.info("Starting game")
                 self.init_game_state()  # Reset paddle positions at the start of the game
@@ -53,12 +52,13 @@ class PongConsumer(AsyncWebsocketConsumer):
                 self.ball_restart()
                 await self.send_state()
                 asyncio.create_task(self.game_loop())  # Start the game loop
-            elif data['t'] == 'pi':  # player_input
-                logger.info("Processing player input")
-                self.player1["speed"] = data.get('p1', 0)  # player1Speed
-                self.player2["speed"] = data.get('p2', 0)  # player2Speed
-                if 'rid' in data:
-                    self.request_id = data['rid']
+            elif data['t'] == 'select_game_type':
+                self.game_type = data.get('game_type')
+                if self.game_type == 'local_1v1':
+                    await self.start_game()
+                else:
+                    self.init_game_state()
+                    await self.send_state()
             else:
                 logger.warning(f"Unknown message type: {data['t']}")
         except json.JSONDecodeError as e:
