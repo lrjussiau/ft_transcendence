@@ -1,5 +1,5 @@
-# supervisor/consumers.py
 import json
+import time
 import random
 import asyncio
 import logging
@@ -12,16 +12,22 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
         logger.info('WebSocket connection established')
-        try:
-            self.init_game_state()
-            await self.send_state()
-        except Exception as e:
-            logger.error(f"Error during connection: {str(e)}")
-            await self.close(code=1011)
+        self.game_type = None
+        self.keep_open = True  # Flag to keep the connection open
+        asyncio.create_task(self.ensure_connection_open())
+
+    async def ensure_connection_open(self):
+        while self.keep_open:
+            await asyncio.sleep(1)  # Keep the connection open by sending a ping every second
+            try:
+                await self.send(text_data=json.dumps({'type': 'ping'}))
+            except:
+                logger.error('Error keeping connection open')
+                break
 
     async def disconnect(self, close_code):
         logger.info(f"WebSocket connection closed with code: {close_code}")
-        self.game_started = False
+        self.keep_open = False
 
     async def receive(self, text_data):
         logger.info(f"Received message: {text_data}")
@@ -30,7 +36,13 @@ class PongConsumer(AsyncWebsocketConsumer):
                 raise ValueError("Empty message received")
             data = json.loads(text_data)
             logger.info(f"Decoded JSON: {data}")
-            if data['t'] == 'sg':  # start_game
+            if data['t'] == 'pi':  # player_input
+                logger.info("Processing player input")
+                self.player1["speed"] = data.get('p1', 0)  # player1Speed
+                self.player2["speed"] = data.get('p2', 0)  # player2Speed
+                if 'rid' in data:
+                    self.request_id = data['rid']
+            elif data['t'] == 'sg':  # start_game
                 logger.info("Starting game")
                 self.init_game_state()  # Reset paddle positions at the start of the game
                 self.game_started = True
@@ -40,12 +52,13 @@ class PongConsumer(AsyncWebsocketConsumer):
                 self.ball_restart()
                 await self.send_state()
                 asyncio.create_task(self.game_loop())  # Start the game loop
-            elif data['t'] == 'pi':  # player_input
-                logger.info("Processing player input")
-                self.player1["speed"] = data.get('p1', 0)  # player1Speed
-                self.player2["speed"] = data.get('p2', 0)  # player2Speed
-                if 'rid' in data:
-                    self.request_id = data['rid']
+            elif data['t'] == 'select_game_type':
+                self.game_type = data.get('game_type')
+                if self.game_type == 'local_1v1':
+                    await self.start_game()
+                else:
+                    self.init_game_state()
+                    await self.send_state()
             else:
                 logger.warning(f"Unknown message type: {data['t']}")
         except json.JSONDecodeError as e:
@@ -56,7 +69,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.close(code=1011)
 
     def init_game_state(self):
-        self.ball = {"x": 320, "y": 180, "vx": 7 * random.choice((1, -1)), "vy": 7 * random.choice((1, -1))}
+        self.ball = {"x": 320, "y": 180, "vx": 4 * random.choice((1, -1)), "vy": 4 * random.choice((1, -1))}
         self.player1 = {"y": 160, "speed": 0}
         self.player2 = {"y": 160, "speed": 0}
         self.player1_score = 0
@@ -83,7 +96,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     def ball_restart(self):
         logger.info("Restarting ball position")
-        self.ball = {"x": 320, "y": 180, "vx": 7 * random.choice((1, -1)), "vy": 7 * random.choice((1, -1))}
+        self.ball = {"x": 320, "y": 180, "vx": 4 * random.choice((1, -1)), "vy": 4 * random.choice((1, -1))}
 
     async def game_loop(self):
         try:
@@ -150,6 +163,17 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.player2["y"] = max(0, min(self.player2["y"], 290))
 
         # Vérification de fin de partie
-        if self.player1_score == 5 or self.player2_score == 5:
+        if self.player1_score == 50 or self.player2_score == 50:
             self.game_over = True
             self.game_started = False
+
+    async def start_game(self):
+        time.sleep(3)
+        self.init_game_state()  # Reset paddle positions at the start of the game
+        self.game_started = True
+        self.game_over = False
+        self.player1_score = 0
+        self.player2_score = 0
+        self.ball_restart()
+        await self.send_state()
+        asyncio.create_task(self.game_loop())  # Start the game loop

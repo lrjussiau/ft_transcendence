@@ -322,3 +322,8 @@ footer {
     font-size: 20px;
     font-weight: bold;
 }
+
+.canvas {
+    background-color: black;
+    display: none;
+}
