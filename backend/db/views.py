@@ -4,11 +4,13 @@ from django.apps import apps
 from django.core.exceptions import ValidationError
 from rest_framework.response import Response
 from .serializers import DynamicFieldsModelSerializer
+import logging
 
 class GenericModelView(ListCreateAPIView):
     serializer_class = DynamicFieldsModelSerializer
 
     def get_queryset(self):
+        logging.error("In get_queryset")
         model_name = self.kwargs.get('model_name')
         try:
             model = apps.get_model('db', model_name)  # Ensure 'db' is your actual app label
@@ -23,6 +25,7 @@ class GenericModelView(ListCreateAPIView):
         return queryset
 
     def get_serializer_context(self):
+        logging.error("In serializer context")
         context = super(GenericModelView, self).get_serializer_context()
         context.update({
             'model_name': self.kwargs.get('model_name')

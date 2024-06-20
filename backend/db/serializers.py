@@ -48,6 +48,7 @@ from django.apps import apps
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
+        print("FDP ca passe")
         # Remove 'fields' from kwargs to manually process it
         fields = kwargs.pop('fields', None)
         super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
