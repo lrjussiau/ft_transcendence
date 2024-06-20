@@ -1,49 +1,34 @@
-import requests
 from rest_framework import serializers
-from .models import CustomUser
+from db.models import User
+from django.contrib.auth.hashers import make_password
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
-        fields = ['email', 'username', 'password']
+        model = User
+        fields = ['id', 'username', 'email', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        api_url = 'http://backend_container:8000/api/db/user/'  # Utilise le nom de service Docker
-        response = requests.post(api_url, json=validated_data)
-        if response.status_code == 201:
-            return validated_data
-        else:
-            raise serializers.ValidationError(response.json())
+        validated_data['password'] = make_password(validated_data['password'])
+        return super().create(validated_data)
 
-    def validate_email(self, value):
-        api_url = f'http://backend_container:8000/api/db/user/?email={value}'  # Utilise le nom de service Docker
-        response = requests.get(api_url)
-        if response.status_code == 200 and response.json():
-            raise serializers.ValidationError("Email already exists.")
-        return value
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth import authenticate
 
-    def validate_username(self, value):
-        api_url = f'http://backend_container:8000/api/db/user/?username={value}'  # Utilise le nom de service Docker
-        response = requests.get(api_url)
-        if response.status_code == 200 and response.json():
-            raise serializers.ValidationError("Username already exists.")
-        return value
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    username_field = 'username'
 
-class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(write_only=True)
+    def validate(self, attrs):
+        credentials = {
+            'username': attrs.get('username'),
+            'password': attrs.get('password')
+        }
 
-    def validate(self, data):
-        email = data.get('email')
-        password = data.get('password')
-        if email and password:
-            api_url = 'http://backend_container:8000/api/db/authenticate/'  # Utilise le nom de service Docker
-            response = requests.post(api_url, json={'email': email, 'password': password})
-            if response.status_code == 200:
-                data['user'] = response.json()
-            else:
-                raise serializers.ValidationError("Invalid email or password")
-        else:
-            raise serializers.ValidationError("Must include 'email' and 'password'")
-        return data
+        user = authenticate(request=self.context.get('request'), **credentials)
+
+        if user is None or not user.is_active:
+            raise serializers.ValidationError(
+                'No active account found with the given credentials'
+            )
+
+        return super().validate(attrs)

@@ -23,7 +23,7 @@ function setupLoginForm() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username, password }),
+          body: JSON.stringify({ username, password }), // Ensure the payload has username and password
         });
 
         if (!response.ok) {
@@ -31,7 +31,8 @@ function setupLoginForm() {
         }
 
         const data = await response.json();
-        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("authToken", data.access); // Store the access token
+        localStorage.setItem("refreshToken", data.refresh); // Store the refresh token
         console.log("Login successful");
 
         // Redirect to the initial route after successful login
@@ -47,85 +48,3 @@ function setupLoginForm() {
     console.error("Login form not found");
   }
 }
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   console.log("DOM fully loaded and parsed");
-
-//   // Set up the login form if the initial route is the login page
-//   if (getCurrentRoute() === 'login') {
-//     setupLoginForm();
-//   }
-
-//   // Handle the route initially
-//   const route = getCurrentRoute();
-//   handleRoute(route);
-
-//   // Add event listeners to links for client-side routing
-//   document.querySelectorAll('a[data-link]').forEach(link => {
-//     link.addEventListener('click', event => {
-//       event.preventDefault();
-//       const href = link.getAttribute('href');
-//       window.history.pushState({}, '', href);
-//       handleRoute(href.split('/')[1]);
-//     });
-//   });
-
-//   // Handle browser navigation events
-//   window.addEventListener('popstate', () => {
-//     const route = getCurrentRoute();
-//     handleRoute(route);
-//   });
-// });
-
-// // Function to handle routing (simplified for the example)
-// async function handleRoute(route) {
-//   console.log("Handling route:", route);
-//   switch (route) {
-//     case 'home':
-//       await loadPartial('home');
-//       break;
-//     case 'login':
-//       await loadPartial('login');
-//       setupLoginForm(); // Set up the login form when loading the login partial
-//       break;
-//     case 'game':
-//       if (isAuthenticated()) {
-//         await loadPartial('game');
-//       } else {
-//         // Store the attempted route and redirect to login
-//         localStorage.setItem('initialRoute', '/game');
-//         window.history.pushState({}, '', '/login');
-//         await loadPartial('login');
-//         setupLoginForm(); // Set up the login form when loading the login partial
-//       }
-//       break;
-//     default:
-//       await loadPartial('home');
-//       break;
-//   }
-// }
-
-// // Simplified helper functions
-// function getCurrentRoute() {
-//   const path = window.location.pathname;
-//   const route = path.split('/')[1];
-//   return route;
-// }
-
-// function isAuthenticated() {
-//   return localStorage.getItem('authToken') !== null;
-// }
-
-// async function loadPartial(partial) {
-//   try {
-//     const response = await fetch(`/static/partials/${partial}.html`);
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-//     const html = await response.text();
-//     document.getElementById('content').innerHTML = html;
-//   } catch (error) {
-//     console.error('Failed to load partial:', error);
-//     // Load 404 page in case of an error
-//   }
-// }
