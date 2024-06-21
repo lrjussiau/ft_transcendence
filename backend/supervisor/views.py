@@ -4,7 +4,6 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from .models import File
 from .serializers import FileSerializer
-from authentication.serializers import CustomUserSerializer
 
 class RootView(APIView):
     def get(self, request):

@@ -15,8 +15,27 @@ async function loadPartial(partial) {
       throw new Error('Network response was not ok');
     }
     const html = await response.text();
-    document.getElementById('content').innerHTML = html;
-    console.log(`Loaded partial: ${partial}`);
+    const contentDiv = document.getElementById('content');
+
+    if (contentDiv) {
+      contentDiv.innerHTML = html;
+
+      const scripts = contentDiv.querySelectorAll('script');
+      scripts.forEach(script => {
+        const newScript = document.createElement('script');
+        newScript.text = script.text;
+        document.body.appendChild(newScript).parentNode.removeChild(newScript);
+      });
+
+      console.log(`Loaded partial: ${partial}`);
+
+      // Call initializeStartButton if the game partial is loaded
+      if (partial === 'game') {
+        initializeStartButton();
+      }
+    } else {
+      console.error('#content element not found');
+    }
   } catch (error) {
     console.error('Failed to load partial:', error);
     loadPartial('404'); // Load 404 page in case of an error
@@ -40,18 +59,33 @@ function toggleHeaderDisplay(route) {
 
 // Function to handle routes
 async function handleRoute(route) {
-  toggleHeaderDisplay(route);
+  console.log("Handling route:", route);
+  toggleHeaderDisplay(route); // Toggle header display based on route
   switch (route) {
     case 'home':
       await loadPartial('home');
+      console.log("Loaded home partial");
       break;
     case 'login':
       await loadPartial('login');
       setupLoginForm(); // Set up the login form when loading the login partial
       break;
     case 'register':
+      console.log("Loading register partial");
       await loadPartial('register');
       setupRegisterForm(); // Set up the register form when loading the register partial
+      break;
+    case 'user':
+      if (isAuthenticated()) {
+        await loadPartial('user');
+        fetchUserProfile(); // Fetch user profile data
+      } else {
+        // Store the attempted route and redirect to login
+        localStorage.setItem('initialRoute', '/user');
+        window.history.pushState({}, '', '/login');
+        await loadPartial('login');
+        setupLoginForm(); // Set up the login form when loading the login partial
+      }
       break;
     case 'game':
       if (isAuthenticated()) {
@@ -99,27 +133,20 @@ window.addEventListener('popstate', () => {
   handleRoute(route);
 });
 
-// Simplified helper functions
-function getCurrentRoute() {
-  const path = window.location.pathname;
-  const route = path.split('/')[1];
-  return route;
-}
-
-function isAuthenticated() {
-  return localStorage.getItem('authToken') !== null;
-}
-
-async function loadPartial(partial) {
-  try {
-    const response = await fetch(`/static/partials/${partial}.html`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const html = await response.text();
-    document.getElementById('content').innerHTML = html;
-  } catch (error) {
-    console.error('Failed to load partial:', error);
-    // Load 404 page in case of an error
+// Helper function to initialize the start button event listener
+function initializeStartButton() {
+  const startButton = document.getElementById('startButton');
+  if (startButton) {
+    startButton.addEventListener('click', () => {
+      if (selectedGameType === 'local_1v1') {
+        startGame();
+      } else if (selectedGameType !== 'local_1v1' && selectedGameType) {
+        alert('Not Playable yet :(.');
+      } else {
+        alert('Please select a game type first.');
+      }
+    });
+  } else {
+    console.error('#startButton element not found');
   }
 }

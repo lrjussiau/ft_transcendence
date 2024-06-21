@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     build: ./db
@@ -15,13 +13,13 @@ services:
     ports:
       - "5432:5432"
 
-  blockchain:
-    build: ./blockchain
-    container_name: blockchain
-    ports:
-      - "3000:3000"
-    networks:
-      - mynetwork
+  # blockchain:
+  #   build: ./blockchain
+  #   container_name: blockchain
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - mynetwork
 
   redis:
     image: "redis:alpine"
