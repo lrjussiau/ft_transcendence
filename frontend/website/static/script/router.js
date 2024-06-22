@@ -138,10 +138,8 @@ function initializeStartButton() {
   const startButton = document.getElementById('startButton');
   if (startButton) {
     startButton.addEventListener('click', () => {
-      if (selectedGameType === 'local_1v1') {
+      if (selectedGameType) {
         startGame();
-      } else if (selectedGameType !== 'local_1v1' && selectedGameType) {
-        alert('Not Playable yet :(.');
       } else {
         alert('Please select a game type first.');
       }
