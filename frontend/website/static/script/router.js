@@ -29,9 +29,9 @@ async function loadPartial(partial) {
 
       console.log(`Loaded partial: ${partial}`);
 
-      // Call initializeStartButton if the game partial is loaded
       if (partial === 'game') {
         initializeStartButton();
+        fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
       }
     } else {
       console.error('#content element not found');
@@ -61,6 +61,12 @@ function toggleHeaderDisplay(route) {
 async function handleRoute(route) {
   console.log("Handling route:", route);
   toggleHeaderDisplay(route); // Toggle header display based on route
+
+  if (route === 'login' && isAuthenticated()) {
+    window.history.pushState({}, '', '/game');
+    route = 'game';
+  }
+
   switch (route) {
     case 'home':
       await loadPartial('home');
