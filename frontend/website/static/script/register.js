@@ -2,18 +2,27 @@ console.log("register.js loaded");
 
 // Function to set up the register form
 function setupRegisterForm() {
+  let isSubmitting = false; // Debounce flag within the function scope
+
   const form = document.getElementById("register-form");
-  const errorDiv = document.getElementById("error");
+  const errorDiv = document.getElementById("register-error");
 
   if (form) {
     form.addEventListener("submit", async (event) => {
       event.preventDefault(); // Prevent the form from reloading the page
       console.log("Form submission prevented");
-      errorDiv.textContent = "";
 
-      const username = document.getElementById("username").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      if (isSubmitting) return; // If already submitting, exit
+      isSubmitting = true; // Set debounce flag
+
+      if (errorDiv) {
+        errorDiv.textContent = "";
+      }
+
+      const username = document.getElementById("register-username").value;
+      console.log("Username:", username);
+      const email = document.getElementById("register-email").value;
+      const password = document.getElementById("register-password").value;
 
       try {
         const response = await fetch("/api/authentication/register/", {
@@ -30,15 +39,19 @@ function setupRegisterForm() {
 
         console.log("Registration successful");
 
-        // Redirect to the login page after successful registration
-        window.history.pushState({}, '', '/login');
-        handleRoute('login');
+        // Show the login modal after successful registration
+        hideModal('registerModal');
+        showModal('loginModal', '/static/modals/auth.html');
 
       } catch (error) {
         console.error("Registration error:", error);
-        errorDiv.textContent = error.message;
+        if (errorDiv) {
+          errorDiv.textContent = error.message;
+        }
+      } finally {
+        isSubmitting = false; // Reset debounce flag
       }
-    });
+    }, { once: true }); // Attach listener only once
   } else {
     console.error("Registration form not found");
   }

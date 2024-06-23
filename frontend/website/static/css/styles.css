@@ -545,15 +545,15 @@ footer {
 
   .message-user{
     rotate: 350deg;
-    left: 110px;
-    top: -140px;
+    left: 80px;
+    top: -40px;
   }
 
   .arrow2 {
     position: relative;
-    width: 400px;
-    height: 400px;
-    opacity: 0.5;
-    rotate: 100deg;
-    top: -50px;
+    width: 250px;
+    height: 250px;
+    opacity: 0.4;
+    rotate: 0deg;
+    top: -20px;
   }
