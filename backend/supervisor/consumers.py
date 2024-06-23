@@ -170,8 +170,13 @@ class PongConsumer(AsyncWebsocketConsumer):
             self.game_started = False
 
     async def start_game(self):
-        time.sleep(3)
-        self.init_game_state()  # Reset paddle positions at the start of the game
+        await self.send(text_data=json.dumps({'type': 'countdown', 'value': 3}))
+        await asyncio.sleep(1)
+        await self.send(text_data=json.dumps({'type': 'countdown', 'value': 2}))
+        await asyncio.sleep(1)
+        await self.send(text_data=json.dumps({'type': 'countdown', 'value': 1}))
+        await asyncio.sleep(1)
+        self.init_game_state()
         self.game_started = True
         self.game_over = False
         self.player1_score = 0
