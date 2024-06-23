@@ -13,6 +13,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         await self.accept()
         logger.info('WebSocket connection established')
         self.game_type = None
+        self.username = None
         self.keep_open = True  # Flag to keep the connection open
         asyncio.create_task(self.ensure_connection_open())
 
@@ -54,6 +55,7 @@ class PongConsumer(AsyncWebsocketConsumer):
                 asyncio.create_task(self.game_loop())  # Start the game loop
             elif data['t'] == 'select_game_type':
                 self.game_type = data.get('game_type')
+                self.username = data.get('username', 'Player1')
                 if self.game_type == 'local_1v1':
                     await self.start_game()
                 else:
@@ -88,7 +90,8 @@ class PongConsumer(AsyncWebsocketConsumer):
                 's2': self.player2_score,
                 'go': self.game_over,
                 'gs': self.game_started,
-                'rid': getattr(self, 'request_id', None)
+                'rid': getattr(self, 'request_id', None),
+                'username': self.username  # Include the username in the game state
             }))
         except Exception as e:
             logger.error(f"Error during state sending: {str(e)}")

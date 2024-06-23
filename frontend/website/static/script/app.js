@@ -10,7 +10,8 @@ async function fetchUserProfile() {
     const data = await response.json();
     document.getElementById('displayUsername').textContent = data.username;
 
-    // Affiche les 10 premiers caractères du token suivis de "...."
+    username = data.username;
+
     const truncatedToken = token ? `${token.substring(0, 10)}....` : '';
     document.getElementById('displayToken').textContent = truncatedToken;
   } else {
@@ -20,10 +21,8 @@ async function fetchUserProfile() {
   }
 }
 
-// Other existing code...
-
-
 let selectedGameType = null;
+let username = '';
 let countdownValue = null;
 let ws = null;
 let player1Speed = 0;
@@ -71,7 +70,7 @@ function startGame(gameType) {
     ws = new WebSocket('ws://localhost:8000/ws/pong/');
     ws.onopen = () => {
       console.log('WebSocket connection established');
-      ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType }));
+      ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: username }));
       if (gameType === 'local_1v1') {
         ws.send(JSON.stringify({ t: 'sg' }));
       } else if (gameType === '1v1') {
@@ -137,12 +136,17 @@ function draw() {
     ctx.fillRect(canvas.width - 15 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY);
     ctx.fillRect(5 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY);
 
-    ctx.font = `${20 * scaleX}px 'Roboto', sans-serif`;
-    ctx.fillText(gameState.s1, canvas.width - 50 * scaleX, 30 * scaleY);
-    ctx.fillText(gameState.s2, 30 * scaleX, 30 * scaleY);
+    ctx.font = `${16 * scaleX}px 'Roboto', sans-serif`;
+    ctx.fillText(`Delta: ${roundTripTime.toFixed(0)} ms`, canvas.width - 30 * scaleX, canvas.height - 10 * scaleY);
 
-    ctx.font = `${12 * scaleX}px 'Roboto', sans-serif`;
-    ctx.fillText(`Delta: ${roundTripTime.toFixed(0)} ms`, canvas.width - 100 * scaleX, canvas.height - 10 * scaleY);
+    // Draw the username and score at the top left
+    ctx.font = `${20 * scaleX}px 'Roboto', sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.fillText(`${username} ${gameState.s1}`, 30 * scaleX, 30 * scaleY);
+
+    // Draw Kaaris and score at the top right
+    ctx.textAlign = 'right';
+    ctx.fillText(`Kaaris ${gameState.s2}`, canvas.width - 30 * scaleX, 30 * scaleY);
 
     drawMiddleLine(ctx, scaleX);
   } else {
@@ -151,6 +155,7 @@ function draw() {
     ctx.fillText('Waiting for Server response ...', canvas.width / 2, canvas.height / 2);
   }
 }
+
 
 function drawWaitingForOpponent() {
   const canvas = document.getElementById('gameCanvas');
