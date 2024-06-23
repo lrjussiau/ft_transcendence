@@ -11,9 +11,11 @@ logger = logging.getLogger(__name__)
 class PongConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
+
         logger.info('WebSocket connection established')
         self.game_type = None
         self.keep_open = True  # Flag to keep the connection open
+
         asyncio.create_task(self.ensure_connection_open())
 
     async def ensure_connection_open(self):
