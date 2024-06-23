@@ -216,8 +216,8 @@ window.addEventListener('keyup', (event) => {
 });
 
 function updateSpeeds() {
-  const newPlayer1Speed = (keys['ArrowDown'] ? 7 : 0) + (keys['ArrowUp'] ? -7 : 0);
-  const newPlayer2Speed = (keys['s'] ? 7 : 0) + (keys['w'] ? -7 : 0);
+  const newPlayer1Speed = (keys['ArrowDown'] ? 5 : 0) + (keys['ArrowUp'] ? -5 : 0);
+  const newPlayer2Speed = (keys['s'] ? 5 : 0) + (keys['w'] ? -5 : 0);
 
   if (ws && (newPlayer1Speed !== player1Speed || newPlayer2Speed !== player2Speed)) {
     player1Speed = newPlayer1Speed;

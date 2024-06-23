@@ -69,7 +69,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.close(code=1011)
 
     def init_game_state(self):
-        self.ball = {"x": 320, "y": 180, "vx": 4 * random.choice((1, -1)), "vy": 4 * random.choice((1, -1))}
+        self.ball = {"x": 320, "y": 180, "vx": 2.5 * random.choice((1, -1)), "vy": 2.5 * random.choice((1, -1))}
         self.player1 = {"y": 160, "speed": 0}
         self.player2 = {"y": 160, "speed": 0}
         self.player1_score = 0
@@ -96,7 +96,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     def ball_restart(self):
         logger.info("Restarting ball position")
-        self.ball = {"x": 320, "y": 180, "vx": 4 * random.choice((1, -1)), "vy": 4 * random.choice((1, -1))}
+        self.ball = {"x": 320, "y": 180, "vx": 2.5 * random.choice((1, -1)), "vy": 2.5 * random.choice((1, -1))}
 
     async def game_loop(self):
         try:
