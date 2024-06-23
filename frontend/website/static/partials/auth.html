@@ -1,0 +1,65 @@
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Se connecter</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="login-form">
+            <div class="form-group">
+              <label for="username">Nom d'utilisateur</label>
+              <input type="text" class="form-control" id="username" placeholder="Nom d'utilisateur">
+            </div>
+            <div class="form-group">
+              <label for="password">Mot de passe</label>
+              <input type="password" class="form-control" id="password" placeholder="Mot de passe">
+            </div>
+            <div id="error" class="text-danger"></div>
+            <div class="buttons">
+              <input type="submit" class="btn modal-button" value="Se connecter">
+              <button type="button" class="btn modal-button" id="register-button">S'enregistrer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registerModalLabel">S'enregistrer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="register-form">
+            <div class="form-group">
+              <label for="register-username">Nom d'utilisateur</label>
+              <input type="text" class="form-control" id="register-username" placeholder="Nom d'utilisateur">
+            </div>
+            <div class="form-group">
+              <label for="register-password">Mot de passe</label>
+              <input type="password" class="form-control" id="register-password" placeholder="Mot de passe">
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email</label>
+              <input type="email" class="form-control" id="register-email" placeholder="Email">
+            </div>
+            <div id="register-error" class="text-danger"></div>
+            <div class="buttons">
+              <input type="submit" class="btn modal-button" value="S'enregistrer">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  

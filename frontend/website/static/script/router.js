@@ -1,13 +1,11 @@
 console.log("router.js loaded");
 
-// Function to get the current route
 function getCurrentRoute() {
   const path = window.location.pathname;
   const route = path.split('/')[1];
   return route;
 }
 
-// Function to load HTML partials
 async function loadPartial(partial) {
   try {
     const response = await fetch(`/static/partials/${partial}.html`);
@@ -29,7 +27,6 @@ async function loadPartial(partial) {
 
       console.log(`Loaded partial: ${partial}`);
 
-      // Call initializeStartButton if the game partial is loaded
       if (partial === 'game') {
         initializeStartButton();
       }
@@ -38,16 +35,14 @@ async function loadPartial(partial) {
     }
   } catch (error) {
     console.error('Failed to load partial:', error);
-    loadPartial('404'); // Load 404 page in case of an error
+    loadPartial('404');
   }
 }
 
-// Function to check authentication
 function isAuthenticated() {
   return localStorage.getItem('authToken') !== null;
 }
 
-// Function to display the header based on the route
 function toggleHeaderDisplay(route) {
   const header = document.querySelector('header');
   if (route === 'home') {
@@ -57,46 +52,34 @@ function toggleHeaderDisplay(route) {
   }
 }
 
-// Function to handle routes
 async function handleRoute(route) {
   console.log("Handling route:", route);
-  toggleHeaderDisplay(route); // Toggle header display based on route
+  if (!isAuthenticated() && (route === 'user' || route === 'game')) {
+    console.log("User not authenticated, showing login modal");
+    showModal('loginModal');
+    localStorage.setItem('requestedRoute', route); // Store the requested route
+    return; // Exit the function without changing the URL or loading a new partial
+  }
+
+  toggleHeaderDisplay(route);
   switch (route) {
     case 'home':
       await loadPartial('home');
       console.log("Loaded home partial");
+      setupModalTriggers();
       break;
     case 'login':
-      await loadPartial('login');
-      setupLoginForm(); // Set up the login form when loading the login partial
+      showModal('loginModal');
       break;
     case 'register':
-      console.log("Loading register partial");
-      await loadPartial('register');
-      setupRegisterForm(); // Set up the register form when loading the register partial
+      showModal('registerModal');
       break;
     case 'user':
-      if (isAuthenticated()) {
-        await loadPartial('user');
-        fetchUserProfile(); // Fetch user profile data
-      } else {
-        // Store the attempted route and redirect to login
-        localStorage.setItem('initialRoute', '/user');
-        window.history.pushState({}, '', '/login');
-        await loadPartial('login');
-        setupLoginForm(); // Set up the login form when loading the login partial
-      }
+      await loadPartial('user');
+      fetchUserProfile();
       break;
     case 'game':
-      if (isAuthenticated()) {
-        await loadPartial('game');
-      } else {
-        // Store the attempted route and redirect to login
-        localStorage.setItem('initialRoute', '/game');
-        window.history.pushState({}, '', '/login');
-        await loadPartial('login');
-        setupLoginForm(); // Set up the login form when loading the login partial
-      }
+      await loadPartial('game');
       break;
     default:
       await loadPartial('404');
@@ -104,11 +87,9 @@ async function handleRoute(route) {
   }
 }
 
-// Initialize the router
 document.addEventListener('DOMContentLoaded', () => {
   let route = getCurrentRoute();
   console.log("Initial route:", route);
-  // Redirect to /home if the route is empty (i.e., root path)
   if (route === '') {
     window.history.pushState({}, '', '/home');
     route = 'home';
@@ -116,24 +97,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   handleRoute(route);
 
-  // Add event listeners to links for client-side routing
   document.querySelectorAll('a[data-link]').forEach(link => {
     link.addEventListener('click', event => {
       event.preventDefault();
       const href = link.getAttribute('href');
-      window.history.pushState({}, '', href);
-      handleRoute(href.split('/')[1]);
+      const targetRoute = href.split('/')[1];
+      if (isAuthenticated() || targetRoute === 'home' || targetRoute === 'login' || targetRoute === 'register') {
+        window.history.pushState({}, '', href);
+        handleRoute(targetRoute);
+      } else {
+        showModal('loginModal');
+        localStorage.setItem('requestedRoute', targetRoute); // Store the requested route
+      }
     });
   });
 });
 
-// Handle browser navigation events
 window.addEventListener('popstate', () => {
   const route = getCurrentRoute();
   handleRoute(route);
 });
 
-// Helper function to initialize the start button event listener
 function initializeStartButton() {
   const startButton = document.getElementById('startButton');
   if (startButton) {
@@ -149,4 +133,77 @@ function initializeStartButton() {
   } else {
     console.error('#startButton element not found');
   }
+}
+
+async function showModal(modalName) {
+  try {
+    console.log(`Loading modal: ${modalName}`);
+    const response = await fetch(`/static/partials/auth.html`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const html = await response.text();
+    const modalContainer = document.getElementById('modal-container');
+
+    if (modalContainer) {
+      modalContainer.innerHTML = html;
+      $(`#${modalName}`).modal('show');
+      console.log(`${modalName} is now shown`);
+
+      setupModalTriggers();
+    } else {
+      console.error('#modal-container element not found');
+    }
+  } catch (error) {
+    console.error('Failed to load modal:', error);
+  }
+}
+
+function setupModalTriggers() {
+  console.log("Setting up modal triggers");
+
+  const registerButton = document.getElementById('register-button');
+  if (registerButton) {
+    registerButton.addEventListener('click', () => {
+      console.log('Register button clicked');
+      $('#loginModal').modal('hide'); // Hide the login modal first
+      $('#registerModal').modal('show'); // Show the register modal
+    });
+  } else {
+    console.error('#register-button element not found');
+  }
+
+  const loginModalTrigger = document.getElementById('loginModalTrigger');
+  if (loginModalTrigger) {
+    loginModalTrigger.addEventListener('click', () => {
+      console.log('Login modal trigger clicked');
+      showModal('loginModal');
+    });
+  } else {
+    console.error('#loginModalTrigger element not found');
+  }
+}
+
+function setupLoginForm() {
+  console.log('Setting up login form');
+  document.getElementById('login-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    // Simulate login process and store the token
+    localStorage.setItem('authToken', 'dummy-token');
+    const requestedRoute = localStorage.getItem('requestedRoute');
+    if (requestedRoute) {
+      window.history.pushState({}, '', `/${requestedRoute}`);
+      handleRoute(requestedRoute);
+      localStorage.removeItem('requestedRoute'); // Clear the stored route
+    } else {
+      window.history.pushState({}, '', '/home');
+      handleRoute('home');
+    }
+    $('#loginModal').modal('hide');
+  });
+}
+
+function setupRegisterForm() {
+  console.log('Setting up register form');
+  // Add any additional setup for the register form here
 }
