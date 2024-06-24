@@ -19,7 +19,9 @@ async function showModal(modalName, modalHtmlPath) {
       // Add event listener to handle redirection when modal is closed
       modalElement.on('hidden.bs.modal', handleModalHidden);
 
+      // Re-setup modal triggers
       setupModalTriggers();
+
       if (modalName === 'loginModal') {
         setupLoginForm();
       } else if (modalName === 'registerModal') {
@@ -53,12 +55,23 @@ function handleModalHidden() {
 function setupModalTriggers() {
   console.log("Setting up modal triggers");
 
+  const modalTriggers = document.querySelectorAll('.modal-trigger');
+  console.log(`Found ${modalTriggers.length} modal triggers`);
+  modalTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const modalName = trigger.getAttribute('data-modal');
+      const modalHtmlPath = trigger.getAttribute('data-html');
+      console.log(`Modal trigger clicked: ${modalName}, ${modalHtmlPath}`);
+      showModal(modalName, modalHtmlPath);
+    });
+  });
+
+  // Additional buttons for login and register
   const registerButton = document.getElementById('register-button');
   if (registerButton) {
     registerButton.addEventListener('click', () => {
       console.log('Register button clicked');
-      $('#loginModal').modal('hide'); // Hide the login modal first
-      showModal('registerModal', '/static/modals/auth.html'); // Show the register modal
+      transitionToModal('loginModal', 'registerModal', '/static/modals/auth.html');
     });
   } else {
     console.error('#register-button element not found');
@@ -74,3 +87,16 @@ function setupModalTriggers() {
     console.error('#loginModalTrigger element not found');
   }
 }
+
+function transitionToModal(currentModal, targetModal, targetModalPath) {
+  $(`#${currentModal}`).off('hidden.bs.modal', handleModalHidden); // Temporarily disable redirection
+  $(`#${currentModal}`).modal('hide');
+  $(`#${currentModal}`).on('hidden.bs.modal', () => {
+    showModal(targetModal, targetModalPath);
+  });
+}
+
+// Call setupModalTriggers to initialize event listeners after DOM is fully loaded
+document.addEventListener("DOMContentLoaded", () => {
+  setupModalTriggers();
+});

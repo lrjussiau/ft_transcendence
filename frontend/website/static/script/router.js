@@ -33,6 +33,10 @@ async function loadPartial(partial) {
       if (partial === 'game') {
         initializeStartButton();
       }
+
+      // Call setupModalTriggers to ensure modal triggers are set up for dynamically loaded content
+      setupModalTriggers();
+
     } else {
       console.error('#content element not found');
     }
