@@ -61,12 +61,6 @@ function toggleHeaderDisplay(route) {
 async function handleRoute(route) {
   console.log("Handling route:", route);
   toggleHeaderDisplay(route); // Toggle header display based on route
-
-  if (route === 'login' && isAuthenticated()) {
-    window.history.pushState({}, '', '/game');
-    route = 'game';
-  }
-
   switch (route) {
     case 'home':
       await loadPartial('home');
