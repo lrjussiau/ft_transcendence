@@ -1,8 +1,17 @@
 console.log("modal.js loaded");
 
+let modalClosedByUser = true;
+
 async function showModal(modalName, modalHtmlPath) {
   try {
     console.log(`Loading modal: ${modalName}`);
+    
+    // Remove any existing modal content
+    const existingModal = document.getElementById(modalName);
+    if (existingModal) {
+      existingModal.remove();
+    }
+    
     const response = await fetch(modalHtmlPath);
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -17,13 +26,11 @@ async function showModal(modalName, modalHtmlPath) {
       console.log(`${modalName} is now shown`);
 
       // Add event listener to handle redirection when modal is closed
-      modalElement.on('hidden.bs.modal', handleModalHidden);
-
-      // Re-setup modal triggers
-      setupModalTriggers();
+      modalElement.on('hidden.bs.modal', () => handleModalHidden(modalName));
 
       if (modalName === 'loginModal') {
         setupLoginForm();
+        setupRegisterButton();
       } else if (modalName === 'registerModal') {
         setupRegisterForm();
       }
@@ -36,20 +43,19 @@ async function showModal(modalName, modalHtmlPath) {
 }
 
 function hideModal(modalName) {
+  modalClosedByUser = false; // Set flag to indicate modal is being closed programmatically
   const modalElement = $(`#${modalName}`);
   modalElement.modal('hide');
   document.getElementById('modal-container').innerHTML = ''; // Clear the modal content
 }
 
-function handleModalHidden() {
-  const modalContainer = document.getElementById('modal-container');
-  if (modalContainer.innerHTML.includes('loginModal') || modalContainer.innerHTML.includes('registerModal')) {
-    console.log('Modal hidden, redirecting to home');
+function handleModalHidden(modalName) {
+  if ((modalName === 'loginModal' || modalName === 'registerModal') && modalClosedByUser) {
+    console.log(`Modal ${modalName} hidden, redirecting to home`);
     window.history.pushState({}, '', '/home');
     handleRoute('home');
   }
-  // Remove event listener to prevent unwanted redirection
-  $(this).off('hidden.bs.modal', handleModalHidden);
+  modalClosedByUser = true; // Reset flag
 }
 
 function setupModalTriggers() {
@@ -65,8 +71,9 @@ function setupModalTriggers() {
       showModal(modalName, modalHtmlPath);
     });
   });
+}
 
-  // Additional buttons for login and register
+function setupRegisterButton() {
   const registerButton = document.getElementById('register-button');
   if (registerButton) {
     registerButton.addEventListener('click', () => {
@@ -76,27 +83,16 @@ function setupModalTriggers() {
   } else {
     console.error('#register-button element not found');
   }
-
-  const loginModalTrigger = document.getElementById('loginModalTrigger');
-  if (loginModalTrigger) {
-    loginModalTrigger.addEventListener('click', () => {
-      console.log('Login modal trigger clicked');
-      showModal('loginModal', '/static/modals/auth.html');
-    });
-  } else {
-    console.error('#loginModalTrigger element not found');
-  }
 }
 
 function transitionToModal(currentModal, targetModal, targetModalPath) {
-  $(`#${currentModal}`).off('hidden.bs.modal', handleModalHidden); // Temporarily disable redirection
+  $(`#${currentModal}`).off('hidden.bs.modal');
   $(`#${currentModal}`).modal('hide');
   $(`#${currentModal}`).on('hidden.bs.modal', () => {
     showModal(targetModal, targetModalPath);
   });
 }
 
-// Call setupModalTriggers to initialize event listeners after DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
   setupModalTriggers();
 });
