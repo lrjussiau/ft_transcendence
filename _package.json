@@ -1,0 +1,9 @@
+{
+	"name": "game3d",
+	"version": "1.0.0",
+	"main": "game3D.js",
+	"dependencies": {
+	  "three": "^0.137.0"
+	}
+  }
+  

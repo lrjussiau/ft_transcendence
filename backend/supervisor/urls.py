@@ -8,5 +8,5 @@ urlpatterns = [
     path('authentication/', include('authentication.urls')),
     path('db/', include('db.urls')),
     path('blockchain/', include('blockchain.urls')),
-    # path('pong/', include('pongengine.urls')),
+    path('tournament/', include('tournament.urls')),
 ]

@@ -38,13 +38,30 @@ async function loadPartial(partial) {
     }
   } catch (error) {
     console.error('Failed to load partial:', error);
-    loadPartial('404'); // Load 404 page in case of an error
+    await loadPartial('404'); // Load 404 page in case of an error
   }
 }
 
 // Function to check authentication
 function isAuthenticated() {
-  return localStorage.getItem('authToken') !== null;
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    console.warn('No auth token found');
+    return false;
+  }
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const isExpired = payload.exp * 1000 < Date.now();
+    if (isExpired) {
+      console.warn('Auth token is expired');
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Invalid auth token', error);
+    return false;
+  }
 }
 
 // Function to display the header based on the route
@@ -138,8 +155,9 @@ function initializeStartButton() {
   const startButton = document.getElementById('startButton');
   if (startButton) {
     startButton.addEventListener('click', () => {
+      const player2Name = document.getElementById('player2-name') ? document.getElementById('player2-name').value : null;
       if (selectedGameType) {
-        startGame();
+        startGame(selectedGameType, player2Name);
       } else {
         alert('Please select a game type first.');
       }

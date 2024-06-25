@@ -9,12 +9,28 @@
   <button class="btn btn-primary m-2" onclick="selectGameType('local_1v1')">Local 1v1</button>
   <button class="btn btn-primary m-2" onclick="selectGameType('tournament')">Tournament</button>
   <button id="startButton" class="btn btn-success">Start Game</button>
+  <button id="deleteButton" class="btn btn-danger">Delete Matches and Players</button>
+</div>
+<div class="container">
+  <input type="text" id="player2-name" placeholder="Enter second player's name" />
 </div>
 <script src="app.js"></script>
 <script src="router.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    fetchUserProfile();
-    initializeStartButton();
+      fetchUserProfile();
+      initializeStartButton();
+
+      document.getElementById('deleteButton').addEventListener('click', function() {
+          if (ws && ws.readyState === WebSocket.OPEN) {
+              const message = {
+                  't': 'delete_matches_and_players',
+                  'username': username
+              };
+              ws.send(JSON.stringify(message));
+          } else {
+              console.error('WebSocket is not open.');
+          }
+      });
   });
 </script>

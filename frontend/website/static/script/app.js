@@ -1,28 +1,6 @@
-async function fetchUserProfile() {
-  const token = localStorage.getItem('authToken');
-  const response = await fetch('/api/authentication/user/profile/', {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    document.getElementById('displayUsername').textContent = data.username;
-
-    username = data.username;
-
-    const truncatedToken = token ? `${token.substring(0, 10)}....` : '';
-    document.getElementById('displayToken').textContent = truncatedToken;
-  } else {
-    console.error('Failed to fetch user profile');
-    window.history.pushState({}, '', '/login');
-    handleRoute('login');
-  }
-}
-
 let selectedGameType = null;
 let username = '';
+let opponentName = '';
 let countdownValue = null;
 let ws = null;
 let player1Speed = 0;
@@ -34,6 +12,82 @@ let gameState = {};
 let ctx = null;
 const keys = {};
 const requestTimestamps = {};
+
+// Initialiser le WebSocket
+function initializeWebSocket() {
+  if (ws) {
+    ws.close();
+  }
+  ws = new WebSocket('ws://localhost:8000/ws/pong/');
+
+  ws.onopen = () => {
+    console.log('WebSocket connection established');
+  };
+
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    console.log('Received update:', data);
+
+    if (data.rid !== undefined && requestTimestamps[data.rid]) {
+      const latency = performance.now() - requestTimestamps[data.rid];
+      roundTripTime = latency;
+      delete requestTimestamps[data.rid];
+      console.log(`Round-Trip Time (RTT): ${roundTripTime} ms`);
+    }
+
+    if (data.type === 'countdown') {
+      countdownValue = data.value;
+      draw();
+    } else if (data.ball) {
+      countdownValue = null;
+      updateGameState(data);
+    } else if (data.t === 'waiting_for_opponent') {
+      drawWaitingForOpponent();
+    } else if (data.type === 'match_created') {
+      console.log('Match created:', data.match);
+      opponentName = data.match.player2 === username ? data.match.player1 : data.match.player2;
+      draw();
+    } else if (data.type === 'tournament_created') {
+      console.log('Tournament created:', data.tournament);
+      // Handle tournament creation response
+    } else if (data.type === 'error') {
+      console.error('Error:', data.message);
+    }
+  };
+
+  ws.onerror = (error) => {
+    console.error('WebSocket error:', error);
+  };
+
+  ws.onclose = (event) => {
+    console.log('WebSocket closed:', event);
+  };
+}
+
+async function fetchUserProfile() {
+  const token = localStorage.getItem('authToken');
+  const response = await fetch('/api/authentication/user/profile/', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    document.getElementById('displayUsername').textContent = data.username;
+    username = data.username;
+
+    const truncatedToken = token ? `${token.substring(0, 10)}....` : '';
+    document.getElementById('displayToken').textContent = truncatedToken;
+
+    // Initialiser le WebSocket après avoir obtenu le profil utilisateur
+    initializeWebSocket();
+  } else {
+    console.error('Failed to fetch user profile');
+    window.history.pushState({}, '', '/login');
+    handleRoute('login');
+  }
+}
 
 function selectGameType(gameType) {
   selectedGameType = gameType;
@@ -54,8 +108,9 @@ function initializeStartButton() {
   const startButton = document.getElementById('startButton');
   if (startButton) {
     startButton.addEventListener('click', () => {
+      const player2Name = document.getElementById('player2-name').value;
       if (selectedGameType) {
-        startGame(selectedGameType);
+        startGame(selectedGameType, player2Name);
       } else {
         alert('Please select a game type first.');
       }
@@ -65,48 +120,14 @@ function initializeStartButton() {
   }
 }
 
-function startGame(gameType) {
-  if (!ws) {
-    ws = new WebSocket('ws://localhost:8000/ws/pong/');
-    ws.onopen = () => {
-      console.log('WebSocket connection established');
-      ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: username }));
-      if (gameType === 'local_1v1') {
-        ws.send(JSON.stringify({ t: 'sg' }));
-      } else if (gameType === '1v1') {
-        ws.send(JSON.stringify({ t: 'join', player_id: 'player1' }));
-      }
-    };
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log('Received update:', data);
-
-      if (data.rid !== undefined && requestTimestamps[data.rid]) {
-        const latency = performance.now() - requestTimestamps[data.rid];
-        roundTripTime = latency;
-        delete requestTimestamps[data.rid];
-        console.log(`Round-Trip Time (RTT): ${roundTripTime} ms`);
-      }
-
-      if (data.type === 'countdown') {
-        countdownValue = data.value;
-        draw();
-      } else if (data.ball) {
-        countdownValue = null;
-        updateGameState(data);
-      } else if (data.t === 'waiting_for_opponent') {
-        drawWaitingForOpponent();
-      }
-    };
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-    ws.onclose = (event) => {
-      console.log('WebSocket closed:', event);
-    };
+function startGame(gameType, opponent = '') {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: username, opponent: opponent }));
+    if (gameType === 'local_1v1') {
+      ws.send(JSON.stringify({ t: 'sg' }));
+    }
   } else {
-    gameOver = false;
-    ws.send(JSON.stringify({ t: 'restart_game' }));
+    console.error('WebSocket is not open.');
   }
 }
 
@@ -144,9 +165,9 @@ function draw() {
     ctx.textAlign = 'left';
     ctx.fillText(`${username} ${gameState.s1}`, 30 * scaleX, 30 * scaleY);
 
-    // Draw Kaaris and score at the top right
+    // Draw opponent's username and score at the top right
     ctx.textAlign = 'right';
-    ctx.fillText(`Kaaris ${gameState.s2}`, canvas.width - 30 * scaleX, 30 * scaleY);
+    ctx.fillText(`${opponentName} ${gameState.s2}`, canvas.width - 30 * scaleX, 30 * scaleY);
 
     drawMiddleLine(ctx, scaleX);
   } else {
@@ -155,7 +176,6 @@ function draw() {
     ctx.fillText('Waiting for Server response ...', canvas.width / 2, canvas.height / 2);
   }
 }
-
 
 function drawWaitingForOpponent() {
   const canvas = document.getElementById('gameCanvas');
@@ -221,6 +241,10 @@ window.addEventListener('keyup', (event) => {
 });
 
 function updateSpeeds() {
+  if (!gameState.gs) {
+    return;
+  }
+
   const newPlayer1Speed = (keys['ArrowDown'] ? 5 : 0) + (keys['ArrowUp'] ? -5 : 0);
   const newPlayer2Speed = (keys['s'] ? 5 : 0) + (keys['w'] ? -5 : 0);
 
@@ -229,6 +253,12 @@ function updateSpeeds() {
     player2Speed = newPlayer2Speed;
     const requestId = requestIdCounter++;
     requestTimestamps[requestId] = performance.now();
-    ws.send(JSON.stringify({ t: 'pi', p1: player1Speed, p2: player2Speed, rid: requestId }));
+    ws.send(JSON.stringify({ t: 'pi', username: username, p1: player1Speed, p2: player2Speed, rid: requestId }));
   }
 }
+
+// Appel de la fonction pour initialiser le bouton de démarrage
+initializeStartButton();
+
+// Appel de la fonction pour récupérer le profil utilisateur au chargement de la page
+fetchUserProfile();

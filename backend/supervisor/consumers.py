@@ -1,34 +1,30 @@
 import json
-import time
-import random
 import asyncio
 import logging
+import random
 from math import cos, sin, radians
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 logger = logging.getLogger(__name__)
 
 class PongConsumer(AsyncWebsocketConsumer):
+    players = {}  # Store players' connections
+    games = {}    # Store ongoing games
+
     async def connect(self):
         await self.accept()
-        logger.info('WebSocket connection established')
-        self.game_type = None
+        self.game_id = None
         self.username = None
-        self.keep_open = True  # Flag to keep the connection open
-        asyncio.create_task(self.ensure_connection_open())
-
-    async def ensure_connection_open(self):
-        while self.keep_open:
-            await asyncio.sleep(1)  # Keep the connection open by sending a ping every second
-            try:
-                await self.send(text_data=json.dumps({'type': 'ping'}))
-            except:
-                logger.error('Error keeping connection open')
-                break
 
     async def disconnect(self, close_code):
+        if self.game_id and self.username:
+            if self.username in PongConsumer.games.get(self.game_id, []):
+                PongConsumer.games[self.game_id].remove(self.username)
+            if not PongConsumer.games.get(self.game_id):
+                PongConsumer.games.pop(self.game_id, None)
+
+        PongConsumer.players.pop(self.username, None)
         logger.info(f"WebSocket connection closed with code: {close_code}")
-        self.keep_open = False
 
     async def receive(self, text_data):
         logger.info(f"Received message: {text_data}")
@@ -37,38 +33,96 @@ class PongConsumer(AsyncWebsocketConsumer):
                 raise ValueError("Empty message received")
             data = json.loads(text_data)
             logger.info(f"Decoded JSON: {data}")
-            if data['t'] == 'pi':  # player_input
-                logger.info("Processing player input")
-                self.player1["speed"] = data.get('p1', 0)  # player1Speed
-                self.player2["speed"] = data.get('p2', 0)  # player2Speed
-                if 'rid' in data:
-                    self.request_id = data['rid']
-            elif data['t'] == 'sg':  # start_game
-                logger.info("Starting game")
-                self.init_game_state()  # Reset paddle positions at the start of the game
-                self.game_started = True
-                self.game_over = False
-                self.player1_score = 0
-                self.player2_score = 0
-                self.ball_restart()
-                await self.send_state()
-                asyncio.create_task(self.game_loop())  # Start the game loop
-            elif data['t'] == 'select_game_type':
-                self.game_type = data.get('game_type')
-                self.username = data.get('username', 'Player1')
-                if self.game_type == 'local_1v1':
+
+            if data['t'] == 'select_game_type':
+                self.username = data.get('username')
+                game_type = data.get('game_type')
+                if game_type == '1v1':
+                    await self.handle_1v1(data)
+                elif game_type == 'local_1v1':
                     await self.start_game()
-                else:
-                    self.init_game_state()
-                    await self.send_state()
+            elif data['t'] == 'pi':  # player_input
+                await self.handle_player_input(data)
+            elif data['t'] == 'sg':  # start_game
+                await self.start_game()
+            elif data['t'] == 'delete_matches_and_players':
+                await self.delete_matches_and_players(data)
             else:
                 logger.warning(f"Unknown message type: {data['t']}")
         except json.JSONDecodeError as e:
             logger.error(f"JSON decode error: {str(e)}")
-            await self.close(code=1011)
+            await self.close(code=4000)
         except Exception as e:
             logger.error(f"Error during message handling: {str(e)}")
-            await self.close(code=1011)
+            await self.close(code=4000)
+
+    async def handle_1v1(self, data):
+        self.username = data['username']
+        opponent = data.get('opponent')
+        if not opponent:
+            await self.send(text_data=json.dumps({
+                'type': 'error',
+                'message': 'Opponent name is required for 1v1 game type.'
+            }))
+            return
+
+        if opponent in PongConsumer.players:
+            self.game_id = f"{self.username}_vs_{opponent}"
+            PongConsumer.games[self.game_id] = {self.username, opponent}
+            await PongConsumer.players[opponent].send(text_data=json.dumps({
+                'type': 'match_created',
+                'match': {'player1': self.username, 'player2': opponent}
+            }))
+            await self.send(text_data=json.dumps({
+                'type': 'match_created',
+                'match': {'player1': self.username, 'player2': opponent}
+            }))
+            # Start the game for both players
+            await self.start_game()
+        else:
+            PongConsumer.players[self.username] = self
+            await self.send(text_data=json.dumps({
+                'type': 'waiting_for_opponent'
+            }))
+
+    async def handle_player_input(self, data):
+        if self.game_id in PongConsumer.games:
+            for player in PongConsumer.games[self.game_id]:
+                if player != self.username and player in PongConsumer.players:
+                    await PongConsumer.players[player].send(text_data=json.dumps(data))
+        if self.username in PongConsumer.games.get(self.game_id, {}):
+            if self.username == list(PongConsumer.games[self.game_id])[0]:
+                self.player1["speed"] = data.get('p1', 0)  # player1Speed
+            else:
+                self.player2["speed"] = data.get('p2', 0)  # player2Speed
+
+    async def start_game(self):
+        await self.send(text_data=json.dumps({'type': 'countdown', 'value': 3}))
+        await asyncio.sleep(1)
+        await self.send(text_data=json.dumps({'type': 'countdown', 'value': 2}))
+        await asyncio.sleep(1)
+        await self.send(text_data=json.dumps({'type': 'countdown', 'value': 1}))
+        await asyncio.sleep(1)
+        self.init_game_state()
+        self.game_started = True
+        self.game_over = False
+        self.player1_score = 0
+        self.player2_score = 0
+        self.ball_restart()
+        await self.send_state()
+        asyncio.create_task(self.game_loop())
+
+    async def delete_matches_and_players(self, data):
+        username = data.get('username')
+        if username in PongConsumer.players:
+            del PongConsumer.players[username]
+        games_to_delete = [game_id for game_id, players in PongConsumer.games.items() if username in players]
+        for game_id in games_to_delete:
+            del PongConsumer.games[game_id]
+        await self.send(text_data=json.dumps({
+            'type': 'info',
+            'message': 'Matches and players deleted successfully.'
+        }))
 
     def init_game_state(self):
         self.ball = {"x": 320, "y": 180, "vx": 2.5 * random.choice((1, -1)), "vy": 2.5 * random.choice((1, -1))}
@@ -80,25 +134,27 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.game_over = False
 
     async def send_state(self):
-        logger.info("Sending game state")
         try:
-            await self.send(text_data=json.dumps({
+            state = {
                 'ball': self.ball,
                 'p1': self.player1,
                 'p2': self.player2,
                 's1': self.player1_score,
                 's2': self.player2_score,
                 'go': self.game_over,
-                'gs': self.game_started,
-                'rid': getattr(self, 'request_id', None),
-                'username': self.username  # Include the username in the game state
-            }))
+                'gs': self.game_started
+            }
+            await self.send(text_data=json.dumps(state))
+            # Send state to opponent
+            if self.game_id in PongConsumer.games:
+                for player in PongConsumer.games[self.game_id]:
+                    if player != self.username and player in PongConsumer.players:
+                        await PongConsumer.players[player].send(text_data=json.dumps(state))
         except Exception as e:
             logger.error(f"Error during state sending: {str(e)}")
-            await self.close(code=1011)
+            await self.close(code=4000)
 
     def ball_restart(self):
-        logger.info("Restarting ball position")
         self.ball = {"x": 320, "y": 180, "vx": 2.5 * random.choice((1, -1)), "vy": 2.5 * random.choice((1, -1))}
 
     async def game_loop(self):
@@ -109,7 +165,7 @@ class PongConsumer(AsyncWebsocketConsumer):
                 await asyncio.sleep(1 / 60)  # 60 FPS
         except Exception as e:
             logger.error(f"Error during game loop: {str(e)}")
-            await self.close(code=1011)
+            await self.close(code=4000)
 
     def padel_colider(self):
         speed_buff = 6 / 5
@@ -169,19 +225,3 @@ class PongConsumer(AsyncWebsocketConsumer):
         if self.player1_score == 50 or self.player2_score == 50:
             self.game_over = True
             self.game_started = False
-
-    async def start_game(self):
-        await self.send(text_data=json.dumps({'type': 'countdown', 'value': 3}))
-        await asyncio.sleep(1)
-        await self.send(text_data=json.dumps({'type': 'countdown', 'value': 2}))
-        await asyncio.sleep(1)
-        await self.send(text_data=json.dumps({'type': 'countdown', 'value': 1}))
-        await asyncio.sleep(1)
-        self.init_game_state()
-        self.game_started = True
-        self.game_over = False
-        self.player1_score = 0
-        self.player2_score = 0
-        self.ball_restart()
-        await self.send_state()
-        asyncio.create_task(self.game_loop())  # Start the game loop

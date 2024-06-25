@@ -1,0 +1,52 @@
+<div id="tournament-content">
+    <h1>Create or Join a Tournament</h1>
+    <button id="create-tournament">Create Tournament</button>
+    <button id="join-tournament">Join Tournament</button>
+    <div id="tournament-list">
+        <!-- Tournament list will be populated here -->
+    </div>
+
+    <h2>Join a 1v1 Game</h2>
+    <input type="text" id="player2-name" placeholder="Enter second player's name" />
+    <button id="start-1v1">Start 1v1 Match</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('create-tournament').addEventListener('click', function() {
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            const tournamentName = prompt('Enter the name of the new tournament:');
+            if (tournamentName) {
+                const message = {
+                    't': 'create_tournament',
+                    'tournament_name': tournamentName
+                };
+                ws.send(JSON.stringify(message));
+            }
+        } else {
+            console.error('WebSocket is not open.');
+        }
+    });
+
+    document.getElementById('join-tournament').addEventListener('click', function() {
+        // Logic to join a tournament
+        console.log('Join tournament clicked');
+        // Here you could implement a modal or a dropdown to select a tournament to join.
+    });
+
+    document.getElementById('start-1v1').addEventListener('click', function() {
+        const player2Name = document.getElementById('player2-name').value;
+        if (ws && ws.readyState === WebSocket.OPEN && player2Name) {
+            const message = {
+                't': 'create_match',
+                'player1': username,
+                'player2': player2Name,
+                'tournament_id': 1 // Remplacez par l'ID de votre tournoi
+            };
+            ws.send(JSON.stringify(message));
+        } else {
+            console.error('WebSocket is not open or player2 name is missing.');
+        }
+    });
+});
+</script>
