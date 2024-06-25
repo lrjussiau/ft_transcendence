@@ -13,3 +13,4 @@ dj-database-url
 gunicorn
 requests
 djangorestframework-simplejwt
+Pillow

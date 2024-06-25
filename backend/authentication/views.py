@@ -3,8 +3,16 @@ from .serializers import CustomTokenObtainPairSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 from db.models import User
+from django.shortcuts import render, redirect
+from .forms import AvatarUploadForm
+from django.http import JsonResponse
+import logging
+
+
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
@@ -39,3 +47,21 @@ class UserProfileView(APIView):
             'username': user.username,
             'email': user.email,
         })
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def upload_avatar(request):
+    if request.method == 'POST':
+        logging.debug('Avatar upload attempt for user: %s', request.user.username)
+        form = AvatarUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = request.user
+            user.avatar = form.cleaned_data['avatar']
+            user.save()
+            logging.debug('Avatar upload successful for user: %s', request.user.username)
+            return redirect('user_profile')  # Redirect to a profile page or any other page
+        else:
+            logging.debug('Avatar upload form invalid: %s', form.errors)
+    else:
+        form = AvatarUploadForm()
+    return render(request, 'upload_avatar.html', {'form': form})

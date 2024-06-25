@@ -1,22 +1,17 @@
-console.log("login.js loaded");
-
-// Function to set up the login form
 function setupLoginForm() {
-  let isSubmitting = false; // Debounce flag within the function scope
+  let isSubmitting = false;
 
   const form = document.getElementById("login-form");
   const errorDiv = document.getElementById("login-error");
-
-  // Get the initial route from localStorage or default to home
   const initialRoute = localStorage.getItem('initialRoute') || '/home';
 
   if (form) {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault(); // Prevent the form from reloading the page
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
       console.log("Form submission prevented");
 
-      if (isSubmitting) return; // If already submitting, exit
-      isSubmitting = true; // Set debounce flag
+      if (isSubmitting) return;
+      isSubmitting = true;
 
       if (errorDiv) {
         errorDiv.textContent = "";
@@ -31,7 +26,7 @@ function setupLoginForm() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username, password }), // Ensure the payload has username and password
+          body: JSON.stringify({ username, password }),
         });
 
         if (!response.ok) {
@@ -42,8 +37,8 @@ function setupLoginForm() {
         localStorage.setItem("authToken", data.access);
         localStorage.setItem("refreshToken", data.refresh);
         console.log("Login successful");
-        hideModal('loginModal');
-        // Redirect to the initial route after successful login
+        modalClosedByUser = false; // Prevent additional redirection to home
+        $('#loginModal').modal('hide');
         window.history.pushState({}, '', initialRoute);
         handleRoute(initialRoute.split('/')[1]);
 
@@ -53,9 +48,9 @@ function setupLoginForm() {
           errorDiv.textContent = error.message;
         }
       } finally {
-        isSubmitting = false; // Reset debounce flag
+        isSubmitting = false;
       }
-    }, { once: true }); // Attach listener only once
+    }, { once: true });
   } else {
     console.error("Login form not found");
   }

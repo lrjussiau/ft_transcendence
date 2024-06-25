@@ -2,16 +2,50 @@ console.log("modal.js loaded");
 
 let modalClosedByUser = true;
 
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM fully loaded and parsed");
+  setupModalTriggers();
+  setupModalListeners();
+});
+
+function setupModalTriggers() {
+  console.log("Setting up modal triggers");
+
+  const modalTriggers = document.querySelectorAll('.modal-trigger');
+  console.log(`Found ${modalTriggers.length} modal triggers`);
+
+  modalTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const modalName = trigger.getAttribute('data-modal');
+      const modalHtmlPath = trigger.getAttribute('data-html');
+      console.log(`Modal trigger clicked: ${modalName}, ${modalHtmlPath}`);
+      showModal(modalName, modalHtmlPath);
+    });
+  });
+}
+
+function setupModalListeners() {
+  console.log('Listening for modal events');
+
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('shown.bs.modal', function(event) {
+      const modalId = event.target.id;
+      console.log('Modal shown:', modalId);
+      initializeModal(modalId);
+    });
+  });
+}
+
 async function showModal(modalName, modalHtmlPath) {
   try {
     console.log(`Loading modal: ${modalName}`);
-    
+
     // Remove any existing modal content
     const existingModal = document.getElementById(modalName);
     if (existingModal) {
       existingModal.remove();
     }
-    
+
     const response = await fetch(modalHtmlPath);
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -25,15 +59,9 @@ async function showModal(modalName, modalHtmlPath) {
       modalElement.modal('show');
       console.log(`${modalName} is now shown`);
 
-      // Add event listener to handle redirection when modal is closed
       modalElement.on('hidden.bs.modal', () => handleModalHidden(modalName));
 
-      if (modalName === 'loginModal') {
-        setupLoginForm();
-        setupRegisterButton();
-      } else if (modalName === 'registerModal') {
-        setupRegisterForm();
-      }
+      initializeModal(modalName);
     } else {
       console.error('#modal-container element not found');
     }
@@ -50,7 +78,7 @@ function hideModal(modalName) {
 }
 
 function handleModalHidden(modalName) {
-  if ((modalName === 'loginModal' || modalName === 'registerModal') && modalClosedByUser) {
+  if (modalClosedByUser && (modalName === 'loginModal' || modalName === 'registerModal')) {
     console.log(`Modal ${modalName} hidden, redirecting to home`);
     window.history.pushState({}, '', '/home');
     handleRoute('home');
@@ -58,30 +86,22 @@ function handleModalHidden(modalName) {
   modalClosedByUser = true; // Reset flag
 }
 
-function setupModalTriggers() {
-  console.log("Setting up modal triggers");
 
-  const modalTriggers = document.querySelectorAll('.modal-trigger');
-  console.log(`Found ${modalTriggers.length} modal triggers`);
-  modalTriggers.forEach(trigger => {
-    trigger.addEventListener('click', () => {
-      const modalName = trigger.getAttribute('data-modal');
-      const modalHtmlPath = trigger.getAttribute('data-html');
-      console.log(`Modal trigger clicked: ${modalName}, ${modalHtmlPath}`);
-      showModal(modalName, modalHtmlPath);
-    });
-  });
-}
 
-function setupRegisterButton() {
-  const registerButton = document.getElementById('register-button');
-  if (registerButton) {
-    registerButton.addEventListener('click', () => {
-      console.log('Register button clicked');
-      transitionToModal('loginModal', 'registerModal', '/static/modals/auth.html');
-    });
-  } else {
-    console.error('#register-button element not found');
+function initializeModal(modalId) {
+  switch (modalId) {
+    case 'avatarModal':
+      setupAvatarForm();
+      break;
+    case 'loginModal':
+      setupLoginForm();
+      setupRegisterButton();
+      break;
+    case 'registerModal':
+      setupRegisterForm();
+      break;
+    default:
+      console.error('No setup function for modal:', modalId);
   }
 }
 
@@ -92,7 +112,3 @@ function transitionToModal(currentModal, targetModal, targetModalPath) {
     showModal(targetModal, targetModalPath);
   });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  setupModalTriggers();
-});

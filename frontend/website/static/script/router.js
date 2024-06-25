@@ -78,15 +78,14 @@ async function handleRoute(route) {
       } else {
         // Store the attempted route and redirect to login
         localStorage.setItem('initialRoute', '/' + route);
-        // window.history.pushState({}, '', '/login');
-        await showModal('loginModal', '/static/modals/auth.html');
-        // setupLoginForm(); // Set up the login form when loading the login partial
+        await showModal('loginModal', '/static/modals/modals.html');
       }
       break;
     default:
       await loadPartial('404');
       break;
   }
+  setActiveNavItem(route); // Set the active nav item
 }
 
 // Initialize the router
@@ -101,13 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   handleRoute(route);
 
-  // Add event listeners to links for client-side routing
-  document.querySelectorAll('a[data-link]').forEach(link => {
-    link.addEventListener('click', event => {
+  // Add event listeners to buttons for client-side routing
+  document.querySelectorAll('button[data-route]').forEach(button => {
+    button.addEventListener('click', event => {
       event.preventDefault();
-      const href = link.getAttribute('href');
-      window.history.pushState({}, '', href);
-      handleRoute(href.split('/')[1]);
+      const route = button.getAttribute('data-route');
+      window.history.pushState({}, '', '/' + route);
+      handleRoute(route);
     });
   });
 
@@ -149,4 +148,14 @@ function handleLogout() {
   localStorage.removeItem('authToken');
   window.history.pushState({}, '', '/home');
   handleRoute('home');
+}
+
+function setActiveNavItem(route) {
+  document.querySelectorAll('button[data-route]').forEach(button => {
+    if (button.getAttribute('data-route') === route) {
+      button.classList.add('active');
+    } else {
+      button.classList.remove('active');
+    }
+  });
 }
