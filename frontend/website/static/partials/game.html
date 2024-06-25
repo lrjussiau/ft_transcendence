@@ -14,23 +14,23 @@
 <div class="container">
   <input type="text" id="player2-name" placeholder="Enter second player's name" />
 </div>
-<script src="app.js"></script>
-<script src="router.js"></script>
+<script src="/static/script/app.js"></script>
+<script src="/static/script/router.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-      fetchUserProfile();
-      initializeStartButton();
+    fetchUserProfile();
+    initializeStartButton();
 
-      document.getElementById('deleteButton').addEventListener('click', function() {
-          if (ws && ws.readyState === WebSocket.OPEN) {
-              const message = {
-                  't': 'delete_matches_and_players',
-                  'username': username
-              };
-              ws.send(JSON.stringify(message));
-          } else {
-              console.error('WebSocket is not open.');
-          }
-      });
+    document.getElementById('deleteButton').addEventListener('click', function() {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        const message = {
+          't': 'delete_matches_and_players',
+          'username': username
+        };
+        ws.send(JSON.stringify(message));
+      } else {
+        console.error('WebSocket is not open.');
+      }
+    });
   });
 </script>

@@ -1,7 +1,6 @@
 Django>=3.0,<4.0
 djangorestframework
 django-cors-headers
-pygame
 channels
 channels-redis
 daphne

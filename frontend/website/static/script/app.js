@@ -1,3 +1,4 @@
+
 let selectedGameType = null;
 let username = '';
 let opponentName = '';
@@ -89,6 +90,7 @@ async function fetchUserProfile() {
   }
 }
 
+
 function selectGameType(gameType) {
   selectedGameType = gameType;
   console.log(`Game type selected: ${gameType}`);
@@ -108,7 +110,7 @@ function initializeStartButton() {
   const startButton = document.getElementById('startButton');
   if (startButton) {
     startButton.addEventListener('click', () => {
-      const player2Name = document.getElementById('player2-name').value;
+      const player2Name = document.getElementById('player2-name') ? document.getElementById('player2-name').value : null;
       if (selectedGameType) {
         startGame(selectedGameType, player2Name);
       } else {

@@ -31,7 +31,6 @@ async function loadPartial(partial) {
 
       if (partial === 'game') {
         initializeStartButton();
-        fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
       }
     } else {
       console.error('#content element not found');
@@ -81,38 +80,19 @@ async function handleRoute(route) {
   switch (route) {
     case 'home':
       await loadPartial('home');
-      console.log("Loaded home partial");
       break;
     case 'login':
-      await loadPartial('login');
-      setupLoginForm(); // Set up the login form when loading the login partial
-      break;
     case 'register':
-      console.log("Loading register partial");
-      await loadPartial('register');
-      setupRegisterForm(); // Set up the register form when loading the register partial
+      await loadPartial(route);
       break;
     case 'user':
-      if (isAuthenticated()) {
-        await loadPartial('user');
-        fetchUserProfile(); // Fetch user profile data
-      } else {
-        // Store the attempted route and redirect to login
-        localStorage.setItem('initialRoute', '/user');
-        window.history.pushState({}, '', '/login');
-        await loadPartial('login');
-        setupLoginForm(); // Set up the login form when loading the login partial
-      }
-      break;
     case 'game':
       if (isAuthenticated()) {
-        await loadPartial('game');
+        await loadPartial(route);
       } else {
-        // Store the attempted route and redirect to login
-        localStorage.setItem('initialRoute', '/game');
+        localStorage.setItem('initialRoute', `/${route}`);
         window.history.pushState({}, '', '/login');
         await loadPartial('login');
-        setupLoginForm(); // Set up the login form when loading the login partial
       }
       break;
     default:
@@ -121,19 +101,14 @@ async function handleRoute(route) {
   }
 }
 
-// Initialize the router
 document.addEventListener('DOMContentLoaded', () => {
   let route = getCurrentRoute();
-  console.log("Initial route:", route);
-  // Redirect to /home if the route is empty (i.e., root path)
   if (route === '') {
     window.history.pushState({}, '', '/home');
     route = 'home';
   }
-
   handleRoute(route);
 
-  // Add event listeners to links for client-side routing
   document.querySelectorAll('a[data-link]').forEach(link => {
     link.addEventListener('click', event => {
       event.preventDefault();
@@ -144,25 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Handle browser navigation events
 window.addEventListener('popstate', () => {
-  const route = getCurrentRoute();
-  handleRoute(route);
+  handleRoute(getCurrentRoute());
 });
-
-// Helper function to initialize the start button event listener
-function initializeStartButton() {
-  const startButton = document.getElementById('startButton');
-  if (startButton) {
-    startButton.addEventListener('click', () => {
-      const player2Name = document.getElementById('player2-name') ? document.getElementById('player2-name').value : null;
-      if (selectedGameType) {
-        startGame(selectedGameType, player2Name);
-      } else {
-        alert('Please select a game type first.');
-      }
-    });
-  } else {
-    console.error('#startButton element not found');
-  }
-}
