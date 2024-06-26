@@ -198,22 +198,23 @@ function updateGameState(data) {
   }
 }
 
-window.addEventListener('keydown', (event) => {
-  if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
-    event.preventDefault();
-    keys[event.key] = true;
-    updateSpeeds();
-  }
-});
+if ( selectedGameType !== null ) {
+  window.addEventListener('keydown', (event) => {
+    if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
+      event.preventDefault();
+      keys[event.key] = true;
+      updateSpeeds();
+    }
+  });
 
-window.addEventListener('keyup', (event) => {
-  if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
-    event.preventDefault();
-    keys[event.key] = false;
-    updateSpeeds();
-  }
-});
-
+  window.addEventListener('keyup', (event) => {
+    if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
+      event.preventDefault();
+      keys[event.key] = false;
+      updateSpeeds();
+    }
+  });
+}
 function updateSpeeds() {
   const newPlayer1Speed = (keys['ArrowDown'] ? 5 : 0) + (keys['ArrowUp'] ? -5 : 0);
   const newPlayer2Speed = (keys['s'] ? 5 : 0) + (keys['w'] ? -5 : 0);
