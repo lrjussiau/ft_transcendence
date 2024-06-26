@@ -31,36 +31,21 @@ async function loadPartial(partial) {
 
       if (partial === 'game') {
         initializeStartButton();
+        fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
       }
     } else {
       console.error('#content element not found');
     }
   } catch (error) {
     console.error('Failed to load partial:', error);
-    await loadPartial('404'); // Load 404 page in case of an error
+    loadPartial('404'); // Load 404 page in case of an error
   }
 }
 
 // Function to check authentication
 function isAuthenticated() {
-  const token = localStorage.getItem('authToken');
-  if (!token) {
-    console.warn('No auth token found');
-    return false;
-  }
-
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const isExpired = payload.exp * 1000 < Date.now();
-    if (isExpired) {
-      console.warn('Auth token is expired');
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.error('Invalid auth token', error);
-    return false;
-  }
+  return localStorage.getItem('authToken') !== null;
+  // return true;
 }
 
 // Function to display the header based on the route
@@ -80,19 +65,38 @@ async function handleRoute(route) {
   switch (route) {
     case 'home':
       await loadPartial('home');
+      console.log("Loaded home partial");
       break;
     case 'login':
+      await loadPartial('login');
+      setupLoginForm(); // Set up the login form when loading the login partial
+      break;
     case 'register':
-      await loadPartial(route);
+      console.log("Loading register partial");
+      await loadPartial('register');
+      setupRegisterForm(); // Set up the register form when loading the register partial
       break;
     case 'user':
-    case 'game':
       if (isAuthenticated()) {
-        await loadPartial(route);
+        await loadPartial('user');
+        fetchUserProfile(); // Fetch user profile data
       } else {
-        localStorage.setItem('initialRoute', `/${route}`);
+        // Store the attempted route and redirect to login
+        localStorage.setItem('initialRoute', '/user');
         window.history.pushState({}, '', '/login');
         await loadPartial('login');
+        setupLoginForm(); // Set up the login form when loading the login partial
+      }
+      break;
+    case 'game':
+      if (isAuthenticated()) {
+        await loadPartial('game');
+      } else {
+        // Store the attempted route and redirect to login
+        localStorage.setItem('initialRoute', '/game');
+        window.history.pushState({}, '', '/login');
+        await loadPartial('login');
+        setupLoginForm(); // Set up the login form when loading the login partial
       }
       break;
     default:
@@ -101,14 +105,19 @@ async function handleRoute(route) {
   }
 }
 
+// Initialize the router
 document.addEventListener('DOMContentLoaded', () => {
   let route = getCurrentRoute();
+  console.log("Initial route:", route);
+  // Redirect to /home if the route is empty (i.e., root path)
   if (route === '') {
     window.history.pushState({}, '', '/home');
     route = 'home';
   }
+
   handleRoute(route);
 
+  // Add event listeners to links for client-side routing
   document.querySelectorAll('a[data-link]').forEach(link => {
     link.addEventListener('click', event => {
       event.preventDefault();
@@ -119,6 +128,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Handle browser navigation events
 window.addEventListener('popstate', () => {
-  handleRoute(getCurrentRoute());
+  const route = getCurrentRoute();
+  handleRoute(route);
 });
+
+// Helper function to initialize the start button event listener
+function initializeStartButton() {
+  const startButton = document.getElementById('startButton');
+  if (startButton) {
+    startButton.addEventListener('click', () => {
+      if (selectedGameType) {
+        startGame();
+      } else {
+        alert('Please select a game type first.');
+      }
+    });
+  } else {
+    console.error('#startButton element not found');
+  }
+}

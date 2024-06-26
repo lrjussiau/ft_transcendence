@@ -92,9 +92,9 @@ class PongConsumer(AsyncWebsocketConsumer):
                     await PongConsumer.players[player].send(text_data=json.dumps(data))
         if self.username in PongConsumer.games.get(self.game_id, {}):
             if self.username == list(PongConsumer.games[self.game_id])[0]:
-                self.player1["speed"] = data.get('p1', 0)  # player1Speed
+                self.player1["speed"] = data.get('p1', 10)
             else:
-                self.player2["speed"] = data.get('p2', 0)  # player2Speed
+                self.player2["speed"] = data.get('p2', 10)
 
     async def start_game(self):
         await self.send(text_data=json.dumps({'type': 'countdown', 'value': 3}))
@@ -162,7 +162,10 @@ class PongConsumer(AsyncWebsocketConsumer):
             while self.game_started and not self.game_over:
                 self.update_game_state()
                 await self.send_state()
+                # if game_type == '1v1':
                 await asyncio.sleep(1 / 60)  # 60 FPS
+                # else:
+                #     await asyncio.sleep(1 / 120)  # 60 FPS
         except Exception as e:
             logger.error(f"Error during game loop: {str(e)}")
             await self.close(code=4000)

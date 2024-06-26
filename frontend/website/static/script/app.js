@@ -86,7 +86,7 @@ async function fetchUserProfile() {
   } else {
     console.error('Failed to fetch user profile');
     window.history.pushState({}, '', '/login');
-    handleRoute('login');
+    // handleRoute('register');
   }
 }
 
