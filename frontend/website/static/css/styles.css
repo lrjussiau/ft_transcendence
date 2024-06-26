@@ -602,7 +602,7 @@ footer {
     width: 500px;
     padding: 10px;
     margin-bottom: 30px;
-    max-height: 350px;
+    height: 350px;
     overflow-y: auto;
     border: 1px solid #ccc;
   }
@@ -629,3 +629,26 @@ footer {
   .modal-dialog.avatar {
     height: 90%;
   }
+
+  .friend-button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+  .changeAvatar-button {
+    font-size: 19px;
+  }
+
+  .friendModal {
+    max-width: 800px;
+}
+.search-results {
+    height: 200px;
+    overflow-y: auto;
+}
+.add-friend-btn {
+    font-size: 13px;
+    width: 25%;
+}

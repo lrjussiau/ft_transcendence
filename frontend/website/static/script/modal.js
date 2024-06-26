@@ -102,6 +102,9 @@ function initializeModal(modalId) {
     case 'registerModal':
       setupRegisterForm();
       break;
+    case 'friendModal':
+      initializeFriendSearch();
+      break;
     default:
       console.error('No setup function for modal:', modalId);
   }
