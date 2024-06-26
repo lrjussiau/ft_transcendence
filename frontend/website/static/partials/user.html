@@ -1,48 +1,11 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link rel="stylesheet" href="path/to/your/styles.css">
-</head>
-<body>
-    <header>
-        <a class="headers title" href="/home">Pong Game</a>
-    </header>
-    <main>
-        <h1>User Profile</h1>
-        <div id="user-profile">
-            <p><strong>Name:</strong> <span id="username"></span></p>
-            <p><strong>Email:</strong> <span id="email"></span></p>
-            <p><strong>Avatar_path:</strong> <span id="avatar_url"></span></p>
-        </div>
-        <button id="logoutButton">Logout</button>
-    </main>
-    <script src="path/to/your/scripts.js"></script>
-    <script src="path/to/your/login.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchUserProfile();
-        });
-
-        document.getElementById('logoutButton').addEventListener('click', () => {
-            localStorage.removeItem('authToken');
-            window.history.pushState({}, '', '/login');
-            handleRoute('login');
-        });
-    </script>
-</body>
-</html> -->
-
 <div class="user">
     <div class="stat-panel">
       <div class="player-card">
         <h2 class="player-name"><span id="username"></h2>
         <div class="player-img">
-          <a href="/user_img">
+          <button class="btn btn-link modal-trigger" data-modal="avatarModal" data-html="/static/modals/modals.html">
             <img src="https://www.w3schools.com/howto/img_avatar.png" alt="player-img" class="img-fluid">
-          </a>
+          </button>
         </div>
       </div>
       <div class="player-stats">
@@ -134,6 +97,9 @@
             <div class="friend-name">Ok j'ai pas d'amis</div>
           </li>
         </ul>
+        <div class="friend-button">
+          <button class="btn modal-button modal-trigger" data-modal="friendModal" data-html="/static/modals/modals.html">Ajouter un ami</button>
+        </div>
       </div>
       <div class="citation">
         <img src="./static/img/Arrow2.png" alt="arrow-img" class="img-fluid arrow2">

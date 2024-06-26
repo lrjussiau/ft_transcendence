@@ -1,54 +1,64 @@
-console.log("register.js loaded");
-
-// Function to set up the register form
 function setupRegisterForm() {
+  let isSubmitting = false;
+
   const form = document.getElementById("register-form");
-  const errorDiv = document.getElementById("error");
+  const errorDiv = document.getElementById("register-error");
 
   if (form) {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault(); // Prevent the form from reloading the page
-      console.log("Form submission prevented");
-      errorDiv.textContent = "";
+      form.addEventListener("submit", async function(event) {
+          event.preventDefault();
+          console.log("Form submission prevented");
 
-      const username = document.getElementById("username").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+          if (isSubmitting) return;
+          isSubmitting = true;
 
-      try {
-        const response = await fetch("/api/authentication/register/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, email, password }),
-        });
+          if (errorDiv) {
+              errorDiv.textContent = "";
+          }
 
-        if (!response.ok) {
-          throw new Error("Registration failed");
-        }
+          const username = document.getElementById("register-username").value;
+          const email = document.getElementById("register-email").value;
+          const password = document.getElementById("register-password").value;
 
-        console.log("Registration successful");
+          try {
+              const response = await fetch("/api/authentication/register/", {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ username, email, password }),
+              });
 
-        // Redirect to the login page after successful registration
-        window.history.pushState({}, '', '/login');
-        handleRoute('login');
+              if (!response.ok) {
+                  throw new Error("Registration failed");
+              }
 
-      } catch (error) {
-        console.error("Registration error:", error);
-        errorDiv.textContent = error.message;
-      }
-    });
+              console.log("Registration successful");
+              $('#registerModal').modal('hide');
+              showModal('loginModal', '/static/modals/modals.html');
+
+          } catch (error) {
+              console.error("Registration error:", error);
+              if (errorDiv) {
+                  errorDiv.textContent = error.message;
+              }
+          } finally {
+              isSubmitting = false;
+          }
+      }, { once: true });
   } else {
-    console.error("Registration form not found");
+      console.error("Registration form not found");
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM fully loaded and parsed - register.js");
-
-  // Set up the register form if the initial route is the register page
-  if (getCurrentRoute() === 'register') {
-    setupRegisterForm();
+function setupRegisterButton() {
+  const registerButton = document.getElementById('register-button');
+  if (registerButton) {
+    registerButton.addEventListener('click', () => {
+      console.log('Register button clicked');
+      transitionToModal('loginModal', 'registerModal', '/static/modals/modals.html');
+    });
+  } else {
+    console.error('#register-button element not found');
   }
-});
+}
