@@ -14,20 +14,6 @@ async function fetchUserProfile() {
     }
 }
 
-  if (response.ok) {
-    const data = await response.json();
-    document.getElementById('displayUsername').textContent = data.username;
-
-    username = data.username;
-
-    const truncatedToken = token ? `${token.substring(0, 10)}....` : '';
-    document.getElementById('displayToken').textContent = truncatedToken;
-  } else {
-    console.error('Failed to fetch user profile');
-    window.history.pushState({}, '', '/login');
-    handleRoute('login');
-  }
-}
 
 let selectedGameType = null;
 let username = '';

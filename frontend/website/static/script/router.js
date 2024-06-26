@@ -39,6 +39,8 @@ async function loadPartial(partial) {
 
       if (partial === 'user') {
         loadUserProfile();
+        displayIncomingFriendRequests();
+        displayFriends();
       }
     } else {
       console.error('#content element not found');
