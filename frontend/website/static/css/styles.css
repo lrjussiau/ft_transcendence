@@ -402,12 +402,20 @@ footer {
     opacity: 0.8;
     margin: 15px;
   }
+
+  .player-img button {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    padding: 0;
+  }
+
   .player-img img {
     width: 100%;
     height: auto;
     border-radius: 50%;
-    opacity: inherit;
   }
+
   .player-stats {
     display: flex;
     justify-content: space-between;
@@ -534,9 +542,8 @@ footer {
     flex-direction: row;
     align-items: center;
     padding: 10px;
-    border-radius: 30px;
     margin-bottom: 10px;
-    box-shadow: 1px 4px 10px 4px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #abababa3;
   }
   .friend-list img {
     width: 60px;
@@ -573,4 +580,52 @@ footer {
     opacity: 0.4;
     rotate: 0deg;
     top: -20px;
+  }
+
+  .avatar-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .avatar-body h1 {
+    margin-bottom: 20px;
+  }
+
+  .avatarList {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 500px;
+    padding: 10px;
+    margin-bottom: 30px;
+    max-height: 350px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+  }
+
+  .avatar-img {
+    max-width: 120px;
+    border-radius: 50%;
+    background: linear-gradient(orange, red);
+    padding: 6px;
+    opacity: 0.8;
+    margin: 15px;
+  }
+
+  .avatar-img.selected {
+    padding: 8px;
+  }
+
+  .avatar-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+  }
+
+  .modal-dialog.avatar {
+    height: 90%;
   }

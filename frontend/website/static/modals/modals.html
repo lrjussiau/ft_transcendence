@@ -67,8 +67,8 @@
 
 <!-- AVATAR_MODAL -->
 
-<div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+  <div class="modal-dialog avatar">
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title" id="registerModalLabel">Choose your avatar</h5>
@@ -76,7 +76,10 @@
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body avatar-body">
+              <div id="avatarList" class="avatarList"></div>
+              <button id="changeAvatar" class="btn btn-primary">Change Avatar</button>
+              <hr/>
               <h1>Upload Avatar</h1>
               <form id="avatarForm" enctype="multipart/form-data">
                   <input type="file" name="avatar" required />

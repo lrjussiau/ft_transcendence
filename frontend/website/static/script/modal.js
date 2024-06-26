@@ -92,6 +92,8 @@ function initializeModal(modalId) {
   switch (modalId) {
     case 'avatarModal':
       setupAvatarForm();
+      listAvatars();
+      setupChangeAvatar();
       break;
     case 'loginModal':
       setupLoginForm();

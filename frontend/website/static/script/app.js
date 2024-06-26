@@ -1,24 +1,19 @@
+// utils.js
 async function fetchUserProfile() {
-  const token = localStorage.getItem('authToken');
-  const response = await fetch('/api/authentication/user/profile/', {
-      headers: {
-          'Authorization': `Bearer ${token}`
-      }
-  });
+    const token = localStorage.getItem('authToken');
+    const response = await fetch('/api/authentication/user/profile/', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 
-  if (response.ok) {
-      const data = await response.json();
-      document.getElementById('username').textContent = data.username;
-      document.getElementById('email').textContent = data.email;
-      document.getElementById('avatar_url').textContent = data.avatar_url;
-      document.getElementById('default_avatar').textContent = data.default_avatar;
-  } else {
-      console.error('Failed to fetch user profile');
-      // Handle the error (e.g., redirect to login if unauthorized)
-      window.history.pushState({}, '', '/login');
-      handleRoute('login');
-  }
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to fetch user profile');
+    }
 }
+
 
 let selectedGameType = null;
 let countdownValue = null;

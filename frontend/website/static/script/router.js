@@ -37,6 +37,9 @@ async function loadPartial(partial) {
       // Call setupModalTriggers to ensure modal triggers are set up for dynamically loaded content
       setupModalTriggers();
 
+      if (partial === 'user') {
+        loadUserProfile();
+      }
     } else {
       console.error('#content element not found');
     }
@@ -74,9 +77,7 @@ async function handleRoute(route) {
     case 'user':
       if (isAuthenticated()) {
         await loadPartial(route);
-        fetchUserProfile(); // Fetch user profile data
       } else {
-        // Store the attempted route and redirect to login
         localStorage.setItem('initialRoute', '/' + route);
         await showModal('loginModal', '/static/modals/modals.html');
       }
@@ -146,6 +147,7 @@ function initializeStartButton() {
 function handleLogout() {
   console.log('Logging out...');
   localStorage.removeItem('authToken');
+  localStorage.removeItem('refreshToken');
   window.history.pushState({}, '', '/home');
   handleRoute('home');
 }
