@@ -4,11 +4,17 @@ import random
 import asyncio
 import logging
 from math import cos, sin, radians
+from ai import ActorModelManager
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 logger = logging.getLogger(__name__)
 
 class PongConsumer(AsyncWebsocketConsumer):
+
+    def __init__(self):
+        self.ai = False
+        self.actor = None
+
     async def connect(self):
         await self.accept()
         logger.info('WebSocket connection established')
@@ -61,6 +67,17 @@ class PongConsumer(AsyncWebsocketConsumer):
                 else:
                     self.init_game_state()
                     await self.send_state()
+            elif data['t'] == 'solo':
+                self.init_game_state()  # Reset paddle positions at the start of the game
+                self.game_started = True
+                self.game_over = False
+                self.ai = True
+                self.actor = ActorModelManager("modelpath")
+                self.player1_score = 0
+                self.player2_score = 0
+                self.ball_restart()
+                await self.send_state()
+                asyncio.create_task(self.game_loop()) 
             else:
                 logger.warning(f"Unknown message type: {data['t']}")
         except json.JSONDecodeError as e:
@@ -79,9 +96,22 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.game_started = False
         self.game_over = False
 
+    def extract_data_for_ai(self):
+        player1_y = self.player1["y"]
+        player2_y = self.player2["y"]
+        ball_x = self.ball["x"]
+        ball_y = self.ball["y"]
+        ball_vx = self.ball["vx"]
+        ball_vy = self.ball["vy"]
+        
+        return player1_y/290.0, player2_y/290.0, ball_x/640, ball_y/360, ball_vx/30, ball_vy/30
+
     async def send_state(self):
         logger.info("Sending game state")
         try:
+            if self.ai == True:
+                ai_move = actor.get_action(self.extract_data_for_ai())
+                self.receive(ai_move)
             await self.send(text_data=json.dumps({
                 'ball': self.ball,
                 'p1': self.player1,

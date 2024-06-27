@@ -64,11 +64,15 @@ function startGame(gameType) {
     ws = new WebSocket('ws://localhost:8000/ws/pong/');
     ws.onopen = () => {
       console.log('WebSocket connection established');
+      console.log('GameType:', gameType);
       ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: username }));
       if (gameType === 'local_1v1') {
         ws.send(JSON.stringify({ t: 'sg' }));
       } else if (gameType === '1v1') {
         ws.send(JSON.stringify({ t: 'join', player_id: 'player1' }));
+      }else if (gameType === 'solo') {
+
+        ws.send(JSON.stringify({ t: 'solo'}));
       }
     };
     ws.onmessage = (event) => {
@@ -198,23 +202,22 @@ function updateGameState(data) {
   }
 }
 
-if ( selectedGameType !== null ) {
-  window.addEventListener('keydown', (event) => {
-    if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
-      event.preventDefault();
-      keys[event.key] = true;
-      updateSpeeds();
-    }
-  });
+window.addEventListener('keydown', (event) => {
+  if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
+    event.preventDefault();
+    keys[event.key] = true;
+    updateSpeeds();
+  }
+});
 
-  window.addEventListener('keyup', (event) => {
-    if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
-      event.preventDefault();
-      keys[event.key] = false;
-      updateSpeeds();
-    }
-  });
-}
+window.addEventListener('keyup', (event) => {
+  if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
+    event.preventDefault();
+    keys[event.key] = false;
+    updateSpeeds();
+  }
+});
+
 function updateSpeeds() {
   const newPlayer1Speed = (keys['ArrowDown'] ? 5 : 0) + (keys['ArrowUp'] ? -5 : 0);
   const newPlayer2Speed = (keys['s'] ? 5 : 0) + (keys['w'] ? -5 : 0);
