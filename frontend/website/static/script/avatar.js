@@ -3,6 +3,14 @@ function setupAvatarForm() {
     console.log('Avatar form loaded:', avatarForm !== null);
 
     if (avatarForm) {
+        const fileInput = document.querySelector('.file-input');
+        const fileNameDisplay = document.querySelector('.file-name');
+
+        fileInput.addEventListener('change', function() {
+          const fileName = this.files[0] ? this.files[0].name : 'No file selected';
+          fileNameDisplay.textContent = fileName;
+        });
+
         avatarForm.addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -32,7 +40,11 @@ function setupAvatarForm() {
     } else {
         console.error('Avatar form not found');
     }
-}
+  }
+
+  document.querySelector('.custom-button').addEventListener('click', function() {
+    document.querySelector('.file-input').click();
+  });
 
 async function listAvatars() {
     const avatarForm = document.getElementById('avatarForm');
@@ -84,7 +96,7 @@ function setupChangeAvatar() {
         changeAvatarButton.addEventListener('click', async function() {
             const selectedAvatarButton = document.querySelector('.avatar-img.selected img');
             if (!selectedAvatarButton) {
-                alert('Please select an avatar first.');
+                avatarError.textContent = 'Please select an avatar first.';
                 return;
             }
 

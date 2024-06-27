@@ -71,19 +71,26 @@
   <div class="modal-dialog avatar">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title">Choose your avatar</h5>
+              <h6 class="modal-title">Choose your avatar</h6>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
           <div class="modal-body avatar-body">
-              <div id="avatarList" class="avatarList"></div>
-              <button id="changeAvatar" class="btn modal-button changeAvatar-button">Change Avatar</button>
-              <hr/>
-              <h1>Upload Avatar</h1>
-              <form id="avatarForm" enctype="multipart/form-data">
-                  <input type="file" name="avatar" required />
-                  <button type="submit">Upload</button>
+              <div id="avatarList" class="avatarList">
+              </div>
+              <div class="avatarSelected">
+                <div id="avatarError" class="text-danger"></div>
+                <button id="changeAvatar" class="btn modal-button changeAvatar-button">Change Avatar</button>
+              </div>
+              <h5>Upload Avatar</h5>
+              <form id="avatarForm" class="avatar-form" enctype="multipart/form-data">
+                  <div class="file-input-container">
+                    <button class="modal-button select-button">Select File</button>
+                    <input type="file" name="avatar" class="file-input" required />
+                    <span class="file-name">No file selected</span>
+                    <button type="submit" class="upload-button">Upload</button>
+                  </div>
               </form>
           </div>
       </div>
