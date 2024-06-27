@@ -4,7 +4,7 @@ import random
 import asyncio
 import logging
 from math import cos, sin, radians
-from ai import ActorModelManager
+from Ai import *
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 logger = logging.getLogger(__name__)
@@ -72,7 +72,7 @@ class PongConsumer(AsyncWebsocketConsumer):
                 self.game_started = True
                 self.game_over = False
                 self.ai = True
-                self.actor = ActorModelManager("modelpath")
+                self.actor = ActorModelManager("./ai_models/p2_actor_envs_2_lam_0_9072109673770274_gamma_0_9748655626322407_t_4773_a_lr_0_0009862160777679757_c_lr_0_0009250117935695386.pth")
                 self.player1_score = 0
                 self.player2_score = 0
                 self.ball_restart()
