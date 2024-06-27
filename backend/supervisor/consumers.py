@@ -41,7 +41,6 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         logger.info(f"Received message: {text_data}")
         try:
-            if 
             if not text_data:
                 raise ValueError("Empty message received")
             data = json.loads(text_data)
@@ -115,6 +114,9 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def send_state(self):
         logger.info("Sending game state")
         try:
+            if self.ai == True:
+                ai_move = self.actor.get_action(self.extract_data_for_ai())
+                self.receive(ai_move)
             await self.send(text_data=json.dumps({
                 'ball': self.ball,
                 'p1': self.player1,
