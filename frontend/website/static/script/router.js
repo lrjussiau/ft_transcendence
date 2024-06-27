@@ -31,7 +31,8 @@ async function loadPartial(partial) {
 
       if (partial === 'game') {
         initializeStartButton();
-        fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
+        fetchUserProfile();
+        initializeWebSocket();
       }
 
       // Call setupModalTriggers to ensure modal triggers are set up for dynamically loaded content
