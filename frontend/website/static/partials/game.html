@@ -8,13 +8,10 @@
   <button class="btn btn-primary m-2" onclick="selectGameType('1v1')">1v1</button>
   <button class="btn btn-primary m-2" onclick="selectGameType('local_1v1')">Local 1v1</button>
   <button class="btn btn-primary m-2" onclick="selectGameType('tournament')">Tournament</button>
+  <div id="opponentNameField" style="display: none;">
+    <input type="text" id="opponentName" placeholder="Opponent Username">
+  </div>
   <button id="startButton" class="btn btn-success">Start Game</button>
 </div>
-<script src="app.js"></script>
 <script src="router.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    fetchUserProfile();
-    initializeStartButton();
-  });
-</script>
+<script src="app.js"></script>
