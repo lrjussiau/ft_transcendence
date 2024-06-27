@@ -1,19 +1,27 @@
 import json
 import time
+import logging
 import random
 import asyncio
 import logging
+import os, sys
+from .ai import *
 from math import cos, sin, radians
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 logger = logging.getLogger(__name__)
 
 class PongConsumer(AsyncWebsocketConsumer):
+    """async def __init__(self):
+        self.ai = False
+        self.actor = None"""
     async def connect(self):
         await self.accept()
         logger.info('WebSocket connection established')
         self.game_type = None
         self.username = None
+        self.ai = False
+        self.actor = None
         self.keep_open = True  # Flag to keep the connection open
         asyncio.create_task(self.ensure_connection_open())
 
@@ -33,6 +41,7 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         logger.info(f"Received message: {text_data}")
         try:
+            if 
             if not text_data:
                 raise ValueError("Empty message received")
             data = json.loads(text_data)
@@ -58,6 +67,19 @@ class PongConsumer(AsyncWebsocketConsumer):
                 self.username = data.get('username', 'Player1')
                 if self.game_type == 'local_1v1':
                     await self.start_game()
+                elif self.game_type == 'solo':
+                    self.init_game_state()  # Reset paddle positions at the start of the game
+                    print("i entered the solo")
+                    self.game_started = True
+                    self.game_over = False
+                    self.ai = True
+                    logger.info("pwd: ",os.getcwd())
+                    self.actor = ActorModelManager("./supervisor/ai_models/p2_actor_envs_2_lam_0_9072109673770274_gamma_0_9748655626322407_t_4773_a_lr_0_0009862160777679757_c_lr_0_0009250117935695386.pth")
+                    self.player1_score = 0
+                    self.player2_score = 0
+                    self.ball_restart()
+                    await self.send_state()
+                    asyncio.create_task(self.game_loop())
                 else:
                     self.init_game_state()
                     await self.send_state()
@@ -69,7 +91,18 @@ class PongConsumer(AsyncWebsocketConsumer):
         except Exception as e:
             logger.error(f"Error during message handling: {str(e)}")
             await self.close(code=1011)
-
+        """elif data['t'] == 'solo':
+                self.init_game_state()  # Reset paddle positions at the start of the game
+                print("i entered the solo")
+                self.game_started = True
+                self.game_over = False
+                self.ai = True
+                self.actor = ActorModelManager("./ai_models/p2_actor_envs_2_lam_0_9072109673770274_gamma_0_9748655626322407_t_4773_a_lr_0_0009862160777679757_c_lr_0_0009250117935695386.pth")
+                self.player1_score = 0
+                self.player2_score = 0
+                self.ball_restart()
+                await self.send_state()
+                asyncio.create_task(self.game_loop())""" 
     def init_game_state(self):
         self.ball = {"x": 320, "y": 180, "vx": 2.5 * random.choice((1, -1)), "vy": 2.5 * random.choice((1, -1))}
         self.player1 = {"y": 160, "speed": 0}

@@ -69,7 +69,9 @@ function startGame(gameType) {
         ws.send(JSON.stringify({ t: 'sg' }));
       } else if (gameType === '1v1') {
         ws.send(JSON.stringify({ t: 'join', player_id: 'player1' }));
-      }
+      } else if(gameType === 'solo'){
+        ws.send(JSON.stringify({ t: 'solo'}));
+      } 
     };
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
