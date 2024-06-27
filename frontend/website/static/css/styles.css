@@ -85,8 +85,25 @@ header {
       text-decoration: none;
       font-size: 40px;
       color: transparent;
+      border: none;
+      background-color: transparent; /* Ensure background is transparent */
+      outline: none; /* Remove focus outline */
+      cursor: pointer; /* Add cursor pointer for buttons */
+      padding: 0; /* Remove default padding */
       background: linear-gradient(180deg, rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255), rgb(255, 0, 255)) 0% 0% / 100% 200% no-repeat;
       -webkit-background-clip: text;
+    }
+
+    .nav-item:hover {
+      opacity: 1;
+    }
+
+    .nav-item:focus {
+      outline: none;
+    }
+
+    .nav-item.active {
+      opacity: 1;
     }
 
     @keyframes sidebar-animation-1 {
@@ -385,12 +402,20 @@ footer {
     opacity: 0.8;
     margin: 15px;
   }
+
+  .player-img button {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    padding: 0;
+  }
+
   .player-img img {
     width: 100%;
     height: auto;
     border-radius: 50%;
-    opacity: inherit;
   }
+
   .player-stats {
     display: flex;
     justify-content: space-between;
@@ -517,9 +542,8 @@ footer {
     flex-direction: row;
     align-items: center;
     padding: 10px;
-    border-radius: 30px;
     margin-bottom: 10px;
-    box-shadow: 1px 4px 10px 4px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #abababa3;
   }
   .friend-list img {
     width: 60px;
@@ -545,15 +569,86 @@ footer {
 
   .message-user{
     rotate: 350deg;
-    left: 110px;
-    top: -140px;
+    left: 80px;
+    top: -40px;
   }
 
   .arrow2 {
     position: relative;
-    width: 400px;
-    height: 400px;
-    opacity: 0.5;
-    rotate: 100deg;
-    top: -50px;
+    width: 250px;
+    height: 250px;
+    opacity: 0.4;
+    rotate: 0deg;
+    top: -20px;
   }
+
+  .avatar-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .avatar-body h1 {
+    margin-bottom: 20px;
+  }
+
+  .avatarList {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 500px;
+    padding: 10px;
+    margin-bottom: 30px;
+    height: 350px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+  }
+
+  .avatar-img {
+    max-width: 120px;
+    border-radius: 50%;
+    background: linear-gradient(orange, red);
+    padding: 6px;
+    opacity: 0.8;
+    margin: 15px;
+  }
+
+  .avatar-img.selected {
+    padding: 8px;
+  }
+
+  .avatar-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+  }
+
+  .modal-dialog.avatar {
+    height: 90%;
+  }
+
+  .friend-button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+  .changeAvatar-button {
+    font-size: 19px;
+  }
+
+  .friendModal {
+    max-width: 800px;
+}
+.search-results {
+    height: 200px;
+    overflow-y: auto;
+}
+.add-friend-btn {
+    font-size: 13px;
+    width: 25%;
+}

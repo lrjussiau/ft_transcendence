@@ -71,7 +71,7 @@ function updateGameState(data) {
 }
 
 window.addEventListener('keydown', (event) => {
-  if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key)) {
+  if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && selectGameType !== null) {
     event.preventDefault();
     keys[event.key] = true;
     updateSpeeds();
@@ -79,7 +79,7 @@ window.addEventListener('keydown', (event) => {
 });
 
 window.addEventListener('keyup', (event) => {
-  if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key)) {
+  if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && selectGameType !== null) {
     event.preventDefault();
     keys[event.key] = false;
     updateSpeeds();

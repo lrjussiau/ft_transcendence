@@ -15,22 +15,30 @@
   <header><a class="headers title" href="/home">Pong Game</a></header>
   <div class="navbar">
     <div class="sidebar">
-      <a href="/user" class="nav-item"><i class="bi bi-person"></i></a>
-      <a href="/trophy" class="nav-item"><i class="bi bi-trophy"></i></a>
-      <a href="/game" class="nav-item"><i class="bi bi-controller"></i></a>
-      <a href="/menu" class="nav-item"><i class="bi bi-menu-button-wide"></i></a>
-      <a href="/settings" class="nav-item"><i class="bi bi-gear"></i></a>
-      <a href="/logout" class="nav-item"><i class="bi bi-arrow-right"></i></a>
+      <button data-route="user" class="nav-item"><i class="bi bi-person"></i></button>
+      <button data-route="trophy" class="nav-item"><i class="bi bi-trophy"></i></button>
+      <button data-route="game" class="nav-item"><i class="bi bi-controller"></i></button>
+      <button data-route="menu" class="nav-item"><i class="bi bi-menu-button-wide"></i></button>
+      <button data-route="settings" class="nav-item"><i class="bi bi-gear"></i></button>
+      <button id="logout-button" class="nav-item"><i class="bi bi-arrow-right"></i></button>
     </div>
   </div>
-  
-  <div id="content"></div>
+  <div id="content" class="content"></div>
 
   <footer>Made by 24k leaks</footer>
+
+  <div id="modal-container"></div>
   
+  <script src="static/script/token.js"></script>
   <script src="static/script/router.js"></script>
+  <script src="static/script/modal.js"></script>
   <script src="static/script/register.js"></script>
   <script src="static/script/login.js"></script>
   <script src="static/script/app.js"></script>
+  <script src="static/script/avatar.js"></script>
+  <script src="static/script/user.js"></script>
+  <script src="static/script/friend.js"></script>
+  
+
 </body>
 </html>

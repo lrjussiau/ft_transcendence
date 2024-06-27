@@ -1,14 +1,15 @@
 from pathlib import Path
 import os
 import dj_database_url
+import re
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'django-insecure-evf%hu@og7(($d3wkktj(p*jli54+zd+b(^0f_$+aq&k(4&qo*'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', '10.13.5.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -27,8 +28,14 @@ INSTALLED_APPS = [
     'supervisor',
     'authentication',
     'db',
+    'friends',
     'blockchain',
 ]
+
+# Media files (Uploaded by users)
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -160,11 +167,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+#STATIC_URL = '/static/'
+#STATICFILES_DIRS = [
+#    BASE_DIR / "static",
+#]
+#STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

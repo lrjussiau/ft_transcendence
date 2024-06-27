@@ -29,9 +29,18 @@ async function loadPartial(partial) {
 
       console.log(`Loaded partial: ${partial}`);
 
-      // Call initializeStartButton if the game partial is loaded
       if (partial === 'game') {
         initializeStartButton();
+        fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
+      }
+
+      // Call setupModalTriggers to ensure modal triggers are set up for dynamically loaded content
+      setupModalTriggers();
+
+      if (partial === 'user') {
+        loadUserProfile();
+        displayIncomingFriendRequests();
+        displayFriends();
       }
     } else {
       console.error('#content element not found');
@@ -66,42 +75,20 @@ async function handleRoute(route) {
       await loadPartial('home');
       console.log("Loaded home partial");
       break;
-    case 'login':
-      await loadPartial('login');
-      setupLoginForm(); // Set up the login form when loading the login partial
-      break;
-    case 'register':
-      console.log("Loading register partial");
-      await loadPartial('register');
-      setupRegisterForm(); // Set up the register form when loading the register partial
-      break;
+    case 'game':
     case 'user':
       if (isAuthenticated()) {
-        await loadPartial('user');
-        fetchUserProfile(); // Fetch user profile data
+        await loadPartial(route);
       } else {
-        // Store the attempted route and redirect to login
-        localStorage.setItem('initialRoute', '/user');
-        window.history.pushState({}, '', '/login');
-        await loadPartial('login');
-        setupLoginForm(); // Set up the login form when loading the login partial
-      }
-      break;
-    case 'game':
-      if (isAuthenticated()) {
-        await loadPartial('game');
-      } else {
-        // Store the attempted route and redirect to login
-        localStorage.setItem('initialRoute', '/game');
-        window.history.pushState({}, '', '/login');
-        await loadPartial('login');
-        setupLoginForm(); // Set up the login form when loading the login partial
+        localStorage.setItem('initialRoute', '/' + route);
+        await showModal('loginModal', '/static/modals/modals.html');
       }
       break;
     default:
       await loadPartial('404');
       break;
   }
+  setActiveNavItem(route); // Set the active nav item
 }
 
 // Initialize the router
@@ -116,15 +103,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   handleRoute(route);
 
-  // Add event listeners to links for client-side routing
-  document.querySelectorAll('a[data-link]').forEach(link => {
-    link.addEventListener('click', event => {
+  // Add event listeners to buttons for client-side routing
+  document.querySelectorAll('button[data-route]').forEach(button => {
+    button.addEventListener('click', event => {
       event.preventDefault();
-      const href = link.getAttribute('href');
-      window.history.pushState({}, '', href);
-      handleRoute(href.split('/')[1]);
+      const route = button.getAttribute('data-route');
+      window.history.pushState({}, '', '/' + route);
+      handleRoute(route);
     });
   });
+
+  const logoutButton = document.getElementById('logout-button');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      handleLogout();
+    });
+  }
 });
 
 // Handle browser navigation events
@@ -138,10 +133,8 @@ function initializeStartButton() {
   const startButton = document.getElementById('startButton');
   if (startButton) {
     startButton.addEventListener('click', () => {
-      if (selectedGameType === 'local_1v1') {
+      if (selectedGameType) {
         startGame();
-      } else if (selectedGameType !== 'local_1v1' && selectedGameType) {
-        alert('Not Playable yet :(.');
       } else {
         alert('Please select a game type first.');
       }
@@ -149,4 +142,22 @@ function initializeStartButton() {
   } else {
     console.error('#startButton element not found');
   }
+}
+
+function handleLogout() {
+  console.log('Logging out...');
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('refreshToken');
+  window.history.pushState({}, '', '/home');
+  handleRoute('home');
+}
+
+function setActiveNavItem(route) {
+  document.querySelectorAll('button[data-route]').forEach(button => {
+    if (button.getAttribute('data-route') === route) {
+      button.classList.add('active');
+    } else {
+      button.classList.remove('active');
+    }
+  });
 }
