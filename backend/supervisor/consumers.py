@@ -179,8 +179,18 @@ class PongConsumer(AsyncWebsocketConsumer):
             await asyncio.sleep(1)
 
     async def start_game(self):
+        if self.game_started:
+            await self.send_state({
+                'type': 'error',
+                'message': 'A game is already in progress. It will be terminated now.'
+            })
+            self.game_over = True
+            await self.disconnect(1001)
+
         await self.countdown()
         self.init_game_state()
+        if (self.game_type == 'local_1v1'):
+            self.refresh_rate = 60
         self.game_started = True
         self.game_over = False
         self.player1_score = 0
@@ -188,6 +198,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.ball_restart()
         await self.send_state()
         asyncio.create_task(self.game_loop())
+
 
     def handle_local_input(self, data):
         self.player1["speed"] = data.get('p1', 0)

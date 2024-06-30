@@ -14,10 +14,20 @@ let playerNum = null;
 const keys = {};
 const requestTimestamps = {};
 
-// Initialiser le WebSocket
+document.addEventListener('DOMContentLoaded', () => {
+  initializeStartButton();
+  fetchUserProfile();
+  initializeKeyboardControls();
+});
+
+
 function initializeWebSocket() {
   if (ws) ws.close();
-  ws = new WebSocket('ws://10.13.4.5:8000/ws/pong/');
+
+  const host = window.location.hostname;
+  const wsUrl = `ws://${host}:8000/ws/pong/`;
+  
+  ws = new WebSocket(wsUrl);
   ws.onopen = () => console.log('WebSocket connection established');
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -56,6 +66,7 @@ function initializeWebSocket() {
   ws.onerror = (error) => console.error('WebSocket error:', error);
   ws.onclose = (event) => console.log('WebSocket closed:', event);
 }
+
 
 async function fetchUserProfile() {
   const token = localStorage.getItem('authToken');
@@ -96,11 +107,6 @@ function selectGameType(gameType) {
 
   ctx = canvas.getContext('2d');
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  initializeStartButton();
-  fetchUserProfile();
-});
 
 function initializeStartButton() {
   const startButton = document.getElementById('startButton');
@@ -267,8 +273,6 @@ function updateSpeeds() {
     }
   }
 }
-
-initializeKeyboardControls();
 
 function initializeKeyboardControls() {
   window.addEventListener('keydown', (event) => {
