@@ -75,7 +75,7 @@ class Actor(nn.Module):
 # Define a class to manage the actor model
 class ActorModelManager:
     def __init__(self, model_path, lr=0):
-        self.actor_model = Actor(lr= 0.0009862160777679757)
+        self.actor_model = Actor(lr=0.0002619536391394153)
         self.actor_model.load_state_dict(torch.load(model_path))
         self.actor_model.eval()  # Set the model to evaluation mode
 

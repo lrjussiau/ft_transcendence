@@ -72,7 +72,7 @@ class PongConsumer(AsyncWebsocketConsumer):
                     self.game_over = False
                     self.ai = True
                     logger.info("pwd: ",os.getcwd())
-                    self.actor = ActorModelManager("./supervisor/ai_models/p1_actor_envs_2_lam_0_9072109673770274_gamma_0_9748655626322407_t_4773_a_lr_0_0009862160777679757_c_lr_0_0009250117935695386.pth")
+                    self.actor = ActorModelManager("./supervisor/ai_models/p2_actor_envs_5_lam_0_9926552414885212_gamma_0_9630216241493252_t_3198_a_lr_0_0002619536391394153_c_lr_0_0007893441693834119.pth")
                     self.player1_score = 0
                     self.player2_score = 0
                     self.ball_restart()
