@@ -77,6 +77,7 @@ async function handleRoute(route) {
       break;
     case 'game':
     case 'user':
+    case 'settings':
       if (isAuthenticated()) {
         await loadPartial(route);
       } else {
