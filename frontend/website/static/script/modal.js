@@ -36,8 +36,8 @@ function setupModalListeners() {
   });
 }
 
-async function showModal(modalName, modalHtmlPath) {
-  try {
+function showModal(modalName, modalHtmlPath) {
+  return new Promise((resolve, reject) => {
     console.log(`Loading modal: ${modalName}`);
 
     // Remove any existing modal content
@@ -46,35 +46,47 @@ async function showModal(modalName, modalHtmlPath) {
       existingModal.remove();
     }
 
-    const response = await fetch(modalHtmlPath);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const html = await response.text();
-    const modalContainer = document.getElementById('modal-container');
+    fetch(modalHtmlPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(html => {
+        const modalContainer = document.getElementById('modal-container');
 
-    if (modalContainer) {
-      modalContainer.innerHTML = html;
-      const modalElement = $(`#${modalName}`);
-      modalElement.modal('show');
-      console.log(`${modalName} is now shown`);
+        if (modalContainer) {
+          modalContainer.innerHTML = html;
+          const modalElement = $(`#${modalName}`);
+          modalElement.modal('show');
+          console.log(`${modalName} is now shown`);
 
-      modalElement.on('hidden.bs.modal', () => handleModalHidden(modalName));
+          modalElement.on('hidden.bs.modal', () => handleModalHidden(modalName));
 
-      initializeModal(modalName);
-    } else {
-      console.error('#modal-container element not found');
-    }
-  } catch (error) {
-    console.error('Failed to load modal:', error);
-  }
+          initializeModal(modalName);
+          resolve();
+        } else {
+          reject(new Error('#modal-container element not found'));
+        }
+      })
+      .catch(error => {
+        console.error('Failed to load modal:', error);
+        reject(error);
+      });
+  });
 }
 
 function hideModal(modalName) {
-  modalClosedByUser = false; // Set flag to indicate modal is being closed programmatically
-  const modalElement = $(`#${modalName}`);
-  modalElement.modal('hide');
-  document.getElementById('modal-container').innerHTML = ''; // Clear the modal content
+  return new Promise((resolve) => {
+    modalClosedByUser = false; // Set flag to indicate modal is being closed programmatically
+    const modalElement = $(`#${modalName}`);
+    modalElement.modal('hide');
+    modalElement.on('hidden.bs.modal', () => {
+      document.getElementById('modal-container').innerHTML = ''; // Clear the modal content
+      resolve();
+    });
+  });
 }
 
 function handleModalHidden(modalName) {

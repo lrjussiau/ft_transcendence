@@ -88,15 +88,15 @@ async function displayIncomingFriendRequests() {
         if (incomingRequests.length > 0) {
             incomingRequests.forEach(request => {
                 const listItem = document.createElement('li');
-                listItem.className = 'friend-list-item';
+                listItem.className = 'pending-friend-item';
 
                 const img = document.createElement('img');
-                img.src = request.user.avatar;
+                img.src = request.user.avatar || 'default-avatar-url.jpg';
                 img.alt = 'player-img';
-                img.className = 'img-fluid';
+                img.className = 'pending-friend-img';
 
                 const nameDiv = document.createElement('div');
-                nameDiv.className = 'friend-name';
+                nameDiv.className = 'pending-friend-name';
                 nameDiv.textContent = request.user.username;
 
                 const acceptButton = document.createElement('button');
@@ -124,7 +124,7 @@ async function displayIncomingFriendRequests() {
                 pendingList.appendChild(listItem);
             });
         } else {
-            pendingList.innerHTML = '<li class="friend-list-item">No pending friend requests</li>';
+            pendingList.innerHTML = '<li class="pending-friend-item">No pending friend requests</li>';
         }
     } catch (error) {
         console.error('Error fetching incoming friend requests:', error);
@@ -140,15 +140,15 @@ async function displayFriends() {
         if (friends.length > 0) {
             friends.forEach(friend => {
                 const listItem = document.createElement('li');
-                listItem.className = 'friend-list-item';
+                listItem.className = 'accepted-friend-item';
 
                 const img = document.createElement('img');
-                img.src = friend.friend.avatar;
+                img.src = friend.friend.avatar || 'default-avatar-url.jpg';
                 img.alt = 'player-img';
-                img.className = 'img-fluid';
+                img.className = 'accepted-friend-img';
 
                 const nameDiv = document.createElement('div');
-                nameDiv.className = 'friend-name';
+                nameDiv.className = 'accepted-friend-name';
                 nameDiv.textContent = friend.friend.username;
 
                 listItem.appendChild(img);
@@ -157,7 +157,7 @@ async function displayFriends() {
                 friendsList.appendChild(listItem);
             });
         } else {
-            friendsList.innerHTML = '<li class="friend-list-item">No friends found</li>';
+            friendsList.innerHTML = '<li class="accepted-friend-item">No friends found</li>';
         }
     } catch (error) {
         console.error('Error fetching friends list:', error);

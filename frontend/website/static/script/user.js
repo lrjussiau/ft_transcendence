@@ -12,7 +12,10 @@ function updateProfileImage(defaultAvatar, avatarUrl) {
 async function loadUserProfile() {
     try {
         const data = await fetchUserProfile();
+        if (data === null)
+            throw new Error('Failed to fetch user profile');
         const usernameElem = document.getElementById('username');
+        console.log('User name:', usernameElem);
         const defaultAvatarElem = document.getElementById('default_avatar');
         const avatarUrlElem = document.getElementById('avatar_url');
         if (usernameElem) {

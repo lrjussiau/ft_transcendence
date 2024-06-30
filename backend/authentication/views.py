@@ -1,4 +1,6 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from .serializers import CustomTokenObtainPairSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -19,6 +21,7 @@ import os
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
+    
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -27,17 +30,25 @@ class RegisterView(APIView):
         username = request.data.get('username')
         
         if User.objects.filter(email=email).exists():
-            return Response({"error": "Email already exists."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "This email is already registered."}, status=status.HTTP_400_BAD_REQUEST)
         
         if User.objects.filter(username=username).exists():
-            return Response({"error": "Username already exists."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "This username is already taken."}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
+            
+            # Set the default avatar without creating a new file
+            default_avatar_path = 'avatars/default_avatar.png'
+            if os.path.exists(os.path.join(settings.MEDIA_ROOT, default_avatar_path)):
+                user.avatar = default_avatar_path
+                user.default_avatar = True
+                user.save()
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
@@ -93,6 +104,7 @@ class ChangeAvatarView(APIView):
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
+        logging.debug('Avatar change attempt for user: %s', request.user.username)
         user = request.user
         avatar_url = request.data.get('avatar')
         
