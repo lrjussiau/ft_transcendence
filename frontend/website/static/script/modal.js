@@ -108,6 +108,9 @@ function initializeModal(modalId) {
     case 'passwordChangeModal':
       setupPasswordChangeModal();
       break;
+    case 'deleteAccountModal':
+      setupDeleteAccountModal();
+      break;
     default:
       console.error('No setup function for modal:', modalId);
   }

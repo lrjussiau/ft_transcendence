@@ -164,11 +164,40 @@ function handleLanguageChange() {
     console.log('Language changed to:', selectedLanguage);
 }
 
-function handleAccountDeletion() {
-    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-        // Implement account deletion logic here
-        console.log('Account deletion requested');
-    }
+function setupDeleteAccountModal() {
+    const form = document.getElementById('delete-account-form');
+    const errorDiv = document.getElementById('delete-account-error');
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const password = document.getElementById('delete-account-password').value;
+
+        try {
+            const response = await fetch('/api/authentication/delete-account/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                },
+                body: JSON.stringify({ password: password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Account deleted successfully
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('refreshToken');
+                alert('Your account has been deleted successfully.');
+                window.location.href = '/home'; // Redirect to home page
+            } else {
+                errorDiv.textContent = data.error || 'An error occurred while deleting the account.';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            errorDiv.textContent = 'An unexpected error occurred. Please try again.';
+        }
+    });
 }
 
 // Setup function for the main settings page
@@ -177,7 +206,6 @@ function setupSettingsPage() {
     document.getElementById('toggle-2fa').addEventListener('click', handle2FAToggle);
     document.getElementById('apply-notifications').addEventListener('click', handleNotificationSettings);
     document.getElementById('apply-language').addEventListener('click', handleLanguageChange);
-    document.getElementById('delete-account').addEventListener('click', handleAccountDeletion);
 
     fetch('/api/authentication/user/profile/', {
         headers: {
@@ -198,4 +226,5 @@ function setupSettingsPage() {
         }
     })
     .catch(error => console.error('Error fetching user profile:', error));
+
 }

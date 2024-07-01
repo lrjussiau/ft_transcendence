@@ -244,3 +244,18 @@ def verify_2fa(request):
             'access': str(refresh.access_token),
         })
     return Response({'error': 'Invalid or expired code'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def delete_account(request):
+    user = request.user
+    password = request.data.get('password')
+
+    if not authenticate(username=user.username, password=password):
+        return Response({"error": "Invalid password"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user.delete()
+        return Response({"success": "Account deleted successfully"}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
