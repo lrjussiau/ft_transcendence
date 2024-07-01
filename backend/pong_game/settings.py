@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 import dj_database_url
-import re
+from . import logging_filters
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +20,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'channels',
     'corsheaders',
-    # 'pongengine',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
@@ -184,20 +183,14 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
     },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
-    },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+            'level': 'INFO',
         },
-        'pongengine': {
+        'django.channels': {
             'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+            'level': 'DEBUG',  # Assurez-vous que ce logger est bien réglé sur DEBUG
         },
     },
 }
