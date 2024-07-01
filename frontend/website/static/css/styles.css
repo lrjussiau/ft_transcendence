@@ -153,6 +153,11 @@ background-color: #1c221c;
 color: #F6F6F6;
 }
 
+.settings-md-title {
+  font-size: 1vw;
+  font-weight: 600;
+}
+
 /* --AVATAR MODAL-- */
 
 .avatar-body {
@@ -1082,5 +1087,13 @@ input:checked + .slider:before {
 
   .danger-zone {
     border-color: #ff6b6b;
+  }
+
+  .arrow {
+    filter: invert(100%);
+  }
+
+  .arrow2 {
+    filter: invert(100%);
   }
 }

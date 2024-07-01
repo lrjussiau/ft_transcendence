@@ -74,9 +74,9 @@ function toggleHeaderDisplay(route) {
 // Function to handle routes
 async function handleRoute(route) {
   console.log("Handling route:", route);
-  toggleHeaderDisplay(route); // Toggle header display based on route
   switch (route) {
     case 'home':
+      toggleHeaderDisplay(route); // Toggle header display based on route
       await loadPartial('home');
       console.log("Loaded home partial");
       break;
@@ -84,10 +84,13 @@ async function handleRoute(route) {
     case 'user':
     case 'settings':
       if (isAuthenticated()) {
+        toggleHeaderDisplay(route); // Toggle header display based on route
         await loadPartial(route);
       } else {
         localStorage.setItem('initialRoute', '/' + route);
-        await showModal('loginModal', '/static/modals/modals.html');
+        if (!document.querySelector('.modal.show')) {
+          await showModal('loginModal', '/static/modals/modals.html');
+        }
       }
       break;
     default:

@@ -38,10 +38,15 @@ function setupLoginForm() {
         localStorage.setItem("authToken", data.access);
         localStorage.setItem("refreshToken", data.refresh);
         console.log("Login successful");
-        modalClosedByUser = false; // Prevent additional redirection to home
-        hideModal('loginModal');
+        window.modalClosedByUser = false; // Prevent additional redirection to home
+        await hideModal('loginModal');
+        
+        // Navigate to the initial route after successful login
         window.history.pushState({}, '', initialRoute);
         handleRoute(initialRoute.split('/')[1]);
+        
+        // Clear the stored initial route
+        localStorage.removeItem('initialRoute');
 
       } catch (error) {
         console.error("Login error:", error);
