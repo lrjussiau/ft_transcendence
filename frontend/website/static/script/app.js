@@ -11,6 +11,7 @@ let roundTripTime = 0;
 let gameOver = false;
 let gameState = {};
 let ctx = null;
+const playerNum = 1;
 const keys = {};
 const requestTimestamps = {};
 
@@ -124,15 +125,25 @@ function startGame(gameType) {
           drawGameReady();
           updateLastMessage('Game is ready!');
           break;
+        case 'player_assignment':
+            console.log(data.message);
+            window.localPlayerNumber = data.player_num;
+            updateLastMessage(`Player ${data.player_num}`);
+            break;
         case 'player_disconnected':
           console.log('A player has disconnected.');
           updateLastMessage('A player has disconnected.');
           alert('A player has disconnected.');
           break;
+        case 'start_game':
+          console.log('Game has started!');
+          countdownValue = null;
+          draw();
+          break;
         case 'game_over':
           console.log('Game over');
           updateLastMessage('Game over!');
-          alert('Game over!');
+          // alert('Game over!');
           break;
         case 'error':
           console.error('Error from server:', data.message);
@@ -205,8 +216,6 @@ window.addEventListener('keyup', (event) => {
 });
 
 function updateSpeeds() {
-  let newSpeed = 0;
-
   if (selectedGameType === 'local_1v1') {
     const newPlayer1Speed = (keys['s'] ? 5 : 0) + (keys['w'] ? -5 : 0);
     const newPlayer2Speed = (keys['ArrowDown'] ? 5 : 0) + (keys['ArrowUp'] ? -5 : 0);
@@ -220,23 +229,14 @@ function updateSpeeds() {
     }
   } else if (selectedGameType === '1v1') {
     // Determine which keys to use based on the player number
-    const upKey = gameState.p1.username === username ? 'w' : 'ArrowUp';
-    const downKey = gameState.p1.username === username ? 's' : 'ArrowDown';
+    let newSpeed = (keys['s'] ? 5 : 0) + (keys['w'] ? -5 : 0);
 
-    newSpeed = (keys['s'] ? 5 : 0) + (keys['w'] ? -5 : 0);
-
-    if (ws && newSpeed !== (gameState.p1.username === username ? player1Speed : player2Speed)) {
-      const playerNum = gameState.p1.username === username ? 1 : 2;
+    if (ws && newSpeed !== player1Speed) {
       const requestId = requestIdCounter++;
       requestTimestamps[requestId] = performance.now();
-      console.log(`Sending player input: ${JSON.stringify({ t: 'pi', player_num: playerNumber, speed: playerSpeed })}`);
-      ws.send(JSON.stringify({ t: 'pi', player_num: playerNumber, speed: playerSpeed }));
-
-      if (playerNum === 1) {
-        player1Speed = newSpeed;
-      } else {
-        player2Speed = newSpeed;
-      }
+      console.log(`Sending player input: ${JSON.stringify({ t: 'pi', player_num: playerNum, speed: newSpeed })}`);
+      ws.send(JSON.stringify({ t: 'pi', player_num: window.localPlayerNumber, speed: newSpeed, rid: requestId }));
+      player1Speed = newSpeed;
     }
   }
 }

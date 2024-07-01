@@ -70,7 +70,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         logger.debug(f"Data received: {data}")
         action = data.get('t')
         if action == 'pi':
-            self.handle_player_input(data)
+            await self.handle_player_input(data)
         elif action == 'sg' and not self.game_started:
             asyncio.create_task(self.start_game())
         elif action == 'select_game_type' and not self.game_started:
@@ -106,7 +106,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     # --------------------------- INPUT HANDLING ----------------------#
 
-    def handle_player_input(self, data):
+    async def handle_player_input(self, data):
         if self.game_type == 'local_1v1':
             self.handle_local_input(data)
         elif self.game_type == '1v1':
@@ -165,6 +165,15 @@ class PongConsumer(AsyncWebsocketConsumer):
         players = list(self.Players.values())
         for i, player in enumerate(players):
             player['player_num'] = i + 1
+            # Prepare and send a personalized message to each player with their player number
+            player_info_message = json.dumps({
+                'type': 'player_assignment',
+                'player_num': player['player_num'],
+                'message': f'You have been assigned as Player {player["player_num"]}'
+            })
+            await player['object'].send(text_data=player_info_message)
+            logger.debug(f"Assigned Player {player['player_num']} to {player['object'].channel_name}")
+
         await self.broadcast_game_state({'type': 'game_ready'})
         await self.start_game()
 
@@ -172,7 +181,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     async def game_loop(self):
         while self.game_started and not self.game_over:
-            self.update_game_state()
+            await self.update_game_state()
             await self.broadcast_game_state()
             await asyncio.sleep(1 / self.refresh_rate)
 
@@ -203,6 +212,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             await asyncio.sleep(1)
             for player in self.Players.values():
                 await player['object'].send(text_data=json.dumps({'type': 'countdown', 'value': i}))
+        await self.broadcast_game_state({'type': 'start_game'})
 
     async def check_game_over(self):
         if self.player1_score == self.points or self.player2_score == self.points:
@@ -224,7 +234,7 @@ class PongConsumer(AsyncWebsocketConsumer):
     def ball_restart(self):
         self.ball = {"x": 320, "y": 180, "vx": 2.5 * random.choice((1, -1)), "vy": 2.5 * random.choice((1, -1))}
 
-    def update_game_state(self):
+    async def update_game_state(self):
         # Update paddle positions
         if self.game_type == '1v1':
             self.player1["y"] += self.Players['player1']["speed"]
