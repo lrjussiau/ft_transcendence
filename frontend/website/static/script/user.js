@@ -15,7 +15,6 @@ async function loadUserProfile() {
         if (data === null)
             throw new Error('Failed to fetch user profile');
         const usernameElem = document.getElementById('username');
-        console.log('User name:', usernameElem);
         const defaultAvatarElem = document.getElementById('default_avatar');
         const avatarUrlElem = document.getElementById('avatar_url');
         if (usernameElem) {

@@ -73,7 +73,7 @@ function hideModal(modalName) {
 
 function handleModalHidden(modalName) {
   if (modalClosedByUser && (modalName === 'loginModal' || modalName === 'registerModal')) {
-    if (!document.querySelector('.modal.show')) {
+    if (!document.querySelector('.modal.show') && !localStorage.getItem('authToken')) {
       console.log(`Modal ${modalName} hidden, redirecting to home`);
       window.history.pushState({}, '', '/home');
       handleRoute('home');

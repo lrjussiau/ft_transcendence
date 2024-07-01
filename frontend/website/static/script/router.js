@@ -58,7 +58,7 @@ async function loadPartial(partial) {
 
 // Function to check authentication
 function isAuthenticated() {
-  return localStorage.getItem('authToken') !== null;
+  return localStorage.getItem('authToken') !== null && localStorage.getItem('authToken') !== undefined;
 }
 
 // Function to display the header based on the route
@@ -76,7 +76,7 @@ async function handleRoute(route) {
   console.log("Handling route:", route);
   switch (route) {
     case 'home':
-      toggleHeaderDisplay(route); // Toggle header display based on route
+      toggleHeaderDisplay(route); 
       await loadPartial('home');
       console.log("Loaded home partial");
       break;
@@ -84,7 +84,7 @@ async function handleRoute(route) {
     case 'user':
     case 'settings':
       if (isAuthenticated()) {
-        toggleHeaderDisplay(route); // Toggle header display based on route
+        toggleHeaderDisplay(route); 
         await loadPartial(route);
       } else {
         localStorage.setItem('initialRoute', '/' + route);

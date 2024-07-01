@@ -23,6 +23,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True)
     email = models.EmailField(unique=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  # Added avatar field
+    is_2fa_enabled = models.BooleanField(default=False)
+    two_factor_code = models.CharField(max_length=6, blank=True, null=True)
+    two_factor_code_timestamp = models.DateTimeField(null=True, blank=True)
     default_avatar = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -122,8 +122,33 @@ function setInitialTheme() {
 }
 
 function handle2FAToggle() {
-    // Implement 2FA toggle logic here
-    console.log('2FA toggle clicked');
+    fetch('/api/authentication/toggle-2fa/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const button = document.getElementById('toggle-2fa');
+            if (data.is_2fa_enabled) {
+                button.textContent = 'Disable 2FA';
+                button.classList.remove('btn-success');
+                button.classList.add('btn-danger');
+            } else {
+                button.textContent = 'Enable 2FA';
+                button.classList.remove('btn-danger');
+                button.classList.add('btn-success');
+            }
+            alert(data.success);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while toggling 2FA');
+    });
 }
 
 function handleNotificationSettings() {
@@ -153,4 +178,24 @@ function setupSettingsPage() {
     document.getElementById('apply-notifications').addEventListener('click', handleNotificationSettings);
     document.getElementById('apply-language').addEventListener('click', handleLanguageChange);
     document.getElementById('delete-account').addEventListener('click', handleAccountDeletion);
+
+    fetch('/api/authentication/user/profile/', {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const button = document.getElementById('toggle-2fa');
+        if (data.is_2fa_enabled) {
+            button.textContent = 'Disable 2FA';
+            button.classList.remove('btn-success');
+            button.classList.add('btn-danger');
+        } else {
+            button.textContent = 'Enable 2FA';
+            button.classList.remove('btn-danger');
+            button.classList.add('btn-success');
+        }
+    })
+    .catch(error => console.error('Error fetching user profile:', error));
 }

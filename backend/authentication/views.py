@@ -1,4 +1,6 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password, make_password
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -17,10 +19,30 @@ import logging
 from urllib.parse import urlparse
 from django.conf import settings
 import os
+from .utils import generate_and_send_2fa_code, verify_2fa_code
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        
+        user = authenticate(username=username, password=password)
+        if user is None:
+            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        if user.is_2fa_enabled:
+            generate_and_send_2fa_code(user)
+            return Response({
+                'require_2fa': True,
+                'username': user.username
+            }, status=status.HTTP_200_OK)
+        
+        # If 2FA is not enabled, proceed with normal token generation
+        response = super().post(request, *args, **kwargs)
+        return response
 
     
 class RegisterView(APIView):
@@ -68,6 +90,7 @@ class UserProfileView(APIView):
             'status': user.status,
             'is_active': user.is_active,
             'is_staff': user.is_staff,
+            'is_2fa_enabled': user.is_2fa_enabled,
         })
 
 @api_view(['POST'])
@@ -173,3 +196,51 @@ def change_password(request):
     user.save()
 
     return Response({"success": "Password updated successfully."}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def toggle_2fa(request):
+    user = request.user
+    user.is_2fa_enabled = not user.is_2fa_enabled
+    user.save()
+    return Response({
+        "success": f"2FA has been {'enabled' if user.is_2fa_enabled else 'disabled'}.",
+        "is_2fa_enabled": user.is_2fa_enabled
+    }, status=status.HTTP_200_OK)
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        
+        user = authenticate(username=username, password=password)
+        if user is None:
+            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        if user.is_2fa_enabled:
+            generate_and_send_2fa_code(user)
+            return Response({
+                'require_2fa': True,
+                'username': user.username
+            }, status=status.HTTP_200_OK)
+        
+        # If 2FA is not enabled, proceed with normal token generation
+        response = super().post(request, *args, **kwargs)
+        return response
+
+@api_view(['POST'])
+def verify_2fa(request):
+    username = request.data.get('username')
+    code = request.data.get('code')
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if verify_2fa_code(user, code):
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })
+    return Response({'error': 'Invalid or expired code'}, status=status.HTTP_400_BAD_REQUEST)
