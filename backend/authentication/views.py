@@ -1,4 +1,5 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.contrib.auth.hashers import check_password, make_password
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from .serializers import CustomTokenObtainPairSerializer, UserSerializer
@@ -120,3 +121,55 @@ class ChangeAvatarView(APIView):
         user.default_avatar = False
         user.save()
         return Response({'success': 'Avatar updated successfully'}, status=status.HTTP_200_OK)
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_username(request):
+    user = request.user
+    new_username = request.data.get('new_username')
+
+    if not new_username:
+        return Response({"error": "New username is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if User.objects.filter(username=new_username).exists():
+        return Response({"error": "This username is already taken."}, status=status.HTTP_400_BAD_REQUEST)
+
+    user.username = new_username
+    user.save()
+
+    return Response({"success": "Username updated successfully."}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_email(request):
+    user = request.user
+    new_email = request.data.get('new_email')
+
+    if not new_email:
+        return Response({"error": "New email is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if User.objects.filter(email=new_email).exists():
+        return Response({"error": "This email is already registered."}, status=status.HTTP_400_BAD_REQUEST)
+
+    user.email = new_email
+    user.save()
+
+    return Response({"success": "Email updated successfully."}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    user = request.user
+    current_password = request.data.get('current_password')
+    new_password = request.data.get('new_password')
+
+    if not current_password or not new_password:
+        return Response({"error": "Both current and new passwords are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if not check_password(current_password, user.password):
+        return Response({"error": "Current password is incorrect."}, status=status.HTTP_400_BAD_REQUEST)
+
+    user.password = make_password(new_password)
+    user.save()
+
+    return Response({"success": "Password updated successfully."}, status=status.HTTP_200_OK)

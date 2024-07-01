@@ -29,16 +29,17 @@ function setupLoginForm() {
           body: JSON.stringify({ username, password }),
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-          throw new Error("Invalid username or password");
+          throw new Error(data.error || "Invalid username or password");
         }
 
-        const data = await response.json();
         localStorage.setItem("authToken", data.access);
         localStorage.setItem("refreshToken", data.refresh);
         console.log("Login successful");
         modalClosedByUser = false; // Prevent additional redirection to home
-        $('#loginModal').modal('hide');
+        hideModal('loginModal');
         window.history.pushState({}, '', initialRoute);
         handleRoute(initialRoute.split('/')[1]);
 
@@ -50,7 +51,7 @@ function setupLoginForm() {
       } finally {
         isSubmitting = false;
       }
-    }, { once: true });
+    });
   } else {
     console.error("Login form not found");
   }

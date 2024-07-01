@@ -102,23 +102,32 @@ function handleModalHidden(modalName) {
 
 function initializeModal(modalId) {
   switch (modalId) {
-    case 'avatarModal':
-      setupAvatarForm();
-      listAvatars();
-      setupChangeAvatar();
-      break;
-    case 'loginModal':
-      setupLoginForm();
-      setupRegisterButton();
-      break;
-    case 'registerModal':
-      setupRegisterForm();
-      break;
-    case 'friendModal':
-      initializeFriendSearch();
-      break;
-    default:
-      console.error('No setup function for modal:', modalId);
+      case 'avatarModal':
+          setupAvatarForm();
+          listAvatars();
+          setupChangeAvatar();
+          break;
+      case 'loginModal':
+          setupLoginForm();
+          setupRegisterButton();
+          break;
+      case 'registerModal':
+          setupRegisterForm();
+          break;
+      case 'friendModal':
+          initializeFriendSearch();
+          break;
+      case 'usernameChangeModal':
+          setupUsernameChangeModal();
+          break;
+      case 'emailChangeModal':
+          setupEmailChangeModal();
+          break;
+      case 'passwordChangeModal':
+          setupPasswordChangeModal();
+          break;
+      default:
+          console.error('No setup function for modal:', modalId);
   }
 }
 

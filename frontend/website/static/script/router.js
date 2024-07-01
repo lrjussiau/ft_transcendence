@@ -42,6 +42,11 @@ async function loadPartial(partial) {
         displayIncomingFriendRequests();
         displayFriends();
       }
+
+      if (partial === 'settings') {
+        setupSettingsPage();
+        setInitialTheme();
+      }
     } else {
       console.error('#content element not found');
     }

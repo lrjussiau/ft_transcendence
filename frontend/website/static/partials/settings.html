@@ -1,71 +1,64 @@
 <div class="settings-container">
-    <div class="settings-section">
-      <h4>Account Information</h4>
-      <form id="account-form">
-        <div class="form-group">
-          <label for="change-username">Change Username:</label>
-          <input type="text" id="change-username" name="username" placeholder="New username">
-        </div>
-        <div class="form-group">
-          <label for="change-email">Change Email:</label>
-          <input type="email" id="change-email" name="email" placeholder="New email">
-        </div>
-        <div class="form-group">
-          <label for="change-password">Change Password:</label>
-          <input type="password" id="change-password" name="password" placeholder="New password">
-        </div>
-        <div class="btn-center">
-          <button type="submit" class="btn-save btn-success">Save Changes</button>
-        </div>
-      </form>
-    </div>
-  
-    <div class="settings-section app-sec">
-      <div class="appearance">
-        <h4>Appearance</h4>
-        <div class="theme-toggle">
-          <span>Light</span>
-          <label class="switch">
-            <input type="checkbox" id="theme-toggle">
-            <span class="slider round"></span>
-          </label>
-          <span>Dark</span>
-        </div>
-      </div>
-      <div>
-        <hr>
-      </div>
-      <div class="security">
-        <h4>Security</h4>
-        <div class="btn-center">
-          <button id="toggle-2fa" class="btn-toggle btn-success">Enable 2FA</button>
-        </div>
-      </div>
-    </div>
-  
-    <div class="settings-section">
-      <h4>Notifications</h4>
-      <div class="checkbox-group">
-        <input type="checkbox" id="email-notifications">
-        <label for="email-notifications">Receive email notifications</label>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="push-notifications">
-        <label for="push-notifications">Receive push notifications</label>
-      </div>
-    </div>
-  
-    <div class="settings-section">
-      <h4>Language</h4>
-      <select id="language-select">
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-        <option value="es">Español</option>
-      </select>
-    </div>
-  
-    <div class="settings-section danger-zone">
-      <h4>Danger Zone</h4>
-      <button id="delete-account" class="btn-danger">Delete Account</button>
+  <div class="settings-section">
+    <h4>Account Information</h4>
+    <div class="account-buttons">
+      <button data-modal="usernameChangeModal" data-html="/static/modals/modals.html" class="modal-button modal-trigger">Change Username</button>
+      <button data-modal="emailChangeModal" data-html="/static/modals/modals.html" class="modal-button modal-trigger">Change Email</button>
+      <button data-modal="passwordChangeModal" data-html="/static/modals/modals.html" class="modal-button modal-trigger">Change Password</button>
     </div>
   </div>
+  <div class="settings-section app-sec">
+    <div class="appearance">
+      <h4>Appearance</h4>
+      <div class="theme-toggle">
+        <span>Light</span>
+        <label class="switch">
+          <input type="checkbox" id="theme-toggle">
+          <span class="slider round"></span>
+        </label>
+        <span>Dark</span>
+      </div>
+    </div>
+    <div>
+      <hr>
+    </div>
+    <div class="security">
+      <h4>Security</h4>
+      <div class="btn-center">
+        <button id="toggle-2fa" class="btn-toggle btn-success">Enable 2FA</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h4>Notifications</h4>
+    <div class="checkbox-group">
+      <input type="checkbox" id="email-notifications">
+      <label for="email-notifications">Receive email notifications</label>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="push-notifications">
+      <label for="push-notifications">Receive push notifications</label>
+    </div>
+    <div class="btn-center">
+      <button id="apply-notifications" class="btn-apply btn-success">Apply Changes</button>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h4>Language</h4>
+    <select id="language-select">
+      <option value="en">English</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+    </select>
+    <div class="btn-center">
+      <button id="apply-language" class="btn-apply btn-success">Apply Changes</button>
+    </div>
+  </div>
+
+  <div class="settings-section danger-zone">
+    <h4>Danger Zone</h4>
+    <button id="delete-account" class="btn-danger">Delete Account</button>
+  </div>
+</div>

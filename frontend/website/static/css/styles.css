@@ -64,9 +64,6 @@ p {
   width: 75%;
   height: 70vh;
   overflow: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .linear-title {
@@ -708,7 +705,7 @@ th {
   object-fit: cover;
 }
 
-.online img {
+.online {
   border: 3px solid rgb(28, 225, 28);
 }
 
@@ -855,11 +852,6 @@ th {
   font-family: Arial, sans-serif;
 }
 
-.settings-title {
-  text-align: center;
-  color: #333;
-}
-
 .settings-section {
   display: flex;
   flex-direction: column;
@@ -871,34 +863,26 @@ th {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.settings-section h3 {
-  margin-top: 0;
-  color: #444;
+.settings-section h2 {
+  margin-bottom: 5%;
 }
 
-.form-group {
-  margin-bottom: 15px;
+.account-buttons {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.btn-save, .btn-toggle, .btn-confirm {
-  background-color: #4CAF50;
+.btn-save, .btn-toggle, .btn-confirm, .btn-apply {
+  background-color: #00c1009e;
+  border-color: #00c10081;
   color: white;
   border: none;
   width: 40%;
   padding: 10px 15px;
-  margin: 0;
+  margin: 10px 0;
   justify-self: center;
   border-radius: 4px;
   cursor: pointer;
@@ -985,6 +969,7 @@ input:checked + .slider:before {
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  margin-bottom: 10px;
 }
 
 .danger-zone {
@@ -1011,4 +996,91 @@ input:checked + .slider:before {
 .canvas {
   background-color: black;
   display: none;
+}
+
+/* Dark mode styles */
+[data-theme="dark"] {
+  body {
+    background-color: #1a1a1a;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  header {
+    background-color: #1a1a1a;
+    border-bottom-color: #ffffff1a;
+  }
+
+  .settings-section, .modal-content {
+    background-color: #2a2a2a;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-play {
+    border-color: #00ff0080;
+    color: #00ff0080;
+  }
+
+  .btn-play:hover {
+    background-color: #00ff0080;
+    color: #1a1a1a;
+  }
+
+  .modal-button {
+    border-color: #e3e3e3;
+  }
+
+  .modal-button:hover {
+    background-color: #e3e3e3;
+    color: #1a1a1a;
+  }
+
+  .form-control, #language-select {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    border-color: #4a4a4a;
+  }
+
+  .avatarList {
+    border-color: #4a4a4a;
+  }
+
+  .table-container {
+    box-shadow: 1px 4px 10px 4px rgba(255,255,255,0.1);
+  }
+
+  th {
+    background-color: #2a2a2a;
+  }
+
+  .btn-success {
+    background-color: #00ff0080;
+  }
+
+  .btn-success:hover {
+    background-color: #00ff00a0;
+  }
+
+  .btn-danger {
+    background-color: #ff000080;
+  }
+
+  .btn-danger:hover {
+    background-color: #ff0000a0;
+  }
+
+  .player-card, .settings-section {
+    box-shadow: 1px 4px 10px 4px rgba(255,255,255,0.1);
+  }
+
+  .slider {
+    background-color: #4a4a4a;
+  }
+
+  input:checked + .slider {
+    background-color: #3a8ac9;
+  }
+
+  .danger-zone {
+    border-color: #ff6b6b;
+  }
 }
