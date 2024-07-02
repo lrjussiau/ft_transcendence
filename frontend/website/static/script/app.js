@@ -273,13 +273,11 @@ function draw() {
     ctx.fillText(`Game Start in ${countdownValue}`, canvas.width / 2, canvas.height / 2);
   } else if (gameState && gameState.ball) {
     drawMiddleLine(ctx, scaleX);
-    ctx.beginPath();
-    ctx.arc(gameState.ball.x * scaleX, gameState.ball.y * scaleY, 5 * scaleX, 0, Math.PI * 2);
-    ctx.fill();
 
-    // Check if it is local or online game to determine paddle positions
+    // Check if it is local or online game to determine ball and paddle positions
     if (selectedGameType === 'local_1v1') {
       // Local game, fixed positions
+      drawBall(ctx, gameState.ball.x, gameState.ball.y, scaleX, scaleY);
       ctx.fillRect(5 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY); // Always left
       ctx.fillRect(canvas.width - 15 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY); // Always right
     } else if (selectedGameType === '1v1') {
@@ -288,8 +286,17 @@ function draw() {
       const playerPaddle = isPlayerOne ? gameState.p1 : gameState.p2;
       const opponentPaddle = isPlayerOne ? gameState.p2 : gameState.p1;
 
-      ctx.fillRect(5 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the left
-      ctx.fillRect(canvas.width - 15 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the right
+      if (isPlayerOne) {
+        // Player 1's perspective
+        drawBall(ctx, gameState.ball.x, gameState.ball.y, scaleX, scaleY);
+        ctx.fillRect(5 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the left
+        ctx.fillRect(canvas.width - 15 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the right
+      } else {
+        // Player 2's perspective
+        drawBall(ctx, 640 - gameState.ball.x, 360 - gameState.ball.y, scaleX, scaleY); // Invert ball position
+        ctx.fillRect(5 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the left
+        ctx.fillRect(canvas.width - 15 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the right
+      }
     }
 
     ctx.font = `${20 * scaleX}px 'Roboto', sans-serif`;
@@ -306,13 +313,22 @@ function draw() {
 }
 
 function drawMiddleLine(ctx, scaleX) {
-  ctx.strokeStyle = 'white';
-  ctx.lineWidth = 2 * scaleX;
   ctx.beginPath();
+  ctx.setLineDash([5, 15]);
   ctx.moveTo(ctx.canvas.width / 2, 0);
   ctx.lineTo(ctx.canvas.width / 2, ctx.canvas.height);
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 2 * scaleX;
   ctx.stroke();
+  ctx.setLineDash([]);
 }
+
+function drawBall(ctx, x, y, scaleX, scaleY) {
+  ctx.beginPath();
+  ctx.arc(x * scaleX, y * scaleY, 5 * scaleX, 0, Math.PI * 2);
+  ctx.fill();
+}
+
 
 function drawWaitingForOpponent() {
   const canvas = document.getElementById('gameCanvas');
