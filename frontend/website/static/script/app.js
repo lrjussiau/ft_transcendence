@@ -1,18 +1,19 @@
 // utils.js
 
-let selectedGameType = null;
+let ws = null;
+let ctx = null;
 let username = '';
 let countdownValue = null;
-let ws = null;
+let latestGameState = null;
+let selectedGameType = null;
 let player1Speed = 0;
 let player2Speed = 0;
-let requestIdCounter = 0;
 let roundTripTime = 0;
+let requestIdCounter = 0;
 let gameOver = false;
-let gameState = {};
-let ctx = null;
 const playerNum = 1;
 const keys = {};
+let gameState = {};
 const requestTimestamps = {};
 
 async function fetchUserProfile() {
@@ -40,7 +41,6 @@ function displayUsername(username) {
     usernameSpan.textContent = username;
   }
 }
-
 
 function selectGameType(gameType) {
   selectedGameType = gameType;
@@ -87,7 +87,7 @@ function startGame(gameType) {
           ws.send(JSON.stringify({ t: 'sg' }));
           break;
         case '1v1':
-          ws.send(JSON.stringify({ t: 'join', player_id: 'player1' }));
+          ws.send(JSON.stringify({ t: 'join', player_id: localPlayerNumber }));
           break;
         default:
           console.error(`Unsupported game type: ${gameType}`);
@@ -124,6 +124,7 @@ function startGame(gameType) {
           console.log('Game is ready!');
           drawGameReady();
           updateLastMessage('Game is ready!');
+          ws.send(JSON.stringify({ t: 'sg' }));
           break;
         case 'player_assignment':
             console.log(data.message);
@@ -216,9 +217,10 @@ window.addEventListener('keyup', (event) => {
 });
 
 function updateSpeeds() {
+  let newPlayerSpeed;
   if (selectedGameType === 'local_1v1') {
-    const newPlayer1Speed = (keys['s'] ? 5 : 0) + (keys['w'] ? -5 : 0);
-    const newPlayer2Speed = (keys['ArrowDown'] ? 5 : 0) + (keys['ArrowUp'] ? -5 : 0);
+    const newPlayer1Speed = (keys['w'] ? -5 : 0) + (keys['s'] ? 5 : 0);
+    const newPlayer2Speed = (keys['ArrowUp'] ? -5 : 0) + (keys['ArrowDown'] ? 5 : 0);
 
     if (ws && (newPlayer1Speed !== player1Speed || newPlayer2Speed !== player2Speed)) {
       player1Speed = newPlayer1Speed;
@@ -228,15 +230,24 @@ function updateSpeeds() {
       ws.send(JSON.stringify({ t: 'pi', p1: player1Speed, p2: player2Speed, rid: requestId }));
     }
   } else if (selectedGameType === '1v1') {
-    // Determine which keys to use based on the player number
-    let newSpeed = (keys['s'] ? 5 : 0) + (keys['w'] ? -5 : 0);
+    // Send speed updates based on the assigned player number
+    newPlayerSpeed = (keys['w'] ? -5 : 0) + (keys['s'] ? 5 : 0);
 
-    if (ws && newSpeed !== player1Speed) {
+    if (ws && newPlayerSpeed !== (window.localPlayerNumber === 1 ? player1Speed : player2Speed)) {
       const requestId = requestIdCounter++;
       requestTimestamps[requestId] = performance.now();
-      console.log(`Sending player input: ${JSON.stringify({ t: 'pi', player_num: playerNum, speed: newSpeed })}`);
-      ws.send(JSON.stringify({ t: 'pi', player_num: window.localPlayerNumber, speed: newSpeed, rid: requestId }));
-      player1Speed = newSpeed;
+      // Send control inputs based on the player number
+      const controlKey = window.localPlayerNumber === 1 ? 'p1' : 'p2';
+      ws.send(JSON.stringify({
+        t: 'pi',
+        [controlKey]: newPlayerSpeed,
+        rid: requestId
+      }));
+      if (window.localPlayerNumber === 1) {
+        player1Speed = newPlayerSpeed;
+      } else {
+        player2Speed = newPlayerSpeed;
+      }
     }
   }
 }
@@ -255,48 +266,29 @@ function draw() {
   const scaleX = canvas.width / 640;
   const scaleY = canvas.height / 360;
 
-  // Draw elements based on game state and game type
   if (countdownValue !== null) {
-    // Draw countdown
     ctx.font = `${40 * scaleX}px 'Roboto', sans-serif`;
     ctx.textAlign = 'center';
     ctx.fillText(`Game Start in ${countdownValue}`, canvas.width / 2, canvas.height / 2);
   } else if (gameState && gameState.ball) {
-
-    // Draw middle line
     drawMiddleLine(ctx, scaleX);
-
-    // Draw ball
     ctx.beginPath();
     ctx.arc(gameState.ball.x * scaleX, gameState.ball.y * scaleY, 5 * scaleX, 0, Math.PI * 2);
     ctx.fill();
 
-    // Conditionally draw paddles based on the player's perspective in 1v1
-    if (selectedGameType === '1v1') {
-      const isPlayerOne = username === gameState.p1.username;  // Assuming username is set to the player's username
+    const isPlayerOne = window.localPlayerNumber === 1;
+    const playerPaddle = isPlayerOne ? gameState.p1 : gameState.p2;
+    const opponentPaddle = isPlayerOne ? gameState.p2 : gameState.p1;
 
-      // Draw player's own paddle on the left if Player 1, otherwise on the right
-      if (isPlayerOne) {
-        ctx.fillRect(5 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY);
-        ctx.fillRect(canvas.width - 15 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY);
-      } else {
-        ctx.fillRect(5 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY);
-        ctx.fillRect(canvas.width - 15 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY);
-      }
-    } else if (selectedGameType === 'local_1v1') {
-      // In local 1v1, always draw player1 on left and player2 on right
-      ctx.fillRect(5 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY);
-      ctx.fillRect(canvas.width - 15 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY);
-    }
+    ctx.fillRect(5 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY);
+    ctx.fillRect(canvas.width - 15 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY);
 
-    // Draw scores and RTT (Round-Trip Time)
     ctx.font = `${20 * scaleX}px 'Roboto', sans-serif`;
-    ctx.fillText(gameState.s1, 30 * scaleX, 30 * scaleY);  // Score for player 1
-    ctx.fillText(gameState.s2, canvas.width - 30 * scaleX, 30 * scaleY);  // Score for player 2
+    ctx.fillText(gameState.s1, 30 * scaleX, 30 * scaleY);
+    ctx.fillText(gameState.s2, canvas.width - 30 * scaleX, 30 * scaleY);
     ctx.font = `${12 * scaleX}px 'Roboto', sans-serif`;
     ctx.fillText(`Delta: ${roundTripTime.toFixed(0)} ms`, canvas.width - 100 * scaleX, canvas.height - 10 * scaleY);
   } else {
-    // Waiting for server response
     ctx.font = `${20 * scaleX}px 'Roboto', sans-serif`;
     ctx.textAlign = 'center';
     ctx.fillText('Waiting for Server response ...', canvas.width / 2, canvas.height / 2);
@@ -339,9 +331,8 @@ function drawGameReady() {
   ctx.fillStyle = 'white';
   ctx.font = '20px Arial';
   ctx.textAlign = 'center';
-  ctx.fillText('Game is ready! Starting now...', canvas.width / 2, canvas.height / 2);
+  ctx.fillText(`Game is ready! You are Player ${window.localPlayerNumber}`, canvas.width / 2, canvas.height / 2);
 }
-
 
 window.updateGameStateFromServer = function (data) {
   if (data.type === 'countdown') {
