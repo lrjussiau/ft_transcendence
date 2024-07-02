@@ -107,21 +107,13 @@ class PongConsumer(AsyncWebsocketConsumer):
     # --------------------------- INPUT HANDLING ----------------------#
 
     async def handle_player_input(self, data):
-        player1_speed = data.get('p1', 0)
-        player2_speed = data.get('p2', 0)
-        self.player1["speed"] = player1_speed
-        self.player2["speed"] = player2_speed
-
-        # if not self.game_started:
-        #     logger.error("Received input while game not started")
-        #     return
-        # if self.game_type == 'local_1v1':
-        #     self.handle_local_input(data)
-        # elif self.game_type == '1v1':
-        #     self.handle_1v1_input(data)
-        # else:
-        #     logger.warning(f"Unexpected game type: {self.game_type}")
-        #     return
+        if self.game_type == 'local_1v1':
+            self.handle_local_input(data)
+        elif self.game_type == '1v1':
+            self.handle_1v1_input(data)
+        else:
+            logger.warning(f"Unexpected game type: {self.game_type}")
+            return
         asyncio.create_task(self.broadcast_game_state())
 
     def handle_local_input(self, data):
@@ -130,26 +122,18 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.player1["speed"] = player1_speed
         self.player2["speed"] = player2_speed
 
-
     def handle_1v1_input(self, data):
-        player_num = data.get('player_num')
-        player1_speed = data.get('p1', 0)  # vitesse du joueur 1
-        player2_speed = data.get('p2', 0)  # vitesse du joueur 2
+        player_num = data.get('player_num', 0)
+        speed = data.get('speed', 0)
 
-        # Assurez-vous que les données sont bien structurées pour le mode 1v1.
         if player_num == 1:
-            # Si c'est le joueur 1, on utilise les vitesses pour le joueur 1 et le joueur 2.
-            self.Players['player1']["speed"] = player1_speed
-            self.Players['player2']["speed"] = player2_speed
+            self.player1["speed"] = speed
+            logger.debug(f"Player 1 speed set to {speed}")
         elif player_num == 2:
-            # Si c'est le joueur 2, on suppose que les vitesses peuvent être inversées.
-            self.Players['player1']["speed"] = player2_speed
-            self.Players['player2']["speed"] = player1_speed
+            self.player2["speed"] = speed
+            logger.debug(f"Player 2 speed set to {speed}")
         else:
-            logger.error("Invalid player number received in input.")
-
-        # Après mise à jour, diffusez l'état du jeu à tous les joueurs.
-        asyncio.create_task(self.broadcast_game_state())
+            logger.error(f"Invalid player number received: {player_num}")
 
     async def handle_game_selection(self, data):
         self.username = data.get('username', 'Player')
@@ -168,7 +152,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             self.player2 = {"y": 180, "speed": 0}
             self.Players[self.channel_name]['player_num'] = 1
             await self.start_game()
-        elif self.game_type == '1v1':
+        elif self.game_type == '1v1' and not self.game_started:
             if len(self.Players) >= 2:
                 await self.assign_players()
             else:
@@ -258,6 +242,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         # elif self.game_type == 'local_1v1':
         self.player1["y"] += self.player1["speed"]
         self.player2["y"] += self.player2["speed"]
+        logger.debug(f"P1 y: {self.player1['y']} | P2 y: {self.player2['y']}")
         # Clamp paddle positions
         self.player1["y"] = max(0, min(self.player1["y"], 360 - self.paddle_height))
         self.player2["y"] = max(0, min(self.player2["y"], 360 - self.paddle_height))

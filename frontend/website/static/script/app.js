@@ -28,6 +28,7 @@ async function fetchUserProfile() {
     const userData = await response.json();
     displayUsername(userData.username);
     // document.getElementById('displayToken').textContent = token;
+    username = userData.username
     return userData;
   } else {
     console.error("Failed to fetch user profile:", await response.text());
@@ -230,26 +231,26 @@ function updateSpeeds() {
       ws.send(JSON.stringify({ t: 'pi', p1: player1Speed, p2: player2Speed, rid: requestId }));
     }
   } else if (selectedGameType === '1v1') {
-    // Send speed updates based on the assigned player number
     newPlayerSpeed = (keys['w'] ? -5 : 0) + (keys['s'] ? 5 : 0);
 
     if (ws && newPlayerSpeed !== (window.localPlayerNumber === 1 ? player1Speed : player2Speed)) {
       const requestId = requestIdCounter++;
       requestTimestamps[requestId] = performance.now();
-      // Send control inputs based on the player number
-      const controlKey = window.localPlayerNumber === 1 ? 'p1' : 'p2';
-      ws.send(JSON.stringify({
-        t: 'pi',
-        [controlKey]: newPlayerSpeed,
-        rid: requestId
-      }));
+     
       if (window.localPlayerNumber === 1) {
         player1Speed = newPlayerSpeed;
       } else {
         player2Speed = newPlayerSpeed;
       }
+      ws.send(JSON.stringify({
+        t: 'pi',
+        player_num: window.localPlayerNumber,
+        speed: newPlayerSpeed,
+        rid: requestId
+      }));
     }
   }
+  // console.log(`${username} is ${window.localPlayerNumber}`);
 }
 
 function draw() {
@@ -276,16 +277,25 @@ function draw() {
     ctx.arc(gameState.ball.x * scaleX, gameState.ball.y * scaleY, 5 * scaleX, 0, Math.PI * 2);
     ctx.fill();
 
-    const isPlayerOne = window.localPlayerNumber === 1;
-    const playerPaddle = isPlayerOne ? gameState.p1 : gameState.p2;
-    const opponentPaddle = isPlayerOne ? gameState.p2 : gameState.p1;
+    // Check if it is local or online game to determine paddle positions
+    if (selectedGameType === 'local_1v1') {
+      // Local game, fixed positions
+      ctx.fillRect(5 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY); // Always left
+      ctx.fillRect(canvas.width - 15 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY); // Always right
+    } else if (selectedGameType === '1v1') {
+      // Online game, dynamic positions based on player number
+      const isPlayerOne = window.localPlayerNumber === 1;
+      const playerPaddle = isPlayerOne ? gameState.p1 : gameState.p2;
+      const opponentPaddle = isPlayerOne ? gameState.p2 : gameState.p1;
 
-    ctx.fillRect(5 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY);
-    ctx.fillRect(canvas.width - 15 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY);
+      ctx.fillRect(5 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the left
+      ctx.fillRect(canvas.width - 15 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the right
+    }
 
     ctx.font = `${20 * scaleX}px 'Roboto', sans-serif`;
-    ctx.fillText(gameState.s1, 30 * scaleX, 30 * scaleY);
-    ctx.fillText(gameState.s2, canvas.width - 30 * scaleX, 30 * scaleY);
+    ctx.fillText(gameState.s1, 30 * scaleX, 30 * scaleY); // Always player 1 score on the left
+    ctx.fillText(gameState.s2, canvas.width - 30 * scaleX, 30 * scaleY); // Always player 2 score on the right
+
     ctx.font = `${12 * scaleX}px 'Roboto', sans-serif`;
     ctx.fillText(`Delta: ${roundTripTime.toFixed(0)} ms`, canvas.width - 100 * scaleX, canvas.height - 10 * scaleY);
   } else {
