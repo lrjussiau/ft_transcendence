@@ -16,7 +16,7 @@ down:
 
 nuke:
 	@echo "Arrêt et suppression de tous les conteneurs et ressources Docker liés au fichier docker-compose..."
-	docker-compose -f $(DOCKER_COMPOSE_FILE) down --volumes --remove-orphans
+	docker-compose -f $(DOCKER_COMPOSE_FILE) down --remove-orphans
 	@if [ -n "$$(docker images -q $$(docker-compose -f $(DOCKER_COMPOSE_FILE) config | grep 'image:' | awk '{print $$2}'))" ]; then docker rmi -f $$(docker images -q $$(docker-compose -f $(DOCKER_COMPOSE_FILE) config | grep 'image:' | awk '{print $$2}')); fi
 
 re: down build up
