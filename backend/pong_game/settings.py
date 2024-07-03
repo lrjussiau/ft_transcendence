@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-evf%hu@og7(($d3wkktj(p*jli54+zd+b(^0f_$+aq&k(4&qo*
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', '10.13.6.2']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,7 +20,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'channels',
     'corsheaders',
-    # 'pongengine',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
@@ -32,7 +31,6 @@ INSTALLED_APPS = [
     'blockchain',
 ]
 
-# Media files (Uploaded by users)
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -80,31 +78,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-# CORS_ALLOW_ALL_ORIGINS = True
-
-# CORS_ALLOW_METHODS = [
-#     "DELETE",
-#     "GET",
-#     "OPTIONS",
-#     "PATCH",
-#     "POST",
-#     "PUT",
-# ]
-
-# CORS_ALLOW_HEADERS = [
-#     "accept",
-#     "accept-encoding",
-#     "authorization",
-#     "content-type",
-#     "dnt",
-#     "origin",
-#     "user-agent",
-#     "x-csrftoken",
-#     "x-requested-with",
-# ]
-
-# CORS_ALLOW_CREDENTIALS = True
-
 ROOT_URLCONF = 'pong_game.urls'
 
 TEMPLATES = [
@@ -123,7 +96,6 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'pong_game.wsgi.application'
 ASGI_APPLICATION = 'pong_game.asgi.application'
 CHANNEL_LAYERS = {
     'default': {
@@ -166,12 +138,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-#STATIC_URL = '/static/'
-#STATICFILES_DIRS = [
-#    BASE_DIR / "static",
-#]
-#STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

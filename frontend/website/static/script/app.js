@@ -275,29 +275,30 @@ function draw() {
     drawMiddleLine(ctx, scaleX);
 
     // Check if it is local or online game to determine ball and paddle positions
-    if (selectedGameType === 'local_1v1') {
-      // Local game, fixed positions
+    // if (selectedGameType === 'local_1v1') 
+    //   {
+    //   // Local game, fixed positions
       drawBall(ctx, gameState.ball.x, gameState.ball.y, scaleX, scaleY);
       ctx.fillRect(5 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY); // Always left
       ctx.fillRect(canvas.width - 15 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY); // Always right
-    } else if (selectedGameType === '1v1') {
-      // Online game, dynamic positions based on player number
-      const isPlayerOne = window.localPlayerNumber === 1;
-      const playerPaddle = isPlayerOne ? gameState.p1 : gameState.p2;
-      const opponentPaddle = isPlayerOne ? gameState.p2 : gameState.p1;
+    // } else if (selectedGameType === '1v1') {
+    //   // Online game, dynamic positions based on player number
+    //   const isPlayerOne = window.localPlayerNumber === 1;
+    //   const playerPaddle = isPlayerOne ? gameState.p1 : gameState.p2;
+    //   const opponentPaddle = isPlayerOne ? gameState.p2 : gameState.p1;
 
-      if (isPlayerOne) {
-        // Player 1's perspective
-        drawBall(ctx, gameState.ball.x, gameState.ball.y, scaleX, scaleY);
-        ctx.fillRect(5 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the left
-        ctx.fillRect(canvas.width - 15 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the right
-      } else {
-        // Player 2's perspective
-        drawBall(ctx, 640 - gameState.ball.x, 360 - gameState.ball.y, scaleX, scaleY); // Invert ball position
-        ctx.fillRect(5 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the left
-        ctx.fillRect(canvas.width - 15 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the right
-      }
-    }
+    //   if (isPlayerOne) {
+    //     // Player 1's perspective
+    //     drawBall(ctx, gameState.ball.x, gameState.ball.y, scaleX, scaleY);
+    //     ctx.fillRect(5 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the left
+    //     ctx.fillRect(canvas.width - 15 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the right
+    //   } else {
+    //     // Player 2's perspective
+    //     drawBall(ctx, 640 - gameState.ball.x, 360 - gameState.ball.y, scaleX, scaleY); // Invert ball position
+    //     ctx.fillRect(5 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the left
+    //     ctx.fillRect(canvas.width - 15 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the right
+    //   }
+    // }
 
     ctx.font = `${20 * scaleX}px 'Roboto', sans-serif`;
     ctx.fillText(gameState.s1, 30 * scaleX, 30 * scaleY); // Always player 1 score on the left
