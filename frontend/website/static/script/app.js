@@ -35,24 +35,31 @@ const keys = {};
 let gameState = {};
 const requestTimestamps = {};
 
-async function fetchUserProfile() {
-  const token = localStorage.getItem('authToken');
-  const response = await fetch('/api/authentication/user/profile/', {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  });
-
-  if (response.ok) {
-    const userData = await response.json();
-    displayUsername(userData.username);
-    username = userData.username
-    return userData;
-  } else {
-    console.error("Failed to fetch user profile:", await response.text());
-    throw new Error('Failed to fetch user profile');
-  }
+async function launchGame() {
+  initializeStartButton();
+  const userData = await fetchUserProfile(); 
+  console.log('User name: ', userData.username);
+  displayUsername(userData.username);
 }
+
+// async function fetchUserProfile() {
+//   const token = localStorage.getItem('authToken');
+//   const response = await fetch('/api/authentication/user/profile/', {
+//     headers: {
+//       'Authorization': `Bearer ${token}`
+//     }
+//   });
+
+//   if (response.ok) {
+//     const userData = await response.json();
+//     displayUsername(userData.username);
+//     username = userData.username
+//     return userData;
+//   } else {
+//     console.error("Failed to fetch user profile:", await response.text());
+//     throw new Error('Failed to fetch user profile');
+//   }
+// }
 
 function displayUsername(username) {
   const usernameSpan = document.getElementById('displayUsername');

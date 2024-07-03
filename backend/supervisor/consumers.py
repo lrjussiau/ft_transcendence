@@ -31,15 +31,15 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     Players = {}
     points = 50
-    refresh_rate = 60
-    speed_buff = 6 / 5
+    refresh_rate = 120
+    speed_buff = 2
     paddle_height = 70
     center_paddle_offset = paddle_height / 2
     max_angle = 45
     game_lock = asyncio.Lock()
     Debug_log = True
     last_update_time = None
-    global_speed_factor = 1.25
+    global_speed_factor = 2
 
     # ----------------------- WEBSOCKET MANAGEMENT -------------------#
 

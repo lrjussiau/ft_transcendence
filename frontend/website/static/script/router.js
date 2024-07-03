@@ -33,8 +33,9 @@ async function loadPartial(partial) {
       console.log("Connected to WebSocket");
 
       if (partial === 'game') {
-        initializeStartButton();
-        fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
+        launchGame();
+        // initializeStartButton();
+        // fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
       }
 
       // Call setupModalTriggers to ensure modal triggers are set up for dynamically loaded content

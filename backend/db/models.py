@@ -66,6 +66,7 @@ class Match(models.Model):
     player2_score = models.IntegerField()
     match_date = models.DateTimeField()
     is_ia = models.BooleanField(default=False)
+    game_type = models.CharField(max_length=255)
 
 class UserStat(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stats')
