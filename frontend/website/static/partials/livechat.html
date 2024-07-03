@@ -1,8 +1,8 @@
 <div class="chat-container">
   <div class="chat-area">
     <div class="chat-header">
-        <h5 class="player-name chat-username"><span id="username">Sabino</span></h5>
-        <div class="img-container chat-img-container">
+        <h5 class="player-name chat-username"><span id="username">Live Chat</span></h5>
+        <div class="img-container chat-img-container" style="display: none">
           <img src="http://localhost:8080/media/avatars/default_avatar.png" alt="player-img" class="chat-img">
         </div>
     </div>
@@ -27,7 +27,7 @@
           </div> -->
       </div>
       <div class="input-area">
-          <input type="text" placeholder="Type a message..." id="messageInput" class="input-message">
+          <input type="text" placeholder="Type a message..." id="messageInput" class="input-message" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
           <button onclick="sendMessage()" class="send-message">Send</button>
       </div>
   </div>

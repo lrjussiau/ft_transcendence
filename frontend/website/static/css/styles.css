@@ -1203,7 +1203,7 @@ input:checked + .slider:before {
 }
 
 .chat-picture {
-  width: 15%;
+  width: 10%;
   border-radius: 50%;
   margin-right: 4%;
   margin-left: 2%;
@@ -1211,7 +1211,7 @@ input:checked + .slider:before {
 }
 
 .chat-picture-online {
-  width: 15%;
+  width: 10%;
   border-radius: 50%;
   margin-right: 4%;
   margin-left: 2%;
