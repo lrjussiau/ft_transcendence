@@ -27,6 +27,9 @@ async function loadUserProfile() {
             avatarUrlElem.textContent = data.avatar_url || 'No avatar available';
         }
         updateProfileImage(data.default_avatar, data.avatar_url);
+        displayIncomingFriendRequests();
+        displayFriends();
+        setupFriendListeners();
     } catch (error) {
         console.error('Error loading user profile:', error);
     }

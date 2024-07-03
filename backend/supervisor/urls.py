@@ -9,5 +9,6 @@ urlpatterns = [
     path('db/', include('db.urls')),
     path('blockchain/', include('blockchain.urls')),
     path('friends/', include('friends.urls')),
-    # path('pong/', include('pongengine.urls')),
+    path('chat/', include('livechat.urls')),
 ]
+

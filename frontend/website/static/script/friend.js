@@ -141,11 +141,18 @@ async function displayFriends() {
             friends.forEach(friend => {
                 const listItem = document.createElement('li');
                 listItem.className = 'accepted-friend-item';
+                listItem.dataset.friendId = friend.friend.id; // Add this line
 
                 const img = document.createElement('img');
-                img.src = friend.friend.avatar || 'default-avatar-url.jpg';
+                img.src = friend.friend.avatar || 'http://localhost:8080/media/avatars/default_avatar.png';
                 img.alt = 'player-img';
-                img.className = 'accepted-friend-img';
+
+                // Check friend's status and set the class accordingly
+                if (friend.friend.status === 'online') {
+                    img.className = 'accepted-friend-img-online';
+                } else {
+                    img.className = 'accepted-friend-img';
+                }
 
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'accepted-friend-name';
@@ -157,13 +164,66 @@ async function displayFriends() {
                 friendsList.appendChild(listItem);
             });
         } else {
-            friendsList.innerHTML = '<li class="accepted-friend-item">No friends found</li>';
+            friendsList.innerHTML = '<li>* No friends found</li>';
         }
     } catch (error) {
         console.error('Error fetching friends list:', error);
     }
 }
 
+function showContextMenu(event, friendId, friendName) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const existingMenu = document.querySelector('.friend-context-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+
+    const contextMenu = document.createElement('div');
+    contextMenu.className = 'friend-context-menu';
+    contextMenu.style.position = 'absolute';
+    contextMenu.style.left = `${event.pageX}px`;
+    contextMenu.style.top = `${event.pageY}px`;
+    contextMenu.style.zIndex = '1000';
+
+    const sendMessageBtn = document.createElement('button');
+    sendMessageBtn.textContent = 'Send a message';
+    sendMessageBtn.onclick = async (e) => {
+        e.stopPropagation();
+        try {
+            await startChat(friendId, friendName);
+        } catch (error) {
+            console.error('Error starting chat:', error);
+            alert('Failed to start chat. Please try again.');
+        }
+        contextMenu.remove();
+    };
+
+    contextMenu.appendChild(sendMessageBtn);
+    document.body.appendChild(contextMenu);
+
+    document.addEventListener('click', function closeMenu(e) {
+        if (!contextMenu.contains(e.target)) {
+            contextMenu.remove();
+            document.removeEventListener('click', closeMenu);
+        }
+    });
+}
+// Add this function to the friend.js file
+function setupFriendListeners() {
+    const friendList = document.getElementById('friendList');
+    if (friendList) {
+        friendList.addEventListener('click', (event) => {
+            const friendItem = event.target.closest('.accepted-friend-item');
+            if (friendItem) {
+                const friendId = friendItem.dataset.friendId;
+                const friendName = friendItem.querySelector('.accepted-friend-name').textContent;
+                showContextMenu(event, friendId, friendName);
+            }
+        });
+    }
+}
 
 async function initializeFriendSearch() {
     $(document).ready(async function() {
@@ -206,3 +266,7 @@ async function initializeFriendSearch() {
         });
     });
 }
+
+
+
+document.addEventListener('DOMContentLoaded', setupFriendListeners);

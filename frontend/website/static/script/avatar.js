@@ -40,11 +40,12 @@ function setupAvatarForm() {
     } else {
         console.error('Avatar form not found');
     }
-  }
-
-  document.querySelector('.custom-button').addEventListener('click', function() {
-    document.querySelector('.file-input').click();
-  });
+}
+    if (document.querySelector('.custom-button') !== null) {
+        document.querySelector('.custom-button').addEventListener('click', function() {
+        document.querySelector('.file-input').click();
+    });
+}
 
 async function listAvatars() {
     const avatarForm = document.getElementById('avatarForm');

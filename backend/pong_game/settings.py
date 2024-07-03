@@ -24,12 +24,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
+    'status',
     'dj_database_url',
     'supervisor',
     'authentication',
     'db',
     'friends',
     'blockchain',
+    'livechat',
 ]
 
 # Media files (Uploaded by users)

@@ -29,18 +29,28 @@ async function loadPartial(partial) {
 
       console.log(`Loaded partial: ${partial}`);
 
+      connectToWebSocket();
+      console.log("Connected to WebSocket");
+
       if (partial === 'game') {
         initializeStartButton();
         fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
       }
 
       // Call setupModalTriggers to ensure modal triggers are set up for dynamically loaded content
-      setupModalTriggers();
+      if (partial !== 'livechat') {
+        setupModalTriggers();
+      }
+
+      if (partial === 'livechat') {
+        setupLiveChat();
+      }
 
       if (partial === 'user') {
         loadUserProfile();
         displayIncomingFriendRequests();
         displayFriends();
+        setupFriendListeners();
       }
 
       if (partial === 'settings') {
@@ -82,6 +92,7 @@ async function handleRoute(route) {
       break;
     case 'game':
     case 'user':
+    case 'livechat':
     case 'settings':
       if (isAuthenticated()) {
         toggleHeaderDisplay(route); 
