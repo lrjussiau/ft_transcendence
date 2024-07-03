@@ -1,14 +1,23 @@
 <div id="playerInfo" style="position: absolute; left: 10px; top: 10px;">
   <p>Username: <span id="displayUsername"></span></p>
-  <p>Token: <span id="displayToken"></span></p>
+  <p>📩: <span id="displayMessage"></span></p>
 </div>
-<div class="container">
+<div class="container" style="position: relative; margin-top: 20px;">
+  <!-- Disconnect and Stop Game Buttons with red color -->
+  <button class="btn btn-danger m-2" id="disconnectButton">Disconnect</button>
+  <button class="btn btn-danger m-2" id="stopGameButton">Stop Game</button>
+  
+  <!-- Canvas for the game -->
   <canvas class="canvas" id="gameCanvas" width="640" height="360"></canvas>
+  
+  <!-- Buttons for game type selection -->
   <button class="btn btn-primary m-2" onclick="selectGameType('solo')">Solo</button>
   <button class="btn btn-primary m-2" onclick="selectGameType('1v1')">1v1</button>
   <button class="btn btn-primary m-2" onclick="selectGameType('local_1v1')">Local 1v1</button>
   <button class="btn btn-primary m-2" onclick="selectGameType('tournament')">Tournament</button>
-  <button id="startButton" class="btn btn-success">Start Game</button>
+  
+  <!-- Start Game Button -->
+  <button class="btn btn-success m-2" id="startButton">Start Game</button>
 </div>
 <script src="app.js"></script>
 <script src="router.js"></script>
@@ -16,5 +25,18 @@
   document.addEventListener('DOMContentLoaded', () => {
     fetchUserProfile();
     initializeStartButton();
+  });
+
+  document.getElementById('disconnectButton').addEventListener('click', function () {
+    if (ws) {
+      ws.send(JSON.stringify({ t: 'disconnect' }));
+      ws.close();
+    }
+  });
+
+  document.getElementById('stopGameButton').addEventListener('click', function () {
+    if (ws) {
+      ws.send(JSON.stringify({ t: 'stop_game' }));
+    }
   });
 </script>

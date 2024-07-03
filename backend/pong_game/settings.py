@@ -20,7 +20,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'channels',
     'corsheaders',
-    # 'pongengine',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
@@ -34,7 +33,6 @@ INSTALLED_APPS = [
     'livechat',
 ]
 
-# Media files (Uploaded by users)
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -64,7 +62,7 @@ from datetime import timedelta
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -81,34 +79,9 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
     'JTI_CLAIM': 'jti',
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=50),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
-
-# CORS_ALLOW_ALL_ORIGINS = True
-
-# CORS_ALLOW_METHODS = [
-#     "DELETE",
-#     "GET",
-#     "OPTIONS",
-#     "PATCH",
-#     "POST",
-#     "PUT",
-# ]
-
-# CORS_ALLOW_HEADERS = [
-#     "accept",
-#     "accept-encoding",
-#     "authorization",
-#     "content-type",
-#     "dnt",
-#     "origin",
-#     "user-agent",
-#     "x-csrftoken",
-#     "x-requested-with",
-# ]
-
-# CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'pong_game.urls'
 
@@ -128,7 +101,6 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'pong_game.wsgi.application'
 ASGI_APPLICATION = 'pong_game.asgi.application'
 CHANNEL_LAYERS = {
     'default': {
@@ -171,12 +143,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-#STATIC_URL = '/static/'
-#STATICFILES_DIRS = [
-#    BASE_DIR / "static",
-#]
-#STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
