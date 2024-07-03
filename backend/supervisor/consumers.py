@@ -9,13 +9,14 @@ logger = logging.getLogger(__name__)
 
 # État du jeu global partagé par tous les joueurs
 game_state = {
-    "ball": {"x": 320, "y": 180, "vx": 2.5 * random.choice((1, -1)), "vy": 2.5 * random.choice((1, -1))},
+    "ball": {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))},
     "player1": {"y": 180, "speed": 0},
     "player2": {"y": 180, "speed": 0},
     "player1_score": 0,
     "player2_score": 0,
     "game_started": False,
-    "game_over": False
+    "game_over": False,
+    "game_loop_running": False  # Ajout de cette variable
 }
 
 class PongConsumer(AsyncWebsocketConsumer):
@@ -30,7 +31,9 @@ class PongConsumer(AsyncWebsocketConsumer):
     center_paddle_offset = paddle_height / 2
     max_angle = 45
     game_lock = asyncio.Lock()
-    Debug_log = False
+    Debug_log = True
+    last_update_time = None
+    global_speed_factor = 1.5
 
     # ----------------------- WEBSOCKET MANAGEMENT -------------------#
 
@@ -204,10 +207,15 @@ class PongConsumer(AsyncWebsocketConsumer):
     # ---------------------------- GAME LOGIC ------------------------#
 
     async def game_loop(self):
+        self.last_update_time = asyncio.get_event_loop().time()
         while game_state['game_started'] and not game_state['game_over']:
             if game_state['game_over']:
                 return
-            await self.update_game_state()
+            current_time = asyncio.get_event_loop().time()
+            dt = current_time - self.last_update_time
+            self.last_update_time = current_time
+
+            await self.update_game_state(dt)
             await self.broadcast_game_state()
             await asyncio.sleep(1 / self.refresh_rate)
 
@@ -224,13 +232,17 @@ class PongConsumer(AsyncWebsocketConsumer):
         game_state['game_started'] = True
         game_state['game_over'] = False
         self.ball_restart()
-        asyncio.create_task(self.game_loop())
+
+        if not game_state['game_loop_running']:
+            game_state['game_loop_running'] = True
+            asyncio.create_task(self.game_loop())
 
     async def stop_current_game(self):
-        if game_state['game_over']:
+        if not game_state['game_started']:
             return
         game_state['game_started'] = False
         game_state['game_over'] = True
+        game_state['game_loop_running'] = False
         await self.broadcast_game_state({'type': 'game_over'})
 
     async def start_countdown(self):
@@ -251,7 +263,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         await self.disconnect(1001)
 
     def init_game_state(self):
-        game_state['ball'] = {"x": 320, "y": 180, "vx": 2.5 * random.choice((1, -1)), "vy": 2.5 * random.choice((1, -1))}
+        game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
         game_state['player1'] = {"y": 180, "speed": 0}
         game_state['player2'] = {"y": 180, "speed": 0}
         game_state['player1_score'] = 0
@@ -260,29 +272,34 @@ class PongConsumer(AsyncWebsocketConsumer):
         game_state['game_over'] = False
 
     def ball_restart(self):
-        game_state['ball'] = {"x": 320, "y": 180, "vx": 2.5 * random.choice((1, -1)), "vy": 2.5 * random.choice((1, -1))}
+        game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
 
-    async def update_game_state(self):
+    async def update_game_state(self, dt):
         if not game_state['game_started']:
             logger.warning("Game update attempted while game is not started.")
             return
 
         # Update paddle positions
-        game_state['player1']["y"] += game_state['player1']["speed"]
-        game_state['player2']["y"] += game_state['player2']["speed"]
+        game_state['player1']["y"] += game_state['player1']["speed"] * dt * 100 * self.global_speed_factor
+        game_state['player2']["y"] += game_state['player2']["speed"] * dt * 100 * self.global_speed_factor
         if self.Debug_log:
             logger.debug(f"P1 y: {game_state['player1']['y']} | P2 y: {game_state['player2']['y']}")
+
         # Clamp paddle positions
         game_state['player1']["y"] = max(0, min(game_state['player1']["y"], 360 - self.paddle_height))
         game_state['player2']["y"] = max(0, min(game_state['player2']["y"], 360 - self.paddle_height))
+
         # Update ball position
-        game_state['ball']["x"] += game_state['ball']["vx"]
-        game_state['ball']["y"] += game_state['ball']["vy"]
+        game_state['ball']["x"] += game_state['ball']["vx"] * dt * self.global_speed_factor
+        game_state['ball']["y"] += game_state['ball']["vy"] * dt * self.global_speed_factor
+
         # Ball collision with top and bottom
         if game_state['ball']["y"] <= 0 or game_state['ball']["y"] >= 360:
             game_state['ball']["vy"] *= -1
+
         # Handle paddle collision
         self.handle_paddle_collision()
+
         # Score points
         if game_state['ball']["x"] <= 0:
             game_state['player2_score'] += 1
@@ -290,6 +307,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         elif game_state['ball']["x"] >= 640:
             game_state['player1_score'] += 1
             self.ball_restart()
+
         # Check for game over
         if game_state['player1_score'] == self.points or game_state['player2_score'] == self.points:
             game_state['game_over'] = True

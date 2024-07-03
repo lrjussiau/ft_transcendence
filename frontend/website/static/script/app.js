@@ -168,6 +168,8 @@ function startGame(gameType) {
     };
     ws.onclose = (event) => {
       console.log('WebSocket closed:', event);
+      ws.send(JSON.stringify({ t: 'stop_game' }));
+      ws.send(JSON.stringify({ t: 'disconnect' }));
     };
   } else {
     gameOver = false;
