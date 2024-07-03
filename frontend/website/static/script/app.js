@@ -1,4 +1,4 @@
-// utils.js
+// App.js
 
 let ws = null;
 let ctx = null;
@@ -27,7 +27,6 @@ async function fetchUserProfile() {
   if (response.ok) {
     const userData = await response.json();
     displayUsername(userData.username);
-    // document.getElementById('displayToken').textContent = token;
     username = userData.username
     return userData;
   } else {
@@ -136,6 +135,7 @@ function startGame(gameType) {
           console.log('A player has disconnected.');
           updateLastMessage('A player has disconnected.');
           alert('A player has disconnected.');
+          stopGame();
           break;
         case 'start_game':
           console.log('Game has started!');
@@ -145,7 +145,6 @@ function startGame(gameType) {
         case 'game_over':
           console.log('Game over');
           updateLastMessage('Game over!');
-          // alert('Game over!');
           break;
         case 'error':
           console.error('Error from server:', data.message);
@@ -168,13 +167,25 @@ function startGame(gameType) {
     };
     ws.onclose = (event) => {
       console.log('WebSocket closed:', event);
-      ws.send(JSON.stringify({ t: 'stop_game' }));
-      ws.send(JSON.stringify({ t: 'disconnect' }));
+      if (!gameOver) {
+        ws.send(JSON.stringify({ t: 'stop_game' }));
+        ws.send(JSON.stringify({ t: 'disconnect' }));
+        stopGame();
+      }
     };
   } else {
     gameOver = false;
     ws.send(JSON.stringify({ t: 'restart_game' }));
   }
+}
+
+function stopGame() {
+  gameOver = true;
+  if (ws) {
+    ws.close();
+    ws = null;
+  }
+  updateLastMessage('Game stopped.');
 }
 
 function updateLastMessage(message) {
@@ -252,7 +263,6 @@ function updateSpeeds() {
       }));
     }
   }
-  // console.log(`${username} is ${window.localPlayerNumber}`);
 }
 
 function draw() {
@@ -276,31 +286,9 @@ function draw() {
   } else if (gameState && gameState.ball) {
     drawMiddleLine(ctx, scaleX);
 
-    // Check if it is local or online game to determine ball and paddle positions
-    // if (selectedGameType === 'local_1v1') 
-    //   {
-    //   // Local game, fixed positions
-      drawBall(ctx, gameState.ball.x, gameState.ball.y, scaleX, scaleY);
-      ctx.fillRect(5 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY); // Always left
-      ctx.fillRect(canvas.width - 15 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY); // Always right
-    // } else if (selectedGameType === '1v1') {
-    //   // Online game, dynamic positions based on player number
-    //   const isPlayerOne = window.localPlayerNumber === 1;
-    //   const playerPaddle = isPlayerOne ? gameState.p1 : gameState.p2;
-    //   const opponentPaddle = isPlayerOne ? gameState.p2 : gameState.p1;
-
-    //   if (isPlayerOne) {
-    //     // Player 1's perspective
-    //     drawBall(ctx, gameState.ball.x, gameState.ball.y, scaleX, scaleY);
-    //     ctx.fillRect(5 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the left
-    //     ctx.fillRect(canvas.width - 15 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the right
-    //   } else {
-    //     // Player 2's perspective
-    //     drawBall(ctx, 640 - gameState.ball.x, 360 - gameState.ball.y, scaleX, scaleY); // Invert ball position
-    //     ctx.fillRect(5 * scaleX, opponentPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Opponent's paddle on the left
-    //     ctx.fillRect(canvas.width - 15 * scaleX, playerPaddle.y * scaleY, 10 * scaleX, 70 * scaleY); // Player's paddle on the right
-    //   }
-    // }
+    drawBall(ctx, gameState.ball.x, gameState.ball.y, scaleX, scaleY);
+    ctx.fillRect(5 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY); // Always left
+    ctx.fillRect(canvas.width - 15 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY); // Always right
 
     ctx.font = `${20 * scaleX}px 'Roboto', sans-serif`;
     ctx.fillText(gameState.s1, 30 * scaleX, 30 * scaleY); // Always player 1 score on the left
@@ -332,14 +320,13 @@ function drawBall(ctx, x, y, scaleX, scaleY) {
   ctx.fill();
 }
 
-
 function drawWaitingForOpponent() {
   const canvas = document.getElementById('gameCanvas');
   if (!canvas) {
-      console.error('Canvas element not found!');
-      return;
+    console.error('Canvas element not found!');
+    return;
   }
-  
+
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'white';
@@ -351,8 +338,8 @@ function drawWaitingForOpponent() {
 function drawGameReady() {
   const canvas = document.getElementById('gameCanvas');
   if (!canvas) {
-      console.error('Canvas element not found!');
-      return;
+    console.error('Canvas element not found!');
+    return;
   }
 
   const ctx = canvas.getContext('2d');
@@ -362,16 +349,3 @@ function drawGameReady() {
   ctx.textAlign = 'center';
   ctx.fillText(`Game is ready! You are Player ${window.localPlayerNumber}`, canvas.width / 2, canvas.height / 2);
 }
-
-window.updateGameStateFromServer = function (data) {
-  if (data.type === 'countdown') {
-    countdownValue = data.value;
-    draw();
-  } else if (data.ball) {
-    countdownValue = null;
-    gameState = data;
-    draw();
-  } else {
-    console.error('Invalid game state received:', data);
-  }
-};

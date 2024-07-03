@@ -23,6 +23,12 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     # ------------------------- DEFINES ----------------------------#
 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.connection_task = None
+        self.keep_open = False
+
     Players = {}
     points = 50
     refresh_rate = 60
@@ -33,11 +39,15 @@ class PongConsumer(AsyncWebsocketConsumer):
     game_lock = asyncio.Lock()
     Debug_log = True
     last_update_time = None
-    global_speed_factor = 1.5
+    global_speed_factor = 1.25
 
     # ----------------------- WEBSOCKET MANAGEMENT -------------------#
 
     async def connect(self):
+        if len(self.Players) >= 2:
+            await self.close()  # Refuse connection if there are already two players
+            return
+
         await self.accept()
         self.game_type = None
         self.Players[self.channel_name] = {
@@ -50,6 +60,10 @@ class PongConsumer(AsyncWebsocketConsumer):
             logger.debug(f"Player connected: {self.channel_name}")
         self.keep_open = True
         self.connection_task = asyncio.create_task(self.ensure_connection_open())
+
+        if len(self.Players) == 2:
+            await self.broadcast_game_state({'type': 'game_ready'})
+
 
     async def ensure_connection_open(self):
         while self.keep_open:
@@ -64,10 +78,15 @@ class PongConsumer(AsyncWebsocketConsumer):
         if self.Debug_log:
             logger.debug(f"Player disconnected: {self.channel_name}")
         self.keep_open = False
-        self.connection_task.cancel()
+        if self.connection_task:
+            self.connection_task.cancel()
         if self.channel_name in self.Players:
             del self.Players[self.channel_name]
-            await self.broadcast_game_state({'type': 'player_disconnected'})
+
+            if len(self.Players) == 1:
+                await self.broadcast_game_state({'type': 'player_disconnected'})
+
+            await self.stop_current_game()
 
     async def receive(self, text_data):
         data = json.loads(text_data)
@@ -282,8 +301,8 @@ class PongConsumer(AsyncWebsocketConsumer):
         # Update paddle positions
         game_state['player1']["y"] += game_state['player1']["speed"] * dt * 100 * self.global_speed_factor
         game_state['player2']["y"] += game_state['player2']["speed"] * dt * 100 * self.global_speed_factor
-        if self.Debug_log:
-            logger.debug(f"P1 y: {game_state['player1']['y']} | P2 y: {game_state['player2']['y']}")
+        # if self.Debug_log:
+        #     logger.debug(f"P1 y: {game_state['player1']['y']} | P2 y: {game_state['player2']['y']}")
 
         # Clamp paddle positions
         game_state['player1']["y"] = max(0, min(game_state['player1']["y"], 360 - self.paddle_height))
