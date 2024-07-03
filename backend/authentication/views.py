@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password, make_password
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from .serializers import CustomTokenObtainPairSerializer, UserSerializer
+from .serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -21,18 +21,19 @@ from django.conf import settings
 import os
 from .utils import generate_and_send_2fa_code, verify_2fa_code
 
-
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
+        serializer = self.get_serializer(data=request.data)
         
-        user = authenticate(username=username, password=password)
-        if user is None:
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception as e:
             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
         
+        user = serializer.user
+
         if user.is_2fa_enabled:
             generate_and_send_2fa_code(user)
             return Response({
@@ -40,11 +41,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                 'username': user.username
             }, status=status.HTTP_200_OK)
         
-        # If 2FA is not enabled, proceed with normal token generation
-        response = super().post(request, *args, **kwargs)
-        return response
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
-    
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -77,39 +75,21 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        user = request.user
-        logging.debug('User profile request for user: %s', user.username)
-        return Response({
-            'user_id': user.id,
-            'username': user.username,
-            'email': user.email,
-            'avatar_url': user.avatar.url if user.avatar else None,
-            'default_avatar': user.default_avatar,
-            'created_at': user.created_at,
-            'updated_at': user.updated_at,
-            'status': user.status,
-            'is_active': user.is_active,
-            'is_staff': user.is_staff,
-            'is_2fa_enabled': user.is_2fa_enabled,
-        })
+        serializer = UserProfileSerializer(request.user, context={'request': request})
+        return Response(serializer.data)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def upload_avatar(request):
-    if request.method == 'POST':
-        logging.debug('Avatar upload attempt for user: %s', request.user.username)
-        form = AvatarUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            user = request.user
-            user.avatar = form.cleaned_data['avatar']
-            user.save()
-            logging.debug('Avatar upload successful for user: %s', request.user.username)
-            return redirect('user_profile')  # Redirect to a profile page or any other page
-        else:
-            logging.debug('Avatar upload form invalid: %s', form.errors)
-    else:
-        form = AvatarUploadForm()
-    return render(request, 'upload_avatar.html', {'form': form})
+    if 'avatar' not in request.FILES:
+        return Response({'error': 'No avatar file provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = request.user
+    user.avatar = request.FILES['avatar']
+    user.default_avatar = False
+    user.save()
+
+    return Response({'success': 'Avatar uploaded successfully'}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -117,84 +97,69 @@ def list_avatars(request):
     avatars_dir = os.path.join(settings.MEDIA_ROOT, 'avatars')
     if os.path.exists(avatars_dir):
         files = os.listdir(avatars_dir)
-        host = request.get_host()
-        port = request.META.get('SERVER_PORT')
-        file_urls = [f'http://{host}:{port}{settings.MEDIA_URL}avatars/{f}' for f in files]
+        file_urls = [f'{settings.MEDIA_URL}avatars/{f}' for f in files]
         return JsonResponse({'files': file_urls})
     return JsonResponse({'files': []})
 
 class ChangeAvatarView(APIView):
     permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
-        logging.debug('Avatar change attempt for user: %s', request.user.username)
-        user = request.user
         avatar_url = request.data.get('avatar')
-        
         if not avatar_url:
             return Response({'error': 'No avatar provided'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Extract the path relative to the media root
-        parsed_url = urlparse(avatar_url)
-        avatar_path = os.path.relpath(parsed_url.path, settings.MEDIA_URL)
-
-        # Assuming avatar_path is valid and exists in the media directory
-        user.avatar = avatar_path
+        user = request.user
+        user.avatar = avatar_url
         user.default_avatar = False
         user.save()
         return Response({'success': 'Avatar updated successfully'}, status=status.HTTP_200_OK)
-    
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def change_username(request):
-    user = request.user
     new_username = request.data.get('new_username')
-
     if not new_username:
         return Response({"error": "New username is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-    if User.objects.filter(username=new_username).exists():
+    user = request.user
+    if User.objects.filter(username=new_username).exclude(id=user.id).exists():
         return Response({"error": "This username is already taken."}, status=status.HTTP_400_BAD_REQUEST)
 
     user.username = new_username
     user.save()
-
     return Response({"success": "Username updated successfully."}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def change_email(request):
-    user = request.user
     new_email = request.data.get('new_email')
-
     if not new_email:
         return Response({"error": "New email is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-    if User.objects.filter(email=new_email).exists():
+    user = request.user
+    if User.objects.filter(email=new_email).exclude(id=user.id).exists():
         return Response({"error": "This email is already registered."}, status=status.HTTP_400_BAD_REQUEST)
 
     user.email = new_email
     user.save()
-
     return Response({"success": "Email updated successfully."}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def change_password(request):
-    user = request.user
     current_password = request.data.get('current_password')
     new_password = request.data.get('new_password')
 
     if not current_password or not new_password:
         return Response({"error": "Both current and new passwords are required."}, status=status.HTTP_400_BAD_REQUEST)
 
+    user = request.user
     if not check_password(current_password, user.password):
         return Response({"error": "Current password is incorrect."}, status=status.HTTP_400_BAD_REQUEST)
 
     user.password = make_password(new_password)
     user.save()
-
     return Response({"success": "Password updated successfully."}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
@@ -208,26 +173,6 @@ def toggle_2fa(request):
         "is_2fa_enabled": user.is_2fa_enabled
     }, status=status.HTTP_200_OK)
 
-class CustomTokenObtainPairView(TokenObtainPairView):
-    def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        
-        user = authenticate(username=username, password=password)
-        if user is None:
-            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-        
-        if user.is_2fa_enabled:
-            generate_and_send_2fa_code(user)
-            return Response({
-                'require_2fa': True,
-                'username': user.username
-            }, status=status.HTTP_200_OK)
-        
-        # If 2FA is not enabled, proceed with normal token generation
-        response = super().post(request, *args, **kwargs)
-        return response
-
 @api_view(['POST'])
 def verify_2fa(request):
     username = request.data.get('username')
@@ -238,11 +183,19 @@ def verify_2fa(request):
         return Response({'error': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
     
     if verify_2fa_code(user, code):
-        refresh = RefreshToken.for_user(user)
-        return Response({
+        serializer = CustomTokenObtainPairSerializer()
+        refresh = serializer.get_token(user)
+        data = {
             'refresh': str(refresh),
             'access': str(refresh.access_token),
-        })
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'is_2fa_enabled': user.is_2fa_enabled,
+            }
+        }
+        return Response(data)
     return Response({'error': 'Invalid or expired code'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])

@@ -4,9 +4,7 @@ from rest_framework.views import APIView
 from .models import ChatRoom, Message
 from .serializers import ChatRoomSerializer, MessageSerializer
 from django.db.models import Q
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from db.models import User  # Changed import to use User from db.models
 
 class ChatRoomList(generics.ListAPIView):
     serializer_class = ChatRoomSerializer
@@ -15,6 +13,11 @@ class ChatRoomList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return ChatRoom.objects.filter(Q(user1=user) | Q(user2=user))
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 class ChatRoomDetail(generics.RetrieveAPIView):
     queryset = ChatRoom.objects.all()

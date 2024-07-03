@@ -1,19 +1,20 @@
 // utils.js
 async function fetchUserProfile() {
-    const token = localStorage.getItem('authToken');
-    const response = await fetch('/api/authentication/user/profile/', {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
+  const token = localStorage.getItem('authToken');
+  const response = await fetch('/api/authentication/user/profile/', {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  });
 
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw new Error('Failed to fetch user profile');
-    }
+  if (response.ok) {
+      const data = await response.json();
+      console.log('Fetched user profile:', data);  // Log the fetched data
+      return data;
+  } else {
+      throw new Error('Failed to fetch user profile');
+  }
 }
-
 
 let selectedGameType = null;
 let username = '';

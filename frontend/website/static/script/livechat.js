@@ -68,11 +68,18 @@ async function displayChatRooms() {
         }
 
         const chatRooms = await response.json();
+        console.log('Chat rooms:', chatRooms);  // Log the entire chatRooms object
+
         const roomHistoryDiv = document.querySelector('.room-history');
         roomHistoryDiv.innerHTML = ''; // Clear existing content
 
         chatRooms.forEach(room => {
+            console.log('room user 1 id:', room.user1.id);
+            console.log('room user 2 id:', room.user2.id);
+            console.log('current user id:', currentUser.id);
             const otherUser = room.user1.id === currentUser.id ? room.user2 : room.user1;
+            console.log('Current user:', currentUser.username);
+            console.log('Other user:', otherUser.username);
             
             const roomButton = document.createElement('button');
             roomButton.className = 'room-preview';
