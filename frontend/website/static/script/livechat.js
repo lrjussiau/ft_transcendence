@@ -142,7 +142,7 @@ function setupWebSocket(roomId) {
     if (chatSocket) chatSocket.close();
 
     const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
-    chatSocket = new WebSocket(`${wsScheme}://${window.location.host}/ws/chat/${roomId}/`);
+    chatSocket = new WebSocket(`${wsScheme}://${window.location.host}:4443/ws/chat/${roomId}/`);
 
     chatSocket.onmessage = handleWebSocketMessage;
     chatSocket.onclose = () => console.warn('Chat socket closed');

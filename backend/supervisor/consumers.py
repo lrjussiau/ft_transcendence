@@ -30,22 +30,22 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.keep_open = False
 
     Players = {}
-    points = 50
-    refresh_rate = 60
-    speed_buff = 6 / 5
+    points = 5
+    refresh_rate = 120
+    speed_buff = 7 / 6
     paddle_height = 70
     center_paddle_offset = paddle_height / 2
     max_angle = 45
     game_lock = asyncio.Lock()
     Debug_log = True
     last_update_time = None
-    global_speed_factor = 1.25
+    global_speed_factor = 1.5
 
     # ----------------------- WEBSOCKET MANAGEMENT -------------------#
 
     async def connect(self):
         if len(self.Players) >= 2:
-            await self.close()  # Refuse connection if there are already two players
+            await self.close()
             return
 
         await self.accept()
