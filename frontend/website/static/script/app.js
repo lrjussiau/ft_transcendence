@@ -81,7 +81,7 @@ function initializeStartButton() {
 function startGame(gameType) {
   if (!ws) {
       const host = window.location.hostname;
-      const wsUrl = `wss://${host}/ws/pong/`;
+      const wsUrl = `wss://${host}:4443/ws/pong/`;
 
       ws = new WebSocket(wsUrl);
       ws.onopen = () => {
