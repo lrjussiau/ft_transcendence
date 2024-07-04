@@ -34,6 +34,7 @@ services:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@db:5432/${DB_NAME}
       REDIS_URL: redis://redis:6379/0
       DJANGO_SETTINGS_MODULE: pong_game.settings
+      HOSTNAME_VAR: ${HOSTNAME_VAR}
     depends_on:
       - db
       - redis
@@ -51,6 +52,7 @@ services:
       context: .
       dockerfile: ./nginx/Dockerfile
     container_name: nginx_container
+    hostname: ${HOSTNAME_VAR}
     ports:
       - "8080:8080"
       - "4443:4443"
@@ -64,6 +66,8 @@ services:
       - backend
     networks:
       - mynetwork
+    environment:
+      HOSTNAME_VAR: ${HOSTNAME_VAR}
 
 volumes:
   postgres_data:

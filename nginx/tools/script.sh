@@ -4,8 +4,7 @@
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-# Get the hostname
-HOSTNAME=$(hostname)
+HOSTNAME=${HOSTNAME_VAR:-$(hostname)}
 
 # Check if SSL certificates are already present
 if [ ! -f /etc/ssl/certs/nginx.crt ]; then
