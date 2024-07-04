@@ -19,6 +19,10 @@ nuke:
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down --remove-orphans
 	@if [ -n "$$(docker images -q $$(docker-compose -f $(DOCKER_COMPOSE_FILE) config | grep 'image:' | awk '{print $$2}'))" ]; then docker rmi -f $$(docker images -q $$(docker-compose -f $(DOCKER_COMPOSE_FILE) config | grep 'image:' | awk '{print $$2}')); fi
 
+ww3: down nuke
+	@echo "☠️☠️☠️"
+	@docker system prune -af
+
 re: down build up
 
 help:
@@ -28,6 +32,7 @@ help:
 	@echo "  up      : Démarrer les conteneurs"
 	@echo "  down    : Arrêter et supprimer les conteneurs"
 	@echo "  nuke    : Tout supprimer ce qu'a installé Docker avec docker-compose"
+	@echo "  ww3     : ☠️ Down, nuke, Prune... ☠️"
 	@echo "  re      : Réaliser down, build et up"
 	@echo "  help    : Afficher ce message d'aide"
 

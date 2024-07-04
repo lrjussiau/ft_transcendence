@@ -1,13 +1,30 @@
 from rest_framework import serializers
 from .models import ChatRoom, Message
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from db.models import User
+from django.conf import settings
+import logging
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ['id', 'username', 'avatar', 'status'] 
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if instance.avatar:
+            request = self.context.get('request')
+            if request:
+                host = request.get_host()
+                port = request.META.get('SERVER_PORT')
+                
+                if port and port not in ('80', '443'):
+                    host = f"{host}:{port}"
+                
+                avatar_url = f"http://{host}{settings.MEDIA_URL}{instance.avatar}"
+                logging.info(avatar_url)
+                representation['avatar'] = avatar_url
+        return representation
 
 class ChatRoomSerializer(serializers.ModelSerializer):
     user1 = UserSerializer(read_only=True)
