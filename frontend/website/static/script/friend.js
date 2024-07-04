@@ -61,6 +61,7 @@ async function fetchFriends() {
     }
 }
 
+
 async function respondFriendRequest(requestId, action) {
     const token = localStorage.getItem('authToken');
     const response = await fetch(`/api/friends/requests/respond/${requestId}/`, {
@@ -227,21 +228,28 @@ function setupFriendListeners() {
 
 async function initializeFriendSearch() {
     $(document).ready(async function() {
-        let friends = [];
+        let users = [];
+        const currentUser = await fetchUserProfile();
+        let friends = await fetchFriends();
 
         try {
-            friends = await fetchUsers();
+            users = await fetchUsers();
+                users.filter(user => 
+                user.username !== currentUser.username && 
+                !friends.some(friend => friend.username === user.username)
+            );
         } catch (error) {
             console.error('Error fetching users:', error);
         }
 
         $('#searchInput').on('input', function() {
             const query = $(this).val().toLowerCase();
-            const filteredFriends = friends.filter(friend => friend.username.toLowerCase().includes(query));
+            const filteredFriends = users.filter(user => user.username.toLowerCase().includes(query));
 
             $('#searchResults').empty();
             if (filteredFriends.length > 0) {
                 filteredFriends.forEach(friend => {
+                    console.log("friend status", friend.status)
                     $('#searchResults').append(`
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             ${friend.username}
@@ -254,15 +262,37 @@ async function initializeFriendSearch() {
             }
         });
 
-        $(document).on('click', '.add-friend-btn', async function() {
+        /*$(document).on('click', '.add-friend-btn', async function() {
             const friendId = $(this).data('id');
             try {
                 const result = await addFriend(friendId);
+
+                $('#searchResults').append(`
+
+                    <button class="btn btn-sm modal-button btn-success">Added</button>
+                `);
                 alert('Friend request sent successfully');
             } catch (error) {
                 console.error('Error adding friend:', error);
-                alert('Failed to add friend');
+                alert(error);
             }
+        });*/
+        $('#searchResults').on('click', '.add-friend-btn', function() {
+            const friendId = $(this).data('id');
+            const button = $(this);
+        
+            addFriend(friendId)
+                .then(() => {
+                    // Replace the button
+                    button.replaceWith(`
+                        <button class="btn btn-sm modal-button btn-success">Added</button>
+                    `);
+                })
+                .catch(error => {
+                    console.error('Error adding friend:', error);
+                    // Handle the error (e.g., show an error message to the user)
+                    alert('Failed to add friend. Please try again.');
+                });
         });
     });
 }
