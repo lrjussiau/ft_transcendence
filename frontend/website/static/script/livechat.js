@@ -59,7 +59,7 @@ function createRoomButton(roomId, otherUser) {
     roomButton.onclick = () => loadChatRoom(roomId);
 
     const userImg = document.createElement('img');
-    userImg.src = otherUser.avatar || 'http://localhost:8080/media/avatars/default_avatar.png';
+    userImg.src = otherUser.avatar;
     userImg.alt = 'Chat Picture';
     userImg.className = otherUser.status === 'online' ? 'chat-picture-online' : 'chat-picture';
 
@@ -142,7 +142,10 @@ function setupWebSocket(roomId) {
     if (chatSocket) chatSocket.close();
 
     const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
-    chatSocket = new WebSocket(`${wsScheme}://${window.location.host}:4443/ws/chat/${roomId}/`);
+    const host = window.location.hostname;
+    chatSocket = new WebSocket(`${wsScheme}://${host}:4443/ws/chat/${roomId}/`);
+
+    // const wsUrl = `wss://${host}:4443/ws/pong/`;
 
     chatSocket.onmessage = handleWebSocketMessage;
     chatSocket.onclose = () => console.warn('Chat socket closed');
@@ -186,7 +189,6 @@ function sendMessage() {
     if (message && chatSocket) {
         try {
             chatSocket.send(JSON.stringify({ 'message': message, 'user_id': currentUserId }));
-            displayMessage(message, currentUserId);
             messageInput.value = '';
         } catch (error) {
             console.error('Error sending message:', error);
