@@ -2,9 +2,9 @@
   <div class="settings-section">
     <h5>Account Information</h5>
     <div class="account-buttons">
-      <button data-modal="usernameChangeModal" data-html="/static/modals/modals.html" class="modal-button modal-trigger">Change Username</button>
-      <button data-modal="emailChangeModal" data-html="/static/modals/modals.html" class="modal-button modal-trigger">Change Email</button>
-      <button data-modal="passwordChangeModal" data-html="/static/modals/modals.html" class="modal-button modal-trigger">Change Password</button>
+      <button data-modal="usernameChangeModal" data-html="/static/modals/modals.html" class="setting-account-btn modal-trigger">Change Username</button>
+      <button data-modal="emailChangeModal" data-html="/static/modals/modals.html" class="setting-account-btn modal-trigger">Change Email</button>
+      <button data-modal="passwordChangeModal" data-html="/static/modals/modals.html" class="setting-account-btn modal-trigger">Change Password</button>
     </div>
   </div>
   <div class="settings-section app-sec">
@@ -19,29 +19,29 @@
         <span>Dark</span>
       </div>
     </div>
-    <div>
-      <hr>
-    </div>
+
     <div class="security">
       <h5>Security</h5>
       <div class="btn-center">
-        <button id="toggle-2fa" class="btn-toggle btn-success">Enable 2FA</button>
+        <button id="toggle-2fa" class="btn-play validate-btn">Enable 2FA</button>
       </div>
     </div>
   </div>
 
   <div class="settings-section">
     <h5>Notifications</h5>
-    <div class="checkbox-group">
-      <input type="checkbox" id="email-notifications">
-      <label for="email-notifications">Receive email notifications</label>
-    </div>
-    <div class="checkbox-group">
-      <input type="checkbox" id="push-notifications">
-      <label for="push-notifications">Receive push notifications</label>
+    <div class="notifications">
+      <div class="checkbox-group">
+        <input type="checkbox" id="email-notifications">
+        <label for="email-notifications">Receive email notifications</label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="push-notifications">
+        <label for="push-notifications">Receive push notifications</label>
+      </div>
     </div>
     <div class="btn-center">
-      <button id="apply-notifications" class="btn-apply btn-success">Apply Changes</button>
+      <button id="apply-notifications" class="btn-play validate-btn">Apply Changes</button>
     </div>
   </div>
 
@@ -53,12 +53,12 @@
       <option value="es">Español</option>
     </select>
     <div class="btn-center">
-      <button id="apply-language" class="btn-apply btn-success">Apply Changes</button>
+      <button id="apply-language" class="btn-play validate-btn">Apply Changes</button>
     </div>
   </div>
 
   <div class="settings-section danger-zone">
     <h5>Danger Zone</h5>
-    <button data-modal="deleteAccountModal" data-html="/static/modals/modals.html" class="btn-danger modal-trigger">Delete Account</button>
+    <button data-modal="deleteAccountModal" data-html="/static/modals/modals.html" class="refuse-btn modal-trigger">Delete Account</button>
   </div>
 </div>

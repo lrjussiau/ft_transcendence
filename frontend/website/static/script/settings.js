@@ -135,14 +135,13 @@ function handle2FAToggle() {
             const button = document.getElementById('toggle-2fa');
             if (data.is_2fa_enabled) {
                 button.textContent = 'Disable 2FA';
-                button.classList.remove('btn-success');
-                button.classList.add('btn-danger');
+                button.classList.remove('validate-btn');
+                button.classList.add('refuse-btn');
             } else {
                 button.textContent = 'Enable 2FA';
-                button.classList.remove('btn-danger');
-                button.classList.add('btn-success');
+                button.classList.remove('refuse-btn');
+                button.classList.add('validate-btn');
             }
-            alert(data.success);
         }
     })
     .catch(error => {
@@ -217,12 +216,12 @@ function setupSettingsPage() {
         const button = document.getElementById('toggle-2fa');
         if (data.is_2fa_enabled) {
             button.textContent = 'Disable 2FA';
-            button.classList.remove('btn-success');
-            button.classList.add('btn-danger');
+            button.classList.remove('validate-btn');
+            button.classList.add('refuse-btn');
         } else {
             button.textContent = 'Enable 2FA';
-            button.classList.remove('btn-danger');
-            button.classList.add('btn-success');
+            button.classList.remove('refuse-btn');
+            button.classList.add('validate-btn');
         }
     })
     .catch(error => console.error('Error fetching user profile:', error));
