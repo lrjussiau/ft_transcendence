@@ -23,11 +23,11 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     # ------------------------- DEFINES ----------------------------#
 
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.connection_task = None
         self.keep_open = False
+        self.tournament_players = []  # Initialiser ici
 
     Players = {}
     points = 5
@@ -64,7 +64,6 @@ class PongConsumer(AsyncWebsocketConsumer):
         if len(self.Players) == 2:
             await self.broadcast_game_state({'type': 'game_ready'})
 
-
     async def ensure_connection_open(self):
         while self.keep_open:
             await asyncio.sleep(1)
@@ -99,12 +98,21 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.run_in_main_loop(self.start_game)
         elif action == 'select_game_type' and not game_state['game_started']:
             await self.handle_game_selection(data)
+        elif action == 'join_tournament':
+            await self.handle_join_tournament(data)
         elif action == 'disconnect':
             await self.disconnect(1001)
         elif action == 'pong':
             await self.handle_pong()
         elif action == 'stop_game':
             await self.run_in_main_loop(self.stop_current_game)
+        else:
+            if self.Debug_log:
+                logger.error(f"Unsupported action: {action}")
+            await self.send(text_data=json.dumps({
+                'type': 'error',
+                'message': f"Unsupported action: {action}"
+            }))
 
     async def broadcast_game_state(self, extra_info=None):
         state = {
@@ -138,7 +146,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         if game_state['game_started']:
             if self.game_type == 'local_1v1':
                 self.handle_local_input(data)
-            elif self.game_type == '1v1':
+            elif self.game_type == '1v1' or self.game_type == 'tournament':
                 self.handle_1v1_input(data)
             else:
                 logger.warning(f"Unexpected game type: {self.game_type}")
@@ -167,6 +175,26 @@ class PongConsumer(AsyncWebsocketConsumer):
         else:
             logger.error(f"Invalid player number received: {player_num}")
 
+    async def assign_players(self):
+        players = list(self.Players.values())
+        if len(players) < 2:
+            if self.Debug_log:
+                logger.debug("Not enough players to start the game")
+            return
+
+        for i, player in enumerate(players):
+            player['player_num'] = i + 1
+            assignment_message = json.dumps({
+                'type': 'player_assignment',
+                'player_num': player['player_num'],
+                'message': f'You are Player {player["player_num"]}.'
+            })
+            await player['object'].send(text_data=assignment_message)
+            if self.Debug_log:
+                logger.debug(f"Assigned Player {player['player_num']} to {player['object'].channel_name}")
+
+        await self.broadcast_game_state({'type': 'game_ready'})
+
     async def handle_game_selection(self, data):
         self.username = data.get('username', 'Player')
         self.game_type = data.get('game_type')
@@ -194,6 +222,8 @@ class PongConsumer(AsyncWebsocketConsumer):
                 else:
                     if self.Debug_log:
                         logger.debug("Waiting for second player to join...")
+            elif self.game_type == 'tournament':
+                await self.handle_join_tournament(data)
             else:
                 logger.warning(f"Unexpected game type: {self.game_type}")
         else:
@@ -203,25 +233,45 @@ class PongConsumer(AsyncWebsocketConsumer):
             }))
             return
 
-    async def assign_players(self):
-        players = list(self.Players.values())
-        if len(players) < 2:
-            if self.Debug_log:
-                logger.debug("Not enough players to start the game")
-            return
+    async def handle_join_tournament(self, data):
+        username = data.get('username', 'Player')
+        player_id = data.get('player_id')
+        self.tournament_players.append({
+            "object": self,
+            "channel_name": self.channel_name,
+            "username": username,
+            "player_num": player_id,
+            "speed": 0
+        })
 
-        for i, player in enumerate(players):
-            player['player_num'] = i + 1
-            assignment_message = json.dumps({
-                'type': 'player_assignment',
-                'player_num': player['player_num'],
-                'message': f'You are Player {player["player_num"]}.'
-            })
-            await player['object'].send(text_data=assignment_message)
-            if self.Debug_log:
-                logger.debug(f"Assigned Player {player['player_num']} to {player['object'].channel_name}")
+        if self.Debug_log:
+            logger.debug(f"{username} joined the tournament lobby as Player {player_id}.")
 
-        await self.broadcast_game_state({'type': 'game_ready'})
+        message = {
+            'type': 'info',
+            'message': f'{username} has joined the tournament lobby as Player {player_id}.'
+        }
+        await self.send(text_data=json.dumps(message))
+        
+        # Inform all players about the current number of players
+        for player in self.tournament_players:
+            await player['object'].send(text_data=json.dumps({
+                'type': 'info',
+                'message': f'{len(self.tournament_players)}/4 players have joined. Waiting for more players...'
+            }))
+        
+        # Vérifier si le nombre de joueurs est suffisant pour démarrer un tournoi
+        if len(self.tournament_players) >= 4:  # ou 8 pour un tournoi plus grand
+            if self.Debug_log:
+                logger.debug("Minimum players for tournament reached. Starting the tournament.")
+            await self.start_tournament()
+
+    async def start_tournament(self):
+        tournament = Tournament(self.tournament_players)
+        tournament.setup_tournament()
+        await tournament.start_tournament()
+        if self.Debug_log:
+            logger.debug("Tournament started.")
 
     # ---------------------------- GAME LOGIC ------------------------#
 
@@ -355,3 +405,67 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def run_in_main_loop(self, coro):
         future = asyncio.run_coroutine_threadsafe(coro(), asyncio.get_event_loop())
         return await asyncio.wrap_future(future)
+
+class Tournament:
+    def __init__(self, players):
+        self.players = players  # Liste des noms des joueurs ou des objets 'player'
+        self.tournament_size = None  # Taille du tournoi (4 ou 8)
+        self.matches = []  # Liste des matches à jouer
+        self.current_match = None  # Match en cours
+
+    def setup_tournament(self):
+        # Détermine la taille du tournoi basée sur le nombre de joueurs
+        if len(self.players) <= 4:
+            self.tournament_size = 4
+        else:
+            self.tournament_size = 8
+
+        # Crée les paires de joueurs pour le premier tour
+        random.shuffle(self.players)
+        for i in range(0, self.tournament_size, 2):
+            self.matches.append((self.players[i], self.players[i + 1]))
+
+    async def start_tournament(self):
+        # Lance les matches un par un
+        for match in self.matches:
+            await self.play_match(match[0], match[1])
+
+    async def play_match(self, player1, player2):
+        # Initialisation du match entre player1 et player2
+        logger.debug(f"Starting match between {player1['username']} and {player2['username']}")
+        self.current_match = (player1, player2)
+
+        # Créer une nouvelle instance de PongConsumer pour ce match
+        match_game = PongConsumer()
+        await match_game.connect()  # Assurez-vous que la méthode connect peut être appelée sans arguments ou ajustez selon votre implémentation
+
+        # Assigner les joueurs et initialiser le jeu
+        match_game.Players[player1['channel_name']] = player1
+        match_game.Players[player2['channel_name']] = player2
+
+        # Assigner des numéros de joueur
+        player1['player_num'] = 1
+        player2['player_num'] = 2
+
+        # Envoyer les informations de début de jeu
+        await match_game.broadcast_game_state({'type': 'game_ready'})
+
+        # Démarrer le jeu
+        await match_game.start_game()
+
+        # Attendre la fin du jeu
+        while not match_game.game_state['game_over']:
+            await asyncio.sleep(1)  # Attendre que le jeu se termine
+
+        # Déterminer le vainqueur
+        if match_game.game_state['player1_score'] > match_game.game_state['player2_score']:
+            winner = player1
+        else:
+            winner = player2
+
+        logger.debug(f"Winner is {winner['username']}")
+        return winner
+
+    def update_bracket(self, winner):
+        # Met à jour les brackets pour le prochain tour
+        logger.debug(f"Updating bracket, winner: {winner}")
