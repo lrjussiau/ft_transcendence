@@ -17,24 +17,16 @@ class UserSerializer(serializers.ModelSerializer):
         return super(UserSerializer, self).create(validated_data)
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    avatar = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'avatar', 'default_avatar', 'created_at', 'updated_at', 'status', 'is_active', 'is_staff', 'is_2fa_enabled']
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        if instance.avatar:
-            request = self.context.get('request')
-            if request:
-                host = request.get_host()
-                port = request.META.get('SERVER_PORT')
-                
-                if port and port not in ('80', '443'):
-                    host = f"{host}:{port}"
-                
-                avatar_url = f"http://{host}{settings.MEDIA_URL}{instance.avatar}"
-                representation['avatar'] = avatar_url
-        return representation
+    def get_avatar(self, obj):
+        if obj.default_avatar:
+            return '/media/avatars/default_avatar.png'
+        return obj.avatar.url if obj.avatar else None
     
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 

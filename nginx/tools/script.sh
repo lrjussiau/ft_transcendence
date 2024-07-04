@@ -8,7 +8,7 @@ NC='\033[0m'
 if [ ! -f /etc/ssl/certs/nginx.crt ]; then
     echo -e "${GREEN}Nginx: configuration de SSL ...${NC}"
     mkdir -p /etc/ssl/private /etc/ssl/certs
-    openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt -subj "/C=CH/ST=Vaud/L=Lausanne/O=24kleaks/CN=c3r5s4.42lausanne.ch"
+    openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt -subj "/C=CH/ST=Vaud/L=Lausanne/O=24kleaks/CN=c3r4s1.42lausanne.ch"
     echo -e "${GREEN}Nginx: SSL est configuré !${NC}"
 fi
 

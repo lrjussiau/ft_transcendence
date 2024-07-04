@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-evf%hu@og7(($d3wkktj(p*jli54+zd+b(^0f_$+aq&k(4&qo*
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['c3r5s2.42lausanne.ch', 'localhost', '127.0.0.1', 'backend', '10.13.4.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Cookies sécurisés
