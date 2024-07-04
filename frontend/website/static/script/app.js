@@ -1,5 +1,6 @@
-
 // App.js
+
+//--------------------------- INIT ------------------------------//
 
 async function fetchUserProfile() {
   const token = localStorage.getItem('authToken');
@@ -18,6 +19,8 @@ async function fetchUserProfile() {
   }
 }
 
+//------------------------- DEFINES ----------------------------//
+
 let ws = null;
 let ctx = null;
 let username = '';
@@ -33,6 +36,9 @@ const playerNum = 1;
 const keys = {};
 let gameState = {};
 const requestTimestamps = {};
+
+
+//--------------- WEBSOCKET & GAME MANAGEMENT  ------------------//
 
 async function launchGame() {
   initializeStartButton();
@@ -185,7 +191,6 @@ function startGame(gameType) {
   }
 }
 
-
 function stopGame() {
   gameOver = true;
   if (ws) {
@@ -220,6 +225,8 @@ function updateGameState(data) {
     window.updateGameStateFromServer(data);
   }
 }
+
+//-------------------------- INPUT HANDLING ---------------------//
 
 window.addEventListener('keydown', (event) => {
   if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
@@ -271,6 +278,8 @@ function updateSpeeds() {
     }
   }
 }
+
+//-------------------------- DRAW HANDLING ----------------------//
 
 function draw() {
   const canvas = document.getElementById('gameCanvas');
