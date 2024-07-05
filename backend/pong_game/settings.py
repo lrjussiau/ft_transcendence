@@ -168,7 +168,7 @@ LOGGING = {
     },
     'root': {
         'handlers': ['console'],
-        'level': 'DEBUG',
+        'level': 'WARNING',
     },
     'loggers': {
         'django': {
@@ -178,8 +178,12 @@ LOGGING = {
         },
         'pongengine': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'propagate': True,
+        },
+        'websockets': {
+            'handlers': ['console'],
+            'level': 'WARNING',
         },
     },
 }

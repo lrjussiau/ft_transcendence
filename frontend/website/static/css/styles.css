@@ -1298,6 +1298,8 @@ input:checked + .slider:before {
 .canvas {
   background-color: black;
   display: none;
+  /* width: 100%;
+  height: auto; */
 }
 
 /* Dark mode styles */
@@ -1607,8 +1609,8 @@ input:checked + .slider:before {
 
 .canvas-wrapper {
   position: relative;
-  width: 70%;
-  height: 98%;
+  width: 60%;
+  height: auto;
 }
 
 .canvas-wrapper::before {
@@ -1641,4 +1643,41 @@ input:checked + .slider:before {
   height: 100%;
   border-radius: 15px;
   background-color: #000000;
+}
+
+.game-over-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* --ANIMATIONS-- */
+
+#blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  pointer-events: none;
+  animation: blurIn 0.4s ease-out;
+}
+
+@keyframes blurIn {
+  0% {
+    backdrop-filter: blur(0px);
+  }
+  50% {
+    backdrop-filter: blur(10px);
+  }
+  100% {
+    backdrop-filter: blur(0px);
+  }
 }
