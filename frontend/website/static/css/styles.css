@@ -1664,10 +1664,10 @@ input:checked + .slider:before {
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
   z-index: 9999;
   pointer-events: none;
-  animation: blurIn 0.4s ease-out;
+  animation: blurIn 0.2s ease-out;
 }
 
 @keyframes blurIn {
@@ -1675,7 +1675,7 @@ input:checked + .slider:before {
     backdrop-filter: blur(0px);
   }
   50% {
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(5px);
   }
   100% {
     backdrop-filter: blur(0px);

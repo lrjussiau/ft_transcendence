@@ -5,5 +5,5 @@ function applyBlurAnimation() {
     
     setTimeout(() => {
       document.body.removeChild(overlay);
-    }, 400);
+    }, 200);
   }
