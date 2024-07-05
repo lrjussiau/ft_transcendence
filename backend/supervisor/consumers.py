@@ -19,6 +19,25 @@ game_state = {
     "game_loop_running": False  # Ajout de cette variable
 }
 
+class TournamentManager:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(TournamentManager, cls).__new__(cls)
+            cls._instance.players = []
+            cls._instance.player_count = 0
+        return cls._instance
+
+    def add_player(self, player_info):
+        self.player_count += 1
+        player_info['player_num'] = self.player_count
+        self.players.append(player_info)
+        return self.player_count
+
+    def get_player_count(self):
+        return len(self.players)
+
 class PongConsumer(AsyncWebsocketConsumer):
 
     # ------------------------- DEFINES ----------------------------#
@@ -27,7 +46,8 @@ class PongConsumer(AsyncWebsocketConsumer):
         super().__init__(*args, **kwargs)
         self.connection_task = None
         self.keep_open = False
-        self.tournament_players = []  # Initialiser ici
+        self.tournament_players = []
+        self.tournament_player_count = 0
 
     Players = {}
     points = 5
@@ -40,29 +60,29 @@ class PongConsumer(AsyncWebsocketConsumer):
     Debug_log = True
     last_update_time = None
     global_speed_factor = 1.5
+    tournament_manager = TournamentManager()
+    
 
     # ----------------------- WEBSOCKET MANAGEMENT -------------------#
 
     async def connect(self):
-        if len(self.Players) >= 2:
-            await self.close()
-            return
-
         await self.accept()
         self.game_type = None
+        self.keep_open = True
+        self.connection_task = asyncio.create_task(self.ensure_connection_open())
+
+        if 'tournament' not in self.Players:
+            self.Players['tournament'] = {}
+
         self.Players[self.channel_name] = {
             "object": self,
             "username": None,
             "player_num": None,
             "speed": 0
         }
+
         if self.Debug_log:
             logger.debug(f"Player connected: {self.channel_name}")
-        self.keep_open = True
-        self.connection_task = asyncio.create_task(self.ensure_connection_open())
-
-        if len(self.Players) == 2:
-            await self.broadcast_game_state({'type': 'game_ready'})
 
     async def ensure_connection_open(self):
         while self.keep_open:
@@ -198,7 +218,22 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def handle_game_selection(self, data):
         self.username = data.get('username', 'Player')
         self.game_type = data.get('game_type')
-        self.Players[self.channel_name]['username'] = self.username
+
+        if self.game_type == 'tournament':
+            if self.channel_name not in self.Players['tournament']:
+                player_id = len(self.tournament_players) + 1
+                self.Players['tournament'][self.channel_name] = {
+                    "object": self,
+                    "username": self.username,
+                    "player_num": player_id,
+                    "speed": 0
+                }
+                self.tournament_players.append(self.Players['tournament'][self.channel_name])
+            else:
+                self.Players['tournament'][self.channel_name]['username'] = self.username
+        else:
+            self.Players[self.channel_name]['username'] = self.username
+
         if self.Debug_log:
             logger.debug(f"Game type selected: {self.game_type} by {self.username}")
 
@@ -235,15 +270,16 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     async def handle_join_tournament(self, data):
         username = data.get('username', 'Player')
-        player_id = data.get('player_id')
-        self.tournament_players.append({
+        
+        player_info = {
             "object": self,
-            "channel_name": self.channel_name,
             "username": username,
-            "player_num": player_id,
-            "speed": 0
-        })
+            "speed": 0,
+            "channel_name": self.channel_name
+        }
 
+        player_id = self.tournament_manager.add_player(player_info)
+        
         if self.Debug_log:
             logger.debug(f"{username} joined the tournament lobby as Player {player_id}.")
 
@@ -252,16 +288,14 @@ class PongConsumer(AsyncWebsocketConsumer):
             'message': f'{username} has joined the tournament lobby as Player {player_id}.'
         }
         await self.send(text_data=json.dumps(message))
-        
-        # Inform all players about the current number of players
-        for player in self.tournament_players:
+
+        for player in self.tournament_manager.players:
             await player['object'].send(text_data=json.dumps({
                 'type': 'info',
-                'message': f'{len(self.tournament_players)}/4 players have joined. Waiting for more players...'
+                'message': f'{self.tournament_manager.get_player_count()}/4 players have joined. Waiting for more players...'
             }))
-        
-        # Vérifier si le nombre de joueurs est suffisant pour démarrer un tournoi
-        if len(self.tournament_players) >= 4:  # ou 8 pour un tournoi plus grand
+
+        if self.tournament_manager.get_player_count() >= 4:
             if self.Debug_log:
                 logger.debug("Minimum players for tournament reached. Starting the tournament.")
             await self.start_tournament()
@@ -408,10 +442,10 @@ class PongConsumer(AsyncWebsocketConsumer):
 
 class Tournament:
     def __init__(self, players):
-        self.players = players  # Liste des noms des joueurs ou des objets 'player'
-        self.tournament_size = None  # Taille du tournoi (4 ou 8)
-        self.matches = []  # Liste des matches à jouer
-        self.current_match = None  # Match en cours
+        self.players = players
+        self.tournament_size = None
+        self.matches = []
+        self.current_match = None
 
     def setup_tournament(self):
         # Détermine la taille du tournoi basée sur le nombre de joueurs
@@ -420,8 +454,14 @@ class Tournament:
         else:
             self.tournament_size = 8
 
-        # Crée les paires de joueurs pour le premier tour
+        # S'assurer qu'il y a suffisamment de joueurs
+        while len(self.players) < self.tournament_size:
+            self.players.append(None)  # Ajouter des "bye" pour les places vides
+
+        # Mélanger les joueurs
         random.shuffle(self.players)
+
+        # Créer les paires de joueurs pour le premier tour
         for i in range(0, self.tournament_size, 2):
             self.matches.append((self.players[i], self.players[i + 1]))
 
