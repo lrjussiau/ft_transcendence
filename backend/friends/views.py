@@ -47,8 +47,7 @@ class DeleteFriendView(APIView):
 class BlockFriendView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        friend_id = request.data.get('friend_id')
+    def post(self, request, friend_id):
         if not friend_id:
             return Response({'error': 'Friend ID not provided'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -62,7 +61,10 @@ class BlockFriendView(APIView):
             return Response({'error': 'Friend not found'}, status=status.HTTP_404_NOT_FOUND)
 
         friendship.status = "blocked"
+        friendship.save()
         return Response({'success': 'Friend blocked successfully'}, status=status.HTTP_200_OK)
+
+
 
 class IncomingFriendRequestsView(APIView):
     permission_classes = [IsAuthenticated]
@@ -113,13 +115,24 @@ class FriendsListView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-def is_blocked(request, friend_id):
-    try:
-        friend = User.objects.get(id=friend_id)
-    except User.DoesNotExist:
-        return False 
+class IsBlockedView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    row = Friend.objects.filter(user=request.user, friend=friend).first()
-    if row and row.status == "blocked":
-        return True
-    return False
+    def post(self, request, friend_id):
+        if self.is_blocked(request.user, friend_id):
+            return Response({'is_blocked': True})
+        else:
+            return Response({'is_blocked': False})
+
+    def is_blocked(self, user, friend_id):
+        print(f"friend {friend_id}")
+        try:
+            friend = User.objects.get(id=friend_id)
+        except User.DoesNotExist:
+            print("friend does not exist")
+            return False
+        
+        row = Friend.objects.filter(user=user, friend=friend).first()
+        if row.status == "blocked":
+            return True
+        return False

@@ -3,39 +3,6 @@
 
 //--------------------------- INIT ------------------------------//
 
-// async function fetchUserProfile() {
-//   const token = localStorage.getItem('authToken');
-//   const response = await fetch('/api/authentication/user/profile/', {
-//       headers: {
-//           'Authorization': `Bearer ${token}`
-//       }
-//   });
-
-//   if (response.ok) {
-//       const data = await response.json();
-//       console.log('Fetched user profile:', data);  // Log the fetched data
-//       return data;
-//   } else {
-//       throw new Error('Failed to fetch user profile');
-//   }
-// }
-
-//   if (response.ok) {
-//       const data = await response.json();
-//       console.log('Fetched user profile:', data);
-//       return data;
-//   } else {
-//       throw new Error('Failed to fetch user profile');
-//   }
-// }
-
-async function launchGame() {
-  initializeStartButton();
-  userData = await fetchUserProfile();
-  console.log('User name: ', userData.username);
-  displayUsername(userData.username);
-}
-
 async function fetchUserProfile() {
   const token = localStorage.getItem('authToken');
   const response = await fetch('/api/authentication/user/profile/', {
@@ -78,25 +45,6 @@ async function launchGame() {
   userData = await fetchUserProfile(); 
   console.log('User name: ', userData.username);
   displayUsername(userData.username);
-}
-
-async function fetchUserProfile() {
-  const token = localStorage.getItem('authToken');
-  const response = await fetch('/api/authentication/user/profile/', {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  });
-
-  if (response.ok) {
-    const userData = await response.json();
-    displayUsername(userData.username);
-    username = userData.username
-    return userData;
-  } else {
-    console.error("Failed to fetch user profile:", await response.text());
-    throw new Error('Failed to fetch user profile');
-  }
 }
 
 //--------------- WEBSOCKET & GAME MANAGEMENT  ------------------//

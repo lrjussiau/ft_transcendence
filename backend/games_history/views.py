@@ -21,11 +21,9 @@ def user_stats(request, user_id):
 
 @sync_to_async
 def store_game(score_loser, loser_username, winner_username, tournament_game):
-    # Retrieve the User objects based on the provided usernames
     loser = User.objects.get(username=loser_username)
     winner = User.objects.get(username=winner_username)
-    
-    # Create a new game entry in the Games table
+
     new_game = Games.objects.create(
         winner=winner,
         loser=loser,
@@ -40,26 +38,6 @@ def store_game(score_loser, loser_username, winner_username, tournament_game):
         else:
             return JsonResponse({"error": "Failed to send data to blockchain"}, status=500)
 
-"""class StoreGameData(APIView):
-    permission_classes = [IsAuthenticated]
-    def post(self, request):
-        serializer = GameStoreSerializer(data=request.data)
-        if serializer.is_valid():
-            game = serializer.save()
-        response = record_score(game.id, request.score_loser, request.loser.username, request.winner.username)
-        if request.is_tournament_game:
-            data_to_send = {
-            "game_id": game.id,
-            "score_loser" : request.score_loser,
-            "loser" : request.loser.username,
-            "winner" : request.winner.username
-        }
-        response = requests.post('/api/blockchain/record_score', json=data_to_send)
-        if response.status_code == 200:
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)"""
-        
 
 class RetrieveGameData(APIView):
     permission_classes = [IsAuthenticated]

@@ -79,9 +79,9 @@ async function gameHistory() {
                     </div>
                 </td>
                 <td class="result">${isWinner ? 'Won' : 'Lost :('}</td>
-                <td class="score">${score_loser} - ${score_winner}</td>
+                <td class="score_game">${score_loser} - ${score_winner}</td>
                 <td class="is_tournament">${is_tournament ? 'yes->checked by blockchain :)':'Nope'}</td>
-                <td class="data">${formatDate(game.date)}</td>
+                <td class="data">${formatDate(game.match_date)}</td>
             `;
 
             gameTableBody.appendChild(row);

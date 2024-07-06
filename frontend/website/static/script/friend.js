@@ -16,6 +16,23 @@ async function addFriend(friendId) {
     }
 }
 
+function blockFriend(friend_id){
+    const token = localStorage.getItem('authToken');
+    fetch(`/api/friends/block/${friend_id}/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to add friend');
+    }
+}
+
+
 async function deleteFriend(friendId) {
     const token = localStorage.getItem('authToken');
     const response = await fetch('/api/friends/delete/', {
@@ -202,7 +219,7 @@ async function displayFriends() {
                 .then(response => response.json())
                 .then(data => {
                     console.debug("DATA: ", data);
-                    if (data) {
+                    if (data.is_blocked == true) {
                         blockButton.innerText = 'Blocked';
                         blockButton.disabled = true;  // Disable the button if the friend is already blocked
                     } else {
@@ -218,20 +235,20 @@ async function displayFriends() {
                 listItem.appendChild(blockButton);
             
                 // Create play game button
-                const playButton = document.createElement('button');
-                playButton.innerText = 'Play Game';
-                playButton.className = 'play-game-button';
-                playButton.addEventListener('click', () => {
-                    // Implement the play game functionality here
-                    alert("Ask to play game")
-                    //askToPlayGame(friend.friend.id);
-                });
+                // const playButton = document.createElement('button');
+                // playButton.innerText = 'Play Game';
+                // playButton.className = 'play-game-button';
+                // playButton.addEventListener('click', () => {
+                //     // Implement the play game functionality here
+                //     alert("Ask to play game")
+                //     //askToPlayGame(friend.friend.id);
+                // });
             
                 listItem.appendChild(img);
                 listItem.appendChild(nameDiv);
 
                 listItem.appendChild(blockButton);
-                listItem.appendChild(playButton);
+                //listItem.appendChild(playButton);
                 listItem.appendChild(deleteButton);
 
 
