@@ -51,7 +51,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     Players = {}
     points = 5
-    refresh_rate = 120
+    refresh_rate = 60
     speed_buff = 7 / 6
     paddle_height = 70
     center_paddle_offset = paddle_height / 2
