@@ -2,7 +2,9 @@ import json
 import random
 import asyncio
 import logging
+from .simple_ai import Ai
 from math import cos, sin, radians
+from games_history.views import store_game
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 logger = logging.getLogger(__name__)
@@ -30,7 +32,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.keep_open = False
 
     Players = {}
-    points = 50
+    points = 5
     refresh_rate = 120
     speed_buff = 2
     paddle_height = 70
@@ -40,6 +42,9 @@ class PongConsumer(AsyncWebsocketConsumer):
     Debug_log = True
     last_update_time = None
     global_speed_factor = 2
+
+    # -------------val---------------#
+    AI = None
 
     # ----------------------- WEBSOCKET MANAGEMENT -------------------#
 
@@ -124,6 +129,11 @@ class PongConsumer(AsyncWebsocketConsumer):
                 await player['object'].send(text_data=json.dumps(state))
             except Exception as e:
                 logger.error(f"Error sending game state: {e}")
+        if self.AI:
+            ai_move = self.AI.act()
+            game_state['player1']['y'] += ai_move
+            game_state['player1']['y'] = max(0, min(game_state['player1']['y'], 290))
+            self.AI.store_state(game_state)
 
     async def handle_pong(self):
         player = self.Players.get(self.channel_name)
@@ -194,6 +204,12 @@ class PongConsumer(AsyncWebsocketConsumer):
                 else:
                     if self.Debug_log:
                         logger.debug("Waiting for second player to join...")
+            elif self.game_type =='solo':
+                game_state['player1'] = {"y": 180, "speed": 0}
+                game_state['player2'] = {"y": 180, "speed": 0}
+                self.AI = Ai()
+                self.Players[self.channel_name]['player_num'] = 1
+                await self.broadcast_game_state({'type': 'game_ready'})
             else:
                 logger.warning(f"Unexpected game type: {self.game_type}")
         else:
@@ -219,7 +235,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             })
             await player['object'].send(text_data=assignment_message)
             if self.Debug_log:
-                logger.debug(f"Assigned Player {player['player_num']} to {player['object'].channel_name}")
+                logger.debug(f"Assigned Player {player['player_num']} to {player['object'].channel_name} as {player['username']}")
 
         await self.broadcast_game_state({'type': 'game_ready'})
 
@@ -273,7 +289,23 @@ class PongConsumer(AsyncWebsocketConsumer):
         return
 
     async def check_game_over(self):
-        if game_state['player1_score'] == self.points or game_state['player2_score'] == self.points:
+        p1 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 1), None)
+        p2 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 2), None)
+        logger.debug(f"player1: {p1.get('username')}, player2: {p2.get('username')}")
+        if not self.game_type == "local_1v1":
+            if (p2 != None):
+                p1_username =  p1.get('username')
+                p2_username =  p2.get('username')
+                if game_state['player1_score'] == self.points:
+                    if self.game_type == "tournament":
+                        await store_game(game_state['player2_score'], p2_username, p1_username, True)
+                    else:
+                        await store_game(game_state['player2_score'], p2_username, p1_username, False)
+                else:
+                    if self.game_type == "tournament":
+                        await store_game(game_state['player1_score'], p1_username, p2_username, True)
+                    else:
+                        await store_game(game_state['player1_score'], p1_username, p2_username, False)    
             game_state['game_over'] = True
             game_state['game_started'] = False
             if self.Debug_log:
@@ -289,6 +321,8 @@ class PongConsumer(AsyncWebsocketConsumer):
         game_state['player2_score'] = 0
         game_state['game_started'] = False
         game_state['game_over'] = False
+        if self.AI:
+            self.AI.store_state(game_state)
 
     def ball_restart(self):
         game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
@@ -331,6 +365,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         if game_state['player1_score'] == self.points or game_state['player2_score'] == self.points:
             game_state['game_over'] = True
             game_state['game_started'] = False
+            await self.check_game_over()
             asyncio.create_task(self.broadcast_game_state({'type': 'game_over'}))
 
     def handle_paddle_collision(self):

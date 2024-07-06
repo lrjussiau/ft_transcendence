@@ -48,6 +48,8 @@ async function loadPartial(partial) {
       }
 
       if (partial === 'user') {
+        gameHistory();
+        defineStats();
         loadUserProfile();
         displayIncomingFriendRequests();
         displayFriends();

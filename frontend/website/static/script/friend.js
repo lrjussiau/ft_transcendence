@@ -16,6 +16,24 @@ async function addFriend(friendId) {
     }
 }
 
+async function deleteFriend(friendId) {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch('/api/friends/delete/', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ friend_id: friendId })
+    });
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to delete friend');
+    }
+}
+
 async function fetchUsers() {
     const token = localStorage.getItem('authToken');
     const response = await fetch('/api/db/User/', {
@@ -159,8 +177,63 @@ async function displayFriends() {
                 nameDiv.className = 'accepted-friend-name';
                 nameDiv.textContent = friend.friend.username;
 
+                const deleteButton = document.createElement('button');
+                deleteButton.innerText = 'Delete';
+                deleteButton.className = 'delete-friend-button';
+                deleteButton.addEventListener('click', () => {
+                    // Implement the delete friend functionality here
+                    alert("FRiend deleted");
+                    deleteFriend(friend.id)
+                    //deleteFriend(friend.friend.id);
+                });
+
+                const blockButton = document.createElement('button');
+                blockButton.className = 'block-friend-button';
+            
+                // Check if the friend is blocked
+                const token = localStorage.getItem('authToken');
+                fetch(`/api/friends/is-blocked/${friend.friend.id}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.debug("DATA: ", data);
+                    if (data) {
+                        blockButton.innerText = 'Blocked';
+                        blockButton.disabled = true;  // Disable the button if the friend is already blocked
+                    } else {
+                        blockButton.innerText = 'Block';
+                        blockButton.addEventListener('click', () => {
+                            blockFriend(friend.friend.id);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            
+                // Append buttons to list item
+                listItem.appendChild(blockButton);
+            
+                // Create play game button
+                const playButton = document.createElement('button');
+                playButton.innerText = 'Play Game';
+                playButton.className = 'play-game-button';
+                playButton.addEventListener('click', () => {
+                    // Implement the play game functionality here
+                    alert("Ask to play game")
+                    //askToPlayGame(friend.friend.id);
+                });
+            
                 listItem.appendChild(img);
                 listItem.appendChild(nameDiv);
+
+                listItem.appendChild(blockButton);
+                listItem.appendChild(playButton);
+                listItem.appendChild(deleteButton);
+
 
                 friendsList.appendChild(listItem);
             });

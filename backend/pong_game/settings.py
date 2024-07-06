@@ -3,7 +3,17 @@ import os
 import dj_database_url
 import re
 
+STATIC_URL = '/static/'
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATIC_URL = '/staticfiles/'
+
+# Additional locations of static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 
 SECRET_KEY = 'django-insecure-evf%hu@og7(($d3wkktj(p*jli54+zd+b(^0f_$+aq&k(4&qo*'
 
@@ -31,6 +41,7 @@ INSTALLED_APPS = [
     'friends',
     'blockchain',
     'livechat',
+    'games_history',
 ]
 
 MEDIA_URL = '/media/'

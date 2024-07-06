@@ -1,20 +1,20 @@
 // utils.js
-async function fetchUserProfile() {
-  const token = localStorage.getItem('authToken');
-  const response = await fetch('/api/authentication/user/profile/', {
-      headers: {
-          'Authorization': `Bearer ${token}`
-      }
-  });
+// async function fetchUserProfile() {
+//   const token = localStorage.getItem('authToken');
+//   const response = await fetch('/api/authentication/user/profile/', {
+//       headers: {
+//           'Authorization': `Bearer ${token}`
+//       }
+//   });
 
-  if (response.ok) {
-      const data = await response.json();
-      console.log('Fetched user profile:', data);  // Log the fetched data
-      return data;
-  } else {
-      throw new Error('Failed to fetch user profile');
-  }
-}
+//   if (response.ok) {
+//       const data = await response.json();
+//       console.log('Fetched user profile:', data);  // Log the fetched data
+//       return data;
+//   } else {
+//       throw new Error('Failed to fetch user profile');
+//   }
+// }
 
 
 // App.js
@@ -25,6 +25,7 @@ let username = '';
 let countdownValue = null;
 let latestGameState = null;
 let selectedGameType = null;
+let userData = null;
 let player1Speed = 0;
 let player2Speed = 0;
 let roundTripTime = 0;
@@ -37,29 +38,29 @@ const requestTimestamps = {};
 
 async function launchGame() {
   initializeStartButton();
-  const userData = await fetchUserProfile(); 
+  userData = await fetchUserProfile(); 
   console.log('User name: ', userData.username);
   displayUsername(userData.username);
 }
 
-// async function fetchUserProfile() {
-//   const token = localStorage.getItem('authToken');
-//   const response = await fetch('/api/authentication/user/profile/', {
-//     headers: {
-//       'Authorization': `Bearer ${token}`
-//     }
-//   });
+async function fetchUserProfile() {
+  const token = localStorage.getItem('authToken');
+  const response = await fetch('/api/authentication/user/profile/', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 
-//   if (response.ok) {
-//     const userData = await response.json();
-//     displayUsername(userData.username);
-//     username = userData.username
-//     return userData;
-//   } else {
-//     console.error("Failed to fetch user profile:", await response.text());
-//     throw new Error('Failed to fetch user profile');
-//   }
-// }
+  if (response.ok) {
+    const userData = await response.json();
+    displayUsername(userData.username);
+    username = userData.username
+    return userData;
+  } else {
+    console.error("Failed to fetch user profile:", await response.text());
+    throw new Error('Failed to fetch user profile');
+  }
+}
 
 function displayUsername(username) {
   const usernameSpan = document.getElementById('displayUsername');
@@ -106,7 +107,8 @@ function startGame(gameType) {
     ws = new WebSocket(wsUrl);
     ws.onopen = () => {
       console.log('WebSocket connection established');
-      ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: username }));
+      let usernameNew = userData.username;  
+      ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username:  usernameNew}));
 
       switch (gameType) {
         case 'local_1v1':

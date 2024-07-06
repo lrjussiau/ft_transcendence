@@ -13,14 +13,6 @@ services:
     ports:
       - "5432:5432"
 
-  # blockchain:
-  #   build: ./blockchain
-  #   container_name: blockchain
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #     - mynetwork
-
   redis:
     image: "redis:alpine"
     container_name: redis_container
@@ -53,6 +45,14 @@ services:
     container_name: frontend_container
     networks:
       - mynetwork
+
+  blockchain:
+    build: ./blockchain
+    container_name: blockchain
+    ports:
+    - "3000:3000"
+    networks:
+    - mynetwork
 
   nginx:
     build:
