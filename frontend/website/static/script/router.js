@@ -87,6 +87,7 @@ function toggleHeaderDisplay(route) {
 // Function to handle routes
 async function handleRoute(route) {
   console.log("Handling route:", route);
+
   switch (route) {
     case 'home':
       toggleHeaderDisplay(route); 
@@ -97,7 +98,11 @@ async function handleRoute(route) {
     case 'user':
     case 'livechat':
     case 'settings':
+    case 'canvas':
       if (isAuthenticated()) {
+        // Apply blur animation
+        applyBlurAnimation();
+        await new Promise(resolve => setTimeout(resolve, 50));
         toggleHeaderDisplay(route); 
         await loadPartial(route);
       } else {

@@ -513,6 +513,7 @@ footer {
   width: 50%;
   border-radius: 20px;
   text-align: center;
+  background-color: inherit;
 }
 
 .btn-play:hover {
@@ -1298,6 +1299,8 @@ input:checked + .slider:before {
 .canvas {
   background-color: black;
   display: none;
+  /* width: 100%;
+  height: auto; */
 }
 
 /* Dark mode styles */
@@ -1607,8 +1610,8 @@ input:checked + .slider:before {
 
 .canvas-wrapper {
   position: relative;
-  width: 70%;
-  height: 98%;
+  width: 60%;
+  height: auto;
 }
 
 .canvas-wrapper::before {
@@ -1641,4 +1644,179 @@ input:checked + .slider:before {
   height: 100%;
   border-radius: 15px;
   background-color: #000000;
+}
+
+.game-over-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* --ANIMATIONS-- */
+
+#blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  pointer-events: none;
+  animation: blurIn 0.2s ease-out;
+}
+
+@keyframes blurIn {
+  0% {
+    backdrop-filter: blur(0px);
+  }
+  50% {
+    backdrop-filter: blur(5px);
+  }
+  100% {
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* --GAME CHOICE-- */
+
+.game-choice-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 80%;
+}
+.game-choice-title {
+  display: flex;
+  font-size: 4vw;
+  font-weight: 900;
+  width: 100%;
+  align-self: center;
+  justify-content: center;
+}
+
+.game-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+.container-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-game-choice-wrapper {
+  position: relative;
+  width: 30%;
+  margin: 2%;
+  border: 2px solid #0000007b;
+  color: #0000007b;
+  border-radius: 20px;
+  z-index: 1; /* Ensure the wrapper is on a lower z-index than the button */
+}
+
+.btn-game-choice-wrapper:hover {
+  border: none;
+  opacity: 0.6;
+  user-select: none;
+  z-index: 0; /* Ensure the hover effect doesn't overlay the button */
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(90deg, rgb(255, 0, 0), rgb(255, 123, 0), rgb(255, 174, 0), rgb(238, 255, 0)) 0% 0% / 400% 100% repeat text;
+  animation: 5s ease 0s infinite normal none running title-animation;
+}
+
+.btn-game-choice-wrapper:hover::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 20px;
+  border: none;
+  opacity: 0.5;
+  padding: 6px;
+  background: linear-gradient(90deg, rgb(255, 0, 0), rgb(255, 123, 0), rgb(255, 174, 0), rgb(238, 255, 0)) 0% 0% / 400% 100% repeat;
+  -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+  mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: 5s ease 0s infinite normal none running title-animation;
+  z-index: -1; /* Ensure the pseudo-element is behind the button */
+}
+
+.btn-game-choice {
+  display: flex;
+  font-size: 1.5vw;
+  font-weight: 900;
+  width: 100%;
+  align-self: center;
+  justify-content: center;
+  padding: 1vw;
+  background-color: inherit;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.btn-selected {
+  border: none;
+  opacity: 0.6;
+  user-select: none;
+  z-index: 0;
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(90deg, rgb(255, 0, 0), rgb(255, 123, 0), rgb(255, 174, 0), rgb(238, 255, 0)) 0% 0% / 400% 100% repeat text;
+  animation: 5s ease 0s infinite normal none running title-animation;
+}
+
+.btn-selected:focus {
+  outline: none;
+  border: none;
+}
+
+.btn-selected::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 20px;
+  border: none;
+  opacity: 0.5;
+  padding: 6px;
+  background: linear-gradient(90deg, rgb(255, 0, 0), rgb(255, 123, 0), rgb(255, 174, 0), rgb(238, 255, 0)) 0% 0% / 400% 100% repeat;
+  -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+  mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: 5s ease 0s infinite normal none running title-animation;
+  z-index: -1; /* Ensure the pseudo-element is behind the button */
+}
+
+.btn-game {
+  font-size: 1.5vw;
+  padding: 0.5%;
 }

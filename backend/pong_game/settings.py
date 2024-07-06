@@ -19,9 +19,13 @@ SECRET_KEY = 'django-insecure-evf%hu@og7(($d3wkktj(p*jli54+zd+b(^0f_$+aq&k(4&qo*
 
 DEBUG = True
 
+<<<<<<< HEAD
+ALLOWED_HOSTS = ['*']
+=======
 hostname = os.getenv('HOSTNAME_VAR', 'localhost')
 
 ALLOWED_HOSTS = [hostname]
+>>>>>>> dbaaa062673bb4ed9dd883f845601afb9bd61cb9
 
 
 # Cookies sécurisés
@@ -181,7 +185,7 @@ LOGGING = {
     },
     'root': {
         'handlers': ['console'],
-        'level': 'DEBUG',
+        'level': 'WARNING',
     },
     'loggers': {
         'django': {
@@ -191,8 +195,12 @@ LOGGING = {
         },
         'pongengine': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'propagate': True,
+        },
+        'websockets': {
+            'handlers': ['console'],
+            'level': 'WARNING',
         },
     },
 }
