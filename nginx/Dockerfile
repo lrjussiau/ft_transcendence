@@ -1,9 +1,3 @@
-# FROM nginx:latest
-
-# COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-# COPY ../frontend/website /usr/share/nginx/html
-# # COPY ../backend/staticfiles /usr/share/nginx/html/static
-
 FROM nginx:alpine
 
 # Installer OpenSSL
@@ -13,7 +7,7 @@ RUN apk add --no-cache openssl
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx/mime.types /etc/nginx/mime.types
 
-# Copier les certificats SSL
+# Copier les certificats SSL (au cas où ils existent déjà)
 COPY ./nginx/certs /etc/ssl/certs
 COPY ./nginx/private /etc/ssl/private
 
