@@ -106,7 +106,7 @@ async function attributePlayer(gameType) {
       player2Name.textContent = 'AI Opponent';
     } else if (gameType === '1v1') {
       // Fetch opponent avatar
-      const opponentUsername = 'opponentUsername'; // Replace with actual opponent username
+      const opponentUsername = 'booba'; // Replace with actual opponent username
       const opponentAvatar = await fetchOpponentAvatar(opponentUsername);
       player2Img.src = opponentAvatar;
       player2Img.alt = `${opponentUsername}'s avatar`;
