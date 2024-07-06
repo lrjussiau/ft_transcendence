@@ -104,7 +104,7 @@ async function startGame(gameType) {
                           ws.send(JSON.stringify({ t: 'sg' }));
                           break;
                       case '1v1':
-                          ws.send(JSON.stringify({ t: 'join', player_id: localPlayerNumber }));
+                          ws.send(JSON.stringify({ t: 'join', player_id: 1 }));
                           break;
                       default:
                           console.error(`Unsupported game type: ${gameType}`);
@@ -162,6 +162,7 @@ async function startGame(gameType) {
                       case 'game_over':
                         console.log('Game over');
                         updateLastMessage('Game over!');
+                        handleGameOver(data.winner);
                         break;
                       case 'error':
                         console.error('Error from server:', data.message);
@@ -185,11 +186,12 @@ async function startGame(gameType) {
                   console.error('WebSocket error:', error);
               };
               ws.onclose = (event) => {
-                  console.log('WebSocket closed:', event);
-                  if (!gameOver) {
-                      stopGame();
-                  }
-              };
+                console.log('WebSocket closed:', event);
+                if (!gameOver) {
+                    console.log('Unexpected WebSocket closure. Attempting to reconnect...');
+                    setTimeout(() => startGame(selectedGameType), 3000);  // Try to reconnect after 3 seconds
+                }
+            };
           } else {
               console.log('Waiting for canvas element...');
           }
@@ -265,7 +267,7 @@ window.updateGameStateFromServer = function (data) {
 };
 
 function updateGameState(data) {
-  console.log('Updating game state:', data);  // Add this line for debugging
+/*   console.log('Updating game state:', data);  */ // Add this line for debugging
 
   if (data.type === 'update') {
     gameState = data;

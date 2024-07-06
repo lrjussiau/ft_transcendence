@@ -33,25 +33,39 @@ class PongConsumer:
 
     def is_game_running(self):
         return game_state['game_started']
+    
+    async def end_game(self):
+        if not game_state['game_started'] and not game_state['game_loop_running']:
+            logger.debug("Game is not running, ignoring end_game call")
+            return
+        game_state['game_over'] = True
+        game_state['game_started'] = False
+        game_state['game_loop_running'] = False
+        try:
+            await self.broadcast_game_state({'type': 'game_over'})
+        except Exception as e:
+            logger.error(f"Error broadcasting game over state: {e}")
+        logger.debug("Game ended")
 
     async def start_game(self):
-        if game_state['game_started']:
+        if game_state['game_started'] or game_state['game_loop_running']:
+            logger.debug("Game is already running, ignoring start_game call")
             return
 
+        self.init_game_state()  # This resets the game state
         await self.start_countdown()
-        self.init_game_state()
         game_state['game_started'] = True
         game_state['game_over'] = False
         self.ball_restart()
 
         logger.debug(f"Game started with players: {self.Players}")
 
-        if not game_state['game_loop_running']:
-            game_state['game_loop_running'] = True
-            asyncio.create_task(self.game_loop())
+        game_state['game_loop_running'] = True
+        asyncio.create_task(self.game_loop())
 
     async def game_loop(self):
         self.last_update_time = asyncio.get_event_loop().time()
+        logger.debug("Game loop started")
         while game_state['game_started'] and not game_state['game_over']:
             current_time = asyncio.get_event_loop().time()
             dt = current_time - self.last_update_time
@@ -60,6 +74,7 @@ class PongConsumer:
             await self.update_game_state(dt)
             await self.broadcast_game_state()
             await asyncio.sleep(1 / self.refresh_rate)
+        logger.debug("Game loop ended")
 
     async def update_game_state(self, dt):
         if not game_state['game_started']:
@@ -86,9 +101,11 @@ class PongConsumer:
             self.ball_restart()
 
         if game_state['player1_score'] == self.points or game_state['player2_score'] == self.points:
-            game_state['game_over'] = True
-            game_state['game_started'] = False
-            asyncio.create_task(self.broadcast_game_state({'type': 'game_over'}))
+                game_state['game_over'] = True
+                game_state['game_started'] = False
+                game_state['game_loop_running'] = False  # Add this line
+                await self.broadcast_game_state({'type': 'game_over'})
+                logger.debug("Game over signal sent")  # Add this line
 
     def handle_paddle_collision(self):
         if game_state['ball']["x"] <= 15:
@@ -114,6 +131,7 @@ class PongConsumer:
             logger.debug(f"Countdown: {i}")
             await self.broadcast_game_state({'type': 'countdown', 'value': i})
             await asyncio.sleep(1)
+        logger.debug("Countdown finished")
 
     def init_game_state(self):
         game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}

@@ -163,14 +163,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
         },
     },
     'root': {
         'handlers': ['console'],
-        'level': 'WARNING',
+        'level': 'DEBUG',
     },
     'loggers': {
         'django': {
@@ -180,12 +187,17 @@ LOGGING = {
         },
         'pongengine': {
             'handlers': ['console'],
-            'level': 'WARNING',
-            'propagate': True,
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'supervisor.pongengine': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
         'websockets': {
             'handlers': ['console'],
-            'level': 'WARNING',
+            'level': 'DEBUG',
         },
     },
 }
