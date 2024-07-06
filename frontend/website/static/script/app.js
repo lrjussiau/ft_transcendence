@@ -122,59 +122,57 @@ async function startGame(gameType) {
                       console.log(`Round-Trip Time (RTT): ${roundTripTime} ms`);
                   }
                   console.log('Received message:', data.type);
-                  switch (data.type) {
+                    switch (data.type) {
                       case 'countdown':
-                          countdownValue = data.value;
-                          draw();
-                          break;
+                        countdownValue = data.value;
+                        draw();
+                        break;
                       case 'update':
-                          countdownValue = null;
-                          updateGameState(data);
-                          break;
+                        countdownValue = null;
+                        updateGameState(data);
+                        break;
                       case 'waiting_for_opponent':
-                          drawWaitingForOpponent();
-                          break;
+                        drawWaitingForOpponent();
+                        break;
                       case 'ping':
-                          ws.send(JSON.stringify({ t: 'pong' }));
-                          break;
+                        ws.send(JSON.stringify({ t: 'pong' }));
+                        break;
                       case 'game_ready':
-                          console.log('Game is ready!');
-                          drawGameReady();
-                          updateLastMessage('Game is ready!');
-                          ws.send(JSON.stringify({ t: 'sg' }));
-                          break;
+                        console.log('Game is ready!');
+                        drawGameReady();
+                        updateLastMessage('Game is ready!');
+                        ws.send(JSON.stringify({ t: 'sg' }));
+                        break;
                       case 'player_assignment':
-                          console.log(data.message);
-                          window.localPlayerNumber = data.player_num;
-                          updateLastMessage(`Player ${data.player_num}`);
-                          break;
+                        console.log(data.message);
+                        window.localPlayerNumber = data.player_num;
+                        updateLastMessage(`Player ${data.player_num}`);
+                        break;
                       case 'player_disconnected':
-                          console.log('A player has disconnected.');
-                          updateLastMessage('A player has disconnected.');
-                          alert('A player has disconnected.');
-                          stopGame();
-                          break;
+                        console.log('A player has disconnected.');
+                        updateLastMessage('A player has disconnected.');
+                        alert('A player has disconnected.');
+                        stopGame();
+                        break;
                       case 'start_game':
-                          console.log('Game has started!');
-                          countdownValue = null;
-                          draw();
-                          break;
+                        console.log('Game has started!');
+                        countdownValue = null;
+                        draw();
+                        break;
                       case 'game_over':
-                          console.log('Game over');
-                          handleGameOver(data.winner);
-                          break;
+                        console.log('Game over');
+                        updateLastMessage('Game over!');
+                        break;
                       case 'error':
-                          console.error('Error from server:', data.message);
-                          updateLastMessage(`Error: ${data.message}`);
-                          alert(`Error: ${data.message}`);
-                          break;
+                        console.error('Error from server:', data.message);
+                        updateLastMessage(`Error: ${data.message}`);
+                        alert(`Error: ${data.message}`);
+                        break;
                       case 'info':
                           console.log(data.message);
-                          updateLastMessage(data.message);
-                          break;
-                      case 'game_start':
-                          console.log('Game has started!');
-                          updateGameState(data);
+                          updateLastMessage(data.message);;
+                            if (data.message.includes('Tournament created')) {
+                              console.log('Tournament created. Waiting for players to join...');}
                           break;
                       default:
                           console.error(`Unsupported data type: ${data.type}`);
@@ -201,9 +199,6 @@ async function startGame(gameType) {
       updateLastMessage(`Error starting game: ${error.message}`);
   }
 }
-
-
-
 
 function stopGame() {
   gameOver = true;
