@@ -121,19 +121,14 @@ function startGame(gameType) {
       console.log('WebSocket connection established');
       ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: usernameNew }));
 
-      switch (gameType) {
-        case 'local_1v1':
-          ws.send(JSON.stringify({ t: 'sg' }));
-          break;
-        case '1v1':
-          ws.send(JSON.stringify({ t: 'join', player_id: localPlayerNumber }));
-          break;
-        case 'tournament':
-          ws.send(JSON.stringify({ t: 'join_tournament', username: usernameNew, player_id: localPlayerNumber }));
-          break;
-        default:
-          console.error(`Unsupported game type: ${gameType}`);
-          break;
+      if (gameType === 'local_1v1') {
+        ws.send(JSON.stringify({ t: 'sg' }));
+      } else if (gameType === '1v1') {
+        ws.send(JSON.stringify({ t: 'join', player_id: localPlayerNumber }));
+      } else if (gameType === 'tournament') {
+        ws.send(JSON.stringify({ t: 'join_tournament', username: usernameNew, player_id: localPlayerNumber }));
+      } else {
+        console.error(`Unsupported game type: ${gameType}`);
       }
     };
 
@@ -225,9 +220,6 @@ function startGame(gameType) {
     ws.send(JSON.stringify({ t: 'restart_game' }));
   }
 }
-
-
-
 
 function stopGame() {
   gameOver = true;
