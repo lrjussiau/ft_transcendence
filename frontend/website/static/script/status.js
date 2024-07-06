@@ -6,7 +6,7 @@ function connectToWebSocket() {
         console.warn('No auth token found');
         return;
     }
-    webSocket = new WebSocket(`ws://${window.location.host}/ws/activity/?token=${accessToken}`);
+    webSocket = new WebSocket(`wss://${window.location.host}/ws/activity/?token=${accessToken}`);
 
     webSocket.addEventListener('open', () => {
         console.log('WebSocket connection established');

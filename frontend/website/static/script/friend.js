@@ -163,7 +163,7 @@ async function displayFriends() {
                 listItem.dataset.friendId = friend.friend.id; // Add this line
 
                 const img = document.createElement('img');
-                img.src = friend.friend.avatar || 'http://localhost:8080/media/avatars/default_avatar.png';
+                img.src = friend.friend.avatar
                 img.alt = 'player-img';
 
                 // Check friend's status and set the class accordingly

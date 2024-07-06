@@ -1,4 +1,8 @@
 // utils.js
+// App.js
+
+//--------------------------- INIT ------------------------------//
+
 // async function fetchUserProfile() {
 //   const token = localStorage.getItem('authToken');
 //   const response = await fetch('/api/authentication/user/profile/', {
@@ -16,8 +20,41 @@
 //   }
 // }
 
+//   if (response.ok) {
+//       const data = await response.json();
+//       console.log('Fetched user profile:', data);
+//       return data;
+//   } else {
+//       throw new Error('Failed to fetch user profile');
+//   }
+// }
 
-// App.js
+async function launchGame() {
+  initializeStartButton();
+  userData = await fetchUserProfile();
+  console.log('User name: ', userData.username);
+  displayUsername(userData.username);
+}
+
+async function fetchUserProfile() {
+  const token = localStorage.getItem('authToken');
+  const response = await fetch('/api/authentication/user/profile/', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log('Fetched user profile:', data);
+    return data;
+  } else {
+    throw new Error('Failed to fetch user profile');
+  }
+}
+
+
+//------------------------- DEFINES ----------------------------//
 
 let ws = null;
 let ctx = null;
@@ -62,6 +99,15 @@ async function fetchUserProfile() {
   }
 }
 
+//--------------- WEBSOCKET & GAME MANAGEMENT  ------------------//
+
+// async function launchGame() {
+//   initializeStartButton();
+//   const userData = await fetchUserProfile(); 
+//   console.log('User name: ', userData.username);
+//   displayUsername(userData.username);
+// }
+
 function displayUsername(username) {
   const usernameSpan = document.getElementById('displayUsername');
   if (usernameSpan) {
@@ -102,13 +148,13 @@ function initializeStartButton() {
 function startGame(gameType) {
   if (!ws) {
     const host = window.location.hostname;
-    const wsUrl = `ws://${host}:8000/ws/pong/`;
+    const wsUrl = `wss://${host}:4443/ws/pong/`;
 
     ws = new WebSocket(wsUrl);
     ws.onopen = () => {
+      let usernameNew = userData.username;
       console.log('WebSocket connection established');
-      let usernameNew = userData.username;  
-      ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username:  usernameNew}));
+      ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: usernameNew }));
 
       switch (gameType) {
         case 'local_1v1':
@@ -117,11 +163,15 @@ function startGame(gameType) {
         case '1v1':
           ws.send(JSON.stringify({ t: 'join', player_id: localPlayerNumber }));
           break;
+        case 'tournament':
+          ws.send(JSON.stringify({ t: 'join_tournament', username: usernameNew, player_id: localPlayerNumber }));
+          break;
         default:
           console.error(`Unsupported game type: ${gameType}`);
           break;
       }
     };
+
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       console.log('Received update:', data);
@@ -155,10 +205,10 @@ function startGame(gameType) {
           ws.send(JSON.stringify({ t: 'sg' }));
           break;
         case 'player_assignment':
-            console.log(data.message);
-            window.localPlayerNumber = data.player_num;
-            updateLastMessage(`Player ${data.player_num}`);
-            break;
+          console.log(data.message);
+          window.localPlayerNumber = data.player_num;
+          updateLastMessage(`Player ${data.player_num}`);
+          break;
         case 'player_disconnected':
           console.log('A player has disconnected.');
           updateLastMessage('A player has disconnected.');
@@ -182,6 +232,9 @@ function startGame(gameType) {
         case 'info':
           console.log(data.message);
           updateLastMessage(data.message);
+          if (data.message.includes('Tournament created')) {
+            console.log('Tournament created. Waiting for players to join...');
+          }
           break;
         default:
           console.error(`Unsupported data type: ${data.type}`);
@@ -193,6 +246,7 @@ function startGame(gameType) {
     ws.onerror = (error) => {
       console.error('WebSocket error:', error);
     };
+
     ws.onclose = (event) => {
       console.log('WebSocket closed:', event);
       if (!gameOver) {
@@ -206,6 +260,9 @@ function startGame(gameType) {
     ws.send(JSON.stringify({ t: 'restart_game' }));
   }
 }
+
+
+
 
 function stopGame() {
   gameOver = true;
@@ -242,6 +299,8 @@ function updateGameState(data) {
   }
 }
 
+//-------------------------- INPUT HANDLING ---------------------//
+
 window.addEventListener('keydown', (event) => {
   if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/game') {
     event.preventDefault();
@@ -271,13 +330,13 @@ function updateSpeeds() {
       requestTimestamps[requestId] = performance.now();
       ws.send(JSON.stringify({ t: 'pi', p1: player1Speed, p2: player2Speed, rid: requestId }));
     }
-  } else if (selectedGameType === '1v1') {
+  } else {
     newPlayerSpeed = (keys['w'] ? -5 : 0) + (keys['s'] ? 5 : 0);
 
     if (ws && newPlayerSpeed !== (window.localPlayerNumber === 1 ? player1Speed : player2Speed)) {
       const requestId = requestIdCounter++;
       requestTimestamps[requestId] = performance.now();
-     
+
       if (window.localPlayerNumber === 1) {
         player1Speed = newPlayerSpeed;
       } else {
@@ -292,6 +351,8 @@ function updateSpeeds() {
     }
   }
 }
+
+//-------------------------- DRAW HANDLING ----------------------//
 
 function draw() {
   const canvas = document.getElementById('gameCanvas');
