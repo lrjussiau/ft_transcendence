@@ -114,6 +114,15 @@ class FriendsListView(APIView):
         serializer = FriendRequestSerializer(friends, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class PendingFriendsListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        friends = Friend.objects.filter(user=request.user, status='Pending')
+        serializer = FriendRequestSerializer(friends, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 
 class IsBlockedView(APIView):
     permission_classes = [IsAuthenticated]

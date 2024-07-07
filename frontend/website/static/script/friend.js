@@ -96,6 +96,20 @@ async function fetchFriends() {
     }
 }
 
+async function fetchPendingFriends() {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch('/api/friends/pending/', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to fetch pending friends list');
+    }
+}
 
 async function respondFriendRequest(requestId, action) {
     const token = localStorage.getItem('authToken');
@@ -321,20 +335,23 @@ async function initializeFriendSearch() {
         let users = [];
         const currentUser = await fetchUserProfile();
         let friends = await fetchFriends();
+        let pendingFriends = await fetchPendingFriends();
 
         try {
             users = await fetchUsers();
-                users.filter(user => 
-                user.username !== currentUser.username && 
-                !friends.some(friend => friend.username === user.username)
-            );
         } catch (error) {
             console.error('Error fetching users:', error);
         }
-
+        const potentialFriends = users.filter(user => 
+            user.username !== currentUser.username && 
+            !friends.some(friend => friend.username === user.username) &&
+            !pendingFriends.some(pending => pending.username === user.username)
+        );
         $('#searchInput').on('input', function() {
             const query = $(this).val().toLowerCase();
-            const filteredFriends = users.filter(user => user.username.toLowerCase().includes(query));
+            const filteredUsers = potentialFriends.filter(user => 
+                user.username.toLowerCase().includes(query)
+            );
 
             $('#searchResults').empty();
             if (filteredFriends.length > 0) {

@@ -8,7 +8,8 @@ from .views import (
     FriendsListView,
     DeleteFriendView,
     IsBlockedView,
-    BlockFriendView
+    BlockFriendView,
+    PendingFriendsListView
 )
 
 urlpatterns = [
@@ -20,4 +21,5 @@ urlpatterns = [
     path('requests/outgoing/', OutgoingFriendRequestsView.as_view(), name='outgoing-friend-requests'),
     path('requests/respond/<int:request_id>/', RespondFriendRequestView.as_view(), name='respond-friend-request'),
     path('', FriendsListView.as_view(), name='friends-list'),
+    path('pending/', PendingFriendsListView.as_view(), name='pending-friends-list'),
 ]
