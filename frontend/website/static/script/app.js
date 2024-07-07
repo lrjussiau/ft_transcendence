@@ -104,7 +104,6 @@ async function startGame(gameType) {
                           ws.send(JSON.stringify({ t: 'sg' }));
                           break;
                       case '1v1':
-                        case '1v1':
                           ws.send(JSON.stringify({ t: 'join' }));
                           break;
                       default:
@@ -230,27 +229,28 @@ function handleGameOver(winner) {
   const messageElement = document.getElementById('displayMessage');
   const gameOverElement = document.getElementById('game-over-message');
   if (messageElement && gameOverElement) {
-      if (winner !== 'undefined') {
-          messageElement.textContent = `Game Finished! ${winner} wins!`;
-      } else {
-          messageElement.textContent = 'Game Finished!';
-      }
-      gameOverElement.style.display = 'block';
+    const finalScore = `${gameState.s1} - ${gameState.s2}`;
+    if (winner !== 'undefined') {
+      messageElement.textContent = `Game Finished! ${winner} wins! Final score: ${finalScore}`;
+    } else {
+      messageElement.textContent = `Game Finished! Final score: ${finalScore}`;
+    }
+    gameOverElement.style.display = 'block';
 
-      // Hide the canvas
-      const canvas = document.getElementById('gameCanvas');
-      if (canvas) {
-          canvas.style.display = 'none';
-      }
+    // Hide the canvas
+    const canvas = document.getElementById('gameCanvas');
+    if (canvas) {
+      canvas.style.display = 'none';
+    }
 
-      // Stop the game and close the WebSocket connection
-      stopGame();
+    // Stop the game and close the WebSocket connection
+    stopGame();
 
-      // Navigate back to /game after 4 seconds
-      setTimeout(() => {
-          window.history.pushState({}, '', '/game');
-          handleRoute('game');
-      }, 4000);
+    // Navigate back to /game after 4 seconds
+    setTimeout(() => {
+      window.history.pushState({}, '', '/game');
+      handleRoute('game');
+    }, 4000);
   }
 }
 
@@ -268,8 +268,6 @@ window.updateGameStateFromServer = function (data) {
 };
 
 function updateGameState(data) {
-/*   console.log('Updating game state:', data);  */ // Add this line for debugging
-
   if (data.type === 'update') {
     gameState = data;
     
@@ -280,7 +278,13 @@ function updateGameState(data) {
       scoreElements[1].textContent = data.s2;
     }
 
-    draw();
+    // Check for game over condition
+    if (data.s1 === 5 || data.s2 === 5) {
+      const winner = data.s1 === 5 ? 'Player 1' : 'Player 2';
+      handleGameOver(winner);
+    } else {
+      draw();
+    }
   } else if (data.type === 'countdown') {
     countdownValue = data.value;
     console.log('Countdown value:', countdownValue);
@@ -297,6 +301,7 @@ function updateGameState(data) {
     gameState = data.initial_state;
     draw();
   } else if (data.type === 'game_over') {
+    // This might be redundant now, but keep it for safety
     handleGameOver(data.winner);
   } else {
     console.error('Invalid game state received:', data);
