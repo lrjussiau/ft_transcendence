@@ -4,19 +4,19 @@ DOCKER_COMPOSE_FILE := docker-compose.yml
 
 build:
 	@echo "Construction des images Docker..."
-	HOSTNAME_VAR=$(shell hostname) docker-compose -f $(DOCKER_COMPOSE_FILE) build
+	docker-compose -f $(DOCKER_COMPOSE_FILE) build
 
 up:
 	@echo "Démarrage des conteneurs..."
-	HOSTNAME_VAR=$(shell hostname) docker-compose -f $(DOCKER_COMPOSE_FILE) up -d
+	docker-compose -f $(DOCKER_COMPOSE_FILE) up -d
 
 down:
 	@echo "Arrêt et suppression des conteneurs..."
-	HOSTNAME_VAR=$(shell hostname) docker-compose -f $(DOCKER_COMPOSE_FILE) down
+	docker-compose -f $(DOCKER_COMPOSE_FILE) down
 
 nuke:
 	@echo "Arrêt et suppression de tous les conteneurs et ressources Docker liés au fichier docker-compose..."
-	HOSTNAME_VAR=$(shell hostname) docker-compose -f $(DOCKER_COMPOSE_FILE) down --remove-orphans
+	docker-compose -f $(DOCKER_COMPOSE_FILE) down --remove-orphans
 	@if [ -n "$$(docker images -q $$(docker-compose -f $(DOCKER_COMPOSE_FILE) config | grep 'image:' | awk '{print $$2}'))" ]; then docker rmi -f $$(docker images -q $$(docker-compose -f $(DOCKER_COMPOSE_FILE) config | grep 'image:' | awk '{print $$2}')); fi
 
 ww3: down nuke

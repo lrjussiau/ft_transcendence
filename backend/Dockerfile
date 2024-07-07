@@ -6,13 +6,16 @@ WORKDIR /app
 
 # Copy the requirements file into the container
 COPY requirements.txt /app/requirements.txt
+COPY tools/script.sh /app/script.sh
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+RUN chmod +x /app/script.sh
 
 # Copy the rest of the application code into the container
 COPY . /app
 
+RUN sh script.sh
 # Expose port 8000
 EXPOSE 8000
 

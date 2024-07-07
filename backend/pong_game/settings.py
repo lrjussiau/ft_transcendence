@@ -9,7 +9,10 @@ SECRET_KEY = 'django-insecure-evf%hu@og7(($d3wkktj(p*jli54+zd+b(^0f_$+aq&k(4&qo*
 
 DEBUG = True
 
-hostname = os.getenv('HOSTNAME_VAR', 'localhost')
+hostname = os.getenv('HOSTNAME_VAR')
+
+if not hostname:
+    raise ValueError("La variable d'environnement HOSTNAME_VAR n'est pas définie")
 
 ALLOWED_HOSTS = [hostname]
 
@@ -190,12 +193,12 @@ LOGGING = {
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # SendGrid settings
-DEFAULT_FROM_EMAIL = 'ljussiau@student.42lausanne.ch' 
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL') 
 
 # You can keep these email settings as well
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.smtp2go.com'
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'student.42lausanne.ch'
-EMAIL_HOST_PASSWORD = 'tuGOdkETsqfIWadc'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWOR')
