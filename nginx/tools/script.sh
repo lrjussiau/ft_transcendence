@@ -1,14 +1,8 @@
 #!/bin/bash
 
-# Define color variables
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-HOSTNAME=${HOSTNAME_VAR:-$(hostname)}
-
-# sed -i "s/hostname/${HOSTNAME}/g" /etc/nginx/nginx.conf
-
-# Check if SSL certificates are already present
 if [ ! -f /etc/ssl/certs/nginx.crt ]; then
     echo -e "${GREEN}Nginx: configuration de SSL ...${NC}"
     mkdir -p /etc/ssl/private /etc/ssl/certs
@@ -16,5 +10,4 @@ if [ ! -f /etc/ssl/certs/nginx.crt ]; then
     echo -e "${GREEN}Nginx: SSL est configuré !${NC}"
 fi
 
-# Start Nginx in the foreground
 nginx -g 'daemon off;'
