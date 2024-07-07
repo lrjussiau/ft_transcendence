@@ -43,9 +43,10 @@ class Room:
         return available_room
 
     async def add_player(self, player):
+        player_num = len(self.players) + 1
+        player['player_num'] = player_num
         self.players.append(player)
-        player['player_num'] = len(self.players)
-        logger.debug(f"Player {player['username']} added to room. Player number: {player['player_num']}")
+        logger.debug(f"Player {player['username']} added to room. Player number: {player_num}")
         await self.send_player_assignment(player)
         if not self.is_full():
             await self.broadcast_waiting_message()
