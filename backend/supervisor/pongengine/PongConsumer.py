@@ -29,7 +29,7 @@ class PongConsumer:
     global_speed_factor = 1.5
 
     def __init__(self, players, game_type):
-        self.Players = players
+        self.Players = {i+1: player for i, player in enumerate(players)}  # Convert list to dict
         self.game_type = game_type
         self.last_update_time = None
         self.AI = Ai() if game_type == "solo" else None
@@ -190,17 +190,14 @@ class PongConsumer:
     def handle_1v1_input(self, data):
         player_num = data.get('player_num', 0)
         speed = data.get('speed', 0)
-        if player_num == 1:
-            game_state['player1']["speed"] = speed
-            logger.debug(f"Player 1 speed set to {speed}")
-        elif player_num == 2:
-            game_state['player2']["speed"] = speed
-            logger.debug(f"Player 2 speed set to {speed}")
+        if player_num in [1, 2]:
+            game_state[f'player{player_num}']["speed"] = speed
+            logger.debug(f"Player {player_num} speed set to {speed}")
         else:
             logger.error(f"Invalid player number received: {player_num}")
 
     async def broadcast_game_state(self, extra_info=None):
-        state = {
+        base_state = {
             'type': 'update',
             'ball': game_state['ball'],
             'p1': game_state['player1'],
@@ -211,8 +208,14 @@ class PongConsumer:
             'gs': game_state['game_started'],
         }
         if extra_info:
-            state.update(extra_info)
-        for player in self.Players.values():
+            base_state.update(extra_info)
+
+        for player_num, player in self.Players.items():
+            state = base_state.copy()
+            if player_num == 2:
+                state['ball'] = self.flip_coordinates(state['ball'])
+                state['p1'], state['p2'] = state['p2'], state['p1']
+                state['s1'], state['s2'] = state['s2'], state['s1']
             try:
                 await player['object'].send(text_data=json.dumps(state))
             except Exception as e:
@@ -222,3 +225,25 @@ class PongConsumer:
             game_state['player1']['y'] += ai_move
             game_state['player1']['y'] = max(0, min(game_state['player1']['y'], 290))
             self.AI.store_state(game_state)
+
+    def flip_coordinates(self, obj):
+        flipped = obj.copy()
+        if 'x' in flipped:
+            flipped['x'] = 640 - flipped['x']
+        if 'vx' in flipped:
+            flipped['vx'] = -flipped['vx']
+        return flipped
+
+    async def end_game(self):
+        if not game_state['game_started'] and not game_state['game_loop_running']:
+            logger.debug("Game is not running, ignoring end_game call")
+            return
+        game_state['game_over'] = True
+        game_state['game_started'] = False
+        game_state['game_loop_running'] = False
+        try:
+            await self.broadcast_game_state({'type': 'game_over'})
+        except Exception as e:
+            logger.error(f"Error broadcasting game over state: {e}")
+        logger.debug("Game ended")
+        return True
