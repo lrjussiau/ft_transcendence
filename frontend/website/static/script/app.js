@@ -104,7 +104,8 @@ async function startGame(gameType) {
                           ws.send(JSON.stringify({ t: 'sg' }));
                           break;
                       case '1v1':
-                          ws.send(JSON.stringify({ t: 'join', player_id: 1 }));
+                        case '1v1':
+                          ws.send(JSON.stringify({ t: 'join' }));
                           break;
                       default:
                           console.error(`Unsupported game type: ${gameType}`);
