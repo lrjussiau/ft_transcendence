@@ -2,7 +2,7 @@ import json
 import asyncio
 import logging
 import random
-from simple_ai import Ai
+from .simple_ai import Ai
 from games_history.views import store_game
 from math import cos, sin, radians
 

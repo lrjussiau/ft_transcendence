@@ -145,3 +145,12 @@ class IsBlockedView(APIView):
         if row.status == "blocked":
             return True
         return False
+
+
+class BlockedFriendsListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        friends = Friend.objects.filter(user=request.user, status='blocked')
+        serializer = FriendRequestSerializer(friends, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

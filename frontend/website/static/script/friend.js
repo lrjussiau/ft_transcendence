@@ -111,6 +111,21 @@ async function fetchPendingFriends() {
     }
 }
 
+async function fetchBlockedFriends() {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch('/api/friends/blocked/', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to fetch blocked friends list');
+    }
+}
+
 async function respondFriendRequest(requestId, action) {
     const token = localStorage.getItem('authToken');
     const response = await fetch(`/api/friends/requests/respond/${requestId}/`, {
@@ -336,6 +351,7 @@ async function initializeFriendSearch() {
         const currentUser = await fetchUserProfile();
         let friends = await fetchFriends();
         let pendingFriends = await fetchPendingFriends();
+        let blockedFriends = await fetchBlockedFriends();
 
         try {
             users = await fetchUsers();
@@ -344,18 +360,20 @@ async function initializeFriendSearch() {
         }
         const potentialFriends = users.filter(user => 
             user.username !== currentUser.username && 
-            !friends.some(friend => friend.username === user.username) &&
-            !pendingFriends.some(pending => pending.username === user.username)
+            !friends.some(friend => friend.friend.username === user.username)&&
+            !pendingFriends.some(pending => pending.friend.username === user.username)&&
+            !blockedFriends.some(blocked => blocked.friend.username === user.username)
         );
+        console.log("potential friend:", potentialFriends);
         $('#searchInput').on('input', function() {
             const query = $(this).val().toLowerCase();
             const filteredUsers = potentialFriends.filter(user => 
                 user.username.toLowerCase().includes(query)
             );
-
+            //console.log("filtrre friend:", filteredUsers);
             $('#searchResults').empty();
-            if (filteredFriends.length > 0) {
-                filteredFriends.forEach(friend => {
+            if (filteredUsers.length > 0) {
+                filteredUsers.forEach(friend => {
                     console.log("friend status", friend.status)
                     $('#searchResults').append(`
                         <div class="list-group-item d-flex justify-content-between align-items-center">

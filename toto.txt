@@ -1,0 +1,6 @@
+max username -> 30 
+remove friends
+play game friends
+
+! remove .env
+remove print statements from frontend
