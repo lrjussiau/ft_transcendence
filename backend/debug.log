@@ -3101,3 +3101,205 @@ DEBUG 2024-07-07 22:54:10,193 LobbyManager Player disconnecting: specific.be822a
 DEBUG 2024-07-07 22:54:10,193 Room Player Louis removed from room bcfa74ee
 DEBUG 2024-07-07 22:54:10,194 Room Ending game in room bcfa74ee
 DEBUG 2024-07-07 22:54:10,195 PongConsumer Ending game 2767
+DEBUG 2024-07-07 23:44:35,051 LobbyManager Player connected: specific.6443649bfd374f2eb850ac1bf76aae05!4ad5e6f2be944cf191565795d3b24c2e
+DEBUG 2024-07-07 23:44:35,053 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'tournament', 'player_count': 4, 'username': '3'}
+DEBUG 2024-07-07 23:44:35,054 TournamentManager Tournament created: ID fe761a0b, players 4
+DEBUG 2024-07-07 23:44:35,054 TournamentManager Created new tournament: <supervisor.pongengine.TournamentManager.Tournament object at 0xffff815e4ca0>
+DEBUG 2024-07-07 23:44:35,054 TournamentManager Player 3 added to tournament fe761a0b. Total players: 1/4
+DEBUG 2024-07-07 23:44:36,758 LobbyManager Player connected: specific.6443649bfd374f2eb850ac1bf76aae05!cf36985bde06436e9c88fbff5f627c19
+DEBUG 2024-07-07 23:44:36,760 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'tournament', 'player_count': 4, 'username': 'Frog'}
+DEBUG 2024-07-07 23:44:36,760 TournamentManager Player Frog added to tournament fe761a0b. Total players: 2/4
+DEBUG 2024-07-07 23:44:46,139 LobbyManager Player connected: specific.6443649bfd374f2eb850ac1bf76aae05!5fc966476a2245e1b8d21138bfe1a6f4
+DEBUG 2024-07-07 23:44:46,141 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'tournament', 'player_count': 4, 'username': 'Louis'}
+DEBUG 2024-07-07 23:44:46,142 TournamentManager Player Louis added to tournament fe761a0b. Total players: 3/4
+DEBUG 2024-07-07 23:44:49,438 LobbyManager Player connected: specific.6443649bfd374f2eb850ac1bf76aae05!641abe3069fb4571b5f62e4531e7d677
+DEBUG 2024-07-07 23:44:49,440 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'tournament', 'player_count': 4, 'username': '4'}
+DEBUG 2024-07-07 23:44:49,440 TournamentManager Player 4 added to tournament fe761a0b. Total players: 4/4
+DEBUG 2024-07-07 23:44:49,444 TournamentManager Tournament fe761a0b is full. Starting tournament.
+INFO 2024-07-07 23:44:49,446 TournamentManager Starting tournament fe761a0b with 4 players
+DEBUG 2024-07-07 23:44:49,458 Room Room created: ID a062adeb, type tournament
+DEBUG 2024-07-07 23:44:49,458 Room Player 3 added to room: a062adeb. Player number: 1
+DEBUG 2024-07-07 23:44:49,458 Room Player Frog added to room: a062adeb. Player number: 2
+DEBUG 2024-07-07 23:44:49,462 PongConsumer Countdown: 3 for game 9714
+DEBUG 2024-07-07 23:44:50,466 PongConsumer Countdown: 2 for game 9714
+DEBUG 2024-07-07 23:44:51,469 PongConsumer Countdown: 1 for game 9714
+DEBUG 2024-07-07 23:44:52,474 PongConsumer Countdown finished for game 9714
+DEBUG 2024-07-07 23:44:52,475 PongConsumer Game 9714 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0xffff831b8250>, 'username': '3', 'player_num': 1, 'game_type': 'tournament', 'speed': 0}, 2: {'object': <supervisor.consumers.GameConsumer object at 0xffff81618220>, 'username': 'Frog', 'player_num': 2, 'game_type': 'tournament', 'speed': 0}}
+DEBUG 2024-07-07 23:44:52,476 Room tournament game started in room a062adeb
+DEBUG 2024-07-07 23:44:52,477 Room Room created: ID 09f7e231, type tournament
+DEBUG 2024-07-07 23:44:52,478 Room Player Louis added to room: 09f7e231. Player number: 1
+DEBUG 2024-07-07 23:44:52,479 Room Player 4 added to room: 09f7e231. Player number: 2
+DEBUG 2024-07-07 23:44:52,480 PongConsumer Countdown: 3 for game 7271
+DEBUG 2024-07-07 23:44:52,480 PongConsumer Game loop started for game 9714
+DEBUG 2024-07-07 23:44:53,482 PongConsumer Countdown: 2 for game 7271
+DEBUG 2024-07-07 23:44:54,485 PongConsumer Countdown: 1 for game 7271
+DEBUG 2024-07-07 23:44:55,488 PongConsumer Countdown finished for game 7271
+DEBUG 2024-07-07 23:44:55,489 PongConsumer Game 7271 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0xffff8160a8e0>, 'username': 'Louis', 'player_num': 1, 'game_type': 'tournament', 'speed': 0}, 2: {'object': <supervisor.consumers.GameConsumer object at 0xffff81593af0>, 'username': '4', 'player_num': 2, 'game_type': 'tournament', 'speed': 0}}
+DEBUG 2024-07-07 23:44:55,490 Room tournament game started in room 09f7e231
+DEBUG 2024-07-07 23:44:55,490 TournamentManager Created 2 matches for round 1
+DEBUG 2024-07-07 23:44:55,492 PongConsumer Game loop started for game 7271
+DEBUG 2024-07-07 23:44:55,935 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-07 23:44:55,937 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!cf36985bde06436e9c88fbff5f627c19 in room a062adeb
+DEBUG 2024-07-07 23:44:55,937 PongConsumer Game 9714: Player 2 speed set to 5
+DEBUG 2024-07-07 23:44:56,352 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-07 23:44:56,353 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!cf36985bde06436e9c88fbff5f627c19 in room a062adeb
+DEBUG 2024-07-07 23:44:56,354 PongConsumer Game 9714: Player 2 speed set to 0
+DEBUG 2024-07-07 23:44:57,179 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 10}
+DEBUG 2024-07-07 23:44:57,181 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!4ad5e6f2be944cf191565795d3b24c2e in room a062adeb
+DEBUG 2024-07-07 23:44:57,182 PongConsumer Game 9714: Player 1 speed set to 5
+DEBUG 2024-07-07 23:44:57,566 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 11}
+DEBUG 2024-07-07 23:44:57,568 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!4ad5e6f2be944cf191565795d3b24c2e in room a062adeb
+DEBUG 2024-07-07 23:44:57,568 PongConsumer Game 9714: Player 1 speed set to 0
+DEBUG 2024-07-07 23:44:58,000 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 6}
+DEBUG 2024-07-07 23:44:58,001 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!641abe3069fb4571b5f62e4531e7d677 in room 09f7e231
+DEBUG 2024-07-07 23:44:58,002 PongConsumer Game 7271: Player 2 speed set to 5
+DEBUG 2024-07-07 23:44:58,374 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 7}
+DEBUG 2024-07-07 23:44:58,377 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!641abe3069fb4571b5f62e4531e7d677 in room 09f7e231
+DEBUG 2024-07-07 23:44:58,377 PongConsumer Game 7271: Player 2 speed set to 0
+DEBUG 2024-07-07 23:44:58,676 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 42}
+DEBUG 2024-07-07 23:44:58,678 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!5fc966476a2245e1b8d21138bfe1a6f4 in room 09f7e231
+DEBUG 2024-07-07 23:44:58,678 PongConsumer Game 7271: Player 1 speed set to 5
+DEBUG 2024-07-07 23:44:59,063 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 43}
+DEBUG 2024-07-07 23:44:59,064 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!5fc966476a2245e1b8d21138bfe1a6f4 in room 09f7e231
+DEBUG 2024-07-07 23:44:59,064 PongConsumer Game 7271: Player 1 speed set to 0
+DEBUG 2024-07-07 23:45:10,517 PongConsumer Game over signal sent for game 9714
+DEBUG 2024-07-07 23:45:10,523 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-07 23:45:10,524 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-07 23:45:10,525 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-07 23:45:10,526 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-07 23:45:10,527 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-07 23:45:10,528 LobbyManager Player disconnecting: specific.6443649bfd374f2eb850ac1bf76aae05!4ad5e6f2be944cf191565795d3b24c2e
+DEBUG 2024-07-07 23:45:10,528 Room Player 3 removed from room a062adeb
+DEBUG 2024-07-07 23:45:10,529 Room Ending game in room a062adeb
+DEBUG 2024-07-07 23:45:10,529 PongConsumer Ending game 9714
+DEBUG 2024-07-07 23:45:10,529 PongConsumer Game 9714: player1: 3, player2: Frog
+DEBUG 2024-07-07 23:45:10,530 PongConsumer Game loop ended for game 9714
+DEBUG 2024-07-07 23:45:10,533 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-07 23:45:10,535 LobbyManager Player disconnecting: specific.6443649bfd374f2eb850ac1bf76aae05!cf36985bde06436e9c88fbff5f627c19
+DEBUG 2024-07-07 23:45:10,536 Room Player Frog removed from room a062adeb
+DEBUG 2024-07-07 23:45:10,537 Room Ending game in room a062adeb
+DEBUG 2024-07-07 23:45:10,538 PongConsumer Ending game 9714
+DEBUG 2024-07-07 23:45:10,539 PongConsumer Game 9714: player1: 3, player2: Frog
+DEBUG 2024-07-07 23:45:10,559 PongConsumer Game 9714 ended
+DEBUG 2024-07-07 23:45:10,562 PongConsumer Game 9714 ended
+DEBUG 2024-07-07 23:45:10,964 PongConsumer Game over signal sent for game 7271
+DEBUG 2024-07-07 23:45:10,969 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-07 23:45:10,971 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-07 23:45:10,972 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-07 23:45:10,972 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-07 23:45:10,973 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-07 23:45:10,973 LobbyManager Player disconnecting: specific.6443649bfd374f2eb850ac1bf76aae05!641abe3069fb4571b5f62e4531e7d677
+DEBUG 2024-07-07 23:45:10,974 Room Player 4 removed from room 09f7e231
+DEBUG 2024-07-07 23:45:10,974 Room Ending game in room 09f7e231
+DEBUG 2024-07-07 23:45:10,975 PongConsumer Ending game 7271
+DEBUG 2024-07-07 23:45:10,975 PongConsumer Game 7271: player1: Louis, player2: 4
+DEBUG 2024-07-07 23:45:10,976 PongConsumer Game loop ended for game 7271
+DEBUG 2024-07-07 23:45:10,978 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-07 23:45:10,980 LobbyManager Player disconnecting: specific.6443649bfd374f2eb850ac1bf76aae05!5fc966476a2245e1b8d21138bfe1a6f4
+DEBUG 2024-07-07 23:45:10,983 Room Player Louis removed from room 09f7e231
+DEBUG 2024-07-07 23:45:10,985 Room Ending game in room 09f7e231
+DEBUG 2024-07-07 23:45:10,986 PongConsumer Ending game 7271
+DEBUG 2024-07-07 23:45:10,986 PongConsumer Game 7271: player1: Louis, player2: 4
+DEBUG 2024-07-07 23:45:10,995 PongConsumer Game 7271 ended
+DEBUG 2024-07-07 23:45:10,998 PongConsumer Game 7271 ended
+DEBUG 2024-07-07 23:45:58,892 LobbyManager Player connected: specific.6443649bfd374f2eb850ac1bf76aae05!a91d03e8a37e47c3a89b215a36ec0f63
+DEBUG 2024-07-07 23:45:58,895 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'tournament', 'player_count': 4, 'username': 'Frog'}
+DEBUG 2024-07-07 23:45:58,895 TournamentManager Tournament created: ID 7ada6523, players 4
+DEBUG 2024-07-07 23:45:58,897 TournamentManager Created new tournament: <supervisor.pongengine.TournamentManager.Tournament object at 0xffff81846ca0>
+DEBUG 2024-07-07 23:45:58,899 TournamentManager Player Frog added to tournament 7ada6523. Total players: 1/4
+DEBUG 2024-07-07 23:46:01,401 LobbyManager Player connected: specific.6443649bfd374f2eb850ac1bf76aae05!11f0cc7fd1134161b6a737e8e3762b74
+DEBUG 2024-07-07 23:46:01,403 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'tournament', 'player_count': 4, 'username': '3'}
+DEBUG 2024-07-07 23:46:01,403 TournamentManager Player 3 added to tournament 7ada6523. Total players: 2/4
+DEBUG 2024-07-07 23:46:03,736 LobbyManager Player connected: specific.6443649bfd374f2eb850ac1bf76aae05!ff7470b31089467a9e9a20f3f6fd73d6
+DEBUG 2024-07-07 23:46:03,738 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'tournament', 'player_count': 4, 'username': '4'}
+DEBUG 2024-07-07 23:46:03,739 TournamentManager Player 4 added to tournament 7ada6523. Total players: 3/4
+DEBUG 2024-07-07 23:46:06,130 LobbyManager Player connected: specific.6443649bfd374f2eb850ac1bf76aae05!e816a6108d374ab4958b86aedd5b1e12
+DEBUG 2024-07-07 23:46:06,131 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'tournament', 'player_count': 4, 'username': 'Louis'}
+DEBUG 2024-07-07 23:46:06,132 TournamentManager Player Louis added to tournament 7ada6523. Total players: 4/4
+DEBUG 2024-07-07 23:46:06,132 TournamentManager Tournament 7ada6523 is full. Starting tournament.
+INFO 2024-07-07 23:46:06,133 TournamentManager Starting tournament 7ada6523 with 4 players
+DEBUG 2024-07-07 23:46:06,133 Room Room created: ID 9f08ac4e, type tournament
+DEBUG 2024-07-07 23:46:06,133 Room Player Frog added to room: 9f08ac4e. Player number: 1
+DEBUG 2024-07-07 23:46:06,134 Room Player 3 added to room: 9f08ac4e. Player number: 2
+DEBUG 2024-07-07 23:46:06,134 PongConsumer Countdown: 3 for game 2607
+DEBUG 2024-07-07 23:46:07,141 PongConsumer Countdown: 2 for game 2607
+DEBUG 2024-07-07 23:46:08,147 PongConsumer Countdown: 1 for game 2607
+DEBUG 2024-07-07 23:46:09,150 PongConsumer Countdown finished for game 2607
+DEBUG 2024-07-07 23:46:09,151 PongConsumer Game 2607 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0xffff816831c0>, 'username': 'Frog', 'player_num': 1, 'game_type': 'tournament', 'speed': 0}, 2: {'object': <supervisor.consumers.GameConsumer object at 0xffff815c9b20>, 'username': '3', 'player_num': 2, 'game_type': 'tournament', 'speed': 0}}
+DEBUG 2024-07-07 23:46:09,152 Room tournament game started in room 9f08ac4e
+DEBUG 2024-07-07 23:46:09,152 Room Room created: ID 9e4b8211, type tournament
+DEBUG 2024-07-07 23:46:09,153 Room Player 4 added to room: 9e4b8211. Player number: 1
+DEBUG 2024-07-07 23:46:09,153 Room Player Louis added to room: 9e4b8211. Player number: 2
+DEBUG 2024-07-07 23:46:09,154 PongConsumer Countdown: 3 for game 5506
+DEBUG 2024-07-07 23:46:09,155 PongConsumer Game loop started for game 2607
+DEBUG 2024-07-07 23:46:10,157 PongConsumer Countdown: 2 for game 5506
+DEBUG 2024-07-07 23:46:11,113 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-07 23:46:11,114 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!11f0cc7fd1134161b6a737e8e3762b74 in room 9f08ac4e
+DEBUG 2024-07-07 23:46:11,114 PongConsumer Game 2607: Player 2 speed set to 5
+DEBUG 2024-07-07 23:46:11,160 PongConsumer Countdown: 1 for game 5506
+DEBUG 2024-07-07 23:46:11,516 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-07 23:46:11,517 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!11f0cc7fd1134161b6a737e8e3762b74 in room 9f08ac4e
+DEBUG 2024-07-07 23:46:11,517 PongConsumer Game 2607: Player 2 speed set to 0
+DEBUG 2024-07-07 23:46:11,792 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-07 23:46:11,795 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!a91d03e8a37e47c3a89b215a36ec0f63 in room 9f08ac4e
+DEBUG 2024-07-07 23:46:11,797 PongConsumer Game 2607: Player 1 speed set to 5
+DEBUG 2024-07-07 23:46:12,164 PongConsumer Countdown finished for game 5506
+DEBUG 2024-07-07 23:46:12,165 PongConsumer Game 5506 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0xffff8151e7c0>, 'username': '4', 'player_num': 1, 'game_type': 'tournament', 'speed': 0}, 2: {'object': <supervisor.consumers.GameConsumer object at 0xffff81529d00>, 'username': 'Louis', 'player_num': 2, 'game_type': 'tournament', 'speed': 0}}
+DEBUG 2024-07-07 23:46:12,166 Room tournament game started in room 9e4b8211
+DEBUG 2024-07-07 23:46:12,166 TournamentManager Created 2 matches for round 1
+DEBUG 2024-07-07 23:46:12,168 PongConsumer Game loop started for game 5506
+DEBUG 2024-07-07 23:46:12,205 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-07 23:46:12,206 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!a91d03e8a37e47c3a89b215a36ec0f63 in room 9f08ac4e
+DEBUG 2024-07-07 23:46:12,206 PongConsumer Game 2607: Player 1 speed set to 0
+DEBUG 2024-07-07 23:46:12,765 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-07 23:46:12,766 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!ff7470b31089467a9e9a20f3f6fd73d6 in room 9e4b8211
+DEBUG 2024-07-07 23:46:12,767 PongConsumer Game 5506: Player 1 speed set to 5
+DEBUG 2024-07-07 23:46:13,096 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-07 23:46:13,096 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!ff7470b31089467a9e9a20f3f6fd73d6 in room 9e4b8211
+DEBUG 2024-07-07 23:46:13,097 PongConsumer Game 5506: Player 1 speed set to 0
+DEBUG 2024-07-07 23:46:13,379 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-07 23:46:13,380 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!e816a6108d374ab4958b86aedd5b1e12 in room 9e4b8211
+DEBUG 2024-07-07 23:46:13,381 PongConsumer Game 5506: Player 2 speed set to 5
+DEBUG 2024-07-07 23:46:13,798 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-07 23:46:13,799 Room Handling player input from specific.6443649bfd374f2eb850ac1bf76aae05!e816a6108d374ab4958b86aedd5b1e12 in room 9e4b8211
+DEBUG 2024-07-07 23:46:13,799 PongConsumer Game 5506: Player 2 speed set to 0
+DEBUG 2024-07-07 23:46:19,155 PongConsumer Game over signal sent for game 2607
+DEBUG 2024-07-07 23:46:19,163 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-07 23:46:19,164 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-07 23:46:19,165 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-07 23:46:19,166 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-07 23:46:19,167 PongConsumer Game loop ended for game 2607
+DEBUG 2024-07-07 23:46:19,169 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-07 23:46:19,170 LobbyManager Player disconnecting: specific.6443649bfd374f2eb850ac1bf76aae05!a91d03e8a37e47c3a89b215a36ec0f63
+DEBUG 2024-07-07 23:46:19,170 Room Player Frog removed from room 9f08ac4e
+DEBUG 2024-07-07 23:46:19,171 Room Ending game in room 9f08ac4e
+DEBUG 2024-07-07 23:46:19,171 PongConsumer Ending game 2607
+DEBUG 2024-07-07 23:46:19,172 PongConsumer Game 2607: player1: Frog, player2: 3
+DEBUG 2024-07-07 23:46:19,173 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-07 23:46:19,174 LobbyManager Player disconnecting: specific.6443649bfd374f2eb850ac1bf76aae05!11f0cc7fd1134161b6a737e8e3762b74
+DEBUG 2024-07-07 23:46:19,176 Room Player 3 removed from room 9f08ac4e
+DEBUG 2024-07-07 23:46:19,177 Room Ending game in room 9f08ac4e
+DEBUG 2024-07-07 23:46:19,178 PongConsumer Ending game 2607
+DEBUG 2024-07-07 23:46:19,179 PongConsumer Game 2607: player1: Frog, player2: 3
+DEBUG 2024-07-07 23:46:19,197 PongConsumer Game 2607 ended
+DEBUG 2024-07-07 23:46:19,201 PongConsumer Game 2607 ended
+DEBUG 2024-07-07 23:46:20,735 PongConsumer Game over signal sent for game 5506
+DEBUG 2024-07-07 23:46:20,740 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-07 23:46:20,742 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-07 23:46:20,743 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-07 23:46:20,744 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-07 23:46:20,745 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-07 23:46:20,745 LobbyManager Player disconnecting: specific.6443649bfd374f2eb850ac1bf76aae05!e816a6108d374ab4958b86aedd5b1e12
+DEBUG 2024-07-07 23:46:20,746 Room Player Louis removed from room 9e4b8211
+DEBUG 2024-07-07 23:46:20,746 Room Ending game in room 9e4b8211
+DEBUG 2024-07-07 23:46:20,746 PongConsumer Ending game 5506
+DEBUG 2024-07-07 23:46:20,747 PongConsumer Game 5506: player1: 4, player2: Louis
+DEBUG 2024-07-07 23:46:20,748 PongConsumer Game loop ended for game 5506
+DEBUG 2024-07-07 23:46:20,749 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-07 23:46:20,752 LobbyManager Player disconnecting: specific.6443649bfd374f2eb850ac1bf76aae05!ff7470b31089467a9e9a20f3f6fd73d6
+DEBUG 2024-07-07 23:46:20,755 Room Player 4 removed from room 9e4b8211
+DEBUG 2024-07-07 23:46:20,756 Room Ending game in room 9e4b8211
+DEBUG 2024-07-07 23:46:20,757 PongConsumer Ending game 5506
+DEBUG 2024-07-07 23:46:20,761 PongConsumer Game 5506: player1: 4, player2: Louis
+DEBUG 2024-07-07 23:46:20,767 PongConsumer Game 5506 ended
+DEBUG 2024-07-07 23:46:20,769 PongConsumer Game 5506 ended
