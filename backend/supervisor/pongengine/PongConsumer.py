@@ -27,25 +27,12 @@ class PongConsumer:
     global_speed_factor = 1.5
 
     def __init__(self, players, game_type):
-        self.Players = players
+        self.Players = {i+1: player for i, player in enumerate(players)}  # Convert list to dict
         self.game_type = game_type
         self.last_update_time = None
 
     def is_game_running(self):
         return game_state['game_started']
-    
-    async def end_game(self):
-        if not game_state['game_started'] and not game_state['game_loop_running']:
-            logger.debug("Game is not running, ignoring end_game call")
-            return
-        game_state['game_over'] = True
-        game_state['game_started'] = False
-        game_state['game_loop_running'] = False
-        try:
-            await self.broadcast_game_state({'type': 'game_over'})
-        except Exception as e:
-            logger.error(f"Error broadcasting game over state: {e}")
-        logger.debug("Game ended")
 
     async def start_game(self):
         if game_state['game_started'] or game_state['game_loop_running']:
@@ -194,3 +181,17 @@ class PongConsumer:
                 await player['object'].send(text_data=json.dumps(state))
             except Exception as e:
                 logger.error(f"Error sending game state: {e}")
+
+    async def end_game(self):
+        if not game_state['game_started'] and not game_state['game_loop_running']:
+            logger.debug("Game is not running, ignoring end_game call")
+            return
+        game_state['game_over'] = True
+        game_state['game_started'] = False
+        game_state['game_loop_running'] = False
+        try:
+            await self.broadcast_game_state({'type': 'game_over'})
+        except Exception as e:
+            logger.error(f"Error broadcasting game over state: {e}")
+        logger.debug("Game ended")
+        return True
