@@ -9,69 +9,32 @@
       <div class="player-stats">
         <div class="stat-win">
           <h4 class="stat-title linear-title">Wins</h3>
-          <p class="stat-value">21</p>
+          <p class="stat-value" id="wins">0</p>
         </div>
         <div class="stat-lose">
-          <h4 class="stat-title linear-title">Loses</h3>
-          <p class="stat-value">10</p>
+          <h4 class="stat-title linear-title">Losses</h3>
+          <p class="stat-value" id="loses">0</p>
         </div>
         <div class="stat-ratio">
           <h4 class="stat-title linear-title">Ratio</h3>
-          <p class="stat-value">2.1</p>
+          <p class="stat-value" id="ratio">0</p>
         </div>
       </div>
       <div class="table-container">
-        <table class="match-stat">
-            <thead>
-                <tr>
-                    <th class="header-class opponent">Concurent</th>
-                    <th class="header-class result">Resultat</th>
-                    <th class="header-class date">date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="opponent">
-                      <div class="opponent-card">
-                        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="player-img" class="img-fluid">
-                        <div class="opponent-name">Val le boss</div>
-                      </div>
-                    </td>
-                    <td class="result">Gagne</td>
-                    <td class="data">21.02.24</td>
-                </tr>
-                <tr>
-                  <td class="opponent">
-                    <div class="opponent-card">
-                      <img src="https://www.w3schools.com/howto/img_avatar.png" alt="player-img" class="img-fluid">
-                      <div class="opponent-name">Sabino la legend</div>
-                    </div>
-                  </td>
-                  <td class="result">Perdu</td>
-                  <td class="data">21.02.24</td>
-                </tr>
-                <tr>
-                  <td class="opponent">
-                    <div class="opponent-card">
-                      <img src="https://www.w3schools.com/howto/img_avatar.png" alt="player-img" class="img-fluid">
-                      <div class="opponent-name">Random</div>
-                    </div>
-                  </td>
-                  <td class="result">Gagne</td>
-                  <td class="data">21.02.24</td>
-                </tr>
-                <tr>
-                  <td class="opponent">
-                    <div class="opponent-card">
-                      <img src="https://www.w3schools.com/howto/img_avatar.png" alt="player-img" class="img-fluid">
-                      <div class="opponent-name">Youhou on peut scroll</div>
-                    </div>
-                  </td>
-                  <td class="result">Perdu</td>
-                  <td class="data">21.02.24</td>
-                </tr>
-            </tbody>
-        </table>
+        <table class="match-stat" id="gameTable">
+          <thead>
+              <tr>
+                  <th class="header-class opponent">Opponent</th>
+                  <th class="header-class result">Result</th>
+                  <th class="header-class score_game">score</th>
+                  <th class="header-class is_tournament">tournament_game</th>
+                  <th class="header-class date">date/time</th>
+              </tr>
+          </thead>
+          <tbody id="gameTableBody">
+              <!-- This will be filled dynamically -->
+          </tbody>
+      </table>
     </div>
     </div>
     <div class="friend-panel">

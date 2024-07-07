@@ -1,28 +1,30 @@
-# Use the Foundry image from the repository
 FROM ghcr.io/foundry-rs/foundry:latest
 
-# Set the working directory
+
 WORKDIR /app
 
-# Install necessary Node.js packages
 RUN apk update && apk add nodejs npm
-RUN npm install express body-parser ethers
-# Copy Foundry project files
+RUN npm install express body-parser ethers dotenv
+
 COPY src /app/src
 COPY scripts /app/scripts
 RUN chmod -R +x /app/scripts
 COPY foundry.toml /app/foundry.toml
-# COPY lib /app/lib # Uncomment if you have libraries in the lib directory
 
-# Copy and make the start script executable
-COPY start_blockchain.sh /start_blockchain.sh
-RUN chmod +x /start_blockchain.sh
+
+COPY start_blockchain.sh /app/scripts/start_blockchain.sh
+RUN chmod +x /app/scripts/start_blockchain.sh
+
+RUN find /app -type f -name "*.sh" -exec sed -i 's/\r$//' {} +
 
 COPY server.js /app/server.js
 RUN chmod +x /app/server.js
 
-# Expose the port for the API
+COPY .env /app/.env
+
+
 EXPOSE 3000
 
-# Start the blockchain services
-CMD ["/start_blockchain.sh"]
+
+CMD ["/bin/sh ./scripts/start_blockchain.sh"]
+# docker run -it --env-file .env transcendence-blockchain

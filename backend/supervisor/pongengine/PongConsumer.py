@@ -2,6 +2,8 @@ import json
 import asyncio
 import logging
 import random
+from .simple_ai import Ai
+from games_history.views import store_game
 from math import cos, sin, radians
 
 logger = logging.getLogger(__name__)
@@ -27,31 +29,64 @@ class PongConsumer:
     global_speed_factor = 1.5
 
     def __init__(self, players, game_type):
-        self.Players = players
+        self.Players = {i+1: player for i, player in enumerate(players)}  # Convert list to dict
         self.game_type = game_type
         self.last_update_time = None
+        self.AI = Ai() if game_type == "solo" else None
+
 
     def is_game_running(self):
         return game_state['game_started']
+    
+    async def end_game(self):
+        if not game_state['game_started'] and not game_state['game_loop_running']:
+            logger.debug("Game is not running, ignoring end_game call")
+            return
+        game_state['game_over'] = True
+        game_state['game_started'] = False
+        game_state['game_loop_running'] = False
+        p1 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 1), None)
+        p2 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 2), None)
+        logger.debug(f"player1: {p1.get('username')}, player2: {p2.get('username')}")
+        if not self.game_type == "local_1v1":
+            if (p2 != None):
+                p1_username =  p1.get('username')
+                p2_username =  p2.get('username')
+                if game_state['player1_score'] == self.points:
+                    if self.game_type == "tournament":
+                        await store_game(game_state['player2_score'], p2_username, p1_username, True)
+                    else:
+                        await store_game(game_state['player2_score'], p2_username, p1_username, False)
+                else:
+                    if self.game_type == "tournament":
+                        await store_game(game_state['player1_score'], p1_username, p2_username, True)
+                    else:
+                        await store_game(game_state['player1_score'], p1_username, p2_username, False)   
+        try:
+            await self.broadcast_game_state({'type': 'game_over'})
+        except Exception as e:
+            logger.error(f"Error broadcasting game over state: {e}")
+        logger.debug("Game ended")
 
     async def start_game(self):
-        if game_state['game_started']:
+        if game_state['game_started'] or game_state['game_loop_running']:
+            logger.debug("Game is already running, ignoring start_game call")
             return
 
+        self.init_game_state()  # This resets the game state
         await self.start_countdown()
-        self.init_game_state()
         game_state['game_started'] = True
         game_state['game_over'] = False
         self.ball_restart()
 
         logger.debug(f"Game started with players: {self.Players}")
 
-        if not game_state['game_loop_running']:
-            game_state['game_loop_running'] = True
-            asyncio.create_task(self.game_loop())
+        game_state['game_loop_running'] = True
+        asyncio.create_task(self.game_loop())
 
     async def game_loop(self):
         self.last_update_time = asyncio.get_event_loop().time()
+        logger.debug("Game loop started")
         while game_state['game_started'] and not game_state['game_over']:
             current_time = asyncio.get_event_loop().time()
             dt = current_time - self.last_update_time
@@ -60,6 +95,7 @@ class PongConsumer:
             await self.update_game_state(dt)
             await self.broadcast_game_state()
             await asyncio.sleep(1 / self.refresh_rate)
+        logger.debug("Game loop ended")
 
     async def update_game_state(self, dt):
         if not game_state['game_started']:
@@ -86,9 +122,11 @@ class PongConsumer:
             self.ball_restart()
 
         if game_state['player1_score'] == self.points or game_state['player2_score'] == self.points:
-            game_state['game_over'] = True
-            game_state['game_started'] = False
-            asyncio.create_task(self.broadcast_game_state({'type': 'game_over'}))
+                game_state['game_over'] = True
+                game_state['game_started'] = False
+                game_state['game_loop_running'] = False  # Add this line
+                await self.broadcast_game_state({'type': 'game_over'})
+                logger.debug("Game over signal sent")  # Add this line
 
     def handle_paddle_collision(self):
         if game_state['ball']["x"] <= 15:
@@ -114,6 +152,7 @@ class PongConsumer:
             logger.debug(f"Countdown: {i}")
             await self.broadcast_game_state({'type': 'countdown', 'value': i})
             await asyncio.sleep(1)
+        logger.debug("Countdown finished")
 
     def init_game_state(self):
         game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
@@ -123,6 +162,8 @@ class PongConsumer:
         game_state['player2_score'] = 0
         game_state['game_started'] = False
         game_state['game_over'] = False
+        if self.AI:
+            self.AI.store_state(game_state)
 
     def ball_restart(self):
         game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
@@ -145,21 +186,19 @@ class PongConsumer:
         player2_speed = data.get('p2', 0)
         game_state['player1']["speed"] = player1_speed
         game_state['player2']["speed"] = player2_speed
+        logger.debug(f"Local 1v1 input: Player 1 speed = {player1_speed}, Player 2 speed = {player2_speed}")
 
     def handle_1v1_input(self, data):
         player_num = data.get('player_num', 0)
         speed = data.get('speed', 0)
-        if player_num == 1:
-            game_state['player1']["speed"] = speed
-            logger.debug(f"Player 1 speed set to {speed}")
-        elif player_num == 2:
-            game_state['player2']["speed"] = speed
-            logger.debug(f"Player 2 speed set to {speed}")
+        if player_num in [1, 2]:
+            game_state[f'player{player_num}']["speed"] = speed
+            logger.debug(f"Player {player_num} speed set to {speed}")
         else:
             logger.error(f"Invalid player number received: {player_num}")
 
     async def broadcast_game_state(self, extra_info=None):
-        state = {
+        base_state = {
             'type': 'update',
             'ball': game_state['ball'],
             'p1': game_state['player1'],
@@ -170,9 +209,42 @@ class PongConsumer:
             'gs': game_state['game_started'],
         }
         if extra_info:
-            state.update(extra_info)
-        for player in self.Players.values():
+            base_state.update(extra_info)
+
+        for player_num, player in self.Players.items():
+            state = base_state.copy()
+            if player_num == 2:
+                state['ball'] = self.flip_coordinates(state['ball'])
+                state['p1'], state['p2'] = state['p2'], state['p1']
+                state['s1'], state['s2'] = state['s2'], state['s1']
             try:
                 await player['object'].send(text_data=json.dumps(state))
             except Exception as e:
                 logger.error(f"Error sending game state: {e}")
+        if self.AI:
+            ai_move = self.AI.act()
+            game_state['player1']['y'] += ai_move
+            game_state['player1']['y'] = max(0, min(game_state['player1']['y'], 290))
+            self.AI.store_state(game_state)
+
+    def flip_coordinates(self, obj):
+        flipped = obj.copy()
+        if 'x' in flipped:
+            flipped['x'] = 640 - flipped['x']
+        if 'vx' in flipped:
+            flipped['vx'] = -flipped['vx']
+        return flipped
+
+    async def end_game(self):
+        if not game_state['game_started'] and not game_state['game_loop_running']:
+            logger.debug("Game is not running, ignoring end_game call")
+            return
+        game_state['game_over'] = True
+        game_state['game_started'] = False
+        game_state['game_loop_running'] = False
+        try:
+            await self.broadcast_game_state({'type': 'game_over'})
+        except Exception as e:
+            logger.error(f"Error broadcasting game over state: {e}")
+        logger.debug("Game ended")
+        return True

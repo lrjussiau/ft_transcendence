@@ -11,14 +11,14 @@ app.use(bodyParser.json());
 
 // Example endpoint to send data to the blockchain
 app.post('/record_score', async (req, res) => {
-    const { game_id, score_loser, score_winner, loser, winner} = req.body;
+    const { game_id, score_loser, loser, winner} = req.body;
 
     try {
         // Path to your script
         const scriptPath = path.join(__dirname, 'scripts', 'recordScore.js');
         
         // Execute the script
-        exec(`node ${scriptPath} ${game_id} ${score_loser} ${score_winner} ${loser} ${winner}`, (error, stdout, stderr) => {
+        exec(`node ${scriptPath} ${game_id} ${score_loser} ${loser} ${winner}`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error executing script: ${error}`);
                 return res.status(500).json({ error: 'Failed to execute script' });

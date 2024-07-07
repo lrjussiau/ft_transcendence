@@ -3,7 +3,17 @@ import os
 import dj_database_url
 import re
 
+STATIC_URL = '/static/'
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATIC_URL = '/staticfiles/'
+
+# Additional locations of static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 
 SECRET_KEY = 'django-insecure-evf%hu@og7(($d3wkktj(p*jli54+zd+b(^0f_$+aq&k(4&qo*'
 
@@ -49,6 +59,8 @@ INSTALLED_APPS = [
     'friends',
     'blockchain',
     'livechat',
+    'games_history',
+    'manage',
 ]
 
 MEDIA_URL = '/media/'
@@ -166,9 +178,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
         },
     },
     'root': {
@@ -184,7 +203,16 @@ LOGGING = {
         'pongengine': {
             'handlers': ['console'],
             'level': 'DEBUG',
-            'propagate': True,
+            'propagate': False,
+        },
+        'supervisor.pongengine': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'websockets': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
         },
     },
 }

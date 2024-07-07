@@ -26,8 +26,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('offline', 'Offline'),
         ('away', 'Away'),
     ]
-    
-    username = models.CharField(max_length=255, unique=True)
+    #bloc
+    username = models.CharField(max_length=30, unique=True)
     email = models.EmailField(unique=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  # Added avatar field
     is_2fa_enabled = models.BooleanField(default=False)
@@ -57,16 +57,17 @@ class Friend(models.Model):
     status = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
 
-class Match(models.Model):
-    game_hash = models.CharField(max_length=255)
-    player1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='matches_player1')
-    player2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='matches_player2')
-    winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='won_matches')
-    player1_score = models.IntegerField()
-    player2_score = models.IntegerField()
-    match_date = models.DateTimeField()
-    is_ia = models.BooleanField(default=False)
-    game_type = models.CharField(max_length=255)
+#player1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='matches_player1')
+#player2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='matches_player2')
+#player1_score = models.IntegerField()
+#is_ia = models.BooleanField(default=False)
+class Games(models.Model):
+    game_id = models.AutoField(primary_key=True) 
+    winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='won_game')
+    loser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lost_game')
+    loser_score = models.IntegerField(default = 0)
+    match_date = models.DateTimeField(auto_now_add=True)
+    is_tournament_game = models.BooleanField(default=False)
 
 class UserStat(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stats')

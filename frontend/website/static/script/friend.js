@@ -16,6 +16,41 @@ async function addFriend(friendId) {
     }
 }
 
+function blockFriend(friend_id){
+    const token = localStorage.getItem('authToken');
+    fetch(`/api/friends/block/${friend_id}/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to add friend');
+    }
+}
+
+
+async function deleteFriend(friendId) {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch('/api/friends/delete/', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ friend_id: friendId })
+    });
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to delete friend');
+    }
+}
+
 async function fetchUsers() {
     const token = localStorage.getItem('authToken');
     const response = await fetch('/api/db/User/', {
@@ -58,6 +93,36 @@ async function fetchFriends() {
         return response.json();
     } else {
         throw new Error('Failed to fetch friends list');
+    }
+}
+
+async function fetchPendingFriends() {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch('/api/friends/pending/', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to fetch pending friends list');
+    }
+}
+
+async function fetchBlockedFriends() {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch('/api/friends/blocked/', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('Failed to fetch blocked friends list');
     }
 }
 
@@ -158,8 +223,63 @@ async function displayFriends() {
                 nameDiv.className = 'accepted-friend-name';
                 nameDiv.textContent = friend.friend.username;
 
+                const deleteButton = document.createElement('button');
+                deleteButton.innerText = 'Delete';
+                deleteButton.className = 'delete-friend-button';
+                deleteButton.addEventListener('click', () => {
+                    // Implement the delete friend functionality here
+                    alert("FRiend deleted");
+                    deleteFriend(friend.id)
+                    //deleteFriend(friend.friend.id);
+                });
+
+                const blockButton = document.createElement('button');
+                blockButton.className = 'block-friend-button';
+            
+                // Check if the friend is blocked
+                const token = localStorage.getItem('authToken');
+                fetch(`/api/friends/is-blocked/${friend.friend.id}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.debug("DATA: ", data);
+                    if (data.is_blocked == true) {
+                        blockButton.innerText = 'Blocked';
+                        blockButton.disabled = true;  // Disable the button if the friend is already blocked
+                    } else {
+                        blockButton.innerText = 'Block';
+                        blockButton.addEventListener('click', () => {
+                            blockFriend(friend.friend.id);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            
+                // Append buttons to list item
+                listItem.appendChild(blockButton);
+            
+                // Create play game button
+                // const playButton = document.createElement('button');
+                // playButton.innerText = 'Play Game';
+                // playButton.className = 'play-game-button';
+                // playButton.addEventListener('click', () => {
+                //     // Implement the play game functionality here
+                //     alert("Ask to play game")
+                //     //askToPlayGame(friend.friend.id);
+                // });
+            
                 listItem.appendChild(img);
                 listItem.appendChild(nameDiv);
+
+                listItem.appendChild(blockButton);
+                //listItem.appendChild(playButton);
+                listItem.appendChild(deleteButton);
+
 
                 friendsList.appendChild(listItem);
             });
@@ -227,21 +347,34 @@ function setupFriendListeners() {
 
 async function initializeFriendSearch() {
     $(document).ready(async function() {
-        let friends = [];
+        let users = [];
+        const currentUser = await fetchUserProfile();
+        let friends = await fetchFriends();
+        let pendingFriends = await fetchPendingFriends();
+        let blockedFriends = await fetchBlockedFriends();
 
         try {
-            friends = await fetchUsers();
+            users = await fetchUsers();
         } catch (error) {
             console.error('Error fetching users:', error);
         }
-
+        const potentialFriends = users.filter(user => 
+            user.username !== currentUser.username && 
+            !friends.some(friend => friend.friend.username === user.username)&&
+            !pendingFriends.some(pending => pending.friend.username === user.username)&&
+            !blockedFriends.some(blocked => blocked.friend.username === user.username)
+        );
+        console.log("potential friend:", potentialFriends);
         $('#searchInput').on('input', function() {
             const query = $(this).val().toLowerCase();
-            const filteredFriends = friends.filter(friend => friend.username.toLowerCase().includes(query));
-
+            const filteredUsers = potentialFriends.filter(user => 
+                user.username.toLowerCase().includes(query)
+            );
+            //console.log("filtrre friend:", filteredUsers);
             $('#searchResults').empty();
-            if (filteredFriends.length > 0) {
-                filteredFriends.forEach(friend => {
+            if (filteredUsers.length > 0) {
+                filteredUsers.forEach(friend => {
+                    console.log("friend status", friend.status)
                     $('#searchResults').append(`
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             ${friend.username}
@@ -254,15 +387,37 @@ async function initializeFriendSearch() {
             }
         });
 
-        $(document).on('click', '.add-friend-btn', async function() {
+        /*$(document).on('click', '.add-friend-btn', async function() {
             const friendId = $(this).data('id');
             try {
                 const result = await addFriend(friendId);
+
+                $('#searchResults').append(`
+
+                    <button class="btn btn-sm modal-button btn-success">Added</button>
+                `);
                 alert('Friend request sent successfully');
             } catch (error) {
                 console.error('Error adding friend:', error);
-                alert('Failed to add friend');
+                alert(error);
             }
+        });*/
+        $('#searchResults').on('click', '.add-friend-btn', function() {
+            const friendId = $(this).data('id');
+            const button = $(this);
+        
+            addFriend(friendId)
+                .then(() => {
+                    // Replace the button
+                    button.replaceWith(`
+                        <button class="btn btn-sm modal-button btn-success">Added</button>
+                    `);
+                })
+                .catch(error => {
+                    console.error('Error adding friend:', error);
+                    // Handle the error (e.g., show an error message to the user)
+                    alert('Failed to add friend. Please try again.');
+                });
         });
     });
 }
