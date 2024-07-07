@@ -8,7 +8,7 @@ async function launchGame() {
       'solo': document.getElementById('solo'),
       '1v1': document.getElementById('1v1'),
       'local_1v1': document.getElementById('local_1v1'),
-      'tournament': document.getElementById('tournament')
+      'tournament-4': document.getElementById('tournament-4'),
     };
   
     let selectedGameType = null;
@@ -31,7 +31,11 @@ async function launchGame() {
         if (selectedGameType) {
           window.history.pushState({}, '', '/canvas');
           handleRoute('canvas');
-          startGame(selectedGameType);
+          if (selectedGameType === 'tournament-4') {
+            startTournament(4);
+          } else {
+            startGame(selectedGameType);
+          }
         } else {
           alert('Please select a game type first.');
         }
@@ -89,4 +93,30 @@ async function launchGame() {
     } catch (error) {
         console.error('Error updating player cards:', error);
     }
+}
+
+
+function loadBracketView() {
+  const mainContent = document.getElementById('main-content');
+  fetch('/bracket.html')
+      .then(response => response.text())
+      .then(html => {
+          mainContent.innerHTML = html;
+          displayBracket();
+      });
+}
+
+function displayBracket() {
+  const tournamentDetails = JSON.parse(sessionStorage.getItem('tournamentDetails'));
+  const bracketView = document.getElementById('bracketView');
+  
+  // Create a simple bracket display
+  let bracketHTML = '<ul>';
+  tournamentDetails.players.forEach((player, index) => {
+      bracketHTML += `<li>${player} ${tournamentDetails.winners.includes(player) ? '(Winner)' : ''}</li>`;
+      if (index % 2 !== 0) bracketHTML += '<br>';
+  });
+  bracketHTML += '</ul>';
+  
+  bracketView.innerHTML = bracketHTML;
 }

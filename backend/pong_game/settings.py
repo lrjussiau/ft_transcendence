@@ -177,7 +177,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'format': '{levelname} {asctime} {module} {message}',
             'style': '{',
         },
     },
@@ -186,33 +186,25 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+            'level': 'INFO',
         },
-        'pongengine': {
-            'handlers': ['console'],
+        'supervisor.pongengine': {  # Assurez-vous que ce chemin correspond bien au module que vous utilisez
+            'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': False,
-        },
-        'supervisor.pongengine': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        'websockets': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
         },
     },
 }
+
 
 # For development (prints emails to console)
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
