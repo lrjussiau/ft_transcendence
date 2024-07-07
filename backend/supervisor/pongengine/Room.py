@@ -17,6 +17,13 @@ class Room:
         logger.debug(f"Room created: ID {self.id}, type {game_type}")
 
     @classmethod
+    async def create_room(cls, player, game_type):
+        room = cls(game_type)
+        await room.add_player(player)
+        cls.rooms[room.id] = room
+        return room
+
+    @classmethod
     async def join_or_create_room(cls, player, game_type):
         available_room = None
         for room in cls.rooms.values():
@@ -25,21 +32,16 @@ class Room:
                 break
 
         if not available_room:
-            available_room = cls(game_type)
+            available_room = await cls.create_room(player, game_type)
             logger.debug(f"Created new room: {available_room}")
         else:
-            logger.debug(f"Joining existing room: {available_room}")
+            await available_room.add_player(player)
+            logger.debug(f"Joined existing room: {available_room}")
 
-        await available_room.add_player(player)
-        logger.debug(f"Player {player['username']} joined room {available_room.id}")
-
-        if available_room.is_full():
+        if available_room.is_full() and game_type == '1v1':
             logger.debug(f"Room {available_room.id} is full. Starting game.")
             await available_room.start_game()
-        else:
-            logger.debug(f"Waiting for more players in room {available_room.id}")
-
-        cls.log_room_state()
+        
         return available_room
 
     async def add_player(self, player):
@@ -95,10 +97,22 @@ class Room:
         return has_player
 
     async def start_game(self):
-        logger.debug("Starting game")
-        self.game = PongConsumer(self.players, self.game_type)
-        await self.game.start_game()
-        logger.debug("Game started successfully")
+        if self.game_type == 'local_1v1':
+            if not self.game:
+                self.game = PongConsumer([self.players[0]], self.game_type)  # Pass only one player for local_1v1
+                await self.game.start_game()
+                logger.debug(f"Local 1v1 game started in room {self.id}")
+            else:
+                logger.warning(f"Game already in progress in room {self.id}")
+        elif self.game_type == '1v1' and self.is_full():
+            if not self.game:
+                self.game = PongConsumer(self.players, self.game_type)
+                await self.game.start_game()
+                logger.debug(f"1v1 game started in room {self.id}")
+            else:
+                logger.warning(f"Game already in progress in room {self.id}")
+        else:
+            logger.warning(f"Cannot start game in room {self.id}: conditions not met")
 
     async def end_game(self):
         if self.game:

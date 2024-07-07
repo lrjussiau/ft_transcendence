@@ -186,6 +186,7 @@ class PongConsumer:
         player2_speed = data.get('p2', 0)
         game_state['player1']["speed"] = player1_speed
         game_state['player2']["speed"] = player2_speed
+        logger.debug(f"Local 1v1 input: Player 1 speed = {player1_speed}, Player 2 speed = {player2_speed}")
 
     def handle_1v1_input(self, data):
         player_num = data.get('player_num', 0)

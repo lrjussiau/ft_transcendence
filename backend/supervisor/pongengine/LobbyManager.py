@@ -39,7 +39,16 @@ class LobbyManager:
         player['username'] = username
         player['game_type'] = game_type
 
-        if game_type in ['1v1', 'local_1v1']:
+        if game_type == 'local_1v1':
+            # Automatically create and join a room for local_1v1
+            room = await Room.create_room(player, game_type)
+            logger.debug(f"Local 1v1 room created and joined: {room.id}")
+            await websocket.send(text_data=json.dumps({
+                'type': 'room_created',
+                'room_id': room.id,
+                'message': 'Local 1v1 room created. Ready to start game.'
+            }))
+        elif game_type == '1v1':
             await websocket.send(text_data=json.dumps({
                 'type': 'game_type_selected',
                 'message': f'Game type {game_type} selected. Ready to join.'
@@ -70,6 +79,8 @@ class LobbyManager:
             await self.handle_player_input(websocket, data)
         elif action == 'join':
             await self.handle_join(websocket, data)
+        elif action == 'sg':  # Add this case for 'start game'
+            await self.handle_start_game(websocket)
         elif action == 'stop_game':
             await self.handle_stop_game(websocket)
         elif action == 'disconnect':
@@ -91,7 +102,24 @@ class LobbyManager:
         player = self.players[websocket.channel_name]
         game_type = player['game_type']
         
-        if game_type not in ['1v1', 'local_1v1']:
+        if game_type == 'local_1v1':
+            # For local_1v1, create a room immediately
+            room = await Room.create_room(player, game_type)
+            logger.debug(f"Local 1v1 room created: {room.id}")
+            await websocket.send(text_data=json.dumps({
+                'type': 'room_created',
+                'room_id': room.id,
+                'message': 'Local 1v1 room created. Use "sg" to start the game.'
+            }))
+        elif game_type == '1v1':
+            # For online 1v1, use the existing join_or_create_room logic
+            room = await Room.join_or_create_room(player, game_type)
+            logger.debug(f"Player {player['username']} joined room {room.id}")
+            await websocket.send(text_data=json.dumps({
+                'type': 'room_joined',
+                'room_id': room.id
+            }))
+        else:
             logger.error(f"Invalid game type for join: {game_type}")
             await websocket.send(text_data=json.dumps({
                 'type': 'error',
@@ -99,13 +127,29 @@ class LobbyManager:
             }))
             return
 
-        logger.debug(f"Player {player['username']} joining {game_type} game")
-        room = await Room.join_or_create_room(player, game_type)
-        logger.debug(f"Player {player['username']} joined room {room.id}")
-
-        await websocket.send(text_data=json.dumps({
-            'type': 'room_joined',
-            'room_id': room.id
-        }))
-
         Room.log_room_state()
+
+    async def handle_start_game(self, websocket):
+        player = self.players[websocket.channel_name]
+        room = Room.find_room_for_player(websocket.channel_name)
+        
+        if room and room.game_type == 'local_1v1':
+            if not room.game:
+                await room.start_game()
+                logger.debug(f"Local 1v1 game started in room {room.id}")
+                await websocket.send(text_data=json.dumps({
+                    'type': 'game_started',
+                    'message': 'Local 1v1 game has started.'
+                }))
+            else:
+                logger.warning(f"Game already in progress in room {room.id}")
+                await websocket.send(text_data=json.dumps({
+                    'type': 'error',
+                    'message': 'Game already in progress'
+                }))
+        else:
+            logger.error(f"Cannot start game: Player not in a local 1v1 room")
+            await websocket.send(text_data=json.dumps({
+                'type': 'error',
+                'message': "Cannot start game: Not in a local 1v1 room"
+            }))
