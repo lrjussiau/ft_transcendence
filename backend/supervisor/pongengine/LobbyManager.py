@@ -18,7 +18,8 @@ class LobbyManager:
             "username": None,
             "player_num": None,
             "game_type": None,
-            "speed": 0
+            "speed": 0,
+            "result": None
         }
         logger.debug(f"Player connected: {websocket.channel_name}")
 
@@ -44,7 +45,7 @@ class LobbyManager:
         player['game_type'] = game_type
 
         if game_type in ['1v1', 'local_1v1', 'solo']:
-            room = await Room.join_or_create_room(player, game_type)
+            room = await Room.join_or_create_room(self.players[websocket.channel_name], game_type)
             await websocket.send(text_data=json.dumps({
                 'type': 'room_joined',
                 'room_id': room.id,
@@ -52,7 +53,7 @@ class LobbyManager:
             }))
         elif game_type == 'tournament':
             player_count = data.get('player_count', 4)  # Default to 4-player tournament
-            tournament = await Tournament.join_or_create_tournament(player, player_count)
+            tournament = await Tournament.join_or_create_tournament(self.players[websocket.channel_name], player_count)
             await websocket.send(text_data=json.dumps({
                 'type': 'tournament_joined',
                 'tournament_id': tournament.id,

@@ -202,6 +202,7 @@ class Room:
         self.tournament_callback = None
         Room.rooms[self.id] = self
         logger.debug(f"Room created: ID {self.id}, type {game_type}")
+        self.match_finished = False
 
     @classmethod
     async def create_room(cls, player, game_type):
@@ -254,15 +255,6 @@ class Room:
         logger.debug(f"Player {player['username']} added to room: {self.id}. Player number: {player_num}")
         await self.send_player_assignment(player)
 
-    async def remove_player(self, player):
-        self.players.remove(player)
-        logger.debug(f"Player {player['username']} removed from room {self.id}")
-        if self.game:
-            await self.end_game()
-        elif not self.players:
-            self.delete_room()
-        await self.notify_player_disconnection()
-
     def delete_room(self):
         if self.id in Room.rooms:
             del Room.rooms[self.id]
@@ -299,23 +291,47 @@ class Room:
             logger.debug(f"Ending game in room {self.id}")
             await self.game.end_game()
             winner = self.determine_winner()
+            if winner:
+                winner['result'] = 'winner'
+                loser = next(player for player in self.players if player != winner)
+                loser['result'] = 'loser'
             self.game = None
             logger.debug("Game ended successfully")
             if self.game_type == 'tournament' and self.tournament_callback:
-                await self.tournament_callback(self, winner)
-            self.delete_room()
+                if winner:
+                    await self.tournament_callback(self, winner)
+                else:
+                    logger.warning(f"No winner determined for tournament game in room {self.id}")
+            else:
+                self.delete_room()
         else:
             logger.debug(f"No game to end in room {self.id}")
 
     def determine_winner(self):
-        if not self.game:
+        if not self.game or not self.players or len(self.players) < 2:
+            logger.warning(f"Unable to determine winner in room {self.id}. Game: {self.game}, Players: {len(self.players)}")
             return None
-        if self.game.game_state['player1_score'] > self.game.game_state['player2_score']:
+        
+        scores = self.game.get_final_scores()
+        if scores['player1_score'] > scores['player2_score']:
             return self.players[0]
-        elif self.game.game_state['player1_score'] < self.game.game_state['player2_score']:
+        elif scores['player1_score'] < scores['player2_score']:
             return self.players[1]
         else:
-            return None
+            logger.warning(f"Tie game in room {self.id}. Choosing player 1 as winner.")
+            return self.players[0]
+
+    async def remove_player(self, player):
+        if player in self.players:
+            self.players.remove(player)
+            logger.debug(f"Player {player['username']} removed from room {self.id}")
+            if self.game:
+                await self.end_game()
+            elif not self.players:
+                self.delete_room()
+            await self.notify_player_disconnection()
+        else:
+            logger.warning(f"Player {player['username']} not found in room {self.id}")
 
     async def handle_player_input(self, channel_name, data):
         if self.game:

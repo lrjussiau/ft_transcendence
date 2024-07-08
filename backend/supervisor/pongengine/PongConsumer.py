@@ -208,3 +208,9 @@ class PongConsumer:
                     await store_game(self.game_state['player1_score'], p1_username, p2_username, False)   
         
         logger.debug(f"Game {self.game_id} ended")
+
+    def get_final_scores(self):
+        return {
+            'player1_score': self.game_state['player1_score'],
+            'player2_score': self.game_state['player2_score']
+        }
