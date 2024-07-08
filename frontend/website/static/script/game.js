@@ -27,10 +27,11 @@ function initializeGameButtons() {
   }
 
   if (startButton) {
-    startButton.addEventListener('click', () => {
+    startButton.addEventListener('click', async () => {
       if (selectedGameType) {
         window.history.pushState({}, '', '/canvas');
         handleRoute('canvas');
+        await attributePlayer(selectedGameType); // Update player info when game starts
         if (selectedGameType === 'tournament-4') {
           startTournament(4);
         } else {
@@ -54,9 +55,10 @@ function highlightSelectedButton(selectedButton, allButtons) {
   selectedButton.classList.add('btn-selected');
 }
 
+
 async function attributePlayer(gameType) {
   try {
-      const userProfile = await fetchUserProfile();
+      const userProfile = await fetchUsernameAvatar('currentUserId'); // Remplacez 'currentUserId' par l'ID réel de l'utilisateur actuel
       
       // Update Player 1 (always the current user)
       const player1Img = document.getElementById('player-1-img');
@@ -83,7 +85,6 @@ async function attributePlayer(gameType) {
           player2Img.alt = 'AI avatar';
           player2Name.textContent = 'AI Opponent';
       } else if (gameType === '1v1') {
-          // For online games, you might want to leave this blank or update it when the opponent connects
           player2Img.src = '/media/avatars/default_avatar.png';
           player2Img.alt = 'Waiting for opponent';
           player2Name.textContent = 'Waiting...';
@@ -92,6 +93,21 @@ async function attributePlayer(gameType) {
       console.log('Player cards updated successfully');
   } catch (error) {
       console.error('Error updating player cards:', error);
+  }
+}
+
+async function fetchUsernameAvatar(user_id) {
+  const token = localStorage.getItem('authToken');
+  const response = await fetch(`/api/authentication/user/profile/${user_id}/`, {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  });
+
+  if (response.ok) {
+      return response.json();
+  } else {
+      throw new Error('Failed to fetch user profile');
   }
 }
 

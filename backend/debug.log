@@ -3912,3 +3912,575 @@ DEBUG 2024-07-08 00:43:41,718 LobbyManager Player disconnecting: specific.b1c1f8
 DEBUG 2024-07-08 00:43:41,719 Room Player 1 removed from room 4dca0f7e
 DEBUG 2024-07-08 00:43:41,719 Room Ending game in room 4dca0f7e
 DEBUG 2024-07-08 00:43:41,719 PongConsumer Ending game 2071
+DEBUG 2024-07-08 00:46:25,517 LobbyManager Player connected: specific.27d3226e4d88469facf98892d8ec210d!4e17c2cc2529447a85c56406766fd8c4
+DEBUG 2024-07-08 00:46:25,519 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'tournament', 'player_count': 4, 'username': '1'}
+DEBUG 2024-07-08 00:46:25,519 TournamentManager Tournament created: ID 133cc349, players 4
+DEBUG 2024-07-08 00:46:25,519 TournamentManager Created new tournament: <supervisor.pongengine.TournamentManager.Tournament object at 0x7ec662d68310>
+DEBUG 2024-07-08 00:46:25,519 TournamentManager Player 1 added to tournament 133cc349. Total players: 1/4
+DEBUG 2024-07-08 01:51:15,341 LobbyManager Player disconnecting: specific.27d3226e4d88469facf98892d8ec210d!4e17c2cc2529447a85c56406766fd8c4
+DEBUG 2024-07-08 01:51:15,349 TournamentManager Player 1 removed from tournament 133cc349
+DEBUG 2024-07-08 01:51:15,350 TournamentManager Empty tournament 133cc349 deleted
+DEBUG 2024-07-08 01:51:15,350 LobbyManager Disconnect handled
+DEBUG 2024-07-08 01:51:15,351 Room Current room state:
+DEBUG 2024-07-08 02:07:55,305 LobbyManager Player connected: specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a
+DEBUG 2024-07-08 02:07:55,319 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'local_1v1', 'username': 'booba'}
+DEBUG 2024-07-08 02:07:55,320 Room Room created: ID 73bfe3f0, type local_1v1
+DEBUG 2024-07-08 02:07:55,320 Room Player booba added to room: 73bfe3f0. Player number: 1
+DEBUG 2024-07-08 02:07:55,321 PongConsumer Countdown: 3 for game 5068
+DEBUG 2024-07-08 02:07:56,322 PongConsumer Countdown: 2 for game 5068
+DEBUG 2024-07-08 02:07:57,324 PongConsumer Countdown: 1 for game 5068
+DEBUG 2024-07-08 02:07:58,326 PongConsumer Countdown finished for game 5068
+DEBUG 2024-07-08 02:07:58,326 PongConsumer Game 5068 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x730f21786ee0>, 'username': 'booba', 'player_num': 1, 'game_type': 'local_1v1', 'speed': 0}}
+DEBUG 2024-07-08 02:07:58,327 Room local_1v1 game started in room 73bfe3f0
+DEBUG 2024-07-08 02:07:58,328 PongConsumer Game loop started for game 5068
+DEBUG 2024-07-08 02:07:58,329 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 02:07:58,330 Room Game already in progress in room 73bfe3f0
+DEBUG 2024-07-08 02:07:58,604 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 0}
+DEBUG 2024-07-08 02:07:58,605 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:07:58,605 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:07:58,766 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 1}
+DEBUG 2024-07-08 02:07:58,767 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:07:58,767 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:07:59,485 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 2}
+DEBUG 2024-07-08 02:07:59,485 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:07:59,485 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:07:59,629 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 3}
+DEBUG 2024-07-08 02:07:59,629 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:07:59,630 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:00,189 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 4}
+DEBUG 2024-07-08 02:08:00,189 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:00,189 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:00,380 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 5}
+DEBUG 2024-07-08 02:08:00,380 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:00,380 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:00,576 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 6}
+DEBUG 2024-07-08 02:08:00,576 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:00,576 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:00,604 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': -5, 'rid': 7}
+DEBUG 2024-07-08 02:08:00,604 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:00,604 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:00,750 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 8}
+DEBUG 2024-07-08 02:08:00,750 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:00,751 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:00,780 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 9}
+DEBUG 2024-07-08 02:08:00,780 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:00,781 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:01,229 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 10}
+DEBUG 2024-07-08 02:08:01,229 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:01,230 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:01,357 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 11}
+DEBUG 2024-07-08 02:08:01,357 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:01,358 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:02,236 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 12}
+DEBUG 2024-07-08 02:08:02,236 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:02,236 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:02,332 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 13}
+DEBUG 2024-07-08 02:08:02,333 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:02,333 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:02,783 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 14}
+DEBUG 2024-07-08 02:08:02,784 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:02,784 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:02,969 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 15}
+DEBUG 2024-07-08 02:08:02,969 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:02,969 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:03,881 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 16}
+DEBUG 2024-07-08 02:08:03,881 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:03,881 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:04,025 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 17}
+DEBUG 2024-07-08 02:08:04,025 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:04,025 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:04,290 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 18}
+DEBUG 2024-07-08 02:08:04,291 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:04,291 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:04,478 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 19}
+DEBUG 2024-07-08 02:08:04,478 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:04,478 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:04,640 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 20}
+DEBUG 2024-07-08 02:08:04,640 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:04,640 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:04,831 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 21}
+DEBUG 2024-07-08 02:08:04,831 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:04,832 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:05,344 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 22}
+DEBUG 2024-07-08 02:08:05,345 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:05,345 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:05,406 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 23}
+DEBUG 2024-07-08 02:08:05,406 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:05,406 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:06,110 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 24}
+DEBUG 2024-07-08 02:08:06,110 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:06,110 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:06,267 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 25}
+DEBUG 2024-07-08 02:08:06,267 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:06,267 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:06,558 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 26}
+DEBUG 2024-07-08 02:08:06,559 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:06,559 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:06,748 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 27}
+DEBUG 2024-07-08 02:08:06,748 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:06,749 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:06,908 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 28}
+DEBUG 2024-07-08 02:08:06,908 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:06,909 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:07,099 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 29}
+DEBUG 2024-07-08 02:08:07,099 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:07,099 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:07,819 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 30}
+DEBUG 2024-07-08 02:08:07,819 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:07,820 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:08,026 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 31}
+DEBUG 2024-07-08 02:08:08,027 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:08,027 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:09,098 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 32}
+DEBUG 2024-07-08 02:08:09,099 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:09,099 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:09,275 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 33}
+DEBUG 2024-07-08 02:08:09,276 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:09,276 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:09,579 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 34}
+DEBUG 2024-07-08 02:08:09,579 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:09,580 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:09,739 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 35}
+DEBUG 2024-07-08 02:08:09,739 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:09,739 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:09,980 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 36}
+DEBUG 2024-07-08 02:08:09,980 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:09,980 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:10,092 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 37}
+DEBUG 2024-07-08 02:08:10,092 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:10,092 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:11,020 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 38}
+DEBUG 2024-07-08 02:08:11,021 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:11,021 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:11,034 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 39}
+DEBUG 2024-07-08 02:08:11,035 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:11,035 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:11,066 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 40}
+DEBUG 2024-07-08 02:08:11,067 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:11,067 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:11,132 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 41}
+DEBUG 2024-07-08 02:08:11,132 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:11,133 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:11,179 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 42}
+DEBUG 2024-07-08 02:08:11,179 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:11,179 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:11,531 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 43}
+DEBUG 2024-07-08 02:08:11,531 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:11,531 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:11,579 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 44}
+DEBUG 2024-07-08 02:08:11,580 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:11,580 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:11,930 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 45}
+DEBUG 2024-07-08 02:08:11,931 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:11,931 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:12,174 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 46}
+DEBUG 2024-07-08 02:08:12,175 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:12,175 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:12,330 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 47}
+DEBUG 2024-07-08 02:08:12,330 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:12,330 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:12,461 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 48}
+DEBUG 2024-07-08 02:08:12,462 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:12,462 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:12,585 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 49}
+DEBUG 2024-07-08 02:08:12,586 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:12,586 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:12,635 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 50}
+DEBUG 2024-07-08 02:08:12,635 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:12,635 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:12,925 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 51}
+DEBUG 2024-07-08 02:08:12,925 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:12,925 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:13,211 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 52}
+DEBUG 2024-07-08 02:08:13,212 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:13,212 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:13,433 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 53}
+DEBUG 2024-07-08 02:08:13,433 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:13,433 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:13,905 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 54}
+DEBUG 2024-07-08 02:08:13,905 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:13,906 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:14,078 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 55}
+DEBUG 2024-07-08 02:08:14,078 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:14,078 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:14,672 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 56}
+DEBUG 2024-07-08 02:08:14,672 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:14,673 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:15,074 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 57}
+DEBUG 2024-07-08 02:08:15,074 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:15,075 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:15,569 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 58}
+DEBUG 2024-07-08 02:08:15,569 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:15,570 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:15,709 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 59}
+DEBUG 2024-07-08 02:08:15,710 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:15,710 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:16,689 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 60}
+DEBUG 2024-07-08 02:08:16,689 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:16,689 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:16,802 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 61}
+DEBUG 2024-07-08 02:08:16,803 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:16,803 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:19,682 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 62}
+DEBUG 2024-07-08 02:08:19,683 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:19,683 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:20,062 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 63}
+DEBUG 2024-07-08 02:08:20,063 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:20,063 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:21,404 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 64}
+DEBUG 2024-07-08 02:08:21,405 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:21,405 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:21,517 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 65}
+DEBUG 2024-07-08 02:08:21,517 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:21,517 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:22,603 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 66}
+DEBUG 2024-07-08 02:08:22,604 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:22,604 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:22,734 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 67}
+DEBUG 2024-07-08 02:08:22,734 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:22,734 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:23,630 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 68}
+DEBUG 2024-07-08 02:08:23,630 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:23,630 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:23,882 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 69}
+DEBUG 2024-07-08 02:08:23,882 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:23,882 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:24,347 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 70}
+DEBUG 2024-07-08 02:08:24,347 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:24,347 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:24,443 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 71}
+DEBUG 2024-07-08 02:08:24,443 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:24,443 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:24,725 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 72}
+DEBUG 2024-07-08 02:08:24,726 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:24,726 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:24,813 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 73}
+DEBUG 2024-07-08 02:08:24,813 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:24,814 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:25,743 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 74}
+DEBUG 2024-07-08 02:08:25,744 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:25,744 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:25,853 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 75}
+DEBUG 2024-07-08 02:08:25,854 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:25,854 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:26,301 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 76}
+DEBUG 2024-07-08 02:08:26,302 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:26,302 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:26,462 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 77}
+DEBUG 2024-07-08 02:08:26,463 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:26,463 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:26,818 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 78}
+DEBUG 2024-07-08 02:08:26,818 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:26,819 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:27,020 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 79}
+DEBUG 2024-07-08 02:08:27,021 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:27,021 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:27,485 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 80}
+DEBUG 2024-07-08 02:08:27,486 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:27,486 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:27,613 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 81}
+DEBUG 2024-07-08 02:08:27,613 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:27,613 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:28,162 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 82}
+DEBUG 2024-07-08 02:08:28,163 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:28,163 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:28,333 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 83}
+DEBUG 2024-07-08 02:08:28,334 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:28,334 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:28,864 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 84}
+DEBUG 2024-07-08 02:08:28,865 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:28,865 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:28,954 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 85}
+DEBUG 2024-07-08 02:08:28,954 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:28,954 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:29,563 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 86}
+DEBUG 2024-07-08 02:08:29,563 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:29,563 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:29,674 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 87}
+DEBUG 2024-07-08 02:08:29,675 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:29,675 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:30,043 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 88}
+DEBUG 2024-07-08 02:08:30,043 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:30,043 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:30,186 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 89}
+DEBUG 2024-07-08 02:08:30,186 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:30,187 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:30,891 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 90}
+DEBUG 2024-07-08 02:08:30,891 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:30,891 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:31,146 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 91}
+DEBUG 2024-07-08 02:08:31,146 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:31,146 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:32,764 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 92}
+DEBUG 2024-07-08 02:08:32,765 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:32,765 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:32,835 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 93}
+DEBUG 2024-07-08 02:08:32,836 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:32,836 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:33,342 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 94}
+DEBUG 2024-07-08 02:08:33,343 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:33,343 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:33,454 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 95}
+DEBUG 2024-07-08 02:08:33,454 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:33,455 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:34,156 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 96}
+DEBUG 2024-07-08 02:08:34,156 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:34,156 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:34,266 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 97}
+DEBUG 2024-07-08 02:08:34,266 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:34,266 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:35,019 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 98}
+DEBUG 2024-07-08 02:08:35,019 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:35,019 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:35,130 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 99}
+DEBUG 2024-07-08 02:08:35,130 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:35,130 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:35,937 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 100}
+DEBUG 2024-07-08 02:08:35,938 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:35,938 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:36,089 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 101}
+DEBUG 2024-07-08 02:08:36,089 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:36,090 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:36,864 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 102}
+DEBUG 2024-07-08 02:08:36,864 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:36,865 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:36,940 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 103}
+DEBUG 2024-07-08 02:08:36,940 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:36,941 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:48,285 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 104}
+DEBUG 2024-07-08 02:08:48,286 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:48,286 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:48,401 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 105}
+DEBUG 2024-07-08 02:08:48,401 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:48,402 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:50,127 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 106}
+DEBUG 2024-07-08 02:08:50,127 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:50,128 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:50,237 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 107}
+DEBUG 2024-07-08 02:08:50,237 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:50,237 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:50,829 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 108}
+DEBUG 2024-07-08 02:08:50,830 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:50,830 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:50,956 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 109}
+DEBUG 2024-07-08 02:08:50,957 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:50,957 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:51,821 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 110}
+DEBUG 2024-07-08 02:08:51,821 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:51,821 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:51,901 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 111}
+DEBUG 2024-07-08 02:08:51,902 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:51,902 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:52,334 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 112}
+DEBUG 2024-07-08 02:08:52,334 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:52,334 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:08:52,414 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 113}
+DEBUG 2024-07-08 02:08:52,414 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:52,414 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:54,418 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 114}
+DEBUG 2024-07-08 02:08:54,419 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:54,419 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:54,717 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 115}
+DEBUG 2024-07-08 02:08:54,718 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:54,718 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:56,212 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 116}
+DEBUG 2024-07-08 02:08:56,212 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:56,213 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:08:56,318 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 117}
+DEBUG 2024-07-08 02:08:56,318 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:56,318 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:58,466 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 118}
+DEBUG 2024-07-08 02:08:58,467 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:58,467 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:59,215 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 119}
+DEBUG 2024-07-08 02:08:59,215 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:59,216 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:59,268 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 120}
+DEBUG 2024-07-08 02:08:59,269 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:59,269 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:59,514 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 121}
+DEBUG 2024-07-08 02:08:59,514 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:59,514 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:08:59,804 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 122}
+DEBUG 2024-07-08 02:08:59,804 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:08:59,804 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:09:00,202 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 123}
+DEBUG 2024-07-08 02:09:00,203 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:00,203 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:02,113 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 124}
+DEBUG 2024-07-08 02:09:02,114 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:02,114 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:02,706 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 125}
+DEBUG 2024-07-08 02:09:02,706 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:02,706 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:02,781 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 126}
+DEBUG 2024-07-08 02:09:02,781 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:02,781 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:02,847 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 127}
+DEBUG 2024-07-08 02:09:02,847 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:02,847 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:02,912 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 128}
+DEBUG 2024-07-08 02:09:02,913 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:02,913 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:03,340 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 129}
+DEBUG 2024-07-08 02:09:03,340 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:03,340 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:03,389 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 130}
+DEBUG 2024-07-08 02:09:03,389 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:03,389 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:03,516 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 131}
+DEBUG 2024-07-08 02:09:03,517 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:03,517 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:03,917 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 132}
+DEBUG 2024-07-08 02:09:03,917 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:03,918 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:09:04,076 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 133}
+DEBUG 2024-07-08 02:09:04,076 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:04,076 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:06,059 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 134}
+DEBUG 2024-07-08 02:09:06,059 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:06,060 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:06,319 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 135}
+DEBUG 2024-07-08 02:09:06,319 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:06,320 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:06,993 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 136}
+DEBUG 2024-07-08 02:09:06,993 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:06,994 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:07,262 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 137}
+DEBUG 2024-07-08 02:09:07,262 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:07,263 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:07,373 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 138}
+DEBUG 2024-07-08 02:09:07,373 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:07,373 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:07,960 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 139}
+DEBUG 2024-07-08 02:09:07,960 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:07,961 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:07,987 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 140}
+DEBUG 2024-07-08 02:09:07,988 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:07,988 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:08,271 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 141}
+DEBUG 2024-07-08 02:09:08,272 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:08,272 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:08,830 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 142}
+DEBUG 2024-07-08 02:09:08,831 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:08,831 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:09:09,025 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 143}
+DEBUG 2024-07-08 02:09:09,025 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:09,025 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:09,120 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 144}
+DEBUG 2024-07-08 02:09:09,120 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:09,121 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:09,282 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 145}
+DEBUG 2024-07-08 02:09:09,282 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:09,282 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:09,923 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 146}
+DEBUG 2024-07-08 02:09:09,923 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:09,924 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:09:10,062 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 147}
+DEBUG 2024-07-08 02:09:10,062 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:10,062 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:11,744 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 148}
+DEBUG 2024-07-08 02:09:11,745 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:11,745 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:11,842 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 149}
+DEBUG 2024-07-08 02:09:11,842 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:11,843 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:12,214 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 150}
+DEBUG 2024-07-08 02:09:12,214 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:12,214 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:12,304 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 151}
+DEBUG 2024-07-08 02:09:12,305 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:12,305 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:14,451 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 152}
+DEBUG 2024-07-08 02:09:14,451 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:14,452 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:14,621 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 5, 'rid': 153}
+DEBUG 2024-07-08 02:09:14,621 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:14,621 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 5
+DEBUG 2024-07-08 02:09:14,627 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 154}
+DEBUG 2024-07-08 02:09:14,627 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:14,627 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:09:14,788 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 5, 'rid': 155}
+DEBUG 2024-07-08 02:09:14,789 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:14,789 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 5
+DEBUG 2024-07-08 02:09:14,819 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 156}
+DEBUG 2024-07-08 02:09:14,820 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:14,820 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:14,880 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': -5, 'rid': 157}
+DEBUG 2024-07-08 02:09:14,880 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:14,880 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = -5
+DEBUG 2024-07-08 02:09:15,004 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 158}
+DEBUG 2024-07-08 02:09:15,004 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:15,004 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:09:15,036 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 159}
+DEBUG 2024-07-08 02:09:15,036 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:15,036 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:15,071 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 160}
+DEBUG 2024-07-08 02:09:15,071 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:15,072 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:09:15,156 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 5, 'rid': 161}
+DEBUG 2024-07-08 02:09:15,156 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:15,157 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 5
+DEBUG 2024-07-08 02:09:15,244 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 162}
+DEBUG 2024-07-08 02:09:15,245 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:15,245 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:15,281 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 163}
+DEBUG 2024-07-08 02:09:15,281 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:15,282 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:15,328 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': -5, 'rid': 164}
+DEBUG 2024-07-08 02:09:15,328 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:15,328 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = -5
+DEBUG 2024-07-08 02:09:15,579 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 165}
+DEBUG 2024-07-08 02:09:15,579 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:15,579 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:16,061 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 5, 'rid': 166}
+DEBUG 2024-07-08 02:09:16,061 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:16,061 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 5
+DEBUG 2024-07-08 02:09:16,142 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 167}
+DEBUG 2024-07-08 02:09:16,142 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:16,143 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:17,215 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 168}
+DEBUG 2024-07-08 02:09:17,215 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:17,215 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:17,312 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 169}
+DEBUG 2024-07-08 02:09:17,312 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:17,312 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:17,773 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 170}
+DEBUG 2024-07-08 02:09:17,774 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:17,774 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:17,869 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 171}
+DEBUG 2024-07-08 02:09:17,869 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:17,870 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:18,190 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 172}
+DEBUG 2024-07-08 02:09:18,191 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:18,191 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:18,301 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 173}
+DEBUG 2024-07-08 02:09:18,302 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:18,302 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:18,606 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 174}
+DEBUG 2024-07-08 02:09:18,606 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:18,606 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:18,702 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 175}
+DEBUG 2024-07-08 02:09:18,702 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:18,702 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:19,169 LobbyManager Data received: {'t': 'pi', 'p1': -5, 'p2': 0, 'rid': 176}
+DEBUG 2024-07-08 02:09:19,169 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:19,169 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:19,295 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 177}
+DEBUG 2024-07-08 02:09:19,295 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:19,295 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:19,614 LobbyManager Data received: {'t': 'pi', 'p1': 5, 'p2': 0, 'rid': 178}
+DEBUG 2024-07-08 02:09:19,614 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:19,614 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:19,728 LobbyManager Data received: {'t': 'pi', 'p1': 0, 'p2': 0, 'rid': 179}
+DEBUG 2024-07-08 02:09:19,728 Room Handling player input from specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a in room 73bfe3f0
+DEBUG 2024-07-08 02:09:19,729 PongConsumer Game 5068: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 02:09:20,918 PongConsumer Game over signal sent for game 5068
+DEBUG 2024-07-08 02:09:20,921 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 02:09:20,921 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 02:09:20,922 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 02:09:20,922 LobbyManager Player disconnecting: specific.9dae2fece9214f69a8be86034a254ce1!6575b391cd6047dfa949a773f909a36a
+DEBUG 2024-07-08 02:09:20,922 Room Player booba removed from room 73bfe3f0
+DEBUG 2024-07-08 02:09:20,922 Room Ending game in room 73bfe3f0
+DEBUG 2024-07-08 02:09:20,922 PongConsumer Ending game 5068
+DEBUG 2024-07-08 02:09:20,928 PongConsumer Game loop ended for game 5068
