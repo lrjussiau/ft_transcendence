@@ -41,6 +41,11 @@ function showModal(modalName, modalHtmlPath) {
           modalContainer.innerHTML = html;
           const modalElement = $(`#${modalName}`);
           modalElement.modal('show');
+          if (window.updateContent) {
+            window.updateContent(document.getElementById(modalName));
+          } else {
+          console.warn('updateContent function not found. Make sure i18n-setup.js is loaded.');
+          }
           console.log(`${modalName} is now shown`);
 
           modalElement.on('shown.bs.modal', () => {
@@ -58,6 +63,7 @@ function showModal(modalName, modalHtmlPath) {
         reject(error);
       });
   });
+
 }
 
 function hideModal(modalName) {

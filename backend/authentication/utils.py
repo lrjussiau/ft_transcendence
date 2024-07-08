@@ -22,7 +22,6 @@ def generate_and_send_2fa_code(user):
         logging.info(f"2FA code sent successfully to user {user.username}")
     except Exception as e:
         logging.error(f"Failed to send 2FA code email to {user.username}: {str(e)}")
-        # Handle the error (e.g., return an error response or use a fallback method)
 
     logging.info(f"2FA code for user {user.username}: {code}")  # For debugging
 

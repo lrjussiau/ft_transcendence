@@ -72,18 +72,17 @@ async function gameHistory() {
             const score_winner = 5;
 
             row.innerHTML = `
-                <td class="opponent">
-                    <div class="opponent-card">
-                        <img src="${'https://www.w3schools.com/howto/img_avatar.png'}" alt="player-img" class="img-fluid">
-                        <div class="opponent-name">${opponent.username}</div>
-                    </div>
-                </td>
-                <td class="result">${isWinner ? 'Won' : 'Lost :('}</td>
-                <td class="score_game">${score_loser} - ${score_winner}</td>
-                <td class="is_tournament">${is_tournament ? 'yes->checked by blockchain :)':'Nope'}</td>
-                <td class="data">${formatDate(game.match_date)}</td>
-            `;
-
+            <td class="opponent">
+                <div class="opponent-card">
+                    <img src="${'https://www.w3schools.com/howto/img_avatar.png'}" alt="player-img" class="img-fluid">
+                    <div class="opponent-name">${opponent.username}</div>
+                </div>
+            </td>
+            <td class="result" data-i18n="${isWinner ? 'winner' : 'loser'}"></td>
+            <td class="score_game">${score_loser} - ${score_winner}</td>
+            <td class="is_tournament" data-i18n=${is_tournament ? 'isTournament':'isNotTournament'}></td>
+            <td class="data">${formatDate(game.match_date)}</td>
+        `;
             gameTableBody.appendChild(row);
         });
     } catch (error) {

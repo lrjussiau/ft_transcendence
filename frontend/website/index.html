@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pong Game</title>
+  <title data-i18n="pongGgame">Pong Game</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="static/css/styles.css">
@@ -12,7 +13,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <header><a href="/home"><h3 class="linear-title headers">Pong Game</h2></a></header>
+  <header><a href="/home"><h3 class="linear-title headers" data-i18n="pongGame">Pong Game</h2></a></header>
   <div class="navbar">
     <div class="sidebar">
       <button data-route="user" class="nav-item"><i class="bi bi-person"></i></button>
@@ -25,10 +26,15 @@
   </div>
   <div id="content" class="content"></div>
 
-  <footer>Made by 24k leaks</footer>
+  <footer data-i18n="madeBy24kleaks">Made by 24k leaks</footer>
 
   <div id="modal-container"></div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/21.6.10/i18next.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next-http-backend/1.3.2/i18nextHttpBackend.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
+  <script src="static/script/i18n-setup.js"></script>
+  <script src="static/script/settings.js"></script>
   <script src="static/script/animation.js"></script>
   <script src="static/script/token.js"></script>
   <script src="static/script/router.js"></script>
@@ -39,7 +45,6 @@
   <script src="static/script/avatar.js"></script>
   <script src="static/script/user.js"></script>
   <script src="static/script/friend.js"></script>
-  <script src="static/script/settings.js"></script>
   <script src="static/script/status.js"></script>
   <script src="static/script/livechat.js"></script>
   <script src="static/script/games_history.js"></script>

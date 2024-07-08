@@ -20,7 +20,7 @@ RUN find /app -type f -name "*.sh" -exec sed -i 's/\r$//' {} +
 COPY server.js /app/server.js
 RUN chmod +x /app/server.js
 
-COPY .env /app/.env
+#COPY .env /app/.env
 
 
 EXPOSE 3000

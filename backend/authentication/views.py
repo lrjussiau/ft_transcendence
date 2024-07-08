@@ -21,19 +21,21 @@ from django.conf import settings
 import os
 from .utils import generate_and_send_2fa_code, verify_2fa_code
 
+logger = logging.getLogger(__name__)
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        
         try:
             serializer.is_valid(raise_exception=True)
         except Exception as e:
             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
         
         user = serializer.user
-
+        if user.status == "online":
+            return Response({"error": "Already Connected"}, status=status.HTTP_401_UNAUTHORIZED)
         if user.is_2fa_enabled:
             generate_and_send_2fa_code(user)
             return Response({
@@ -60,7 +62,6 @@ class RegisterView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             
-            # Set the default avatar without creating a new file
             default_avatar_path = 'avatars/default_avatar.png'
             if os.path.exists(os.path.join(settings.MEDIA_ROOT, default_avatar_path)):
                 user.avatar = default_avatar_path
@@ -145,6 +146,18 @@ def change_email(request):
     user.save()
     return Response({"success": "Email updated successfully."}, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_status(request):
+    new_status = request.data.get('new_status')
+    if not new_status:
+        return Response({"error": "New status is required."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    user = request.user
+    user.status = new_status
+    user.save()
+    
+    return Response({"success": "Status updated successfully."}, status=status.HTTP_200_OK)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def change_password(request):

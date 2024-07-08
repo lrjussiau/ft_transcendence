@@ -4,9 +4,9 @@ from django.http import JsonResponse
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-@csrf_exempt   #Use this decorator if you're testing with POST requests from non-browser clients
+@csrf_exempt
 def endpoint_handler(request, operation_requested):
-    if request.content_type == 'application/json': # should be json
+    if request.content_type == 'application/json':
         data = json.loads(request.body)
     if operation_requested == 'record_score':
         return record_score(data.get('game_id'), data.get('score_loser'),data.get('loser'), data.get('winner'))
@@ -14,7 +14,7 @@ def endpoint_handler(request, operation_requested):
         print("should go here")
         return retrieve_score(data.get('game_id'))
     else:
-        return HttpResponse(status=404)  # Not Found
+        return HttpResponse(status=404)
 
 def record_score(game_id, score_loser, loser, winner):
     blockchain_endpoint = "http://blockchain:3000/record_score"

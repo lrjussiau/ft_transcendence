@@ -1,3 +1,5 @@
+//import { setupSettingsPage } from './settings.js';
+//import { setupSettingsPage } from '.';
 console.log("router.js loaded");
 
 // Function to get the current route
@@ -34,11 +36,8 @@ async function loadPartial(partial) {
 
       if (partial === 'game') {
         launchGame();
-        // initializeStartButton();
-        // fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
       }
 
-      // Call setupModalTriggers to ensure modal triggers are set up for dynamically loaded content
       if (partial !== 'livechat') {
         setupModalTriggers();
       }
@@ -60,6 +59,19 @@ async function loadPartial(partial) {
         setupSettingsPage();
         setInitialTheme();
       }
+
+      // Call updateContent to translate the newly loaded partial
+      if (window.initI18next && window.updateContent) {
+        window.initI18next().then(() => {
+          window.updateContent();
+          if (window.initializeLanguageSelector) {
+            window.initializeLanguageSelector();
+          }
+        });
+      } else {
+        console.warn('i18next setup functions not found. Make sure i18n-setup.js is loaded.');
+      }
+
     } else {
       console.error('#content element not found');
     }
@@ -172,11 +184,34 @@ function initializeStartButton() {
   }
 }
 
-function handleLogout() {
+async function handleLogout() {
+  try {
+    const response = await fetch('/api/authentication/change-status/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({new_status: "offline"})
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (error) {
+      
+  }
+
   console.log('Logging out...');
   localStorage.removeItem('authToken');
   localStorage.removeItem('refreshToken');
   window.history.pushState({}, '', '/home');
+  try {
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
   handleRoute('home');
 }
 
