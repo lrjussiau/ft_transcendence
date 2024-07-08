@@ -17,9 +17,12 @@ class PongConsumer:
     max_angle = 45
     global_speed_factor = 1.5
 
-    def __init__(self, players, game_type):
+    def __init__(self, players, game_type, room_id, game_end_callback, tournament_callback=None):
         self.players = {i+1: player for i, player in enumerate(players)}
         self.game_type = game_type
+        self.room_id = room_id
+        self.game_end_callback = game_end_callback
+        self.tournament_callback = tournament_callback
         self.AI = Ai() if game_type == "solo" else None
         self.game_id = str(random.randint(1000, 9999))  # Unique identifier for each game
         self.game_state = self.init_game_state()
@@ -41,34 +44,27 @@ class PongConsumer:
         await self.start_countdown()
         self.game_state['game_started'] = True
         self.ball_restart()
-        logger.debug(f"Game {self.game_id} started with players: {self.players}")
+        for player in self.players.values():
+            logger.debug(f"Game {self.game_id} started with players: {player.get_username()}")
         asyncio.create_task(self.game_loop())
 
     async def game_loop(self):
         self.game_state['last_update_time'] = asyncio.get_event_loop().time()
         logger.debug(f"Game loop started for game {self.game_id}")
-        while self.game_state['game_started'] and not self.game_state['game_over']:
-            current_time = asyncio.get_event_loop().time()
-            dt = current_time - self.game_state['last_update_time']
-            self.game_state['last_update_time'] = current_time
+        try:
+            while self.game_state['game_started'] and not self.game_state['game_over']:
+                current_time = asyncio.get_event_loop().time()
+                dt = current_time - self.game_state['last_update_time']
+                self.game_state['last_update_time'] = current_time
 
-            await self.update_game_state(dt)
-            await self.broadcast_game_state()
-            await asyncio.sleep(1 / self.refresh_rate)
-        
-        final_scores = self.get_final_scores()
-        # Determine winner and loser
-        if final_scores['player1_score'] > final_scores['player2_score']:
-            self.players[1]['result'] = 'winner'
-            self.players[2]['result'] = 'loser'
-        elif final_scores['player1_score'] < final_scores['player2_score']:
-            self.players[1]['result'] = 'loser'
-            self.players[2]['result'] = 'winner'
-        else:
-            self.players[1]['result'] = 'tie'
-            self.players[2]['result'] = 'tie'
-        logger.debug(f"Game loop ended for game {self.game_id}")
-        await self.broadcast_final_state(final_scores)
+                await self.update_game_state(dt)
+                await self.broadcast_game_state()
+                await asyncio.sleep(1 / self.refresh_rate)
+            
+            await self.end_game()
+        except Exception as e:
+            logger.error(f"Error in game loop for game {self.game_id}: {e}")
+            await self.end_game(error=True)
 
 
     async def update_game_state(self, dt):
@@ -126,6 +122,7 @@ class PongConsumer:
             await asyncio.sleep(1)
         logger.debug(f"Countdown finished for game {self.game_id}")
 
+
     def ball_restart(self):
         self.game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
 
@@ -139,16 +136,23 @@ class PongConsumer:
 
     async def handle_player_input(self, data):
         if self.game_state['game_started']:
-            if self.game_type in ['1v1', 'tournament']:
-                self.handle_1v1_input(data)
-            elif self.game_type == 'local_1v1':
+            if self.game_type == 'local_1v1':
                 self.handle_local_input(data)
+            elif self.game_type in ['1v1', 'tournament', 'solo']:
+                self.handle_1v1_input(data)
             else:
                 logger.warning(f"Unexpected game type: {self.game_type}")
                 return
-            await self.broadcast_game_state()
         else:
             logger.warning(f"Game {self.game_id} is not started, input ignored.")
+
+    def handle_local_input(self, data):
+        logger.debug(f"Game {self.game_id}: Local 1v1 input received : {data}")
+        player1_speed = data.get('p1', 0)
+        player2_speed = data.get('p2', 0)
+        self.game_state['player1']["speed"] = player1_speed
+        self.game_state['player2']["speed"] = player2_speed
+        logger.debug(f"Game {self.game_id}: Local 1v1 input: Player 1 speed = {player1_speed}, Player 2 speed = {player2_speed}")
 
     def handle_1v1_input(self, data):
         player_num = data.get('player_num', 0)
@@ -159,65 +163,68 @@ class PongConsumer:
         else:
             logger.error(f"Game {self.game_id}: Invalid player number received: {player_num}")
 
-    def handle_local_input(self, data):
-        player1_speed = data.get('p1', 0)
-        player2_speed = data.get('p2', 0)
-        self.game_state['player1']["speed"] = player1_speed
-        self.game_state['player2']["speed"] = player2_speed
-        logger.debug(f"Game {self.game_id}: Local 1v1 input: Player 1 speed = {player1_speed}, Player 2 speed = {player2_speed}")
-
-    async def end_game(self):
-        logger.debug(f"In End_game Store into DB")
+    async def end_game(self, error=False):
+        self.game_state['game_over'] = True
+        self.game_state['game_started'] = False
         
-        p1 = next((player_data for player_data in self.players.values() if player_data["player_num"] == 1), None)
-        p2 = next((player_data for player_data in self.players.values() if player_data["player_num"] == 2), None)
-        logger.debug(f"Game {self.game_id}: player1: {p1.get('username')}, player2: {p2.get('username')}")
-        if not self.game_type == "local_1v1" and p2 is not None:
-            p1_username = p1.get('username')
-            p2_username = p2.get('username')
-            if self.game_state['player1_score'] == self.points:
-                if self.game_type == "tournament":
-                    await store_game(self.game_state['player2_score'], p2_username, p1_username, True)
-                else:
-                    await store_game(self.game_state['player2_score'], p2_username, p1_username, False)
+        final_scores = self.get_final_scores()
+        
+        if not error:
+            if final_scores['player1_score'] > final_scores['player2_score']:
+                self.players[1].result = 'winner'
+                self.players[2].result = 'loser'
+            elif final_scores['player1_score'] < final_scores['player2_score']:
+                self.players[1].result = 'loser'
+                self.players[2].result = 'winner'
             else:
-                if self.game_type == "tournament":
-                    await store_game(self.game_state['player1_score'], p1_username, p2_username, True)
-                else:
-                    await store_game(self.game_state['player1_score'], p1_username, p2_username, False)   
-        logger.debug(f"Game {self.game_id} ended")
+                self.players[1].result = 'tie'
+                self.players[2].result = 'tie'
+
+        await self.broadcast_final_state(final_scores)
+        await self.store_game_result()
+        
+        # Call the game_end_callback
+        if self.game_end_callback:
+            await self.game_end_callback(self, self.room_id)
+
+        # Call the tournament_callback if it's a tournament game
+        if self.game_type == 'tournament' and self.tournament_callback:
+            winner = next((player for player in self.players.values() if player.result == 'winner'), None)
+            if winner:
+                await self.tournament_callback(self.room_id, winner)
 
     def get_final_scores(self):
         return {
-            'player1_name': self.players[1]['username'],
+            'player1_name': self.players[1].get_username(),
             'player1_score': self.game_state['player1_score'],
-            'player2_name': self.players[2]['username'],
+            'player2_name': self.players[2].get_username(),
             'player2_score': self.game_state['player2_score']
         }
-
-# -----------Brodcast----------------    
+    
+    async def store_game_result(self):
+        if self.game_type != "local_1v1":
+            p1 = self.players[1]
+            p2 = self.players[2]
+            p1_username = p1.get_username()
+            p2_username = p2.get_username()
+            if self.game_state['player1_score'] > self.game_state['player2_score']:
+                await store_game(self.game_state['player2_score'], p2_username, p1_username, self.game_type == "tournament")
+            else:
+                await store_game(self.game_state['player1_score'], p1_username, p2_username, self.game_type == "tournament")
 
     async def broadcast_final_state(self, final_scores):
         final_state = {
-            'type': 'game_over',
+            'type': 'message',
             'final_scores': final_scores,
-            'player1_result': self.players[1]['result'],
-            'player2_result': self.players[2]['result']
+            'player1_result': self.players[1].result,
+            'player2_result': self.players[2].result
         }
-
-        if self.game_type == 'tournament':
-            logger.debug(f"Game {self.game_id} is a tournament game. No Game_over.")
-            await self.end_game()
-            return
         for player in self.players.values():
             try:
-                logger.debug(f"Sending final state to player {player['username']} : {final_state}")
-                await player['object'].send(text_data=json.dumps(final_state))
-                logger.debug(f"Final state sent to player {player['username']}")
+                await player.send_message(final_state)
             except Exception as e:
-                logger.error(f"Error sending final state to player {player['username']}: {e}")
-
-
+                logger.error(f"Error sending final state to player {player.get_username()}: {e}")
+     
     async def broadcast_game_state(self, extra_info=None):
         base_state = {
             'type': 'update',
@@ -238,12 +245,15 @@ class PongConsumer:
                 state['ball'] = self.flip_coordinates(state['ball'])
                 state['p1'], state['p2'] = state['p2'], state['p1']
                 state['s1'], state['s2'] = state['s2'], state['s1']
-            if 'object' in player and player['object']:
-                await player['object'].send(text_data=json.dumps(state))
+            if player.websocket:
+                try:
+                    await player.send_message(state)
+                except Exception as e:
+                    logger.error(f"Error sending game state to player {player.get_username()}: {e}")
             else:
                 logger.error(f"Player {player_num} does not have a valid websocket object")
         if self.AI:
             ai_move = self.AI.act()
-            self.game_state['player1']['y'] += ai_move
-            self.game_state['player1']['y'] = max(0, min(self.game_state['player1']['y'], 290))
+            self.game_state['player2']['y'] += ai_move
+            self.game_state['player2']['y'] = max(0, min(self.game_state['player2']['y'], 290))
             self.AI.store_state(self.game_state)
