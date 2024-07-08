@@ -2,6 +2,16 @@
 //import { setupSettingsPage } from '.';
 //console.log("router.js loaded");
 
+
+
+// Script to set initial theme based on localStorage
+document.addEventListener('DOMContentLoaded', (event) => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+});
+
 // Function to get the current route
 function getCurrentRoute() {
   const path = window.location.pathname;
