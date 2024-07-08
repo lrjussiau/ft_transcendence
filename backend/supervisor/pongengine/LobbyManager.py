@@ -23,18 +23,20 @@ class LobbyManager:
         }
         logger.debug(f"Player connected: {websocket.channel_name}")
 
-    async def disconnect(self, websocket):
-        logger.debug(f"Player disconnecting: {websocket.channel_name}")
-        if websocket.channel_name in self.players:
-            player = self.players[websocket.channel_name]
-            room = Room.find_room_for_player(websocket.channel_name)
+    async def handle_disconnect(self, channel_name):
+        if channel_name in self.players:
+            player = self.players[channel_name]
+            room = Room.find_room_for_player(channel_name)
             if room:
                 await room.remove_player(player)
-            tournament = Tournament.find_tournament_for_player(websocket.channel_name)
+            
+            tournament = Tournament.find_tournament_for_player(channel_name)
             if tournament:
                 await tournament.remove_player(player)
-            del self.players[websocket.channel_name]
-        logger.debug("Disconnect handled")
+            
+            del self.players[channel_name]
+        
+        logger.debug(f"Disconnect handled for player: {player['username']}")
         Room.log_room_state()
 
     async def handle_game_selection(self, websocket, data):
@@ -86,7 +88,7 @@ class LobbyManager:
         elif action == 'sg':  # start game
             await self.handle_start_game(websocket)
         elif action == 'disconnect':
-            await self.disconnect(websocket)
+            await self.handle_disconnect(websocket.channel_name)
         elif action == 'player_ready':
             await self.handle_player_ready(websocket, data)
         else:
@@ -110,3 +112,6 @@ class LobbyManager:
             await tournament.player_ready(self.players[websocket.channel_name])
         else:
             logger.error(f"Tournament not found: {tournament_id}")
+
+    async def disconnect(self, websocket):
+        await self.handle_disconnect(websocket.channel_name)

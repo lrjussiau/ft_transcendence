@@ -16,6 +16,7 @@ class Tournament:
         self.rooms = []
         self.current_round = 0
         self.winners = []
+        self.ready_players = []
         Tournament.tournaments[self.id] = self
         logger.debug(f"Tournament created: ID {self.id}, players {player_count}")
 
@@ -70,14 +71,6 @@ class Tournament:
             await room.start_game()
         logger.debug(f"Created {len(self.rooms)} matches for round {self.current_round}")
 
-    async def player_ready(self, player):
-            if player not in self.ready_players:
-                self.ready_players.append(player)
-                await self.broadcast_tournament_status()
-
-            if len(self.ready_players) == len(self.players):
-                await self.start_next_round()
-
     async def end_tournament(self, winner):
         logger.info(f"Tournament {self.id} ended. Winner: {winner['username']}")
         end_message = json.dumps({
@@ -105,6 +98,7 @@ class Tournament:
             'tournament_details': self.get_tournament_details()
         })
         for player in self.players:
+            # logger.debug(f"Sending tournament started message to {player['username']} : {message}")
             await player['object'].send(text_data=message)
 
     async def broadcast_round_start(self):
@@ -114,6 +108,7 @@ class Tournament:
             'tournament_details': self.get_tournament_details()
         })
         for player in self.players:
+            # logger.debug(f"Sending round start message to {player['username']} : {message}")
             await player['object'].send(text_data=message)
 
     def get_tournament_details(self):
@@ -151,6 +146,7 @@ class Tournament:
             'tournament_details': self.get_tournament_details()
         })
         for remaining_player in self.players:
+            # logger.debug(f"Sending player left message to {remaining_player['username']} : {message}")
             await remaining_player['object'].send(text_data=message)
 
     async def handle_match_end(self, room, winner):
@@ -159,16 +155,14 @@ class Tournament:
         self.winners.append(winner)
         await self.send_round_ended(winner)
         
-        loser = next(player for player in room.players if player['result'] == 'loser')
+        loser = next(player for player in room.players if player['username'] != winner['username'])
         await self.send_game_over(loser, winner)
         
-        # Mark the room as finished
         room.match_finished = True
         
-        # Check if all matches in this round are finished
         if all(r.match_finished for r in self.rooms):
-            self.rooms.clear()  # Clear all rooms after the round is complete
-            await self.prepare_next_round()
+            self.rooms.clear()
+            await self.broadcast_round_end()
 
     async def send_round_ended(self, winner):
         logger.debug(f"Sending round ended message to winner {winner['username']}")
@@ -177,7 +171,9 @@ class Tournament:
             'message': f'You won the match!',
             'tournament_details': self.get_tournament_details()
         })
-        await winner['object'].send(text_data=message)
+        winner_player = next(p for p in self.players if p['username'] == winner['username'])
+        # logger.debug(f"Sending message to {winner_player['username']} : {message}")
+        await winner_player['object'].send(text_data=message)
 
     async def send_game_over(self, loser, winner):
         logger.debug(f"Sending game over message to loser {loser['username']}")
@@ -189,17 +185,6 @@ class Tournament:
         })
         await loser['object'].send(text_data=message)
 
-    async def prepare_next_round(self):
-        if len(self.winners) == 1:
-            await self.end_tournament(self.winners[0])
-        else:
-            self.current_round += 1
-            self.players = self.winners
-            self.winners = []
-            self.ready_players = []
-            await self.create_matches()
-            await self.broadcast_round_start()
-
     async def broadcast_round_end(self):
         message = json.dumps({
             'type': 'round_ended',
@@ -207,7 +192,16 @@ class Tournament:
             'tournament_details': self.get_tournament_details()
         })
         for player in self.players:
+            # logger.debug(f"Sending round ended message to {player['username']} : {message}")
             await player['object'].send(text_data=message)
+
+    async def player_ready(self, player):
+        if player not in self.ready_players:
+            self.ready_players.append(player)
+            await self.broadcast_tournament_status()
+
+        if len(self.ready_players) == len(self.winners):
+            await self.start_next_round()
 
     async def broadcast_tournament_status(self):
         status = {
@@ -217,11 +211,16 @@ class Tournament:
             'tournament_details': self.get_tournament_details()
         }
         for player in self.players:
+            # logger.debug(f"Sending tournament status to {player['username']} : {status}")
             await player['object'].send(text_data=json.dumps(status))
 
     async def start_next_round(self):
-        self.players = self.winners
-        self.winners = []
-        self.ready_players = []
-        await self.create_matches()
-        await self.broadcast_round_start()
+        if len(self.winners) == 1:
+            await self.end_tournament(self.winners[0])
+        else:
+            self.current_round += 1
+            self.players = self.winners
+            self.winners = []
+            self.ready_players = []
+            await self.create_matches()
+            await self.broadcast_round_start()

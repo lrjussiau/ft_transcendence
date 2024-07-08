@@ -18,7 +18,7 @@ class PongConsumer:
     global_speed_factor = 1.5
 
     def __init__(self, players, game_type):
-        self.Players = {i+1: player for i, player in enumerate(players)}
+        self.players = {i+1: player for i, player in enumerate(players)}
         self.game_type = game_type
         self.AI = Ai() if game_type == "solo" else None
         self.game_id = str(random.randint(1000, 9999))  # Unique identifier for each game
@@ -41,7 +41,7 @@ class PongConsumer:
         await self.start_countdown()
         self.game_state['game_started'] = True
         self.ball_restart()
-        logger.debug(f"Game {self.game_id} started with players: {self.Players}")
+        logger.debug(f"Game {self.game_id} started with players: {self.players}")
         asyncio.create_task(self.game_loop())
 
     async def game_loop(self):
@@ -55,7 +55,21 @@ class PongConsumer:
             await self.update_game_state(dt)
             await self.broadcast_game_state()
             await asyncio.sleep(1 / self.refresh_rate)
+        
+        final_scores = self.get_final_scores()
+        # Determine winner and loser
+        if final_scores['player1_score'] > final_scores['player2_score']:
+            self.players[1]['result'] = 'winner'
+            self.players[2]['result'] = 'loser'
+        elif final_scores['player1_score'] < final_scores['player2_score']:
+            self.players[1]['result'] = 'loser'
+            self.players[2]['result'] = 'winner'
+        else:
+            self.players[1]['result'] = 'tie'
+            self.players[2]['result'] = 'tie'
         logger.debug(f"Game loop ended for game {self.game_id}")
+        await self.broadcast_final_state(final_scores)
+
 
     async def update_game_state(self, dt):
         if not self.game_state['game_started']:
@@ -84,8 +98,7 @@ class PongConsumer:
         if self.game_state['player1_score'] == self.points or self.game_state['player2_score'] == self.points:
             self.game_state['game_over'] = True
             self.game_state['game_started'] = False
-            await self.broadcast_game_state({'type': 'game_over'})
-            logger.debug(f"Game over signal sent for game {self.game_id}")
+            logger.debug(f"End Game condition met for game {self.game_id}")
 
     def handle_paddle_collision(self):
         if self.game_state['ball']["x"] <= 15:
@@ -115,36 +128,6 @@ class PongConsumer:
 
     def ball_restart(self):
         self.game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
-
-    async def broadcast_game_state(self, extra_info=None):
-        base_state = {
-            'type': 'update',
-            'ball': self.game_state['ball'],
-            'p1': self.game_state['player1'],
-            'p2': self.game_state['player2'],
-            's1': self.game_state["player1_score"],
-            's2': self.game_state["player2_score"],
-            'go': self.game_state['game_over'],
-            'gs': self.game_state['game_started'],
-        }
-        if extra_info:
-            base_state.update(extra_info)
-
-        for player_num, player in self.Players.items():
-            state = base_state.copy()
-            if player_num == 2:
-                state['ball'] = self.flip_coordinates(state['ball'])
-                state['p1'], state['p2'] = state['p2'], state['p1']
-                state['s1'], state['s2'] = state['s2'], state['s1']
-            try:
-                await player['object'].send(text_data=json.dumps(state))
-            except Exception as e:
-                logger.error(f"Error sending game state for game {self.game_id}: {e}")
-        if self.AI:
-            ai_move = self.AI.act()
-            self.game_state['player1']['y'] += ai_move
-            self.game_state['player1']['y'] = max(0, min(self.game_state['player1']['y'], 290))
-            self.AI.store_state(self.game_state)
 
     def flip_coordinates(self, obj):
         flipped = obj.copy()
@@ -184,15 +167,11 @@ class PongConsumer:
         logger.debug(f"Game {self.game_id}: Local 1v1 input: Player 1 speed = {player1_speed}, Player 2 speed = {player2_speed}")
 
     async def end_game(self):
-        logger.debug(f"Ending game {self.game_id}")
-        self.game_state['game_over'] = True
-        self.game_state['game_started'] = False
-        await self.broadcast_game_state({'type': 'game_over'})
+        logger.debug(f"In End_game Store into DB")
         
-        p1 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 1), None)
-        p2 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 2), None)
+        p1 = next((player_data for player_data in self.players.values() if player_data["player_num"] == 1), None)
+        p2 = next((player_data for player_data in self.players.values() if player_data["player_num"] == 2), None)
         logger.debug(f"Game {self.game_id}: player1: {p1.get('username')}, player2: {p2.get('username')}")
-        
         if not self.game_type == "local_1v1" and p2 is not None:
             p1_username = p1.get('username')
             p2_username = p2.get('username')
@@ -206,11 +185,65 @@ class PongConsumer:
                     await store_game(self.game_state['player1_score'], p1_username, p2_username, True)
                 else:
                     await store_game(self.game_state['player1_score'], p1_username, p2_username, False)   
-        
         logger.debug(f"Game {self.game_id} ended")
 
     def get_final_scores(self):
         return {
+            'player1_name': self.players[1]['username'],
             'player1_score': self.game_state['player1_score'],
+            'player2_name': self.players[2]['username'],
             'player2_score': self.game_state['player2_score']
         }
+
+# -----------Brodcast----------------    
+
+    async def broadcast_final_state(self, final_scores):
+        final_state = {
+            'type': 'game_over',
+            'final_scores': final_scores,
+            'player1_result': self.players[1]['result'],
+            'player2_result': self.players[2]['result']
+        }
+
+        if self.game_type == 'tournament':
+            logger.debug(f"Game {self.game_id} is a tournament game. No Game_over.")
+            await self.end_game()
+            return
+        for player in self.players.values():
+            try:
+                logger.debug(f"Sending final state to player {player['username']} : {final_state}")
+                await player['object'].send(text_data=json.dumps(final_state))
+                logger.debug(f"Final state sent to player {player['username']}")
+            except Exception as e:
+                logger.error(f"Error sending final state to player {player['username']}: {e}")
+
+
+    async def broadcast_game_state(self, extra_info=None):
+        base_state = {
+            'type': 'update',
+            'ball': self.game_state['ball'],
+            'p1': self.game_state['player1'],
+            'p2': self.game_state['player2'],
+            's1': self.game_state["player1_score"],
+            's2': self.game_state["player2_score"],
+            'go': self.game_state['game_over'],
+            'gs': self.game_state['game_started'],
+        }
+        if extra_info:
+            base_state.update(extra_info)
+
+        for player_num, player in self.players.items():
+            state = base_state.copy()
+            if player_num == 2:
+                state['ball'] = self.flip_coordinates(state['ball'])
+                state['p1'], state['p2'] = state['p2'], state['p1']
+                state['s1'], state['s2'] = state['s2'], state['s1']
+            if 'object' in player and player['object']:
+                await player['object'].send(text_data=json.dumps(state))
+            else:
+                logger.error(f"Player {player_num} does not have a valid websocket object")
+        if self.AI:
+            ai_move = self.AI.act()
+            self.game_state['player1']['y'] += ai_move
+            self.game_state['player1']['y'] = max(0, min(self.game_state['player1']['y'], 290))
+            self.AI.store_state(self.game_state)

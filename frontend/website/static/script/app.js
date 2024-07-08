@@ -138,6 +138,7 @@ async function startGame(gameType) {
                         console.log('A player has disconnected.');
                         updateLastMessage('A player has disconnected.');
                         alert('A player has disconnected.');
+                        console.log('app.js: stopGame() 141');
                         stopGame();
                         break;
                       case 'start_game':
@@ -204,6 +205,7 @@ function stopGame() {
   player1Speed = 0;
   player2Speed = 0;
 }
+
 function updateLastMessage(message) {
   const messageSpan = document.getElementById('displayMessage');
   if (messageSpan) {
@@ -231,6 +233,7 @@ function handleGameOver(winner) {
 
     // Stop the game and close the WebSocket connection
     stopGame();
+    console.log('Stop_game handleGameOver'); 
 
     // Navigate back to /game after 4 seconds
     setTimeout(() => {
