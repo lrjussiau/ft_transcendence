@@ -264,7 +264,7 @@
 #         else:
 #             await self.send(text_data=json.dumps({
 #                 'type': 'error',
-#                 'message': 'A game is already in progress.'
+#                 'message': 'A ready in progress.'
 #             }))
 #             return
 

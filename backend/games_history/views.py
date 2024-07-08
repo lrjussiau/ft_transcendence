@@ -19,10 +19,27 @@ def user_stats(request, user_id):
     losses = Games.objects.filter(loser_id=user_id).count()
     return JsonResponse({'wins': wins, 'losses': losses})
 
+from django.utils import timezone
+from django.db.models import Q
+from datetime import timedelta
+from django.http import JsonResponse
+
 @sync_to_async
 def store_game(score_loser, loser_username, winner_username, tournament_game):
     loser = User.objects.get(username=loser_username)
     winner = User.objects.get(username=winner_username)
+
+    # Check for recent similar games in the last 5 seconds
+    five_seconds_ago = timezone.now() - timedelta(seconds=5)
+    recent_similar_game = Games.objects.filter(
+        Q(winner=winner, loser=loser) | Q(winner=loser, loser=winner),
+        loser_score=score_loser,
+        is_tournament_game=tournament_game,
+        match_date__gte=five_seconds_ago
+    ).exists()
+
+    if recent_similar_game:
+        return JsonResponse({"message": "Similar game recently recorded"}, status=200)
 
     new_game = Games.objects.create(
         winner=winner,
@@ -37,7 +54,8 @@ def store_game(score_loser, loser_username, winner_username, tournament_game):
             return JsonResponse({"message": "Data sent successfully"}, status=200)
         else:
             return JsonResponse({"error": "Failed to send data to blockchain"}, status=500)
-
+    
+    return JsonResponse({"message": "Game recorded successfully"}, status=200)
 
 class RetrieveGameData(APIView):
     permission_classes = [IsAuthenticated]

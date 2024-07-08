@@ -54,144 +54,137 @@ async function launchGame() {
 async function startGame(gameType) {
   // First, ensure any existing game is stopped
   if (ws) {
-    stopGame();
+      stopGame();
   }
 
   try {
-    const userData = await fetchUserProfile();
-    const username = userData.username;
-    selectedGameType = gameType;
+      const userData = await fetchUserProfile();
+      const username = userData.username;
+      selectedGameType = gameType;
 
-    // Wait for the canvas element to be available
-    const checkCanvasInterval = setInterval(() => {
-      const canvas = document.getElementById('gameCanvas');
-      console.log('Checking for canvas element...');
-      if (canvas) {
-        clearInterval(checkCanvasInterval);
+      // Wait for the canvas element to be available
+      const checkCanvasInterval = setInterval(() => {
+          const canvas = document.getElementById('gameCanvas');
+          console.log('Checking for canvas element...');
+          if (canvas) {
+              clearInterval(checkCanvasInterval);
+              
+              console.log('Canvas element found');
+              document.querySelector('.canvas').style.display = 'block';
+              
+              ctx = canvas.getContext('2d');
+              
+              const host = window.location.hostname;
+              const wsUrl = `wss://${host}:4443/ws/pong/`;
 
-        console.log('Canvas element found');
-        document.querySelector('.canvas').style.display = 'block';
+              ws = new WebSocket(wsUrl);
+              ws.onopen = () => {
+                  console.log('WebSocket connection established');
+                  ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: username }));
+                  attributePlayer(gameType);
+                  switch (gameType) {
+                      case 'local_1v1':
+                          ws.send(JSON.stringify({ t: 'sg' }));
+                          break;
+                      case '1v1':
+                          ws.send(JSON.stringify({ t: 'sg' }));
+                          break;
+                      case 'solo':
+                          ws.send(JSON.stringify({ t: 'sg' }));
+                          break;
+                      default:
+                          console.error(`Unsupported game type: ${gameType}`);
+                          break;
+                  }
+              };
+              ws.onmessage = (event) => {
+                  const data = JSON.parse(event.data);
+                  // console.log('Received update:', data);
 
-        ctx = canvas.getContext('2d');
+                  if (data.rid !== undefined && requestTimestamps[data.rid]) {
+                      const latency = performance.now() - requestTimestamps[data.rid];
+                      roundTripTime = latency;
+                      delete requestTimestamps[data.rid];
+                      console.log(`Round-Trip Time (RTT): ${roundTripTime} ms`);
+                  }
+                  console.log('Received message:', data.type);
+                    switch (data.type) {
+                      case 'countdown':
+                        countdownValue = data.value;
+                        draw();
+                        break;
+                      case 'update':
+                        countdownValue = null;
+                        updateGameState(data);
+                        break;
+                      case 'waiting_for_opponent':
+                        drawWaitingForOpponent();
+                        break;
+                      case 'ping':
+                        ws.send(JSON.stringify({ t: 'pong' }));
+                        break;
+                      case 'game_ready':
+                        console.log('Game is ready!');
+                        drawGameReady();
+                        updateLastMessage('Game is ready!');
+                        ws.send(JSON.stringify({ t: 'sg' }));
+                        break;
+                      case 'player_assignment':
+                        console.log(data.message);
+                        window.localPlayerNumber = data.player_num;
+                        updateLastMessage(`Player ${data.player_num}`);
+                        break;
+                      case 'player_disconnected':
+                        console.log('A player has disconnected.');
+                        updateLastMessage('A player has disconnected.');
+                        alert('A player has disconnected.');
+                        stopGame();
+                        break;
+                      case 'start_game':
+                        console.log('Game has started!');
+                        countdownValue = null;
+                        draw();
+                        break;
+                      case 'game_over':
+                        console.log('Game over');
+                        updateLastMessage('Game over!');
+                        handleGameOver(data.winner);
+                        break;
+                      case 'error':
+                        console.error('Error from server:', data.message);
+                        updateLastMessage(`Error: ${data.message}`);
+                        alert(`Error: ${data.message}`);
+                        break;
+                      case 'info':
+                          console.log(data.message);
+                          updateLastMessage(data.message);;
+                            if (data.message.includes('Tournament created')) {
+                              console.log('Tournament created. Waiting for players to join...');}
+                          break;
+                      default:
+                          console.error(`Unsupported data type: ${data.type}`);
+                          updateLastMessage(`Received unsupported data type: ${data.type}`);
+                          break;
+                  }
+              };
 
-        const host = window.location.hostname;
-        const wsUrl = `wss://${host}:4443/ws/pong/`;
-
-        ws = new WebSocket(wsUrl);
-        ws.onopen = () => {
-          console.log('WebSocket connection established');
-          ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: username }));
-          attributePlayer(gameType);
-          switch (gameType) {
-            case 'local_1v1':
-              ws.send(JSON.stringify({ t: 'sg' }));
-              break;
-            case '1v1':
-              ws.send(JSON.stringify({ t: 'join' }));
-              break;
-            case 'solo':
-              ws.send(JSON.stringify({ t: 'solo' }));
-              break;
-            default:
-              console.error(`Unsupported game type: ${gameType}`);
-              break;
+              ws.onerror = (error) => {
+                  console.error('WebSocket error:', error);
+              };
+              ws.onclose = (event) => {
+                console.log('WebSocket closed:', event);
+                if (!gameOver) {
+                    console.log('Unexpected WebSocket closure. Attempting to reconnect...');
+                    setTimeout(() => startGame(selectedGameType), 3000);  // Try to reconnect after 3 seconds
+                }
+            };
+          } else {
+              console.log('Waiting for canvas element...');
           }
-        };
-        ws.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          // console.log('Received update:', data);
-
-          if (data.rid !== undefined && requestTimestamps[data.rid]) {
-            const latency = performance.now() - requestTimestamps[data.rid];
-            roundTripTime = latency;
-            delete requestTimestamps[data.rid];
-            console.log(`Round-Trip Time (RTT): ${roundTripTime} ms`);
-          }
-          console.log('Received message:', data.type);
-          switch (data.type) {
-            case 'countdown':
-              countdownValue = data.value;
-              draw();
-              break;
-            case 'update':
-              countdownValue = null;
-              updateGameState(data);
-              break;
-            case 'waiting_for_opponent':
-              drawWaitingForOpponent();
-              break;
-            case 'ping':
-              ws.send(JSON.stringify({ t: 'pong' }));
-              break;
-            case 'game_ready':
-              console.log('Game is ready!');
-              drawGameReady();
-              updateLastMessage('Game is ready!');
-              ws.send(JSON.stringify({ t: 'sg' }));
-              break;
-            case 'player_assignment':
-              console.log(data.message);
-              window.localPlayerNumber = data.player_num;
-              updateLastMessage(`Player ${data.player_num}`);
-              break;
-            case 'player_disconnected':
-              console.log('A player has disconnected.');
-              updateLastMessage('A player has disconnected.');
-              alert('A player has disconnected.');
-              stopGame();
-              break;
-            case 'opponent_profile':
-              updateOpponentProfile(data);
-              break;
-            case 'start_game':
-              console.log('Game has started!');
-              countdownValue = null;
-              draw();
-              break;
-            case 'game_over':
-              console.log('Game over');
-              updateLastMessage('Game over!');
-              handleGameOver(data.winner);
-              break;
-            case 'error':
-              console.error('Error from server:', data.message);
-              updateLastMessage(`Error: ${data.message}`);
-              alert(`Error: ${data.message}`);
-              break;
-            case 'info':
-              console.log(data.message);
-              updateLastMessage(data.message);
-              if (data.message.includes('Tournament created')) {
-                console.log('Tournament created. Waiting for players to join...');
-              }
-              break;
-            case 'opponent_profile':
-              updateOpponentProfile(data);
-              break;
-            default:
-              console.error(`Unsupported data type: ${data.type}`);
-              updateLastMessage(`Received unsupported data type: ${data.type}`);
-              break;
-          }
-        };
-
-        ws.onerror = (error) => {
-          console.error('WebSocket error:', error);
-        };
-        ws.onclose = (event) => {
-          console.log('WebSocket closed:', event);
-          if (!gameOver) {
-            console.log('Unexpected WebSocket closure. Attempting to reconnect...');
-            setTimeout(() => startGame(selectedGameType), 3000);  // Try to reconnect after 3 seconds
-          }
-        };
-      } else {
-        console.log('Waiting for canvas element...');
-      }
-    }, 100); // Check every 100ms
+      }, 100); // Check every 100ms
   } catch (error) {
-    console.error('Error starting game:', error);
-    updateLastMessage(`Error starting game: ${error.message}`);
+      console.error('Error starting game:', error);
+      updateLastMessage(`Error starting game: ${error.message}`);
   }
 }
 
@@ -294,8 +287,11 @@ function updateGameState(data) {
     gameState = data.initial_state;
     draw();
   } else if (data.type === 'game_over') {
-    // This might be redundant now, but keep it for safety
     handleGameOver(data.winner);
+  } else if (data.type === 'tournament_update') {
+    updateTournamentStatus(data);
+  } else if (data.type === 'tournament_match_start') {
+    startMatch(data);
   } else {
     console.error('Invalid game state received:', data);
   }

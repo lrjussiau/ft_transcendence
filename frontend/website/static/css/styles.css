@@ -1315,6 +1315,60 @@ input:checked + .slider:before {
     border-bottom-color: #ffffff1a;
   }
 
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #ffffff6a;
+    color: #1a1a1a;
+    }
+
+  .player-card-game {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff1a;
+    border-radius: 15px;
+  }
+
+  .btn-game-choice-wrapper {
+    position: relative;
+    width: 30%;
+    margin: 2%;
+    border: 2px solid #00ff0080;
+    color: #00ff0080;
+    border-radius: 20px;
+    z-index: 1; /* Ensure the wrapper is on a lower z-index than the button */
+  }
+
+  .span {
+    color:white;
+  }
+
+  .btn-play:hover {
+    background-color: #00c1006a;
+    color: #1a1a1a;
+  }
+
+  .file-input {
+    position: absolute;
+    opacity: 0;
+    width: 30%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    color:white;
+  }
+
+  /* .changeAvatar-button {
+    margin: 2%;
+    font-size: 1vw;
+    color:white;
+  } */
+
   .chat-header {
     display: flex;
     flex-direction: row;
@@ -1689,7 +1743,7 @@ input:checked + .slider:before {
 }
 
 .accepted-friend-item:hover {
-  background-color: #f0f0f0;
+  background-color: #4a4a4a;
 }
 
 .accepted-friend-img, .accepted-friend-img-online {

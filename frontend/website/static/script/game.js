@@ -8,7 +8,7 @@ function initializeGameButtons() {
     'solo': document.getElementById('solo'),
     '1v1': document.getElementById('1v1'),
     'local_1v1': document.getElementById('local_1v1'),
-    'tournament': document.getElementById('tournament')
+    'tournament-4': document.getElementById('tournament-4'),
   };
 
   let selectedGameType = null;
@@ -31,7 +31,11 @@ function initializeGameButtons() {
       if (selectedGameType) {
         window.history.pushState({}, '', '/canvas');
         handleRoute('canvas');
-        startGame(selectedGameType);
+        if (selectedGameType === 'tournament-4') {
+          startTournament(4);
+        } else {
+          startGame(selectedGameType);
+        }
       } else {
         alert('Please select a game type first.');
       }
@@ -49,53 +53,70 @@ function highlightSelectedButton(selectedButton, allButtons) {
   // Add highlight to selected button
   selectedButton.classList.add('btn-selected');
 }
+
 async function attributePlayer(gameType) {
   try {
-    const userProfile = await fetchUserProfile();
+      const userProfile = await fetchUserProfile();
+      
+      // Update Player 1 (always the current user)
+      const player1Img = document.getElementById('player-1-img');
+      const player1Name = document.getElementById('player-1-name').querySelector('h5');
 
-    // Update Player 1 (always the current user)
-    const player1Img = document.getElementById('player-1-img');
-    const player1Name = document.getElementById('player-1-name').querySelector('h5');
+      if (userProfile.avatar) {
+          player1Img.src = userProfile.avatar;
+      } else {
+          player1Img.src = '/static/img/default_avatar.png'; // Fallback to default avatar
+      }
+      player1Img.alt = `${userProfile.username}'s avatar`;
+      player1Name.textContent = userProfile.username;
 
-    if (userProfile.avatar) {
-      player1Img.src = userProfile.avatar;
-    } else {
-      player1Img.src = '/static/img/default_avatar.png'; // Fallback to default avatar
-    }
-    player1Img.alt = `${userProfile.username}'s avatar`;
-    player1Name.textContent = userProfile.username;
+      // Update Player 2 based on game type
+      const player2Img = document.getElementById('player-2-img');
+      const player2Name = document.getElementById('player-2-name').querySelector('h5');
 
-    // Update Player 2 based on game type
-    const player2Img = document.getElementById('player-2-img');
-    const player2Name = document.getElementById('player-2-name').querySelector('h5');
+      if (gameType === 'local_1v1') {
+          player2Img.src = '/media/avatars/default_avatar.png';
+          player2Img.alt = 'Player 2 avatar';
+          player2Name.textContent = 'Player 2';
+      } else if (gameType === 'ai') {
+          player2Img.src = '/media/avatars/default_avatar.png'; // Assuming you have an AI avatar
+          player2Img.alt = 'AI avatar';
+          player2Name.textContent = 'AI Opponent';
+      } else if (gameType === '1v1') {
+          // For online games, you might want to leave this blank or update it when the opponent connects
+          player2Img.src = '/media/avatars/default_avatar.png';
+          player2Img.alt = 'Waiting for opponent';
+          player2Name.textContent = 'Waiting...';
+      }
 
-    if (gameType === 'local_1v1') {
-      player2Img.src = '/media/avatars/default_avatar.png';
-      player2Img.alt = 'Player 2 avatar';
-      player2Name.textContent = 'Player 2';
-    } else if (gameType === 'ai') {
-      player2Img.src = '/media/avatars/ai.jpg'; // Assuming you have an AI avatar image
-      player2Img.alt = 'AI avatar';
-      player2Name.textContent = 'AI Opponent';
-    } else if (gameType === '1v1') {
-      player2Img.src = '/media/avatars/default_avatar.png';
-      player2Img.alt = 'Waiting for opponent';
-      player2Name.textContent = 'Waiting...';
-    }
-
-    console.log('Player cards updated successfully');
+      console.log('Player cards updated successfully');
   } catch (error) {
-    console.error('Error updating player cards:', error);
+      console.error('Error updating player cards:', error);
   }
 }
 
-function updateOpponentProfile(data) {
-  const player2Img = document.getElementById('player-2-img');
-  const player2Name = document.getElementById('player-2-name').querySelector('h5');
 
-  player2Img.src = data.avatar || '/media/avatars/default_avatar.png';
-  player2Img.alt = `${data.username}'s avatar`;
-  player2Name.textContent = data.username;
+function loadBracketView() {
+const mainContent = document.getElementById('main-content');
+fetch('/bracket.html')
+    .then(response => response.text())
+    .then(html => {
+        mainContent.innerHTML = html;
+        displayBracket();
+    });
 }
 
+function displayBracket() {
+const tournamentDetails = JSON.parse(sessionStorage.getItem('tournamentDetails'));
+const bracketView = document.getElementById('bracketView');
 
+// Create a simple bracket display
+let bracketHTML = '<ul>';
+tournamentDetails.players.forEach((player, index) => {
+    bracketHTML += `<li>${player} ${tournamentDetails.winners.includes(player) ? '(Winner)' : ''}</li>`;
+    if (index % 2 !== 0) bracketHTML += '<br>';
+});
+bracketHTML += '</ul>';
+
+bracketView.innerHTML = bracketHTML;
+}
