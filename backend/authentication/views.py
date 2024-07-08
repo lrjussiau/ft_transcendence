@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password, make_password
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from .serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer
+from .serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer, UserSabProfileSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -20,6 +20,14 @@ from urllib.parse import urlparse
 from django.conf import settings
 import os
 from .utils import generate_and_send_2fa_code, verify_2fa_code
+
+class UserSabView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, user_id):
+        incomming = User.objects.filter(id=user_id)
+        serializer = UserSabProfileSerializer(incomming)
+        return Response(serializer.data)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer

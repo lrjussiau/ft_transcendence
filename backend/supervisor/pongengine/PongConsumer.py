@@ -10,12 +10,12 @@ logger = logging.getLogger(__name__)
 
 class PongConsumer:
     points = 5
-    refresh_rate = 120
+    refresh_rate = 60
     speed_buff = 7 / 6
     paddle_height = 70
     center_paddle_offset = paddle_height / 2
     max_angle = 45
-    global_speed_factor = 1.5
+    global_speed_factor = 1.75
 
     def __init__(self, players, game_type):
         self.Players = {i+1: player for i, player in enumerate(players)}

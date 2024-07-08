@@ -3,7 +3,7 @@ from .views import (
     RegisterView, UserProfileView, CustomTokenObtainPairView, 
     upload_avatar, list_avatars, ChangeAvatarView,
     change_username, change_email, change_password,
-    toggle_2fa, verify_2fa, delete_account
+    toggle_2fa, verify_2fa, delete_account, UserSabView
 )
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -21,4 +21,5 @@ urlpatterns = [
     path('toggle-2fa/', toggle_2fa, name='toggle_2fa'),
     path('verify-2fa/', verify_2fa, name='verify_2fa'),
     path('delete-account/', delete_account, name='delete_account'),
+    path('user/profile/<int:user_id>/', UserSabView.as_view(), name='user_sab_profile'),
 ]

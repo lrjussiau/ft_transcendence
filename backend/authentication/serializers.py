@@ -44,3 +44,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             'is_2fa_enabled': self.user.is_2fa_enabled,
         }
         return data
+
+class UserSabProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'avatar']

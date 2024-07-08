@@ -81,7 +81,7 @@ async function attributePlayer(gameType) {
           player2Img.alt = 'Player 2 avatar';
           player2Name.textContent = 'Player 2';
       } else if (gameType === 'ai') {
-          player2Img.src = '/media/avatars/default_avatar.png'; // Assuming you have an AI avatar
+          player2Img.src = '/media/avatars/ai.png'; // Assuming you have an AI avatar
           player2Img.alt = 'AI avatar';
           player2Name.textContent = 'AI Opponent';
       } else if (gameType === '1v1') {
