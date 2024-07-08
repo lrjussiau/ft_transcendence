@@ -2,13 +2,36 @@ async function launchGame() {
   initializeGameButtons();
 }
 
+async function fetchOpponentAvatar(username) {
+  try {
+    const response = await fetch(`/user/avatar/${username}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming you use token-based auth
+      }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.avatar;
+    } else {
+      console.error('Failed to fetch opponent avatar:', response.statusText);
+      return '/media/avatars/default_avatar.png'; // Fallback avatar
+    }
+  } catch (error) {
+    console.error('Error fetching opponent avatar:', error);
+    return '/media/avatars/default_avatar.png'; // Fallback avatar
+  }
+}
+
 function initializeGameButtons() {
   const startButton = document.getElementById('startButton');
   const gameButtons = {
     'solo': document.getElementById('solo'),
     '1v1': document.getElementById('1v1'),
     'local_1v1': document.getElementById('local_1v1'),
-    'tournament-4': document.getElementById('tournament-4'),
+    'tournament': document.getElementById('tournament')
   };
 
   let selectedGameType = null;
@@ -16,10 +39,13 @@ function initializeGameButtons() {
   // Add click event listeners to game type buttons
   for (const [type, button] of Object.entries(gameButtons)) {
     if (button) {
-      button.addEventListener('click', () => {
+      button.addEventListener('click', async () => {
         selectedGameType = type;
         highlightSelectedButton(button, gameButtons);
         console.log(`Game type selected: ${selectedGameType}`);
+
+        // Call attributePlayer when game type is selected
+        await attributePlayer(selectedGameType);
       });
     } else {
       console.error(`#${type} button element not found`);
@@ -27,16 +53,11 @@ function initializeGameButtons() {
   }
 
   if (startButton) {
-    startButton.addEventListener('click', async () => {
+    startButton.addEventListener('click', () => {
       if (selectedGameType) {
         window.history.pushState({}, '', '/canvas');
         handleRoute('canvas');
-        await attributePlayer(selectedGameType); // Update player info when game starts
-        if (selectedGameType === 'tournament-4') {
-          startTournament(4);
-        } else {
-          startGame(selectedGameType);
-        }
+        startGame(selectedGameType);
       } else {
         alert('Please select a game type first.');
       }
@@ -55,84 +76,45 @@ function highlightSelectedButton(selectedButton, allButtons) {
   selectedButton.classList.add('btn-selected');
 }
 
-
 async function attributePlayer(gameType) {
   try {
-      const userProfile = await fetchUsernameAvatar('currentUserId'); // Remplacez 'currentUserId' par l'ID réel de l'utilisateur actuel
-      
-      // Update Player 1 (always the current user)
-      const player1Img = document.getElementById('player-1-img');
-      const player1Name = document.getElementById('player-1-name').querySelector('h5');
+    const userProfile = await fetchUserProfile();
 
-      if (userProfile.avatar) {
-          player1Img.src = userProfile.avatar;
-      } else {
-          player1Img.src = '/static/img/default_avatar.png'; // Fallback to default avatar
-      }
-      player1Img.alt = `${userProfile.username}'s avatar`;
-      player1Name.textContent = userProfile.username;
+    // Update Player 1 (always the current user)
+    const player1Img = document.getElementById('player-1-img');
+    const player1Name = document.getElementById('player-1-name').querySelector('h5');
 
-      // Update Player 2 based on game type
-      const player2Img = document.getElementById('player-2-img');
-      const player2Name = document.getElementById('player-2-name').querySelector('h5');
+    if (userProfile.avatar) {
+      player1Img.src = userProfile.avatar;
+    } else {
+      player1Img.src = '/media/avatars/default_avatar.png'; // Fallback to default avatar
+    }
+    player1Img.alt = `${userProfile.username}'s avatar`;
+    player1Name.textContent = userProfile.username;
 
-      if (gameType === 'local_1v1') {
-          player2Img.src = '/media/avatars/default_avatar.png';
-          player2Img.alt = 'Player 2 avatar';
-          player2Name.textContent = 'Player 2';
-      } else if (gameType === 'ai') {
-          player2Img.src = '/media/avatars/ai.png'; // Assuming you have an AI avatar
-          player2Img.alt = 'AI avatar';
-          player2Name.textContent = 'AI Opponent';
-      } else if (gameType === '1v1') {
-          player2Img.src = '/media/avatars/default_avatar.png';
-          player2Img.alt = 'Waiting for opponent';
-          player2Name.textContent = 'Waiting...';
-      }
+    // Update Player 2 based on game type
+    const player2Img = document.getElementById('player-2-img');
+    const player2Name = document.getElementById('player-2-name').querySelector('h5');
 
-      console.log('Player cards updated successfully');
+    if (gameType === 'local_1v1') {
+      player2Img.src = player1Img.src; // Use Player 1 avatar for Player 2
+      player2Img.alt = 'Player 2 avatar';
+      player2Name.textContent = 'Player 2';
+    } else if (gameType === 'solo') {
+      player2Img.src = '/media/avatars/ai.png'; // Assuming you have an AI avatar
+      player2Img.alt = 'AI avatar';
+      player2Name.textContent = 'AI Opponent';
+    } else if (gameType === '1v1') {
+      // Fetch opponent avatar
+      const opponentUsername = 'opponentUsername'; // Replace with actual opponent username
+      const opponentAvatar = await fetchOpponentAvatar(opponentUsername);
+      player2Img.src = opponentAvatar;
+      player2Img.alt = `${opponentUsername}'s avatar`;
+      player2Name.textContent = opponentUsername;
+    }
+
+    console.log('Player cards updated successfully');
   } catch (error) {
-      console.error('Error updating player cards:', error);
+    console.error('Error updating player cards:', error);
   }
-}
-
-async function fetchUsernameAvatar(user_id) {
-  const token = localStorage.getItem('authToken');
-  const response = await fetch(`/api/authentication/user/profile/${user_id}/`, {
-      headers: {
-          'Authorization': `Bearer ${token}`
-      }
-  });
-
-  if (response.ok) {
-      return response.json();
-  } else {
-      throw new Error('Failed to fetch user profile');
-  }
-}
-
-
-function loadBracketView() {
-const mainContent = document.getElementById('main-content');
-fetch('/bracket.html')
-    .then(response => response.text())
-    .then(html => {
-        mainContent.innerHTML = html;
-        displayBracket();
-    });
-}
-
-function displayBracket() {
-const tournamentDetails = JSON.parse(sessionStorage.getItem('tournamentDetails'));
-const bracketView = document.getElementById('bracketView');
-
-// Create a simple bracket display
-let bracketHTML = '<ul>';
-tournamentDetails.players.forEach((player, index) => {
-    bracketHTML += `<li>${player} ${tournamentDetails.winners.includes(player) ? '(Winner)' : ''}</li>`;
-    if (index % 2 !== 0) bracketHTML += '<br>';
-});
-bracketHTML += '</ul>';
-
-bracketView.innerHTML = bracketHTML;
 }

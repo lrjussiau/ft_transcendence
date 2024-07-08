@@ -1,12 +1,10 @@
 import time
 
-
 class Ai:
     def __init__(self):
         self.paddle = 0
         self.target = 0
         self.time = time.time()
-
 
     def act(self):
         if self.paddle + 70 < self.target:
@@ -38,7 +36,7 @@ class Ai:
 
     def predict(self, state):
         paddle_1 = state[0]
-        paddel_2 = state[1]
+        paddle_2 = state[1]
         ball_x = state[2]
         ball_y = state[3]
         ball_vx = state[4]
@@ -49,6 +47,5 @@ class Ai:
             ball_y += ball_vy
             if ball_y <= 0 or ball_y >= 360:
                 ball_vy *= -1
-        self.paddle = paddle_1
+        self.paddle = paddle_2
         self.target = ball_y
-        #logger.info(f"AI received this state this move: {state} and the predicted y is {self.target}")

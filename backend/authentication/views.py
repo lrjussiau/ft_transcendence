@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password, make_password
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from .serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer, UserSabProfileSerializer
+from .serializers import CustomTokenObtainPairSerializer, UserSerializer, UserAvatarSerializer,  UserProfileSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -21,14 +21,17 @@ from django.conf import settings
 import os
 from .utils import generate_and_send_2fa_code, verify_2fa_code
 
-class UserSabView(APIView):
+class UserAvatarView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, user_id):
-        incomming = User.objects.filter(id=user_id)
-        serializer = UserSabProfileSerializer(incomming)
-        return Response(serializer.data)
-
+    def get(self, request, username):
+        user = User.objects.filter(username=username).first()
+        if user:
+            serializer = UserAvatarSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response({"detail": "User not found."}, status=404)
+        
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 

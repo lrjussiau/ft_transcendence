@@ -3,6 +3,7 @@ from db.models import User
 from django.contrib.auth.hashers import make_password
 import logging
 from django.conf import settings
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -28,8 +29,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             return '/media/avatars/default_avatar.png'
         return obj.avatar.url if obj.avatar else None
     
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -45,7 +44,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         }
         return data
 
-class UserSabProfileSerializer(serializers.ModelSerializer):
+class UserAvatarSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'avatar']

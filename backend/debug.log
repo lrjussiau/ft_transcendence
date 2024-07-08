@@ -5009,3 +5009,1305 @@ DEBUG 2024-07-08 13:10:17,220 Room Player booba removed from room 49948b0e
 DEBUG 2024-07-08 13:10:17,220 Room Ending game in room 49948b0e
 DEBUG 2024-07-08 13:10:17,221 PongConsumer Ending game 4963
 DEBUG 2024-07-08 13:10:17,231 PongConsumer Game loop ended for game 4963
+DEBUG 2024-07-08 14:12:30,937 LobbyManager Player connected: specific.d3040d139de9401db041bddeba750091!1cc1c9e6c1394f29b092a092c7a80745
+DEBUG 2024-07-08 14:12:30,949 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'local_1v1', 'username': '1'}
+DEBUG 2024-07-08 14:12:30,950 Room Room created: ID 6a0ac6c1, type local_1v1
+DEBUG 2024-07-08 14:12:30,950 Room Player 1 added to room: 6a0ac6c1. Player number: 1
+DEBUG 2024-07-08 14:12:30,951 PongConsumer Countdown: 3 for game 4400
+DEBUG 2024-07-08 14:12:31,952 PongConsumer Countdown: 2 for game 4400
+DEBUG 2024-07-08 14:12:32,955 PongConsumer Countdown: 1 for game 4400
+DEBUG 2024-07-08 14:12:33,958 PongConsumer Countdown finished for game 4400
+DEBUG 2024-07-08 14:12:33,958 PongConsumer Game 4400 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x75fa69d8d9d0>, 'username': '1', 'player_num': 1, 'game_type': 'local_1v1', 'speed': 0}}
+DEBUG 2024-07-08 14:12:33,958 Room local_1v1 game started in room 6a0ac6c1
+DEBUG 2024-07-08 14:12:33,959 PongConsumer Game loop started for game 4400
+DEBUG 2024-07-08 14:12:33,960 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:12:33,960 Room Game already in progress in room 6a0ac6c1
+DEBUG 2024-07-08 14:12:58,215 PongConsumer Game over signal sent for game 4400
+DEBUG 2024-07-08 14:12:58,234 PongConsumer Game loop ended for game 4400
+DEBUG 2024-07-08 14:13:26,247 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 14:13:26,247 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 14:13:26,248 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 14:13:26,249 LobbyManager Player disconnecting: specific.d3040d139de9401db041bddeba750091!1cc1c9e6c1394f29b092a092c7a80745
+DEBUG 2024-07-08 14:13:26,249 Room Player 1 removed from room 6a0ac6c1
+DEBUG 2024-07-08 14:13:26,249 Room Ending game in room 6a0ac6c1
+DEBUG 2024-07-08 14:13:26,249 PongConsumer Ending game 4400
+DEBUG 2024-07-08 14:13:26,588 LobbyManager Player connected: specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450
+DEBUG 2024-07-08 14:13:26,599 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 14:13:26,599 Room Room created: ID 9b79a369, type solo
+DEBUG 2024-07-08 14:13:26,600 Room Player 1 added to room: 9b79a369. Player number: 1
+DEBUG 2024-07-08 14:13:26,600 PongConsumer Countdown: 3 for game 9575
+DEBUG 2024-07-08 14:13:27,603 PongConsumer Countdown: 2 for game 9575
+DEBUG 2024-07-08 14:13:28,605 PongConsumer Countdown: 1 for game 9575
+DEBUG 2024-07-08 14:13:29,608 PongConsumer Countdown finished for game 9575
+DEBUG 2024-07-08 14:13:29,608 PongConsumer Game 9575 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x75fa68bb8820>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 14:13:29,608 Room solo game started in room 9b79a369
+DEBUG 2024-07-08 14:13:29,609 PongConsumer Game loop started for game 9575
+DEBUG 2024-07-08 14:13:29,610 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:13:29,611 Room Game already in progress in room 9b79a369
+DEBUG 2024-07-08 14:13:29,956 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-08 14:13:29,956 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:29,956 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:29,957 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-08 14:13:29,958 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:29,958 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:29,989 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 2}
+DEBUG 2024-07-08 14:13:29,990 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:29,990 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:30,103 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 3}
+DEBUG 2024-07-08 14:13:30,103 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:30,104 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:30,167 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 4}
+DEBUG 2024-07-08 14:13:30,168 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:30,168 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:30,309 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 5}
+DEBUG 2024-07-08 14:13:30,309 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:30,309 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:30,817 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 6}
+DEBUG 2024-07-08 14:13:30,817 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:30,818 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:30,984 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 7}
+DEBUG 2024-07-08 14:13:30,984 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:30,985 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:31,155 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 8}
+DEBUG 2024-07-08 14:13:31,156 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:31,156 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:31,324 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 9}
+DEBUG 2024-07-08 14:13:31,325 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:31,325 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:31,401 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 10}
+DEBUG 2024-07-08 14:13:31,401 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:31,402 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:31,485 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 11}
+DEBUG 2024-07-08 14:13:31,485 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:31,486 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:31,729 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 12}
+DEBUG 2024-07-08 14:13:31,729 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:31,730 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:31,894 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 13}
+DEBUG 2024-07-08 14:13:31,895 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:31,895 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:31,940 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 14}
+DEBUG 2024-07-08 14:13:31,941 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:31,941 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:32,125 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 15}
+DEBUG 2024-07-08 14:13:32,126 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:32,126 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:32,183 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 16}
+DEBUG 2024-07-08 14:13:32,183 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:32,183 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:32,189 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 17}
+DEBUG 2024-07-08 14:13:32,189 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:32,190 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:32,277 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 18}
+DEBUG 2024-07-08 14:13:32,278 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:32,278 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:32,456 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 19}
+DEBUG 2024-07-08 14:13:32,456 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:32,456 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:32,492 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 20}
+DEBUG 2024-07-08 14:13:32,493 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:32,493 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:32,733 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 21}
+DEBUG 2024-07-08 14:13:32,734 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:32,734 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:33,118 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 22}
+DEBUG 2024-07-08 14:13:33,119 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:33,119 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:33,253 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 23}
+DEBUG 2024-07-08 14:13:33,254 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:33,254 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:33,318 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 24}
+DEBUG 2024-07-08 14:13:33,318 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:33,318 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:33,483 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 25}
+DEBUG 2024-07-08 14:13:33,483 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:33,483 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:33,491 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 26}
+DEBUG 2024-07-08 14:13:33,491 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:33,491 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:33,641 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 27}
+DEBUG 2024-07-08 14:13:33,642 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:33,642 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:36,557 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 28}
+DEBUG 2024-07-08 14:13:36,558 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:36,558 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:36,800 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 29}
+DEBUG 2024-07-08 14:13:36,801 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:36,801 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:40,787 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 30}
+DEBUG 2024-07-08 14:13:40,787 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:40,787 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:40,961 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 31}
+DEBUG 2024-07-08 14:13:40,961 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:40,961 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:41,031 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 32}
+DEBUG 2024-07-08 14:13:41,032 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:41,032 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:41,145 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 33}
+DEBUG 2024-07-08 14:13:41,146 Room Handling player input from specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450 in room 9b79a369
+WARNING 2024-07-08 14:13:41,146 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:13:49,754 PongConsumer Game over signal sent for game 9575
+DEBUG 2024-07-08 14:13:49,772 PongConsumer Game loop ended for game 9575
+DEBUG 2024-07-08 14:14:06,687 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 14:14:06,687 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 14:14:06,690 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 14:14:06,690 LobbyManager Player disconnecting: specific.d3040d139de9401db041bddeba750091!a408fabdac4c4969ad9430dcc5c06450
+DEBUG 2024-07-08 14:14:06,691 Room Player 1 removed from room 9b79a369
+DEBUG 2024-07-08 14:14:06,691 Room Ending game in room 9b79a369
+DEBUG 2024-07-08 14:14:06,691 PongConsumer Ending game 9575
+DEBUG 2024-07-08 14:14:07,013 LobbyManager Player connected: specific.d3040d139de9401db041bddeba750091!ffbfb0a5d5c64a50aaa270b0ba681627
+DEBUG 2024-07-08 14:14:07,023 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 14:14:07,024 Room Room created: ID deb6e3db, type solo
+DEBUG 2024-07-08 14:14:07,024 Room Player 1 added to room: deb6e3db. Player number: 1
+DEBUG 2024-07-08 14:14:07,025 PongConsumer Countdown: 3 for game 1405
+DEBUG 2024-07-08 14:14:08,027 PongConsumer Countdown: 2 for game 1405
+DEBUG 2024-07-08 14:14:09,029 PongConsumer Countdown: 1 for game 1405
+DEBUG 2024-07-08 14:14:10,031 PongConsumer Countdown finished for game 1405
+DEBUG 2024-07-08 14:14:10,031 PongConsumer Game 1405 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x75fa68ae2670>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 14:14:10,032 Room solo game started in room deb6e3db
+DEBUG 2024-07-08 14:14:10,033 PongConsumer Game loop started for game 1405
+DEBUG 2024-07-08 14:14:10,034 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:14:10,034 Room Game already in progress in room deb6e3db
+DEBUG 2024-07-08 14:14:34,042 PongConsumer Game over signal sent for game 1405
+DEBUG 2024-07-08 14:14:34,061 PongConsumer Game loop ended for game 1405
+DEBUG 2024-07-08 14:15:45,359 LobbyManager Player disconnecting: specific.d3040d139de9401db041bddeba750091!ffbfb0a5d5c64a50aaa270b0ba681627
+DEBUG 2024-07-08 14:15:45,360 Room Player 1 removed from room deb6e3db
+DEBUG 2024-07-08 14:15:45,360 Room Ending game in room deb6e3db
+DEBUG 2024-07-08 14:15:45,360 PongConsumer Ending game 1405
+DEBUG 2024-07-08 14:16:55,683 LobbyManager Player connected: specific.e24d920564714b879656fc3e342550c9!718b799d7d2b4dfcb3add971563f998e
+DEBUG 2024-07-08 14:16:55,686 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'local_1v1', 'username': '1'}
+DEBUG 2024-07-08 14:16:55,686 Room Room created: ID bd560d81, type local_1v1
+DEBUG 2024-07-08 14:16:55,686 Room Player 1 added to room: bd560d81. Player number: 1
+DEBUG 2024-07-08 14:16:55,687 PongConsumer Countdown: 3 for game 8414
+DEBUG 2024-07-08 14:16:56,689 PongConsumer Countdown: 2 for game 8414
+DEBUG 2024-07-08 14:16:57,691 PongConsumer Countdown: 1 for game 8414
+DEBUG 2024-07-08 14:16:58,694 PongConsumer Countdown finished for game 8414
+DEBUG 2024-07-08 14:16:58,694 PongConsumer Game 8414 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7b36da447e20>, 'username': '1', 'player_num': 1, 'game_type': 'local_1v1', 'speed': 0}}
+DEBUG 2024-07-08 14:16:58,694 Room local_1v1 game started in room bd560d81
+DEBUG 2024-07-08 14:16:58,694 PongConsumer Game loop started for game 8414
+DEBUG 2024-07-08 14:16:58,695 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:16:58,695 Room Game already in progress in room bd560d81
+DEBUG 2024-07-08 14:17:18,884 PongConsumer Game over signal sent for game 8414
+DEBUG 2024-07-08 14:17:18,889 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 14:17:18,890 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 14:17:18,891 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 14:17:18,891 LobbyManager Player disconnecting: specific.e24d920564714b879656fc3e342550c9!718b799d7d2b4dfcb3add971563f998e
+DEBUG 2024-07-08 14:17:18,891 Room Player 1 removed from room bd560d81
+DEBUG 2024-07-08 14:17:18,891 Room Ending game in room bd560d81
+DEBUG 2024-07-08 14:17:18,891 PongConsumer Ending game 8414
+DEBUG 2024-07-08 14:17:18,902 PongConsumer Game loop ended for game 8414
+DEBUG 2024-07-08 14:19:59,700 LobbyManager Player connected: specific.e918c3c6982c453aa0f4164be1c8fe4f!c07c9f5fdcf14139b0af5ac0f8ccf262
+DEBUG 2024-07-08 14:19:59,719 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'local_1v1', 'username': '1'}
+DEBUG 2024-07-08 14:19:59,719 Room Room created: ID a2946f25, type local_1v1
+DEBUG 2024-07-08 14:19:59,720 Room Player 1 added to room: a2946f25. Player number: 1
+DEBUG 2024-07-08 14:19:59,721 PongConsumer Countdown: 3 for game 6341
+DEBUG 2024-07-08 14:20:00,722 PongConsumer Countdown: 2 for game 6341
+DEBUG 2024-07-08 14:20:01,724 PongConsumer Countdown: 1 for game 6341
+DEBUG 2024-07-08 14:20:02,727 PongConsumer Countdown finished for game 6341
+DEBUG 2024-07-08 14:20:02,727 PongConsumer Game 6341 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x74b7872e3be0>, 'username': '1', 'player_num': 1, 'game_type': 'local_1v1', 'speed': 0}}
+DEBUG 2024-07-08 14:20:02,728 Room local_1v1 game started in room a2946f25
+DEBUG 2024-07-08 14:20:02,728 PongConsumer Game loop started for game 6341
+DEBUG 2024-07-08 14:20:02,729 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:20:02,730 Room Game already in progress in room a2946f25
+DEBUG 2024-07-08 14:20:18,376 PongConsumer Game over signal sent for game 6341
+DEBUG 2024-07-08 14:20:18,377 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 14:20:18,377 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 14:20:18,378 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 14:20:18,378 LobbyManager Player disconnecting: specific.e918c3c6982c453aa0f4164be1c8fe4f!c07c9f5fdcf14139b0af5ac0f8ccf262
+DEBUG 2024-07-08 14:20:18,378 Room Player 1 removed from room a2946f25
+DEBUG 2024-07-08 14:20:18,378 Room Ending game in room a2946f25
+DEBUG 2024-07-08 14:20:18,378 PongConsumer Ending game 6341
+DEBUG 2024-07-08 14:20:18,393 PongConsumer Game loop ended for game 6341
+DEBUG 2024-07-08 14:24:59,885 LobbyManager Player connected: specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae
+DEBUG 2024-07-08 14:24:59,894 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 14:24:59,894 Room Room created: ID f6d1b6b2, type solo
+DEBUG 2024-07-08 14:24:59,894 Room Player 1 added to room: f6d1b6b2. Player number: 1
+DEBUG 2024-07-08 14:24:59,894 PongConsumer Countdown: 3 for game 5372
+DEBUG 2024-07-08 14:25:00,896 PongConsumer Countdown: 2 for game 5372
+DEBUG 2024-07-08 14:25:01,898 PongConsumer Countdown: 1 for game 5372
+DEBUG 2024-07-08 14:25:02,901 PongConsumer Countdown finished for game 5372
+DEBUG 2024-07-08 14:25:02,901 PongConsumer Game 5372 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x759cf9847f70>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 14:25:02,902 Room solo game started in room f6d1b6b2
+DEBUG 2024-07-08 14:25:02,902 PongConsumer Game loop started for game 5372
+DEBUG 2024-07-08 14:25:02,904 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:25:02,904 Room Game already in progress in room f6d1b6b2
+DEBUG 2024-07-08 14:25:02,957 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-08 14:25:02,958 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:02,958 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:03,181 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-08 14:25:03,181 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:03,181 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:03,201 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 2}
+DEBUG 2024-07-08 14:25:03,202 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:03,203 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:03,411 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 3}
+DEBUG 2024-07-08 14:25:03,412 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:03,412 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:03,932 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 4}
+DEBUG 2024-07-08 14:25:03,932 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:03,933 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:04,162 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 5}
+DEBUG 2024-07-08 14:25:04,163 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:04,163 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:04,163 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 6}
+DEBUG 2024-07-08 14:25:04,163 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:04,163 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:04,365 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 7}
+DEBUG 2024-07-08 14:25:04,365 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:04,365 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:08,137 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 8}
+DEBUG 2024-07-08 14:25:08,137 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:08,137 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:08,461 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 9}
+DEBUG 2024-07-08 14:25:08,462 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:08,462 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:09,209 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 10}
+DEBUG 2024-07-08 14:25:09,210 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:09,210 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:09,319 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 11}
+DEBUG 2024-07-08 14:25:09,319 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:09,319 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:09,349 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 12}
+DEBUG 2024-07-08 14:25:09,350 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:09,350 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:09,375 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 13}
+DEBUG 2024-07-08 14:25:09,375 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:09,375 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:09,874 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 14}
+DEBUG 2024-07-08 14:25:09,874 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:09,874 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:10,049 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 15}
+DEBUG 2024-07-08 14:25:10,049 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:10,050 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:10,150 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 16}
+DEBUG 2024-07-08 14:25:10,150 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:10,150 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:10,334 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 17}
+DEBUG 2024-07-08 14:25:10,334 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:10,335 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:10,474 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 18}
+DEBUG 2024-07-08 14:25:10,474 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:10,475 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:10,645 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 19}
+DEBUG 2024-07-08 14:25:10,645 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:10,645 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:10,743 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 20}
+DEBUG 2024-07-08 14:25:10,743 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:10,744 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:10,903 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 21}
+DEBUG 2024-07-08 14:25:10,903 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:10,903 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:10,964 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 22}
+DEBUG 2024-07-08 14:25:10,964 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:10,964 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:11,101 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 23}
+DEBUG 2024-07-08 14:25:11,101 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:11,101 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:11,731 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 24}
+DEBUG 2024-07-08 14:25:11,732 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:11,732 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,063 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 25}
+DEBUG 2024-07-08 14:25:12,063 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,064 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,081 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 26}
+DEBUG 2024-07-08 14:25:12,081 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,082 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,354 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 27}
+DEBUG 2024-07-08 14:25:12,355 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,355 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,403 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 28}
+DEBUG 2024-07-08 14:25:12,403 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,404 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,569 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 29}
+DEBUG 2024-07-08 14:25:12,570 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,570 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,587 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 30}
+DEBUG 2024-07-08 14:25:12,587 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,588 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,817 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 31}
+DEBUG 2024-07-08 14:25:12,818 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,818 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,819 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 32}
+DEBUG 2024-07-08 14:25:12,819 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,820 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,899 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 33}
+DEBUG 2024-07-08 14:25:12,900 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,900 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:12,901 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 34}
+DEBUG 2024-07-08 14:25:12,901 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:12,901 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,077 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 35}
+DEBUG 2024-07-08 14:25:13,078 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,078 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,080 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 36}
+DEBUG 2024-07-08 14:25:13,080 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,080 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,163 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 37}
+DEBUG 2024-07-08 14:25:13,164 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,164 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,166 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 38}
+DEBUG 2024-07-08 14:25:13,166 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,166 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,303 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 39}
+DEBUG 2024-07-08 14:25:13,304 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,304 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,325 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 40}
+DEBUG 2024-07-08 14:25:13,326 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,326 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,434 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 41}
+DEBUG 2024-07-08 14:25:13,435 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,435 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,443 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 42}
+DEBUG 2024-07-08 14:25:13,443 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,443 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,564 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 43}
+DEBUG 2024-07-08 14:25:13,564 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,565 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,578 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 44}
+DEBUG 2024-07-08 14:25:13,578 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,579 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:13,617 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 45}
+DEBUG 2024-07-08 14:25:13,618 Room Handling player input from specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae in room f6d1b6b2
+WARNING 2024-07-08 14:25:13,618 PongConsumer Unexpected game type: solo
+DEBUG 2024-07-08 14:25:29,088 PongConsumer Game over signal sent for game 5372
+DEBUG 2024-07-08 14:25:29,095 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 14:25:29,096 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 14:25:29,096 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 14:25:29,097 LobbyManager Player disconnecting: specific.c332ebd35d6a49449fc1a56de570671c!638c49cde78f492eaf71c61fd6c023ae
+DEBUG 2024-07-08 14:25:29,097 Room Player 1 removed from room f6d1b6b2
+DEBUG 2024-07-08 14:25:29,097 Room Ending game in room f6d1b6b2
+DEBUG 2024-07-08 14:25:29,097 PongConsumer Ending game 5372
+DEBUG 2024-07-08 14:25:29,106 PongConsumer Game loop ended for game 5372
+DEBUG 2024-07-08 14:29:14,865 LobbyManager Player connected: specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370
+DEBUG 2024-07-08 14:29:14,869 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 14:29:14,869 Room Room created: ID f982c891, type solo
+DEBUG 2024-07-08 14:29:14,869 Room Player 1 added to room: f982c891. Player number: 1
+DEBUG 2024-07-08 14:29:14,869 PongConsumer Countdown: 3 for game 3098
+DEBUG 2024-07-08 14:29:15,870 PongConsumer Countdown: 2 for game 3098
+DEBUG 2024-07-08 14:29:16,871 PongConsumer Countdown: 1 for game 3098
+DEBUG 2024-07-08 14:29:17,873 PongConsumer Countdown finished for game 3098
+DEBUG 2024-07-08 14:29:17,874 PongConsumer Game 3098 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7a94e2acb2e0>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 14:29:17,874 Room solo game started in room f982c891
+DEBUG 2024-07-08 14:29:17,875 PongConsumer Game loop started for game 3098
+DEBUG 2024-07-08 14:29:17,876 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:29:17,876 Room Game already in progress in room f982c891
+DEBUG 2024-07-08 14:29:18,265 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-08 14:29:18,265 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:18,265 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:18,433 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-08 14:29:18,433 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:18,434 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:18,460 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 2}
+DEBUG 2024-07-08 14:29:18,460 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:18,460 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:18,642 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 3}
+DEBUG 2024-07-08 14:29:18,643 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:18,643 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:18,774 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 4}
+DEBUG 2024-07-08 14:29:18,774 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:18,775 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:18,969 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 5}
+DEBUG 2024-07-08 14:29:18,969 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:18,970 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:19,006 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 6}
+DEBUG 2024-07-08 14:29:19,007 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:19,007 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:19,114 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 7}
+DEBUG 2024-07-08 14:29:19,115 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:19,115 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:19,209 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 8}
+DEBUG 2024-07-08 14:29:19,209 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:19,209 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:19,297 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 9}
+DEBUG 2024-07-08 14:29:19,298 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:19,298 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:19,945 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 10}
+DEBUG 2024-07-08 14:29:19,945 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:19,946 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:20,033 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 11}
+DEBUG 2024-07-08 14:29:20,033 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:20,034 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:20,159 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 12}
+DEBUG 2024-07-08 14:29:20,159 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:20,159 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:20,400 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 13}
+DEBUG 2024-07-08 14:29:20,400 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:20,400 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:20,441 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 14}
+DEBUG 2024-07-08 14:29:20,441 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:20,441 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:20,544 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 15}
+DEBUG 2024-07-08 14:29:20,544 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:20,545 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:20,898 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 16}
+DEBUG 2024-07-08 14:29:20,898 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:20,898 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:21,061 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 17}
+DEBUG 2024-07-08 14:29:21,061 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:21,061 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:21,101 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 18}
+DEBUG 2024-07-08 14:29:21,101 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:21,101 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:21,255 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 19}
+DEBUG 2024-07-08 14:29:21,255 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:21,255 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:21,346 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 20}
+DEBUG 2024-07-08 14:29:21,347 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:21,347 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:21,488 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 21}
+DEBUG 2024-07-08 14:29:21,488 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:21,488 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:21,527 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 22}
+DEBUG 2024-07-08 14:29:21,528 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:21,528 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:21,751 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 23}
+DEBUG 2024-07-08 14:29:21,751 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:21,752 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:21,790 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 24}
+DEBUG 2024-07-08 14:29:21,791 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:21,791 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:21,943 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 25}
+DEBUG 2024-07-08 14:29:21,944 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:21,944 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,014 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 26}
+DEBUG 2024-07-08 14:29:22,015 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,015 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,041 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 27}
+DEBUG 2024-07-08 14:29:22,041 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,042 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,168 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 28}
+DEBUG 2024-07-08 14:29:22,168 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,169 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,208 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 29}
+DEBUG 2024-07-08 14:29:22,208 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,209 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,332 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 30}
+DEBUG 2024-07-08 14:29:22,332 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,332 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,368 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 31}
+DEBUG 2024-07-08 14:29:22,368 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,368 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,429 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 32}
+DEBUG 2024-07-08 14:29:22,429 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,429 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,535 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 33}
+DEBUG 2024-07-08 14:29:22,535 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,535 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,573 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 34}
+DEBUG 2024-07-08 14:29:22,573 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,573 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,686 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 35}
+DEBUG 2024-07-08 14:29:22,687 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,687 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,796 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 36}
+DEBUG 2024-07-08 14:29:22,797 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,797 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,878 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 37}
+DEBUG 2024-07-08 14:29:22,878 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,878 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:22,909 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 38}
+DEBUG 2024-07-08 14:29:22,910 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:22,910 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:23,075 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 39}
+DEBUG 2024-07-08 14:29:23,075 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:23,075 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:23,119 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 40}
+DEBUG 2024-07-08 14:29:23,120 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:23,120 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:23,249 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 41}
+DEBUG 2024-07-08 14:29:23,249 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:23,249 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:23,347 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 42}
+DEBUG 2024-07-08 14:29:23,348 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:23,348 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:23,449 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 43}
+DEBUG 2024-07-08 14:29:23,449 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:23,450 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:23,579 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 44}
+DEBUG 2024-07-08 14:29:23,579 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:23,580 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:23,682 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 45}
+DEBUG 2024-07-08 14:29:23,683 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:23,683 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:23,695 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 46}
+DEBUG 2024-07-08 14:29:23,696 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:23,696 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:23,729 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 47}
+DEBUG 2024-07-08 14:29:23,729 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:23,730 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:24,770 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 48}
+DEBUG 2024-07-08 14:29:24,770 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:24,770 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:24,959 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 49}
+DEBUG 2024-07-08 14:29:24,960 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:24,960 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:25,087 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 50}
+DEBUG 2024-07-08 14:29:25,088 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:25,088 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:25,158 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 51}
+DEBUG 2024-07-08 14:29:25,158 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:25,159 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:25,209 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 52}
+DEBUG 2024-07-08 14:29:25,210 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:25,210 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:25,346 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 53}
+DEBUG 2024-07-08 14:29:25,347 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:25,347 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:25,348 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 54}
+DEBUG 2024-07-08 14:29:25,349 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:25,349 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:25,459 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 55}
+DEBUG 2024-07-08 14:29:25,460 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:25,460 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:25,534 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 56}
+DEBUG 2024-07-08 14:29:25,535 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:25,535 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:25,655 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 57}
+DEBUG 2024-07-08 14:29:25,655 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:25,656 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:27,673 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 58}
+DEBUG 2024-07-08 14:29:27,673 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:27,674 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:27,890 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 59}
+DEBUG 2024-07-08 14:29:27,890 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:27,891 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,014 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 60}
+DEBUG 2024-07-08 14:29:28,014 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,015 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,144 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 61}
+DEBUG 2024-07-08 14:29:28,145 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,145 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,165 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 62}
+DEBUG 2024-07-08 14:29:28,166 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,166 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,276 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 63}
+DEBUG 2024-07-08 14:29:28,276 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,277 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,327 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 64}
+DEBUG 2024-07-08 14:29:28,328 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,328 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,428 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 65}
+DEBUG 2024-07-08 14:29:28,429 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,429 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,445 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 66}
+DEBUG 2024-07-08 14:29:28,445 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,446 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,525 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 67}
+DEBUG 2024-07-08 14:29:28,525 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,526 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,631 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 68}
+DEBUG 2024-07-08 14:29:28,632 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,632 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:28,662 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 69}
+DEBUG 2024-07-08 14:29:28,663 Room Handling player input from specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370 in room f982c891
+DEBUG 2024-07-08 14:29:28,663 PongConsumer Game 3098: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-08 14:29:37,199 PongConsumer Game over signal sent for game 3098
+DEBUG 2024-07-08 14:29:37,201 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 14:29:37,201 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 14:29:37,202 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 14:29:37,202 LobbyManager Player disconnecting: specific.c2c0d9ad566247ecaeb8268cd387a635!441cdf13ce69402d9b44c9bd107e3370
+DEBUG 2024-07-08 14:29:37,202 Room Player 1 removed from room f982c891
+DEBUG 2024-07-08 14:29:37,202 Room Ending game in room f982c891
+DEBUG 2024-07-08 14:29:37,202 PongConsumer Ending game 3098
+DEBUG 2024-07-08 14:29:37,217 PongConsumer Game loop ended for game 3098
+DEBUG 2024-07-08 14:37:57,328 LobbyManager Player connected: specific.679393dde1d0405696511fa2eae86457!cbf9edae927d4ba2b3581c24acd8bab5
+DEBUG 2024-07-08 14:37:57,333 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 14:37:57,333 Room Room created: ID d5a5fce1, type solo
+DEBUG 2024-07-08 14:37:57,333 Room Player 1 added to room: d5a5fce1. Player number: 1
+DEBUG 2024-07-08 14:37:57,333 PongConsumer Countdown: 3 for game 8845
+DEBUG 2024-07-08 14:37:58,334 PongConsumer Countdown: 2 for game 8845
+DEBUG 2024-07-08 14:37:59,337 PongConsumer Countdown: 1 for game 8845
+DEBUG 2024-07-08 14:38:00,339 PongConsumer Countdown finished for game 8845
+DEBUG 2024-07-08 14:38:00,340 PongConsumer Game 8845 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7339f8dd72b0>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 14:38:00,340 Room solo game started in room d5a5fce1
+DEBUG 2024-07-08 14:38:00,341 PongConsumer Game loop started for game 8845
+DEBUG 2024-07-08 14:38:00,342 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:38:00,342 Room Game already in progress in room d5a5fce1
+DEBUG 2024-07-08 14:38:00,680 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-08 14:38:00,680 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!cbf9edae927d4ba2b3581c24acd8bab5 in room d5a5fce1
+ERROR 2024-07-08 14:38:00,820 PongConsumer Error sending game state for game 8845: Attempt to send on a closed protocol
+DEBUG 2024-07-08 14:38:04,022 LobbyManager Player connected: specific.679393dde1d0405696511fa2eae86457!b5666cafc944484ab0145f7fdccc13b8
+DEBUG 2024-07-08 14:38:04,067 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 14:38:04,067 Room Room created: ID 271cada4, type solo
+DEBUG 2024-07-08 14:38:04,067 Room Player 1 added to room: 271cada4. Player number: 1
+DEBUG 2024-07-08 14:38:04,067 PongConsumer Countdown: 3 for game 9574
+DEBUG 2024-07-08 14:38:05,069 PongConsumer Countdown: 2 for game 9574
+DEBUG 2024-07-08 14:38:06,071 PongConsumer Countdown: 1 for game 9574
+DEBUG 2024-07-08 14:38:07,072 PongConsumer Countdown finished for game 9574
+DEBUG 2024-07-08 14:38:07,073 PongConsumer Game 9574 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7339f73c4be0>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 14:38:07,073 Room solo game started in room 271cada4
+DEBUG 2024-07-08 14:38:07,074 PongConsumer Game loop started for game 9574
+DEBUG 2024-07-08 14:38:07,075 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:38:07,076 Room Game already in progress in room 271cada4
+DEBUG 2024-07-08 14:38:07,077 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 18}
+DEBUG 2024-07-08 14:38:07,077 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!b5666cafc944484ab0145f7fdccc13b8 in room 271cada4
+ERROR 2024-07-08 14:38:07,831 PongConsumer Error sending game state for game 9574: Attempt to send on a closed protocol
+DEBUG 2024-07-08 14:38:23,854 PongConsumer Game over signal sent for game 8845
+DEBUG 2024-07-08 14:38:23,872 PongConsumer Game loop ended for game 8845
+DEBUG 2024-07-08 14:38:29,494 PongConsumer Game over signal sent for game 9574
+DEBUG 2024-07-08 14:38:29,512 PongConsumer Game loop ended for game 9574
+DEBUG 2024-07-08 14:39:28,258 LobbyManager Player connected: specific.679393dde1d0405696511fa2eae86457!8e517c5badf94eea8e98ce9ee9f0338d
+DEBUG 2024-07-08 14:39:28,263 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': '1'}
+DEBUG 2024-07-08 14:39:28,263 Room Room created: ID bf5e8ad5, type 1v1
+DEBUG 2024-07-08 14:39:28,264 Room Player 1 added to room: bf5e8ad5. Player number: 1
+DEBUG 2024-07-08 14:39:28,270 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:39:28,270 Room Cannot start game in room bf5e8ad5: not enough players
+DEBUG 2024-07-08 14:40:07,095 LobbyManager Player connected: specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b
+DEBUG 2024-07-08 14:40:07,154 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': 'booba'}
+DEBUG 2024-07-08 14:40:07,154 Room Player booba added to room: bf5e8ad5. Player number: 2
+DEBUG 2024-07-08 14:40:07,155 PongConsumer Countdown: 3 for game 8980
+DEBUG 2024-07-08 14:40:08,156 PongConsumer Countdown: 2 for game 8980
+DEBUG 2024-07-08 14:40:09,159 PongConsumer Countdown: 1 for game 8980
+DEBUG 2024-07-08 14:40:10,161 PongConsumer Countdown finished for game 8980
+DEBUG 2024-07-08 14:40:10,162 PongConsumer Game 8980 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7339f73bc1c0>, 'username': '1', 'player_num': 1, 'game_type': '1v1', 'speed': 0}, 2: {'object': <supervisor.consumers.GameConsumer object at 0x7339f728fbe0>, 'username': 'booba', 'player_num': 2, 'game_type': '1v1', 'speed': 0}}
+DEBUG 2024-07-08 14:40:10,162 Room 1v1 game started in room bf5e8ad5
+DEBUG 2024-07-08 14:40:10,163 PongConsumer Game loop started for game 8980
+DEBUG 2024-07-08 14:40:10,164 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:40:10,164 Room Game already in progress in room bf5e8ad5
+DEBUG 2024-07-08 14:40:11,429 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-08 14:40:11,429 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:11,430 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:11,464 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-08 14:40:11,464 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:11,464 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:11,663 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 2}
+DEBUG 2024-07-08 14:40:11,663 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:11,663 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:11,861 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 3}
+DEBUG 2024-07-08 14:40:11,861 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:11,861 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:12,039 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 4}
+DEBUG 2024-07-08 14:40:12,039 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:12,039 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:12,181 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 5}
+DEBUG 2024-07-08 14:40:12,181 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:12,181 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:12,397 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 6}
+DEBUG 2024-07-08 14:40:12,397 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:12,397 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:12,621 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 7}
+DEBUG 2024-07-08 14:40:12,622 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:12,622 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:12,776 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 8}
+DEBUG 2024-07-08 14:40:12,776 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:12,776 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:12,941 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 9}
+DEBUG 2024-07-08 14:40:12,941 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:12,941 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:14,342 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 10}
+DEBUG 2024-07-08 14:40:14,342 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:14,342 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:14,345 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 11}
+DEBUG 2024-07-08 14:40:14,346 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:14,346 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:14,557 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 12}
+DEBUG 2024-07-08 14:40:14,558 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:14,558 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:14,563 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 13}
+DEBUG 2024-07-08 14:40:14,563 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:14,563 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:14,603 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 14}
+DEBUG 2024-07-08 14:40:14,603 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:14,604 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:14,793 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 15}
+DEBUG 2024-07-08 14:40:14,793 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:14,794 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:14,822 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 16}
+DEBUG 2024-07-08 14:40:14,823 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:14,823 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:15,044 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 17}
+DEBUG 2024-07-08 14:40:15,044 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:15,045 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:15,477 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 18}
+DEBUG 2024-07-08 14:40:15,478 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:15,478 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:15,482 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 19}
+DEBUG 2024-07-08 14:40:15,483 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:15,483 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:15,485 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 20}
+DEBUG 2024-07-08 14:40:15,485 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:15,486 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:15,488 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 21}
+DEBUG 2024-07-08 14:40:15,488 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:15,489 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:15,491 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 22}
+DEBUG 2024-07-08 14:40:15,491 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:15,492 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:15,770 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 23}
+DEBUG 2024-07-08 14:40:15,770 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:15,770 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:15,782 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 24}
+DEBUG 2024-07-08 14:40:15,783 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:15,783 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:15,968 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 25}
+DEBUG 2024-07-08 14:40:15,968 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:15,968 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:16,029 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 26}
+DEBUG 2024-07-08 14:40:16,029 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,029 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:16,156 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 27}
+DEBUG 2024-07-08 14:40:16,156 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,156 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:16,180 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 28}
+DEBUG 2024-07-08 14:40:16,180 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,180 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:16,292 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 29}
+DEBUG 2024-07-08 14:40:16,293 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,293 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:16,373 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 30}
+DEBUG 2024-07-08 14:40:16,373 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,373 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:16,445 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 31}
+DEBUG 2024-07-08 14:40:16,445 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,445 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:16,505 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 32}
+DEBUG 2024-07-08 14:40:16,505 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,505 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:16,556 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 33}
+DEBUG 2024-07-08 14:40:16,556 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,556 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:16,622 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 34}
+DEBUG 2024-07-08 14:40:16,622 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,622 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:16,747 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 35}
+DEBUG 2024-07-08 14:40:16,747 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,747 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:16,773 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 36}
+DEBUG 2024-07-08 14:40:16,773 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,773 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:16,849 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 37}
+DEBUG 2024-07-08 14:40:16,849 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,849 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:16,893 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 38}
+DEBUG 2024-07-08 14:40:16,893 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,893 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:16,965 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 39}
+DEBUG 2024-07-08 14:40:16,965 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:16,965 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:17,022 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 40}
+DEBUG 2024-07-08 14:40:17,022 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,022 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:17,109 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 41}
+DEBUG 2024-07-08 14:40:17,109 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,109 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:17,148 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 42}
+DEBUG 2024-07-08 14:40:17,148 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,149 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:17,213 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 43}
+DEBUG 2024-07-08 14:40:17,213 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,213 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:17,286 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 44}
+DEBUG 2024-07-08 14:40:17,286 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,287 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:17,358 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 45}
+DEBUG 2024-07-08 14:40:17,358 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,358 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:17,381 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 46}
+DEBUG 2024-07-08 14:40:17,381 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,381 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:17,492 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 47}
+DEBUG 2024-07-08 14:40:17,493 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,493 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:17,573 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 48}
+DEBUG 2024-07-08 14:40:17,573 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,573 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:17,667 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 49}
+DEBUG 2024-07-08 14:40:17,667 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,668 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:17,804 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 50}
+DEBUG 2024-07-08 14:40:17,805 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,805 PongConsumer Game 8980: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:17,868 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 51}
+DEBUG 2024-07-08 14:40:17,869 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,869 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:17,880 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 52}
+DEBUG 2024-07-08 14:40:17,880 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,880 PongConsumer Game 8980: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:17,968 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 53}
+DEBUG 2024-07-08 14:40:17,968 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b in room bf5e8ad5
+DEBUG 2024-07-08 14:40:17,968 PongConsumer Game 8980: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:19,196 LobbyManager Player disconnecting: specific.679393dde1d0405696511fa2eae86457!110b161d89754a45b0e60e3dfea4627b
+DEBUG 2024-07-08 14:40:19,197 Room Player booba removed from room bf5e8ad5
+DEBUG 2024-07-08 14:40:19,197 Room Ending game in room bf5e8ad5
+DEBUG 2024-07-08 14:40:19,197 PongConsumer Ending game 8980
+DEBUG 2024-07-08 14:40:19,198 PongConsumer Game 8980: player1: 1, player2: booba
+DEBUG 2024-07-08 14:40:19,199 PongConsumer Game loop ended for game 8980
+DEBUG 2024-07-08 14:40:19,265 PongConsumer Game 8980 ended
+DEBUG 2024-07-08 14:40:19,266 Room Game ended successfully
+DEBUG 2024-07-08 14:40:19,266 Room Room bf5e8ad5 deleted
+DEBUG 2024-07-08 14:40:19,266 LobbyManager Disconnect handled
+DEBUG 2024-07-08 14:40:19,266 Room Current room state:
+DEBUG 2024-07-08 14:40:19,266 Room   Room ID: d5a5fce1, Type: solo, Players: 1/1, Full: True
+DEBUG 2024-07-08 14:40:19,266 Room   Room ID: 271cada4, Type: solo, Players: 1/1, Full: True
+DEBUG 2024-07-08 14:40:21,184 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 14:40:21,184 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 14:40:21,185 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 14:40:21,185 LobbyManager Player disconnecting: specific.679393dde1d0405696511fa2eae86457!8e517c5badf94eea8e98ce9ee9f0338d
+DEBUG 2024-07-08 14:40:21,185 LobbyManager Disconnect handled
+DEBUG 2024-07-08 14:40:21,185 Room Current room state:
+DEBUG 2024-07-08 14:40:21,185 Room   Room ID: d5a5fce1, Type: solo, Players: 1/1, Full: True
+DEBUG 2024-07-08 14:40:21,185 Room   Room ID: 271cada4, Type: solo, Players: 1/1, Full: True
+DEBUG 2024-07-08 14:40:21,185 LobbyManager Player disconnecting: specific.679393dde1d0405696511fa2eae86457!8e517c5badf94eea8e98ce9ee9f0338d
+DEBUG 2024-07-08 14:40:21,185 LobbyManager Disconnect handled
+DEBUG 2024-07-08 14:40:21,185 Room Current room state:
+DEBUG 2024-07-08 14:40:21,185 Room   Room ID: d5a5fce1, Type: solo, Players: 1/1, Full: True
+DEBUG 2024-07-08 14:40:21,185 Room   Room ID: 271cada4, Type: solo, Players: 1/1, Full: True
+DEBUG 2024-07-08 14:40:32,161 LobbyManager Player connected: specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e
+DEBUG 2024-07-08 14:40:32,163 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': 'booba'}
+DEBUG 2024-07-08 14:40:32,164 Room Room created: ID 5250bc56, type 1v1
+DEBUG 2024-07-08 14:40:32,164 Room Player booba added to room: 5250bc56. Player number: 1
+DEBUG 2024-07-08 14:40:32,165 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:40:32,165 Room Cannot start game in room 5250bc56: not enough players
+DEBUG 2024-07-08 14:40:33,351 LobbyManager Player connected: specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73
+DEBUG 2024-07-08 14:40:33,360 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': '1'}
+DEBUG 2024-07-08 14:40:33,360 Room Player 1 added to room: 5250bc56. Player number: 2
+DEBUG 2024-07-08 14:40:33,360 PongConsumer Countdown: 3 for game 1324
+DEBUG 2024-07-08 14:40:34,362 PongConsumer Countdown: 2 for game 1324
+DEBUG 2024-07-08 14:40:35,365 PongConsumer Countdown: 1 for game 1324
+DEBUG 2024-07-08 14:40:36,367 PongConsumer Countdown finished for game 1324
+DEBUG 2024-07-08 14:40:36,368 PongConsumer Game 1324 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7339f7272fd0>, 'username': 'booba', 'player_num': 1, 'game_type': '1v1', 'speed': 0}, 2: {'object': <supervisor.consumers.GameConsumer object at 0x7339f72ebf40>, 'username': '1', 'player_num': 2, 'game_type': '1v1', 'speed': 0}}
+DEBUG 2024-07-08 14:40:36,368 Room 1v1 game started in room 5250bc56
+DEBUG 2024-07-08 14:40:36,369 PongConsumer Game loop started for game 1324
+DEBUG 2024-07-08 14:40:36,371 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 14:40:36,371 Room Game already in progress in room 5250bc56
+DEBUG 2024-07-08 14:40:36,751 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-08 14:40:36,752 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:36,752 PongConsumer Game 1324: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:36,929 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-08 14:40:36,929 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:36,929 PongConsumer Game 1324: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:36,944 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 2}
+DEBUG 2024-07-08 14:40:36,945 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:36,945 PongConsumer Game 1324: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:37,078 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 3}
+DEBUG 2024-07-08 14:40:37,078 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:37,078 PongConsumer Game 1324: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:37,428 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 4}
+DEBUG 2024-07-08 14:40:37,428 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:37,428 PongConsumer Game 1324: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:37,549 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 5}
+DEBUG 2024-07-08 14:40:37,549 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:37,549 PongConsumer Game 1324: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:37,598 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 6}
+DEBUG 2024-07-08 14:40:37,598 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:37,598 PongConsumer Game 1324: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:37,835 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 7}
+DEBUG 2024-07-08 14:40:37,835 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:37,836 PongConsumer Game 1324: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:38,030 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 8}
+DEBUG 2024-07-08 14:40:38,031 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:38,031 PongConsumer Game 1324: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:38,182 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 9}
+DEBUG 2024-07-08 14:40:38,182 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:38,182 PongConsumer Game 1324: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:38,414 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 10}
+DEBUG 2024-07-08 14:40:38,415 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:38,415 PongConsumer Game 1324: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:38,550 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 11}
+DEBUG 2024-07-08 14:40:38,551 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:38,551 PongConsumer Game 1324: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:38,718 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 12}
+DEBUG 2024-07-08 14:40:38,718 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:38,718 PongConsumer Game 1324: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:38,838 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 13}
+DEBUG 2024-07-08 14:40:38,839 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:38,839 PongConsumer Game 1324: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:39,750 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 14}
+DEBUG 2024-07-08 14:40:39,750 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:39,751 PongConsumer Game 1324: Player 2 speed set to -5
+DEBUG 2024-07-08 14:40:39,915 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 15}
+DEBUG 2024-07-08 14:40:39,915 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:39,915 PongConsumer Game 1324: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:40,327 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 16}
+DEBUG 2024-07-08 14:40:40,327 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:40,327 PongConsumer Game 1324: Player 2 speed set to 5
+DEBUG 2024-07-08 14:40:40,418 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 17}
+DEBUG 2024-07-08 14:40:40,419 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73 in room 5250bc56
+DEBUG 2024-07-08 14:40:40,419 PongConsumer Game 1324: Player 2 speed set to 0
+DEBUG 2024-07-08 14:40:40,792 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 0}
+DEBUG 2024-07-08 14:40:40,792 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:40,792 PongConsumer Game 1324: Player 1 speed set to -5
+DEBUG 2024-07-08 14:40:40,990 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 1}
+DEBUG 2024-07-08 14:40:40,991 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:40,991 PongConsumer Game 1324: Player 1 speed set to 0
+DEBUG 2024-07-08 14:40:41,118 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 2}
+DEBUG 2024-07-08 14:40:41,118 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:41,118 PongConsumer Game 1324: Player 1 speed set to 5
+DEBUG 2024-07-08 14:40:41,261 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 3}
+DEBUG 2024-07-08 14:40:41,262 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:41,262 PongConsumer Game 1324: Player 1 speed set to 0
+DEBUG 2024-07-08 14:40:41,616 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 4}
+DEBUG 2024-07-08 14:40:41,617 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:41,617 PongConsumer Game 1324: Player 1 speed set to 5
+DEBUG 2024-07-08 14:40:41,752 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 5}
+DEBUG 2024-07-08 14:40:41,752 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:41,752 PongConsumer Game 1324: Player 1 speed set to 0
+DEBUG 2024-07-08 14:40:41,929 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 6}
+DEBUG 2024-07-08 14:40:41,930 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:41,930 PongConsumer Game 1324: Player 1 speed set to -5
+DEBUG 2024-07-08 14:40:42,134 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 7}
+DEBUG 2024-07-08 14:40:42,134 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:42,135 PongConsumer Game 1324: Player 1 speed set to 0
+DEBUG 2024-07-08 14:40:42,298 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 8}
+DEBUG 2024-07-08 14:40:42,299 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:42,299 PongConsumer Game 1324: Player 1 speed set to 5
+DEBUG 2024-07-08 14:40:42,438 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 9}
+DEBUG 2024-07-08 14:40:42,438 Room Handling player input from specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e in room 5250bc56
+DEBUG 2024-07-08 14:40:42,438 PongConsumer Game 1324: Player 1 speed set to 0
+DEBUG 2024-07-08 14:40:54,312 LobbyManager Player disconnecting: specific.679393dde1d0405696511fa2eae86457!43d4fc2648a7489594f35fba074dcd73
+DEBUG 2024-07-08 14:40:54,313 Room Player 1 removed from room 5250bc56
+DEBUG 2024-07-08 14:40:54,314 Room Ending game in room 5250bc56
+DEBUG 2024-07-08 14:40:54,314 PongConsumer Ending game 1324
+DEBUG 2024-07-08 14:40:54,314 PongConsumer Game 1324: player1: booba, player2: 1
+DEBUG 2024-07-08 14:40:54,326 PongConsumer Game loop ended for game 1324
+DEBUG 2024-07-08 14:40:54,382 PongConsumer Game 1324 ended
+DEBUG 2024-07-08 15:12:24,236 LobbyManager Player disconnecting: specific.679393dde1d0405696511fa2eae86457!a867c122800d496a9e4a501874610b5e
+DEBUG 2024-07-08 15:12:24,237 Room Player booba removed from room 5250bc56
+DEBUG 2024-07-08 15:12:24,237 Room Ending game in room 5250bc56
+DEBUG 2024-07-08 15:12:24,238 PongConsumer Ending game 1324
+DEBUG 2024-07-08 15:12:24,238 PongConsumer Game 1324: player1: booba, player2: 1
+DEBUG 2024-07-08 15:12:24,485 PongConsumer Game 1324 ended
+DEBUG 2024-07-08 15:15:02,445 LobbyManager Player connected: specific.c63bdfcbe1b94cc18d2cd1c5558c1541!3debded723784481b3e143a41e727437
+DEBUG 2024-07-08 15:15:02,456 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 15:15:02,456 Room Room created: ID d8b2a9b9, type solo
+DEBUG 2024-07-08 15:15:02,456 Room Player 1 added to room: d8b2a9b9. Player number: 1
+DEBUG 2024-07-08 15:15:02,456 PongConsumer Countdown: 3 for game 9499
+DEBUG 2024-07-08 15:15:03,458 PongConsumer Countdown: 2 for game 9499
+DEBUG 2024-07-08 15:15:04,460 PongConsumer Countdown: 1 for game 9499
+DEBUG 2024-07-08 15:15:05,463 PongConsumer Countdown finished for game 9499
+DEBUG 2024-07-08 15:15:05,464 PongConsumer Game 9499 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7af25c13e220>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 15:15:05,464 Room solo game started in room d8b2a9b9
+DEBUG 2024-07-08 15:15:05,465 PongConsumer Game loop started for game 9499
+DEBUG 2024-07-08 15:15:05,466 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:15:05,467 Room Game already in progress in room d8b2a9b9
+DEBUG 2024-07-08 15:15:05,852 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 0}
+DEBUG 2024-07-08 15:15:05,852 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!3debded723784481b3e143a41e727437 in room d8b2a9b9
+ERROR 2024-07-08 15:15:05,944 PongConsumer Error sending game state for game 9499: Attempt to send on a closed protocol
+ERROR 2024-07-08 15:15:05,962 PongConsumer Error sending game state for game 9499: Attempt to send on a closed protocol
+DEBUG 2024-07-08 15:15:09,200 LobbyManager Player connected: specific.c63bdfcbe1b94cc18d2cd1c5558c1541!a526c2da95744b8db92f481f5d703666
+DEBUG 2024-07-08 15:15:09,218 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 15:15:09,218 Room Room created: ID 93a372d3, type solo
+DEBUG 2024-07-08 15:15:09,218 Room Player 1 added to room: 93a372d3. Player number: 1
+DEBUG 2024-07-08 15:15:09,219 PongConsumer Countdown: 3 for game 7205
+DEBUG 2024-07-08 15:15:10,220 PongConsumer Countdown: 2 for game 7205
+DEBUG 2024-07-08 15:15:11,221 PongConsumer Countdown: 1 for game 7205
+DEBUG 2024-07-08 15:15:12,224 PongConsumer Countdown finished for game 7205
+DEBUG 2024-07-08 15:15:12,225 PongConsumer Game 7205 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7af25a6c3e20>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 15:15:12,225 Room solo game started in room 93a372d3
+DEBUG 2024-07-08 15:15:12,226 PongConsumer Game loop started for game 7205
+DEBUG 2024-07-08 15:15:12,228 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:15:12,229 Room Game already in progress in room 93a372d3
+DEBUG 2024-07-08 15:15:13,777 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 15:15:13,777 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 15:15:13,778 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 15:15:13,778 LobbyManager Player disconnecting: specific.c63bdfcbe1b94cc18d2cd1c5558c1541!a526c2da95744b8db92f481f5d703666
+DEBUG 2024-07-08 15:15:13,778 Room Player 1 removed from room 93a372d3
+DEBUG 2024-07-08 15:15:13,778 Room Ending game in room 93a372d3
+DEBUG 2024-07-08 15:15:13,779 PongConsumer Ending game 7205
+DEBUG 2024-07-08 15:15:13,786 PongConsumer Game loop ended for game 7205
+DEBUG 2024-07-08 15:15:13,934 LobbyManager Player connected: specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5
+DEBUG 2024-07-08 15:15:13,945 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': '1'}
+DEBUG 2024-07-08 15:15:13,945 Room Room created: ID aff778a0, type 1v1
+DEBUG 2024-07-08 15:15:13,945 Room Player 1 added to room: aff778a0. Player number: 1
+DEBUG 2024-07-08 15:15:13,946 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:15:13,946 Room Cannot start game in room aff778a0: not enough players
+DEBUG 2024-07-08 15:15:16,734 LobbyManager Player connected: specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679
+DEBUG 2024-07-08 15:15:16,738 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': 'booba'}
+DEBUG 2024-07-08 15:15:16,739 Room Player booba added to room: aff778a0. Player number: 2
+DEBUG 2024-07-08 15:15:16,739 PongConsumer Countdown: 3 for game 1977
+DEBUG 2024-07-08 15:15:17,742 PongConsumer Countdown: 2 for game 1977
+DEBUG 2024-07-08 15:15:18,744 PongConsumer Countdown: 1 for game 1977
+DEBUG 2024-07-08 15:15:19,746 PongConsumer Countdown finished for game 1977
+DEBUG 2024-07-08 15:15:19,747 PongConsumer Game 1977 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7af25a6f8d00>, 'username': '1', 'player_num': 1, 'game_type': '1v1', 'speed': 0}, 2: {'object': <supervisor.consumers.GameConsumer object at 0x7af25a69be80>, 'username': 'booba', 'player_num': 2, 'game_type': '1v1', 'speed': 0}}
+DEBUG 2024-07-08 15:15:19,747 Room 1v1 game started in room aff778a0
+DEBUG 2024-07-08 15:15:19,748 PongConsumer Game loop started for game 1977
+DEBUG 2024-07-08 15:15:19,749 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:15:19,750 Room Game already in progress in room aff778a0
+DEBUG 2024-07-08 15:15:20,290 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 10}
+DEBUG 2024-07-08 15:15:20,291 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:20,291 PongConsumer Game 1977: Player 2 speed set to -5
+DEBUG 2024-07-08 15:15:20,330 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 11}
+DEBUG 2024-07-08 15:15:20,330 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:20,331 PongConsumer Game 1977: Player 2 speed set to 0
+DEBUG 2024-07-08 15:15:20,445 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 12}
+DEBUG 2024-07-08 15:15:20,445 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:20,445 PongConsumer Game 1977: Player 2 speed set to 5
+DEBUG 2024-07-08 15:15:20,624 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 13}
+DEBUG 2024-07-08 15:15:20,625 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:20,625 PongConsumer Game 1977: Player 2 speed set to 0
+DEBUG 2024-07-08 15:15:20,633 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 14}
+DEBUG 2024-07-08 15:15:20,634 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:20,634 PongConsumer Game 1977: Player 2 speed set to -5
+DEBUG 2024-07-08 15:15:20,885 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 15}
+DEBUG 2024-07-08 15:15:20,886 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:20,886 PongConsumer Game 1977: Player 2 speed set to 0
+DEBUG 2024-07-08 15:15:21,750 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 4}
+DEBUG 2024-07-08 15:15:21,751 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:21,751 PongConsumer Game 1977: Player 1 speed set to 5
+DEBUG 2024-07-08 15:15:21,759 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 5}
+DEBUG 2024-07-08 15:15:21,759 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:21,760 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:21,762 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 6}
+DEBUG 2024-07-08 15:15:21,763 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:21,763 PongConsumer Game 1977: Player 1 speed set to -5
+DEBUG 2024-07-08 15:15:21,932 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 7}
+DEBUG 2024-07-08 15:15:21,932 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:21,932 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:22,006 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 8}
+DEBUG 2024-07-08 15:15:22,006 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,006 PongConsumer Game 1977: Player 1 speed set to 5
+DEBUG 2024-07-08 15:15:22,191 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 9}
+DEBUG 2024-07-08 15:15:22,191 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,192 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:22,238 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 10}
+DEBUG 2024-07-08 15:15:22,238 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,238 PongConsumer Game 1977: Player 1 speed set to -5
+DEBUG 2024-07-08 15:15:22,348 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 11}
+DEBUG 2024-07-08 15:15:22,349 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,349 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:22,365 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 12}
+DEBUG 2024-07-08 15:15:22,366 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,366 PongConsumer Game 1977: Player 1 speed set to 5
+DEBUG 2024-07-08 15:15:22,409 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 13}
+DEBUG 2024-07-08 15:15:22,409 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,409 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:22,565 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 14}
+DEBUG 2024-07-08 15:15:22,565 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,565 PongConsumer Game 1977: Player 1 speed set to 5
+DEBUG 2024-07-08 15:15:22,746 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 15}
+DEBUG 2024-07-08 15:15:22,746 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,746 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:22,781 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 16}
+DEBUG 2024-07-08 15:15:22,781 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,781 PongConsumer Game 1977: Player 1 speed set to -5
+DEBUG 2024-07-08 15:15:22,847 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 17}
+DEBUG 2024-07-08 15:15:22,847 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:22,847 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:23,365 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 18}
+DEBUG 2024-07-08 15:15:23,365 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:23,365 PongConsumer Game 1977: Player 1 speed set to -5
+DEBUG 2024-07-08 15:15:23,548 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 19}
+DEBUG 2024-07-08 15:15:23,548 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:23,549 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:23,715 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 5, 'rid': 20}
+DEBUG 2024-07-08 15:15:23,715 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:23,716 PongConsumer Game 1977: Player 1 speed set to 5
+DEBUG 2024-07-08 15:15:23,875 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 21}
+DEBUG 2024-07-08 15:15:23,875 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:23,875 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:24,093 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 22}
+DEBUG 2024-07-08 15:15:24,093 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:24,093 PongConsumer Game 1977: Player 1 speed set to -5
+DEBUG 2024-07-08 15:15:24,316 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': 0, 'rid': 23}
+DEBUG 2024-07-08 15:15:24,316 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5 in room aff778a0
+DEBUG 2024-07-08 15:15:24,317 PongConsumer Game 1977: Player 1 speed set to 0
+DEBUG 2024-07-08 15:15:24,730 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 5, 'rid': 16}
+DEBUG 2024-07-08 15:15:24,731 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:24,731 PongConsumer Game 1977: Player 2 speed set to 5
+DEBUG 2024-07-08 15:15:24,879 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 17}
+DEBUG 2024-07-08 15:15:24,879 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:24,879 PongConsumer Game 1977: Player 2 speed set to 0
+DEBUG 2024-07-08 15:15:24,931 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': -5, 'rid': 18}
+DEBUG 2024-07-08 15:15:24,932 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:24,932 PongConsumer Game 1977: Player 2 speed set to -5
+DEBUG 2024-07-08 15:15:25,037 LobbyManager Data received: {'t': 'pi', 'player_num': 2, 'speed': 0, 'rid': 19}
+DEBUG 2024-07-08 15:15:25,037 Room Handling player input from specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679 in room aff778a0
+DEBUG 2024-07-08 15:15:25,038 PongConsumer Game 1977: Player 2 speed set to 0
+DEBUG 2024-07-08 15:15:26,262 PongConsumer Game over signal sent for game 9499
+DEBUG 2024-07-08 15:15:26,281 PongConsumer Game loop ended for game 9499
+DEBUG 2024-07-08 15:15:32,005 PongConsumer Game over signal sent for game 1977
+DEBUG 2024-07-08 15:15:32,024 PongConsumer Game loop ended for game 1977
+DEBUG 2024-07-08 15:16:48,590 LobbyManager Player disconnecting: specific.c63bdfcbe1b94cc18d2cd1c5558c1541!16910a46e65b4b5b8269b0b13990c679
+DEBUG 2024-07-08 15:16:48,593 Room Player booba removed from room aff778a0
+DEBUG 2024-07-08 15:16:48,593 Room Ending game in room aff778a0
+DEBUG 2024-07-08 15:16:48,593 PongConsumer Ending game 1977
+DEBUG 2024-07-08 15:16:48,594 PongConsumer Game 1977: player1: 1, player2: booba
+DEBUG 2024-07-08 15:16:48,595 LobbyManager Player disconnecting: specific.c63bdfcbe1b94cc18d2cd1c5558c1541!eef6f42fc1e64361ad7a27a36b6b2ac5
+DEBUG 2024-07-08 15:16:48,595 Room Player 1 removed from room aff778a0
+DEBUG 2024-07-08 15:16:48,595 Room Ending game in room aff778a0
+DEBUG 2024-07-08 15:16:48,595 PongConsumer Ending game 1977
+DEBUG 2024-07-08 15:16:48,596 PongConsumer Game 1977: player1: 1, player2: booba
+DEBUG 2024-07-08 15:16:48,803 PongConsumer Game 1977 ended
+DEBUG 2024-07-08 15:16:48,873 PongConsumer Game 1977 ended
+DEBUG 2024-07-08 15:18:31,057 LobbyManager Player connected: specific.042439c4c2e94caf9fa8b0d665e4514a!452ba84559014f0387ea363269a35ddc
+DEBUG 2024-07-08 15:18:31,060 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 15:18:31,061 Room Room created: ID 2bc8a4c5, type solo
+DEBUG 2024-07-08 15:18:31,061 Room Player 1 added to room: 2bc8a4c5. Player number: 1
+DEBUG 2024-07-08 15:18:31,061 PongConsumer Countdown: 3 for game 4463
+DEBUG 2024-07-08 15:18:32,062 PongConsumer Countdown: 2 for game 4463
+DEBUG 2024-07-08 15:18:33,064 PongConsumer Countdown: 1 for game 4463
+DEBUG 2024-07-08 15:18:34,066 PongConsumer Countdown finished for game 4463
+DEBUG 2024-07-08 15:18:34,067 PongConsumer Game 4463 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7bc10dc4d3a0>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 15:18:34,068 Room solo game started in room 2bc8a4c5
+DEBUG 2024-07-08 15:18:34,069 PongConsumer Game loop started for game 4463
+DEBUG 2024-07-08 15:18:34,070 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:18:34,071 Room Game already in progress in room 2bc8a4c5
+DEBUG 2024-07-08 15:18:47,536 LobbyManager Player disconnecting: specific.042439c4c2e94caf9fa8b0d665e4514a!452ba84559014f0387ea363269a35ddc
+DEBUG 2024-07-08 15:18:47,539 Room Player 1 removed from room 2bc8a4c5
+DEBUG 2024-07-08 15:18:47,540 Room Ending game in room 2bc8a4c5
+DEBUG 2024-07-08 15:18:47,540 PongConsumer Ending game 4463
+DEBUG 2024-07-08 15:18:47,542 PongConsumer Game loop ended for game 4463
+DEBUG 2024-07-08 15:20:36,588 LobbyManager Player connected: specific.7d23b43fb4684f7ead9d4f33fc7c54de!47730e0db73b4eadb5779050ac8fe153
+DEBUG 2024-07-08 15:20:36,637 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': '1'}
+DEBUG 2024-07-08 15:20:36,637 Room Room created: ID 4221ea2b, type 1v1
+DEBUG 2024-07-08 15:20:36,638 Room Player 1 added to room: 4221ea2b. Player number: 1
+DEBUG 2024-07-08 15:20:36,641 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:20:36,641 Room Cannot start game in room 4221ea2b: not enough players
+DEBUG 2024-07-08 15:20:39,824 LobbyManager Player connected: specific.7d23b43fb4684f7ead9d4f33fc7c54de!46af816874b74896aa85badca653ff65
+DEBUG 2024-07-08 15:20:39,828 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': 'booba'}
+DEBUG 2024-07-08 15:20:39,829 Room Player booba added to room: 4221ea2b. Player number: 2
+DEBUG 2024-07-08 15:20:39,829 PongConsumer Countdown: 3 for game 8304
+DEBUG 2024-07-08 15:20:40,831 PongConsumer Countdown: 2 for game 8304
+DEBUG 2024-07-08 15:20:41,833 PongConsumer Countdown: 1 for game 8304
+DEBUG 2024-07-08 15:20:42,835 PongConsumer Countdown finished for game 8304
+DEBUG 2024-07-08 15:20:42,835 PongConsumer Game 8304 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7e351aa35ee0>, 'username': '1', 'player_num': 1, 'game_type': '1v1', 'speed': 0}, 2: {'object': <supervisor.consumers.GameConsumer object at 0x7e35198a5b20>, 'username': 'booba', 'player_num': 2, 'game_type': '1v1', 'speed': 0}}
+DEBUG 2024-07-08 15:20:42,836 Room 1v1 game started in room 4221ea2b
+DEBUG 2024-07-08 15:20:42,836 PongConsumer Game loop started for game 8304
+DEBUG 2024-07-08 15:20:42,838 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:20:42,838 Room Game already in progress in room 4221ea2b
+DEBUG 2024-07-08 15:20:48,225 LobbyManager Player disconnecting: specific.7d23b43fb4684f7ead9d4f33fc7c54de!46af816874b74896aa85badca653ff65
+DEBUG 2024-07-08 15:20:48,228 Room Player booba removed from room 4221ea2b
+DEBUG 2024-07-08 15:20:48,228 Room Ending game in room 4221ea2b
+DEBUG 2024-07-08 15:20:48,228 PongConsumer Ending game 8304
+DEBUG 2024-07-08 15:20:48,229 PongConsumer Game 8304: player1: 1, player2: booba
+DEBUG 2024-07-08 15:20:48,231 PongConsumer Game loop ended for game 8304
+DEBUG 2024-07-08 15:20:48,309 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 15:20:48,309 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 15:20:48,310 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 15:20:48,310 LobbyManager Player disconnecting: specific.7d23b43fb4684f7ead9d4f33fc7c54de!47730e0db73b4eadb5779050ac8fe153
+DEBUG 2024-07-08 15:20:48,310 Room Player 1 removed from room 4221ea2b
+DEBUG 2024-07-08 15:20:48,310 Room Ending game in room 4221ea2b
+DEBUG 2024-07-08 15:20:48,311 PongConsumer Ending game 8304
+DEBUG 2024-07-08 15:20:48,311 PongConsumer Game 8304: player1: 1, player2: booba
+DEBUG 2024-07-08 15:20:48,495 PongConsumer Game 8304 ended
+DEBUG 2024-07-08 15:20:48,578 PongConsumer Game 8304 ended
+DEBUG 2024-07-08 15:20:55,903 LobbyManager Player connected: specific.7d23b43fb4684f7ead9d4f33fc7c54de!7c63d0ede4674c6e843d0913792ce3d7
+DEBUG 2024-07-08 15:20:55,933 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 15:20:55,934 Room Room created: ID efd26f04, type solo
+DEBUG 2024-07-08 15:20:55,934 Room Player 1 added to room: efd26f04. Player number: 1
+DEBUG 2024-07-08 15:20:55,935 PongConsumer Countdown: 3 for game 6473
+DEBUG 2024-07-08 15:20:56,936 PongConsumer Countdown: 2 for game 6473
+DEBUG 2024-07-08 15:20:57,939 PongConsumer Countdown: 1 for game 6473
+DEBUG 2024-07-08 15:20:58,941 PongConsumer Countdown finished for game 6473
+DEBUG 2024-07-08 15:20:58,941 PongConsumer Game 6473 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7e3519873a90>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 15:20:58,941 Room solo game started in room efd26f04
+DEBUG 2024-07-08 15:20:58,942 PongConsumer Game loop started for game 6473
+DEBUG 2024-07-08 15:20:58,944 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:20:58,944 Room Game already in progress in room efd26f04
+DEBUG 2024-07-08 15:21:00,767 LobbyManager Data received: {'t': 'pi', 'player_num': 1, 'speed': -5, 'rid': 0}
+DEBUG 2024-07-08 15:21:00,768 Room Handling player input from specific.7d23b43fb4684f7ead9d4f33fc7c54de!7c63d0ede4674c6e843d0913792ce3d7 in room efd26f04
+ERROR 2024-07-08 15:21:01,556 PongConsumer Error sending game state for game 6473: Attempt to send on a closed protocol
+ERROR 2024-07-08 15:21:01,575 PongConsumer Error sending game state for game 6473: Attempt to send on a closed protocol
+ERROR 2024-07-08 15:21:01,593 PongConsumer Error sending game state for game 6473: Attempt to send on a closed protocol
+ERROR 2024-07-08 15:21:01,611 PongConsumer Error sending game state for game 6473: Attempt to send on a closed protocol
+ERROR 2024-07-08 15:21:01,630 PongConsumer Error sending game state for game 6473: Attempt to send on a closed protocol
+DEBUG 2024-07-08 15:21:17,519 LobbyManager Player connected: specific.7d23b43fb4684f7ead9d4f33fc7c54de!4dedd88b7997403a83dfbd124289c1cd
+DEBUG 2024-07-08 15:21:17,531 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': '1'}
+DEBUG 2024-07-08 15:21:17,531 Room Room created: ID d3ac369c, type solo
+DEBUG 2024-07-08 15:21:17,531 Room Player 1 added to room: d3ac369c. Player number: 1
+DEBUG 2024-07-08 15:21:17,531 PongConsumer Countdown: 3 for game 8528
+DEBUG 2024-07-08 15:21:17,978 PongConsumer Game over signal sent for game 6473
+DEBUG 2024-07-08 15:21:17,996 PongConsumer Game loop ended for game 6473
+DEBUG 2024-07-08 15:21:18,534 PongConsumer Countdown: 2 for game 8528
+DEBUG 2024-07-08 15:21:19,536 PongConsumer Countdown: 1 for game 8528
+DEBUG 2024-07-08 15:21:20,538 PongConsumer Countdown finished for game 8528
+DEBUG 2024-07-08 15:21:20,538 PongConsumer Game 8528 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7e35198d2eb0>, 'username': '1', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 15:21:20,539 Room solo game started in room d3ac369c
+DEBUG 2024-07-08 15:21:20,540 PongConsumer Game loop started for game 8528
+DEBUG 2024-07-08 15:21:20,541 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:21:20,541 Room Game already in progress in room d3ac369c
+DEBUG 2024-07-08 15:21:42,289 PongConsumer Game over signal sent for game 8528
+DEBUG 2024-07-08 15:21:42,297 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 15:21:42,297 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 15:21:42,300 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 15:21:42,300 LobbyManager Player disconnecting: specific.7d23b43fb4684f7ead9d4f33fc7c54de!4dedd88b7997403a83dfbd124289c1cd
+DEBUG 2024-07-08 15:21:42,301 Room Player 1 removed from room d3ac369c
+DEBUG 2024-07-08 15:21:42,301 Room Ending game in room d3ac369c
+DEBUG 2024-07-08 15:21:42,301 PongConsumer Ending game 8528
+DEBUG 2024-07-08 15:21:42,307 PongConsumer Game loop ended for game 8528
+DEBUG 2024-07-08 15:21:50,015 LobbyManager Player connected: specific.7d23b43fb4684f7ead9d4f33fc7c54de!48afa54e76ac4b5d8d81ae6ff0011583
+DEBUG 2024-07-08 15:21:50,092 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'local_1v1', 'username': '1'}
+DEBUG 2024-07-08 15:21:50,092 Room Room created: ID 305391a5, type local_1v1
+DEBUG 2024-07-08 15:21:50,093 Room Player 1 added to room: 305391a5. Player number: 1
+DEBUG 2024-07-08 15:21:50,094 PongConsumer Countdown: 3 for game 8955
+DEBUG 2024-07-08 15:21:51,095 PongConsumer Countdown: 2 for game 8955
+DEBUG 2024-07-08 15:21:52,097 PongConsumer Countdown: 1 for game 8955
+DEBUG 2024-07-08 15:21:53,098 PongConsumer Countdown finished for game 8955
+DEBUG 2024-07-08 15:21:53,098 PongConsumer Game 8955 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7e3518f14ca0>, 'username': '1', 'player_num': 1, 'game_type': 'local_1v1', 'speed': 0}}
+DEBUG 2024-07-08 15:21:53,099 Room local_1v1 game started in room 305391a5
+DEBUG 2024-07-08 15:21:53,099 PongConsumer Game loop started for game 8955
+DEBUG 2024-07-08 15:21:53,099 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:21:53,099 Room Game already in progress in room 305391a5
+DEBUG 2024-07-08 15:22:14,402 PongConsumer Game over signal sent for game 8955
+DEBUG 2024-07-08 15:22:14,404 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 15:22:14,404 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 15:22:14,404 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 15:22:14,404 LobbyManager Player disconnecting: specific.7d23b43fb4684f7ead9d4f33fc7c54de!48afa54e76ac4b5d8d81ae6ff0011583
+DEBUG 2024-07-08 15:22:14,405 Room Player 1 removed from room 305391a5
+DEBUG 2024-07-08 15:22:14,405 Room Ending game in room 305391a5
+DEBUG 2024-07-08 15:22:14,405 PongConsumer Ending game 8955
+DEBUG 2024-07-08 15:22:14,420 PongConsumer Game loop ended for game 8955
+DEBUG 2024-07-08 15:22:19,164 LobbyManager Player connected: specific.7d23b43fb4684f7ead9d4f33fc7c54de!99bc94053401462e9ee6fb25dd827dcd
+DEBUG 2024-07-08 15:22:19,172 LobbyManager Data received: {'t': 'select_game_type', 'game_type': 'solo', 'username': 'booba'}
+DEBUG 2024-07-08 15:22:19,173 Room Room created: ID aef2b3e9, type solo
+DEBUG 2024-07-08 15:22:19,173 Room Player booba added to room: aef2b3e9. Player number: 1
+DEBUG 2024-07-08 15:22:19,174 PongConsumer Countdown: 3 for game 4505
+DEBUG 2024-07-08 15:22:20,176 PongConsumer Countdown: 2 for game 4505
+DEBUG 2024-07-08 15:22:21,178 PongConsumer Countdown: 1 for game 4505
+DEBUG 2024-07-08 15:22:22,180 PongConsumer Countdown finished for game 4505
+DEBUG 2024-07-08 15:22:22,181 PongConsumer Game 4505 started with players: {1: {'object': <supervisor.consumers.GameConsumer object at 0x7e3518f091f0>, 'username': 'booba', 'player_num': 1, 'game_type': 'solo', 'speed': 0}}
+DEBUG 2024-07-08 15:22:22,181 Room solo game started in room aef2b3e9
+DEBUG 2024-07-08 15:22:22,182 PongConsumer Game loop started for game 4505
+DEBUG 2024-07-08 15:22:22,183 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:22:22,184 Room Game already in progress in room aef2b3e9
+DEBUG 2024-07-08 15:22:52,381 PongConsumer Game over signal sent for game 4505
+DEBUG 2024-07-08 15:22:52,389 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 15:22:52,389 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 15:22:52,390 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 15:22:52,390 LobbyManager Player disconnecting: specific.7d23b43fb4684f7ead9d4f33fc7c54de!99bc94053401462e9ee6fb25dd827dcd
+DEBUG 2024-07-08 15:22:52,390 Room Player booba removed from room aef2b3e9
+DEBUG 2024-07-08 15:22:52,391 Room Ending game in room aef2b3e9
+DEBUG 2024-07-08 15:22:52,391 PongConsumer Ending game 4505
+DEBUG 2024-07-08 15:22:52,399 PongConsumer Game loop ended for game 4505
+DEBUG 2024-07-08 15:23:02,553 LobbyManager Player connected: specific.7d23b43fb4684f7ead9d4f33fc7c54de!e1fa9c60b9124ca1b3a122455adb82e3
+DEBUG 2024-07-08 15:23:02,554 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': 'booba'}
+DEBUG 2024-07-08 15:23:02,554 Room Player booba added to room: 4221ea2b. Player number: 1
+DEBUG 2024-07-08 15:23:02,555 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:23:02,555 Room Game already in progress in room 4221ea2b
+DEBUG 2024-07-08 15:23:06,615 LobbyManager Player connected: specific.7d23b43fb4684f7ead9d4f33fc7c54de!66f02e15ff7a4e31b2aa0ba96850615a
+DEBUG 2024-07-08 15:23:06,627 LobbyManager Data received: {'t': 'select_game_type', 'game_type': '1v1', 'username': '1'}
+DEBUG 2024-07-08 15:23:06,627 Room Player 1 added to room: 4221ea2b. Player number: 2
+WARNING 2024-07-08 15:23:06,628 Room Game already in progress in room 4221ea2b
+DEBUG 2024-07-08 15:23:06,629 LobbyManager Data received: {'t': 'sg'}
+WARNING 2024-07-08 15:23:06,630 Room Game already in progress in room 4221ea2b
+DEBUG 2024-07-08 15:23:15,060 LobbyManager Player disconnecting: specific.7d23b43fb4684f7ead9d4f33fc7c54de!66f02e15ff7a4e31b2aa0ba96850615a
+DEBUG 2024-07-08 15:23:15,060 Room Player 1 removed from room 4221ea2b
+DEBUG 2024-07-08 15:23:15,061 Room Ending game in room 4221ea2b
+DEBUG 2024-07-08 15:23:15,061 PongConsumer Ending game 8304
+DEBUG 2024-07-08 15:23:15,061 PongConsumer Game 8304: player1: 1, player2: booba
+DEBUG 2024-07-08 15:23:15,345 PongConsumer Game 8304 ended
+DEBUG 2024-07-08 15:23:15,346 Room Game ended successfully
+DEBUG 2024-07-08 15:23:15,346 Room Room 4221ea2b deleted
+DEBUG 2024-07-08 15:23:15,346 LobbyManager Disconnect handled
+DEBUG 2024-07-08 15:23:15,346 Room Current room state:
+DEBUG 2024-07-08 15:23:15,347 Room   Room ID: efd26f04, Type: solo, Players: 1/1, Full: True
+DEBUG 2024-07-08 15:23:15,347 Room   Room ID: d3ac369c, Type: solo, Players: 0/1, Full: False
+DEBUG 2024-07-08 15:23:15,347 Room   Room ID: 305391a5, Type: local_1v1, Players: 0/1, Full: False
+DEBUG 2024-07-08 15:23:15,347 Room   Room ID: aef2b3e9, Type: solo, Players: 0/1, Full: False
+DEBUG 2024-07-08 15:23:23,742 LobbyManager Data received: {'t': 'stop_game'}
+ERROR 2024-07-08 15:23:23,742 LobbyManager Unsupported action: stop_game
+DEBUG 2024-07-08 15:23:23,743 LobbyManager Data received: {'t': 'disconnect'}
+DEBUG 2024-07-08 15:23:23,743 LobbyManager Player disconnecting: specific.7d23b43fb4684f7ead9d4f33fc7c54de!e1fa9c60b9124ca1b3a122455adb82e3
+DEBUG 2024-07-08 15:23:23,743 LobbyManager Disconnect handled
+DEBUG 2024-07-08 15:23:23,743 Room Current room state:
+DEBUG 2024-07-08 15:23:23,743 Room   Room ID: efd26f04, Type: solo, Players: 1/1, Full: True
+DEBUG 2024-07-08 15:23:23,743 Room   Room ID: d3ac369c, Type: solo, Players: 0/1, Full: False
+DEBUG 2024-07-08 15:23:23,743 Room   Room ID: 305391a5, Type: local_1v1, Players: 0/1, Full: False
+DEBUG 2024-07-08 15:23:23,743 Room   Room ID: aef2b3e9, Type: solo, Players: 0/1, Full: False
+DEBUG 2024-07-08 15:23:23,743 LobbyManager Player disconnecting: specific.7d23b43fb4684f7ead9d4f33fc7c54de!e1fa9c60b9124ca1b3a122455adb82e3
+DEBUG 2024-07-08 15:23:23,743 LobbyManager Disconnect handled
+DEBUG 2024-07-08 15:23:23,743 Room Current room state:
+DEBUG 2024-07-08 15:23:23,743 Room   Room ID: efd26f04, Type: solo, Players: 1/1, Full: True
+DEBUG 2024-07-08 15:23:23,743 Room   Room ID: d3ac369c, Type: solo, Players: 0/1, Full: False
+DEBUG 2024-07-08 15:23:23,743 Room   Room ID: 305391a5, Type: local_1v1, Players: 0/1, Full: False
+DEBUG 2024-07-08 15:23:23,743 Room   Room ID: aef2b3e9, Type: solo, Players: 0/1, Full: False

@@ -142,8 +142,8 @@ class PongConsumer:
                 logger.error(f"Error sending game state for game {self.game_id}: {e}")
         if self.AI:
             ai_move = self.AI.act()
-            self.game_state['player1']['y'] += ai_move
-            self.game_state['player1']['y'] = max(0, min(self.game_state['player1']['y'], 290))
+            self.game_state['player2']['y'] += ai_move
+            self.game_state['player2']['y'] = max(0, min(self.game_state['player2']['y'], 290))
             self.AI.store_state(self.game_state)
 
     def flip_coordinates(self, obj):
@@ -158,7 +158,7 @@ class PongConsumer:
         if self.game_state['game_started']:
             if self.game_type in ['1v1', 'tournament']:
                 self.handle_1v1_input(data)
-            elif self.game_type == 'local_1v1':
+            elif self.game_type in ['local_1v1', 'solo']:
                 self.handle_local_input(data)
             else:
                 logger.warning(f"Unexpected game type: {self.game_type}")
@@ -178,9 +178,11 @@ class PongConsumer:
 
     def handle_local_input(self, data):
         player1_speed = data.get('p1', 0)
-        player2_speed = data.get('p2', 0)
+        if not self.AI:
+            player2_speed = data.get('p2', 0)
         self.game_state['player1']["speed"] = player1_speed
-        self.game_state['player2']["speed"] = player2_speed
+        if not self.AI:
+            self.game_state['player2']["speed"] = player2_speed
         logger.debug(f"Game {self.game_id}: Local 1v1 input: Player 1 speed = {player1_speed}, Player 2 speed = {player2_speed}")
 
     async def end_game(self):
