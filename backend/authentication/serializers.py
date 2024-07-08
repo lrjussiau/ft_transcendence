@@ -5,6 +5,7 @@ import logging
 from django.conf import settings
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 

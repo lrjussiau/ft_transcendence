@@ -3,6 +3,8 @@ from .views import (
     RegisterView, UserProfileView, CustomTokenObtainPairView, 
     upload_avatar, list_avatars, ChangeAvatarView,
     change_username, change_email, change_password,
+    toggle_2fa, verify_2fa, delete_account,
+    change_status,
     toggle_2fa, verify_2fa, delete_account, UserAvatarView
 )
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -16,6 +18,7 @@ urlpatterns = [
     path('list-avatars/', list_avatars, name='list_avatars'),
     path('change-avatar/', ChangeAvatarView.as_view(), name='change_avatar'),
     path('change-username/', change_username, name='change_username'),
+    path('change-status/', change_status, name='change_status'),
     path('change-email/', change_email, name='change_email'),
     path('change-password/', change_password, name='change_password'),
     path('toggle-2fa/', toggle_2fa, name='toggle_2fa'),

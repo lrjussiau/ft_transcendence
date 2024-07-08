@@ -42,7 +42,7 @@ function initializeGameButtons() {
       button.addEventListener('click', async () => {
         selectedGameType = type;
         highlightSelectedButton(button, gameButtons);
-        console.log(`Game type selected: ${selectedGameType}`);
+        //console.log(`Game type selected: ${selectedGameType}`);
 
         // Call attributePlayer when game type is selected
         await attributePlayer(selectedGameType);
@@ -113,7 +113,7 @@ async function attributePlayer(gameType) {
       player2Name.textContent = opponentUsername;
     }
 
-    console.log('Player cards updated successfully');
+    //console.log('Player cards updated successfully');
   } catch (error) {
     console.error('Error updating player cards:', error);
   }

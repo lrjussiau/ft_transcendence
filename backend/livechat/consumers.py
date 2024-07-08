@@ -13,7 +13,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_group_name = f'chat_{self.room_id}'
         logger.info(f"Attempting to connect to room: {self.room_id}")
 
-        # Join room group
+
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
@@ -24,18 +24,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def disconnect(self, close_code):
         logger.info(f"Disconnected from room: {self.room_id} with code: {close_code}")
-        # Leave room group
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
 
-    # Receive message from room group
     async def chat_message(self, event):
         message = event['message']
         user_id = event['user_id']
 
-        # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
             'user_id': user_id
@@ -72,7 +69,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             else:
                 logger.warning("Message was not saved to the database")
 
-            # Send message to room group
+        
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -84,7 +81,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             logger.info(f"Message sent to group {self.room_group_name}")
         except Exception as e:
             logger.error(f"Error processing message: {str(e)}")
-            logger.exception(e)  # This will lo
+            logger.exception(e)
 
     @database_sync_to_async
     def save_message(self, user, room_id, message):
@@ -99,4 +96,4 @@ class ChatConsumer(AsyncWebsocketConsumer):
             logger.error(f"ChatRoom with id {room_id} does not exist")
         except Exception as e:
             logger.error(f"Error saving message to database: {str(e)}")
-            logger.exception(e)  # This will log the full stack trace
+            logger.exception(e)

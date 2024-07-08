@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from asgiref.sync import sync_to_async
 from db.models import Games, User
-#from django.db.models import Games
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -74,7 +73,6 @@ class RetrieveGameData(APIView):
         return True
 
     def get(self, request, user_id):
-        # Filter games where the user is either the winner or the loser
         matches = Games.objects.filter(
             Q(winner__id=user_id) | Q(loser__id=user_id)
         )

@@ -1,4 +1,16 @@
-console.log("router.js loaded");
+//import { setupSettingsPage } from './settings.js';
+//import { setupSettingsPage } from '.';
+//console.log("router.js loaded");
+
+
+
+// Script to set initial theme based on localStorage
+document.addEventListener('DOMContentLoaded', (event) => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+});
 
 // Function to get the current route
 function getCurrentRoute() {
@@ -27,18 +39,15 @@ async function loadPartial(partial) {
         document.body.appendChild(newScript).parentNode.removeChild(newScript);
       });
 
-      console.log(`Loaded partial: ${partial}`);
+      //console.log(`Loaded partial: ${partial}`);
 
       connectToWebSocket();
-      console.log("Connected to WebSocket");
+      //console.log("Connected to WebSocket");
 
       if (partial === 'game' || partial === 'tournament') {
         launchGame();
-        // initializeStartButton();
-        // fetchUserProfile(); // Ensure user profile is fetched when game partial is loaded
       }
 
-      // Call setupModalTriggers to ensure modal triggers are set up for dynamically loaded content
       if (partial !== 'livechat') {
         setupModalTriggers();
       }
@@ -64,6 +73,19 @@ async function loadPartial(partial) {
         setupSettingsPage();
         setInitialTheme();
       }
+
+      // Call updateContent to translate the newly loaded partial
+      if (window.initI18next && window.updateContent) {
+        window.initI18next().then(() => {
+          window.updateContent();
+          if (window.initializeLanguageSelector) {
+            window.initializeLanguageSelector();
+          }
+        });
+      } else {
+        console.warn('i18next setup functions not found. Make sure i18n-setup.js is loaded.');
+      }
+
     } else {
       console.error('#content element not found');
     }
@@ -90,13 +112,13 @@ function toggleHeaderDisplay(route) {
 
 // Function to handle routes
 async function handleRoute(route) {
-  console.log("Handling route:", route);
+  //console.log("Handling route:", route);
 
   switch (route) {
     case 'home':
       toggleHeaderDisplay(route); 
       await loadPartial('home');
-      console.log("Loaded home partial");
+      //console.log("Loaded home partial");
       break;
     case 'game':
     case 'user':
@@ -128,7 +150,7 @@ async function handleRoute(route) {
 // Initialize the router
 document.addEventListener('DOMContentLoaded', () => {
   let route = getCurrentRoute();
-  console.log("Initial route:", route);
+  //console.log("Initial route:", route);
   // Redirect to /home if the route is empty (i.e., root path)
   if (route === '') {
     window.history.pushState({}, '', '/home');
@@ -178,11 +200,34 @@ function initializeStartButton() {
   }
 }
 
-function handleLogout() {
-  console.log('Logging out...');
+async function handleLogout() {
+  try {
+    const response = await fetch('/api/authentication/change-status/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({new_status: "offline"})
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (error) {
+      
+  }
+
+  //console.log('Logging out...');
   localStorage.removeItem('authToken');
   localStorage.removeItem('refreshToken');
   window.history.pushState({}, '', '/home');
+  try {
+      const data = await response.json();
+      //console.log(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
   handleRoute('home');
 }
 

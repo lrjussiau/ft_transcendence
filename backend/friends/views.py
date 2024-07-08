@@ -97,7 +97,6 @@ class RespondFriendRequestView(APIView):
 
         if action == 'accept':
             friend_request.status = 'Accepted'
-            # Create reciprocal relationship
             Friend.objects.create(user=request.user, friend=friend_request.user, status='Accepted')
         elif action == 'reject':
             friend_request.status = 'Rejected'

@@ -2,7 +2,7 @@
 function updateProfileImage(defaultAvatar, avatarUrl) {
     const imgElement = document.querySelector('.player-img img');
     imgElement.src = decodeURIComponent(avatarUrl);
-    console.log('Avatar URL Display:', avatarUrl);
+    //console.log('Avatar URL Display:', avatarUrl);
 }
 
 async function loadUserProfile() {

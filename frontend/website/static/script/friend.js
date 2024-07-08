@@ -189,7 +189,7 @@ async function displayIncomingFriendRequests() {
                 pendingList.appendChild(listItem);
             });
         } else {
-            pendingList.innerHTML = '<li class="pending-friend-item">No pending friend requests</li>';
+            pendingList.innerHTML = '<li class="pending-friend-item" data-i18n="noPendingFriendRequest">No pending friend requests</li>';
         }
     } catch (error) {
         console.error('Error fetching incoming friend requests:', error);
@@ -284,8 +284,18 @@ async function displayFriends() {
                 friendsList.appendChild(listItem);
             });
         } else {
-            friendsList.innerHTML = '<li>* No friends found</li>';
+            friendsList.innerHTML = '<li data-i18n="noFriendsFound">* No friends found</li>';
         }
+        if (window.initI18next && window.updateContent) {
+            window.initI18next().then(() => {
+              window.updateContent();
+              if (window.initializeLanguageSelector) {
+                window.initializeLanguageSelector();
+              }
+            });
+          } else {
+            console.warn('i18next setup functions not found. Make sure i18n-setup.js is loaded.');
+          }
     } catch (error) {
         console.error('Error fetching friends list:', error);
     }
@@ -364,58 +374,39 @@ async function initializeFriendSearch() {
             !pendingFriends.some(pending => pending.friend.username === user.username)&&
             !blockedFriends.some(blocked => blocked.friend.username === user.username)
         );
-        console.log("potential friend:", potentialFriends);
+        //console.log("potential friend:", potentialFriends);
         $('#searchInput').on('input', function() {
             const query = $(this).val().toLowerCase();
             const filteredUsers = potentialFriends.filter(user => 
                 user.username.toLowerCase().includes(query)
             );
-            //console.log("filtrre friend:", filteredUsers);
             $('#searchResults').empty();
             if (filteredUsers.length > 0) {
                 filteredUsers.forEach(friend => {
-                    console.log("friend status", friend.status)
+                    //console.log("friend status", friend.status)
                     $('#searchResults').append(`
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             ${friend.username}
-                            <button class="btn btn-sm modal-button add-friend-btn" data-id="${friend.id}">Add Friend</button>
+                            <button class="btn btn-sm modal-button add-friend-btn" data-id="${friend.id} data-i18n="addFriend">Add Friend</button>
                         </div>
                     `);
                 });
             } else {
-                $('#searchResults').append('<div class="list-group-item">No friends found</div>');
+                $('#searchResults').append('<div class="list-group-item"  data-i18n="noFriendsFound">No friends found</div>');
             }
         });
-
-        /*$(document).on('click', '.add-friend-btn', async function() {
-            const friendId = $(this).data('id');
-            try {
-                const result = await addFriend(friendId);
-
-                $('#searchResults').append(`
-
-                    <button class="btn btn-sm modal-button btn-success">Added</button>
-                `);
-                alert('Friend request sent successfully');
-            } catch (error) {
-                console.error('Error adding friend:', error);
-                alert(error);
-            }
-        });*/
         $('#searchResults').on('click', '.add-friend-btn', function() {
             const friendId = $(this).data('id');
             const button = $(this);
         
             addFriend(friendId)
                 .then(() => {
-                    // Replace the button
                     button.replaceWith(`
-                        <button class="btn btn-sm modal-button btn-success">Added</button>
+                        <button class="btn btn-sm modal-button btn-success" data-i18n="added">Added</button>
                     `);
                 })
                 .catch(error => {
                     console.error('Error adding friend:', error);
-                    // Handle the error (e.g., show an error message to the user)
                     alert('Failed to add friend. Please try again.');
                 });
         });
