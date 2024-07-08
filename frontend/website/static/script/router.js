@@ -34,12 +34,16 @@ async function loadPartial(partial) {
       connectToWebSocket();
       console.log("Connected to WebSocket");
 
-      if (partial === 'game') {
+      if (partial === 'game' || partial === 'tournament') {
         launchGame();
       }
 
       if (partial !== 'livechat') {
         setupModalTriggers();
+      }
+
+      if (partial === 'bracket') {
+        loadBracketView();
       }
 
       if (partial === 'livechat') {
@@ -111,6 +115,8 @@ async function handleRoute(route) {
     case 'livechat':
     case 'settings':
     case 'canvas':
+    case 'tournament':
+    case 'bracket':
       if (isAuthenticated()) {
         // Apply blur animation
         applyBlurAnimation();

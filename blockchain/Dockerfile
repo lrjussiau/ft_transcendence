@@ -3,6 +3,9 @@ FROM ghcr.io/foundry-rs/foundry:latest
 
 WORKDIR /app
 
+ARG SEPOLIA_URL
+ARG PRIVATE_KEY
+
 RUN apk update && apk add nodejs npm
 RUN npm install express body-parser ethers dotenv
 
@@ -20,7 +23,7 @@ RUN find /app -type f -name "*.sh" -exec sed -i 's/\r$//' {} +
 COPY server.js /app/server.js
 RUN chmod +x /app/server.js
 
-#COPY .env /app/.env
+# COPY .env /app/.env
 
 
 EXPOSE 3000

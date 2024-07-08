@@ -1,24 +1,20 @@
 FROM nginx:alpine
 
-# Installer OpenSSL
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl sed
 
-# Copier les fichiers de configuration et le script
+ARG HOSTNAME_VAR
+RUN echo "HOSTNAME_VAR is: ${HOSTNAME_VAR}"
+
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx/mime.types /etc/nginx/mime.types
 
-# Copier les certificats SSL (au cas où ils existent déjà)
 COPY ./nginx/certs /etc/ssl/certs
 COPY ./nginx/private /etc/ssl/private
-
-# Copier les fichiers du frontend
 COPY ../frontend/website /usr/share/nginx/html
 
-# Copier le script
-COPY ./nginx/tools/script.sh /usr/local/bin/script.sh
+RUN sed -i "s/hostname/${HOSTNAME_VAR}/g" /etc/nginx/nginx.conf
 
-# Rendre le script exécutable
+COPY ./nginx/tools/script.sh /usr/local/bin/script.sh
 RUN chmod +x /usr/local/bin/script.sh
 
-# Exécuter le script
 CMD ["sh", "/usr/local/bin/script.sh"]

@@ -87,10 +87,10 @@ async function startGame(gameType) {
                           ws.send(JSON.stringify({ t: 'sg' }));
                           break;
                       case '1v1':
-                          ws.send(JSON.stringify({ t: 'join' }));
+                          ws.send(JSON.stringify({ t: 'sg' }));
                           break;
                       case 'solo':
-                          ws.send(JSON.stringify({ t: 'solo' }));
+                          ws.send(JSON.stringify({ t: 'sg' }));
                           break;
                       default:
                           console.error(`Unsupported game type: ${gameType}`);
@@ -287,8 +287,11 @@ function updateGameState(data) {
     gameState = data.initial_state;
     draw();
   } else if (data.type === 'game_over') {
-    // This might be redundant now, but keep it for safety
     handleGameOver(data.winner);
+  } else if (data.type === 'tournament_update') {
+    updateTournamentStatus(data);
+  } else if (data.type === 'tournament_match_start') {
+    startMatch(data);
   } else {
     console.error('Invalid game state received:', data);
   }

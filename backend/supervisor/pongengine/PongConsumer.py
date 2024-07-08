@@ -8,205 +8,124 @@ from math import cos, sin, radians
 
 logger = logging.getLogger(__name__)
 
-game_state = {
-    "ball": {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))},
-    "player1": {"y": 180, "speed": 0},
-    "player2": {"y": 180, "speed": 0},
-    "player1_score": 0,
-    "player2_score": 0,
-    "game_started": False,
-    "game_over": False,
-    "game_loop_running": False
-}
-
 class PongConsumer:
     points = 5
-    refresh_rate = 120
+    refresh_rate = 60
     speed_buff = 7 / 6
     paddle_height = 70
     center_paddle_offset = paddle_height / 2
     max_angle = 45
-    global_speed_factor = 1.5
+    global_speed_factor = 1.75
 
     def __init__(self, players, game_type):
-        self.Players = {i+1: player for i, player in enumerate(players)}  # Convert list to dict
+        self.Players = {i+1: player for i, player in enumerate(players)}
         self.game_type = game_type
-        self.last_update_time = None
         self.AI = Ai() if game_type == "solo" else None
+        self.game_id = str(random.randint(1000, 9999))  # Unique identifier for each game
+        self.game_state = self.init_game_state()
 
-
-    def is_game_running(self):
-        return game_state['game_started']
-    
-    async def end_game(self):
-        if not game_state['game_started'] and not game_state['game_loop_running']:
-            logger.debug("Game is not running, ignoring end_game call")
-            return
-        game_state['game_over'] = True
-        game_state['game_started'] = False
-        game_state['game_loop_running'] = False
-        p1 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 1), None)
-        p2 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 2), None)
-        logger.debug(f"player1: {p1.get('username')}, player2: {p2.get('username')}")
-        if not self.game_type == "local_1v1":
-            if (p2 != None):
-                p1_username =  p1.get('username')
-                p2_username =  p2.get('username')
-                if game_state['player1_score'] == self.points:
-                    if self.game_type == "tournament":
-                        await store_game(game_state['player2_score'], p2_username, p1_username, True)
-                    else:
-                        await store_game(game_state['player2_score'], p2_username, p1_username, False)
-                else:
-                    if self.game_type == "tournament":
-                        await store_game(game_state['player1_score'], p1_username, p2_username, True)
-                    else:
-                        await store_game(game_state['player1_score'], p1_username, p2_username, False)   
-        try:
-            await self.broadcast_game_state({'type': 'game_over'})
-        except Exception as e:
-            logger.error(f"Error broadcasting game over state: {e}")
-        logger.debug("Game ended")
+    def init_game_state(self):
+        return {
+            "ball": {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))},
+            "player1": {"y": 180, "speed": 0},
+            "player2": {"y": 180, "speed": 0},
+            "player1_score": 0,
+            "player2_score": 0,
+            "game_started": False,
+            "game_over": False,
+            "last_update_time": None
+        }
 
     async def start_game(self):
-        if game_state['game_started'] or game_state['game_loop_running']:
-            logger.debug("Game is already running, ignoring start_game call")
-            return
-
-        self.init_game_state()  # This resets the game state
+        self.game_state = self.init_game_state()  # Reset game state
         await self.start_countdown()
-        game_state['game_started'] = True
-        game_state['game_over'] = False
+        self.game_state['game_started'] = True
         self.ball_restart()
-
-        logger.debug(f"Game started with players: {self.Players}")
-
-        game_state['game_loop_running'] = True
+        logger.debug(f"Game {self.game_id} started with players: {self.Players}")
         asyncio.create_task(self.game_loop())
 
     async def game_loop(self):
-        self.last_update_time = asyncio.get_event_loop().time()
-        logger.debug("Game loop started")
-        while game_state['game_started'] and not game_state['game_over']:
+        self.game_state['last_update_time'] = asyncio.get_event_loop().time()
+        logger.debug(f"Game loop started for game {self.game_id}")
+        while self.game_state['game_started'] and not self.game_state['game_over']:
             current_time = asyncio.get_event_loop().time()
-            dt = current_time - self.last_update_time
-            self.last_update_time = current_time
+            dt = current_time - self.game_state['last_update_time']
+            self.game_state['last_update_time'] = current_time
 
             await self.update_game_state(dt)
             await self.broadcast_game_state()
             await asyncio.sleep(1 / self.refresh_rate)
-        logger.debug("Game loop ended")
+        logger.debug(f"Game loop ended for game {self.game_id}")
 
     async def update_game_state(self, dt):
-        if not game_state['game_started']:
+        if not self.game_state['game_started']:
             return
 
-        game_state['player1']["y"] += game_state['player1']["speed"] * dt * 100 * self.global_speed_factor
-        game_state['player2']["y"] += game_state['player2']["speed"] * dt * 100 * self.global_speed_factor
-        game_state['player1']["y"] = max(0, min(game_state['player1']["y"], 360 - self.paddle_height))
-        game_state['player2']["y"] = max(0, min(game_state['player2']["y"], 360 - self.paddle_height))
+        self.game_state['player1']["y"] += self.game_state['player1']["speed"] * dt * 100 * self.global_speed_factor
+        self.game_state['player2']["y"] += self.game_state['player2']["speed"] * dt * 100 * self.global_speed_factor
+        self.game_state['player1']["y"] = max(0, min(self.game_state['player1']["y"], 360 - self.paddle_height))
+        self.game_state['player2']["y"] = max(0, min(self.game_state['player2']["y"], 360 - self.paddle_height))
 
-        game_state['ball']["x"] += game_state['ball']["vx"] * dt * self.global_speed_factor
-        game_state['ball']["y"] += game_state['ball']["vy"] * dt * self.global_speed_factor
+        self.game_state['ball']["x"] += self.game_state['ball']["vx"] * dt * self.global_speed_factor
+        self.game_state['ball']["y"] += self.game_state['ball']["vy"] * dt * self.global_speed_factor
 
-        if game_state['ball']["y"] <= 0 or game_state['ball']["y"] >= 360:
-            game_state['ball']["vy"] *= -1
+        if self.game_state['ball']["y"] <= 0 or self.game_state['ball']["y"] >= 360:
+            self.game_state['ball']["vy"] *= -1
 
         self.handle_paddle_collision()
 
-        if game_state['ball']["x"] <= 0:
-            game_state['player2_score'] += 1
+        if self.game_state['ball']["x"] <= 0:
+            self.game_state['player2_score'] += 1
             self.ball_restart()
-        elif game_state['ball']["x"] >= 640:
-            game_state['player1_score'] += 1
+        elif self.game_state['ball']["x"] >= 640:
+            self.game_state['player1_score'] += 1
             self.ball_restart()
 
-        if game_state['player1_score'] == self.points or game_state['player2_score'] == self.points:
-                game_state['game_over'] = True
-                game_state['game_started'] = False
-                game_state['game_loop_running'] = False  # Add this line
-                await self.broadcast_game_state({'type': 'game_over'})
-                logger.debug("Game over signal sent")  # Add this line
+        if self.game_state['player1_score'] == self.points or self.game_state['player2_score'] == self.points:
+            self.game_state['game_over'] = True
+            self.game_state['game_started'] = False
+            await self.broadcast_game_state({'type': 'game_over'})
+            logger.debug(f"Game over signal sent for game {self.game_id}")
 
     def handle_paddle_collision(self):
-        if game_state['ball']["x"] <= 15:
-            if game_state['player1']["y"] <= game_state['ball']["y"] <= game_state['player1']["y"] + self.paddle_height:
-                relative_intercept = (game_state['player1']["y"] + self.center_paddle_offset) - game_state['ball']["y"]
+        if self.game_state['ball']["x"] <= 15:
+            if self.game_state['player1']["y"] <= self.game_state['ball']["y"] <= self.game_state['player1']["y"] + self.paddle_height:
+                relative_intercept = (self.game_state['player1']["y"] + self.center_paddle_offset) - self.game_state['ball']["y"]
                 normalized_relative_intercept = relative_intercept / self.center_paddle_offset
                 bounce_angle = normalized_relative_intercept * self.max_angle
-                game_state['ball']["vx"] = abs(game_state['ball']["vx"]) * cos(radians(bounce_angle)) * self.speed_buff
-                game_state['ball']["vy"] = abs(game_state['ball']["vx"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * self.speed_buff
-                game_state['ball']["x"] = 15
+                self.game_state['ball']["vx"] = abs(self.game_state['ball']["vx"]) * cos(radians(bounce_angle)) * self.speed_buff
+                self.game_state['ball']["vy"] = abs(self.game_state['ball']["vx"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * self.speed_buff
+                self.game_state['ball']["x"] = 15
 
-        elif game_state['ball']["x"] >= 625:
-            if game_state['player2']["y"] <= game_state['ball']["y"] <= game_state['player2']["y"] + self.paddle_height:
-                relative_intercept = (game_state['player2']["y"] + self.center_paddle_offset) - game_state['ball']["y"]
+        elif self.game_state['ball']["x"] >= 625:
+            if self.game_state['player2']["y"] <= self.game_state['ball']["y"] <= self.game_state['player2']["y"] + self.paddle_height:
+                relative_intercept = (self.game_state['player2']["y"] + self.center_paddle_offset) - self.game_state['ball']["y"]
                 normalized_relative_intercept = relative_intercept / self.center_paddle_offset
                 bounce_angle = normalized_relative_intercept * self.max_angle
-                game_state['ball']["vx"] = -abs(game_state['ball']["vx"]) * cos(radians(bounce_angle)) * self.speed_buff
-                game_state['ball']["vy"] = abs(game_state['ball']["vx"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * self.speed_buff
-                game_state['ball']["x"] = 625
+                self.game_state['ball']["vx"] = -abs(self.game_state['ball']["vx"]) * cos(radians(bounce_angle)) * self.speed_buff
+                self.game_state['ball']["vy"] = abs(self.game_state['ball']["vx"]) * sin(radians(bounce_angle)) * (-1 if normalized_relative_intercept < 0 else 1) * self.speed_buff
+                self.game_state['ball']["x"] = 625
 
     async def start_countdown(self):
         for i in range(3, 0, -1):
-            logger.debug(f"Countdown: {i}")
+            logger.debug(f"Countdown: {i} for game {self.game_id}")
             await self.broadcast_game_state({'type': 'countdown', 'value': i})
             await asyncio.sleep(1)
-        logger.debug("Countdown finished")
-
-    def init_game_state(self):
-        game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
-        game_state['player1'] = {"y": 180, "speed": 0}
-        game_state['player2'] = {"y": 180, "speed": 0}
-        game_state['player1_score'] = 0
-        game_state['player2_score'] = 0
-        game_state['game_started'] = False
-        game_state['game_over'] = False
-        if self.AI:
-            self.AI.store_state(game_state)
+        logger.debug(f"Countdown finished for game {self.game_id}")
 
     def ball_restart(self):
-        game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
-
-    async def handle_player_input(self, data):
-        if game_state['game_started']:
-            if self.game_type == 'local_1v1':
-                self.handle_local_input(data)
-            elif self.game_type == '1v1':
-                self.handle_1v1_input(data)
-            else:
-                logger.warning(f"Unexpected game type: {self.game_type}")
-                return
-            await self.broadcast_game_state()
-        else:
-            logger.warning("Game is not started, input ignored.")
-
-    def handle_local_input(self, data):
-        player1_speed = data.get('p1', 0)
-        player2_speed = data.get('p2', 0)
-        game_state['player1']["speed"] = player1_speed
-        game_state['player2']["speed"] = player2_speed
-        logger.debug(f"Local 1v1 input: Player 1 speed = {player1_speed}, Player 2 speed = {player2_speed}")
-
-    def handle_1v1_input(self, data):
-        player_num = data.get('player_num', 0)
-        speed = data.get('speed', 0)
-        if player_num in [1, 2]:
-            game_state[f'player{player_num}']["speed"] = speed
-            logger.debug(f"Player {player_num} speed set to {speed}")
-        else:
-            logger.error(f"Invalid player number received: {player_num}")
+        self.game_state['ball'] = {"x": 320, "y": 180, "vx": 150 * random.choice((1, -1)), "vy": 150 * random.choice((1, -1))}
 
     async def broadcast_game_state(self, extra_info=None):
         base_state = {
             'type': 'update',
-            'ball': game_state['ball'],
-            'p1': game_state['player1'],
-            'p2': game_state['player2'],
-            's1': game_state['player1_score'],
-            's2': game_state['player2_score'],
-            'go': game_state['game_over'],
-            'gs': game_state['game_started'],
+            'ball': self.game_state['ball'],
+            'p1': self.game_state['player1'],
+            'p2': self.game_state['player2'],
+            's1': self.game_state["player1_score"],
+            's2': self.game_state["player2_score"],
+            'go': self.game_state['game_over'],
+            'gs': self.game_state['game_started'],
         }
         if extra_info:
             base_state.update(extra_info)
@@ -220,12 +139,12 @@ class PongConsumer:
             try:
                 await player['object'].send(text_data=json.dumps(state))
             except Exception as e:
-                logger.error(f"Error sending game state: {e}")
+                logger.error(f"Error sending game state for game {self.game_id}: {e}")
         if self.AI:
             ai_move = self.AI.act()
-            game_state['player1']['y'] += ai_move
-            game_state['player1']['y'] = max(0, min(game_state['player1']['y'], 290))
-            self.AI.store_state(game_state)
+            self.game_state['player2']['y'] += ai_move
+            self.game_state['player2']['y'] = max(0, min(self.game_state['player2']['y'], 290))
+            self.AI.store_state(self.game_state)
 
     def flip_coordinates(self, obj):
         flipped = obj.copy()
@@ -235,16 +154,59 @@ class PongConsumer:
             flipped['vx'] = -flipped['vx']
         return flipped
 
+    async def handle_player_input(self, data):
+        if self.game_state['game_started']:
+            if self.game_type in ['1v1', 'tournament']:
+                self.handle_1v1_input(data)
+            elif self.game_type in ['local_1v1', 'solo']:
+                self.handle_local_input(data)
+            else:
+                logger.warning(f"Unexpected game type: {self.game_type}")
+                return
+            await self.broadcast_game_state()
+        else:
+            logger.warning(f"Game {self.game_id} is not started, input ignored.")
+
+    def handle_1v1_input(self, data):
+        player_num = data.get('player_num', 0)
+        speed = data.get('speed', 0)
+        if player_num in [1, 2]:
+            self.game_state[f'player{player_num}']["speed"] = speed
+            logger.debug(f"Game {self.game_id}: Player {player_num} speed set to {speed}")
+        else:
+            logger.error(f"Game {self.game_id}: Invalid player number received: {player_num}")
+
+    def handle_local_input(self, data):
+        player1_speed = data.get('p1', 0)
+        if not self.AI:
+            player2_speed = data.get('p2', 0)
+        self.game_state['player1']["speed"] = player1_speed
+        if not self.AI:
+            self.game_state['player2']["speed"] = player2_speed
+        logger.debug(f"Game {self.game_id}: Local 1v1 input: Player 1 speed = {player1_speed}, Player 2 speed = {player2_speed}")
+
     async def end_game(self):
-        if not game_state['game_started'] and not game_state['game_loop_running']:
-            logger.debug("Game is not running, ignoring end_game call")
-            return
-        game_state['game_over'] = True
-        game_state['game_started'] = False
-        game_state['game_loop_running'] = False
-        try:
-            await self.broadcast_game_state({'type': 'game_over'})
-        except Exception as e:
-            logger.error(f"Error broadcasting game over state: {e}")
-        logger.debug("Game ended")
-        return True
+        logger.debug(f"Ending game {self.game_id}")
+        self.game_state['game_over'] = True
+        self.game_state['game_started'] = False
+        await self.broadcast_game_state({'type': 'game_over'})
+        
+        p1 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 1), None)
+        p2 = next((player_data for player_data in self.Players.values() if player_data["player_num"] == 2), None)
+        logger.debug(f"Game {self.game_id}: player1: {p1.get('username')}, player2: {p2.get('username')}")
+        
+        if not self.game_type == "local_1v1" and p2 is not None:
+            p1_username = p1.get('username')
+            p2_username = p2.get('username')
+            if self.game_state['player1_score'] == self.points:
+                if self.game_type == "tournament":
+                    await store_game(self.game_state['player2_score'], p2_username, p1_username, True)
+                else:
+                    await store_game(self.game_state['player2_score'], p2_username, p1_username, False)
+            else:
+                if self.game_type == "tournament":
+                    await store_game(self.game_state['player1_score'], p1_username, p2_username, True)
+                else:
+                    await store_game(self.game_state['player1_score'], p1_username, p2_username, False)   
+        
+        logger.debug(f"Game {self.game_id} ended")
