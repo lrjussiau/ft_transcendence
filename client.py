@@ -4,13 +4,12 @@ import requests
 import websockets
 import pygame
 from pygame.locals import *
-import subprocess
-import urllib3
 import ssl
 import signal
 import sys
 
 # Désactiver les avertissements de requêtes HTTPS non vérifiées
+import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration
@@ -18,6 +17,12 @@ AUTH_TOKEN = None
 game_over_flag = False
 latest_game_state = None
 countdown_value = None
+game_type = None
+ws = None
+display_message = None
+keys = {}
+player1_speed = 0
+player2_speed = 0
 
 # Function to authenticate and retrieve the token
 def authenticate(base_url, username, password):
@@ -25,8 +30,8 @@ def authenticate(base_url, username, password):
         response = requests.post(f'{base_url}/api/authentication/login/', data={
             'username': username,
             'password': password
-        }, verify=False)  # Disable SSL verification
-        response.raise_for_status()  # Will raise an HTTPError for bad responses
+        }, verify=False)
+        response.raise_for_status()
         data = response.json()
         if 'access' in data:
             return data['access']
@@ -43,8 +48,8 @@ def fetch_user_profile(base_url, token):
         headers = {
             'Authorization': f'Bearer {token}'
         }
-        response = requests.get(f'{base_url}/api/authentication/user/profile/', headers=headers, verify=False)  # Disable SSL verification
-        response.raise_for_status()  # Will raise an HTTPError for bad responses
+        response = requests.get(f'{base_url}/api/authentication/user/profile/', headers=headers, verify=False)
+        response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
         print(f'Error fetching user profile: {e}')
@@ -52,13 +57,14 @@ def fetch_user_profile(base_url, token):
 
 # Function to handle WebSocket communication
 async def handle_websocket(game_type, username, token, websocket_url):
-    global latest_game_state, game_over_flag, countdown_value
+    global latest_game_state, game_over_flag, countdown_value, ws, display_message
     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     ssl_context.check_hostname = False
     ssl_context.verify_mode = ssl.CERT_NONE
 
     try:
         async with websockets.connect(websocket_url, extra_headers={'Authorization': f'Bearer {token}'}, ssl=ssl_context) as websocket:
+            ws = websocket
             await websocket.send(json.dumps({'t': 'select_game_type', 'game_type': game_type, 'username': username}))
 
             while not game_over_flag:
@@ -72,28 +78,34 @@ async def handle_websocket(game_type, username, token, websocket_url):
 
 # Function to handle server messages
 def handle_server_message(data):
-    global latest_game_state, game_over_flag, countdown_value
+    global latest_game_state, game_over_flag, countdown_value, display_message
     if data['type'] == 'update':
         latest_game_state = data
         print(f'Updated game state: {latest_game_state}')  # Debug log
     elif data['type'] == 'countdown':
         countdown_value = data['value']
-        print(f'Game starts in {countdown_value} seconds')
+        display_message = f'Game starts in {countdown_value} seconds'
+        print(display_message)
     elif data['type'] == 'game_over':
-        print(f'Game over! Winner: {data["winner"]}')
+        display_message = f'Game over! Winner: {data["winner"]}'
+        print(display_message)
         game_over_flag = True
     elif data['type'] == 'ping':
         send_pong()
     elif data['type'] == 'game_ready':
-        print('Game is ready!')
+        display_message = 'Game is ready!'
+        print(display_message)
     elif data['type'] == 'player_assignment':
-        print(data['message'])
+        display_message = data['message']
+        print(display_message)
     elif data['type'] == 'player_disconnected':
-        print('A player has disconnected.')
+        display_message = 'A player has disconnected.'
+        print(display_message)
         game_over_flag = True
     elif data['type'] == 'start_game':
-        print('Game has started!')
+        display_message = 'Game has started!'
         countdown_value = None
+        print(display_message)
     else:
         print(f"Unhandled message type: {data['type']}")
 
@@ -105,8 +117,8 @@ def init_pygame():
     return screen
 
 # Main game loop
-def main_game_loop(screen):
-    global game_over_flag
+async def main_game_loop(screen):
+    global game_over_flag, latest_game_state, game_type, display_message, countdown_value
     running = True
     clock = pygame.time.Clock()
 
@@ -115,6 +127,12 @@ def main_game_loop(screen):
             if event.type == QUIT:
                 running = False
                 game_over_flag = True
+            elif event.type == KEYDOWN:
+                keys[event.key] = True
+                await update_speeds()
+            elif event.type == KEYUP:
+                keys[event.key] = False
+                await update_speeds()
 
         screen.fill((0, 0, 0))  # Clear screen with black
 
@@ -123,8 +141,14 @@ def main_game_loop(screen):
         else:
             print('No game state to draw')  # Debug log
 
+        if display_message:
+            draw_message(screen, display_message)
+
         pygame.display.flip()
         clock.tick(60)
+
+        # Allow other tasks to run
+        await asyncio.sleep(0.01)
 
     pygame.quit()
     sys.exit(0)  # Ensure the program exits
@@ -155,6 +179,13 @@ def draw_game_state(screen, game_state):
     pygame.draw.rect(screen, (255, 255, 255), (paddle1_x, paddle1_y, 20, 140))
     pygame.draw.rect(screen, (255, 255, 255), (paddle2_x, paddle2_y, 20, 140))
 
+# Draw messages on the screen
+def draw_message(screen, message):
+    font = pygame.font.Font(None, 74)
+    text = font.render(message, True, (255, 255, 255))
+    text_rect = text.get_rect(center=(screen.get_width() / 2, screen.get_height() / 2))
+    screen.blit(text, text_rect)
+
 # Handle SIGINT (Ctrl + C)
 def signal_handler(sig, frame):
     global game_over_flag
@@ -166,17 +197,34 @@ def signal_handler(sig, frame):
 def send_pong():
     global ws
     if ws:
-        ws.send(json.dumps({ 't': 'pong' }))
+        ws.send(json.dumps({'t': 'pong'}))
 
-if __name__ == '__main__':
-    # Récupérer le hostname en exécutant la commande `hostname`
-    try:
-        host = subprocess.check_output(['hostname'], universal_newlines=True).strip()
-        print(f'Hostname: {host}')
-    except subprocess.CalledProcessError as e:
-        print(f'Error fetching hostname: {e}')
-        exit(1)
+async def send_player_input(direction):
+    global ws
+    if ws:
+        await ws.send(json.dumps({'t': 'move', 'direction': direction}))
 
+async def update_speeds():
+    global ws, player1_speed, player2_speed, keys, game_type
+    new_player1_speed = (keys.get(pygame.K_w, False) * -5) + (keys.get(pygame.K_s, False) * 5)
+    new_player2_speed = (keys.get(pygame.K_UP, False) * -5) + (keys.get(pygame.K_DOWN, False) * 5)
+
+    if game_type == 'local_1v1':
+        if new_player1_speed != player1_speed or new_player2_speed != player2_speed:
+            player1_speed = new_player1_speed
+            player2_speed = new_player2_speed
+            if ws:
+                await ws.send(json.dumps({'t': 'pi', 'p1': player1_speed, 'p2': player2_speed}))
+    else:
+        if new_player1_speed != player1_speed:
+            player1_speed = new_player1_speed
+            if ws:
+                await ws.send(json.dumps({'t': 'pi', 'player_num': 1, 'speed': player1_speed}))
+
+async def main():
+    global AUTH_TOKEN, latest_game_state, game_type
+
+    host = 'c3r5s5.42lausanne.ch'
     username = input('Enter your username: ')
     password = input('Enter your password: ')
     game_type = input('Enter the game type (solo, 1v1, local_1v1): ')
@@ -194,9 +242,12 @@ if __name__ == '__main__':
     screen = init_pygame()
     latest_game_state = None
 
-    # Run WebSocket handler in a separate thread
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(handle_websocket(game_type, user_profile['username'], AUTH_TOKEN, websocket_url))
+    # Create tasks for WebSocket and game loop
+    websocket_task = asyncio.create_task(handle_websocket(game_type, user_profile['username'], AUTH_TOKEN, websocket_url))
+    game_loop_task = asyncio.create_task(main_game_loop(screen))
 
-    # Run the main game loop
-    main_game_loop(screen)
+    # Wait for both tasks to complete
+    await asyncio.gather(websocket_task, game_loop_task)
+
+if __name__ == '__main__':
+    asyncio.run(main())
