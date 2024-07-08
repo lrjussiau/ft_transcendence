@@ -108,7 +108,7 @@ function setupPasswordChangeModal() {
 
 function handleThemeToggle(event) {
     const isDarkMode = event.target.checked;
-    console.log('Dark mode enabled:', isDarkMode);
+    //console.log('Dark mode enabled:', isDarkMode);
     if (isDarkMode) {
         document.documentElement.setAttribute('data-theme', 'dark');
     } else {
@@ -119,7 +119,7 @@ function handleThemeToggle(event) {
 
 function setInitialTheme() {
     const savedTheme = localStorage.getItem('theme');
-    console.log('Saved theme:', savedTheme);
+    //console.log('Saved theme:', savedTheme);
     if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.getElementById('theme-toggle').checked = true;
@@ -159,7 +159,7 @@ function handleNotificationSettings() {
     const emailNotifications = document.getElementById('email-notifications').checked;
     const pushNotifications = document.getElementById('push-notifications').checked;
     // Implement notification settings update logic here
-    console.log('Notification settings:', { email: emailNotifications, push: pushNotifications });
+    //console.log('Notification settings:', { email: emailNotifications, push: pushNotifications });
 }
 
 function handleLanguageChange() {
@@ -176,7 +176,7 @@ function handleLanguageChange() {
         localStorage.setItem('i18nextLng', selectedLanguage);
         document.body.className = document.body.className.replace(/lang-\w+/, '');
         document.body.classList.add(`lang-${selectedLanguage}`);
-        console.log('Language changed to:', selectedLanguage);
+        //console.log('Language changed to:', selectedLanguage);
     });
 }
 

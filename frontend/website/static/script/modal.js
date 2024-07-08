@@ -1,23 +1,23 @@
-console.log("modal.js loaded");
+//console.log("modal.js loaded");
 
 let modalClosedByUser = true;
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM fully loaded and parsed");
+  //console.log("DOM fully loaded and parsed");
   setupModalTriggers();
 });
 
 function setupModalTriggers() {
-  console.log("Setting up modal triggers");
+  //console.log("Setting up modal triggers");
 
   const modalTriggers = document.querySelectorAll('.modal-trigger');
-  console.log(`Found ${modalTriggers.length} modal triggers`);
+  //console.log(`Found ${modalTriggers.length} modal triggers`);
 
   modalTriggers.forEach(trigger => {
     trigger.addEventListener('click', () => {
       const modalName = trigger.getAttribute('data-modal');
       const modalHtmlPath = trigger.getAttribute('data-html');
-      console.log(`Modal trigger clicked: ${modalName}, ${modalHtmlPath}`);
+      //console.log(`Modal trigger clicked: ${modalName}, ${modalHtmlPath}`);
       showModal(modalName, modalHtmlPath);
     });
   });
@@ -25,7 +25,7 @@ function setupModalTriggers() {
 
 function showModal(modalName, modalHtmlPath) {
   return new Promise((resolve, reject) => {
-    console.log(`Loading modal: ${modalName}`);
+    //console.log(`Loading modal: ${modalName}`);
 
     fetch(modalHtmlPath)
       .then(response => {
@@ -46,7 +46,7 @@ function showModal(modalName, modalHtmlPath) {
           } else {
           console.warn('updateContent function not found. Make sure i18n-setup.js is loaded.');
           }
-          console.log(`${modalName} is now shown`);
+          //console.log(`${modalName} is now shown`);
 
           modalElement.on('shown.bs.modal', () => {
             initializeModal(modalName);
@@ -80,7 +80,7 @@ function hideModal(modalName) {
 function handleModalHidden(modalName) {
   if (modalClosedByUser && (modalName === 'loginModal' || modalName === 'registerModal')) {
     if (!document.querySelector('.modal.show') && !localStorage.getItem('authToken')) {
-      console.log(`Modal ${modalName} hidden, redirecting to home`);
+      //console.log(`Modal ${modalName} hidden, redirecting to home`);
       window.history.pushState({}, '', '/home');
       handleRoute('home');
     }

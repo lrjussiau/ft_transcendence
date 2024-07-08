@@ -374,7 +374,7 @@ async function initializeFriendSearch() {
             !pendingFriends.some(pending => pending.friend.username === user.username)&&
             !blockedFriends.some(blocked => blocked.friend.username === user.username)
         );
-        console.log("potential friend:", potentialFriends);
+        //console.log("potential friend:", potentialFriends);
         $('#searchInput').on('input', function() {
             const query = $(this).val().toLowerCase();
             const filteredUsers = potentialFriends.filter(user => 
@@ -383,7 +383,7 @@ async function initializeFriendSearch() {
             $('#searchResults').empty();
             if (filteredUsers.length > 0) {
                 filteredUsers.forEach(friend => {
-                    console.log("friend status", friend.status)
+                    //console.log("friend status", friend.status)
                     $('#searchResults').append(`
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             ${friend.username}

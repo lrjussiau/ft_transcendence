@@ -1,6 +1,6 @@
 //import { setupSettingsPage } from './settings.js';
 //import { setupSettingsPage } from '.';
-console.log("router.js loaded");
+//console.log("router.js loaded");
 
 // Function to get the current route
 function getCurrentRoute() {
@@ -29,10 +29,10 @@ async function loadPartial(partial) {
         document.body.appendChild(newScript).parentNode.removeChild(newScript);
       });
 
-      console.log(`Loaded partial: ${partial}`);
+      //console.log(`Loaded partial: ${partial}`);
 
       connectToWebSocket();
-      console.log("Connected to WebSocket");
+      //console.log("Connected to WebSocket");
 
       if (partial === 'game' || partial === 'tournament') {
         launchGame();
@@ -102,13 +102,13 @@ function toggleHeaderDisplay(route) {
 
 // Function to handle routes
 async function handleRoute(route) {
-  console.log("Handling route:", route);
+  //console.log("Handling route:", route);
 
   switch (route) {
     case 'home':
       toggleHeaderDisplay(route); 
       await loadPartial('home');
-      console.log("Loaded home partial");
+      //console.log("Loaded home partial");
       break;
     case 'game':
     case 'user':
@@ -140,7 +140,7 @@ async function handleRoute(route) {
 // Initialize the router
 document.addEventListener('DOMContentLoaded', () => {
   let route = getCurrentRoute();
-  console.log("Initial route:", route);
+  //console.log("Initial route:", route);
   // Redirect to /home if the route is empty (i.e., root path)
   if (route === '') {
     window.history.pushState({}, '', '/home');
@@ -208,13 +208,13 @@ async function handleLogout() {
       
   }
 
-  console.log('Logging out...');
+  //console.log('Logging out...');
   localStorage.removeItem('authToken');
   localStorage.removeItem('refreshToken');
   window.history.pushState({}, '', '/home');
   try {
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
     } catch (error) {
         console.error('Error:', error);
     }

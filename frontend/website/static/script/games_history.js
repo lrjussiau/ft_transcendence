@@ -55,7 +55,7 @@ async function gameHistory() {
         const response = await fetchGames(user.id);
         //console.error('Games: ', response);
         if (!response.status === 200) {
-            console.log('Games: ', response.status);
+            //console.log('Games: ', response.status);
             throw new Error('Failed to fetch games');
         }
         //const games = data.matches;
@@ -64,7 +64,7 @@ async function gameHistory() {
 
         response.forEach(game => {
             const row = document.createElement('tr');
-            console.log('Games: ', game.winner.username);
+            //console.log('Games: ', game.winner.username);
             const isWinner = game.winner.id === user.id ? true:false;
             const opponent = isWinner ? game.loser : game.winner;
             const is_tournament = game.is_tournament_game;

@@ -13,7 +13,7 @@ async function fetchUserProfile() {
 
   if (response.ok) {
     const data = await response.json();
-    console.log('Fetched user profile:', data);
+    //console.log('Fetched user profile:', data);
     return data;
   } else {
     throw new Error('Failed to fetch user profile');
@@ -43,7 +43,7 @@ const requestTimestamps = {};
 async function launchGame() {
   initializeStartButton();
   userData = await fetchUserProfile(); 
-  console.log('User name: ', userData.username);
+  //console.log('User name: ', userData.username);
   displayUsername(userData.username);
 }
 
@@ -65,11 +65,11 @@ async function startGame(gameType) {
       // Wait for the canvas element to be available
       const checkCanvasInterval = setInterval(() => {
           const canvas = document.getElementById('gameCanvas');
-          console.log('Checking for canvas element...');
+          //console.log('Checking for canvas element...');
           if (canvas) {
               clearInterval(checkCanvasInterval);
               
-              console.log('Canvas element found');
+              //console.log('Canvas element found');
               document.querySelector('.canvas').style.display = 'block';
               
               ctx = canvas.getContext('2d');
@@ -79,7 +79,7 @@ async function startGame(gameType) {
 
               ws = new WebSocket(wsUrl);
               ws.onopen = () => {
-                  console.log('WebSocket connection established');
+                  //console.log('WebSocket connection established');
                   ws.send(JSON.stringify({ t: 'select_game_type', game_type: gameType, username: username }));
                   attributePlayer(gameType);
                   switch (gameType) {
@@ -105,9 +105,9 @@ async function startGame(gameType) {
                       const latency = performance.now() - requestTimestamps[data.rid];
                       roundTripTime = latency;
                       delete requestTimestamps[data.rid];
-                      console.log(`Round-Trip Time (RTT): ${roundTripTime} ms`);
+                      //console.log(`Round-Trip Time (RTT): ${roundTripTime} ms`);
                   }
-                  console.log('Received message:', data.type);
+                  //console.log('Received message:', data.type);
                     switch (data.type) {
                       case 'countdown':
                         countdownValue = data.value;
@@ -124,7 +124,7 @@ async function startGame(gameType) {
                         ws.send(JSON.stringify({ t: 'pong' }));
                         break;
                       case 'game_ready':
-                        console.log('Game is ready!');
+                        //console.log('Game is ready!');
                         drawGameReady();
                         updateLastMessage('Game is ready!');
                         ws.send(JSON.stringify({ t: 'sg' }));
@@ -135,18 +135,18 @@ async function startGame(gameType) {
                         updateLastMessage(`Player ${data.player_num}`);
                         break;
                       case 'player_disconnected':
-                        console.log('A player has disconnected.');
+                        //console.log('A player has disconnected.');
                         updateLastMessage('A player has disconnected.');
                         alert('A player has disconnected.');
                         stopGame();
                         break;
                       case 'start_game':
-                        console.log('Game has started!');
+                        //console.log('Game has started!');
                         countdownValue = null;
                         draw();
                         break;
                       case 'game_over':
-                        console.log('Game over');
+                        //console.log('Game over');
                         updateLastMessage('Game over!');
                         handleGameOver(data.winner);
                         break;
@@ -172,9 +172,9 @@ async function startGame(gameType) {
                   console.error('WebSocket error:', error);
               };
               ws.onclose = (event) => {
-                console.log('WebSocket closed:', event);
+                //console.log('WebSocket closed:', event);
                 if (!gameOver) {
-                    console.log('Unexpected WebSocket closure. Attempting to reconnect...');
+                    //console.log('Unexpected WebSocket closure. Attempting to reconnect...');
                     setTimeout(() => startGame(selectedGameType), 3000);  // Try to reconnect after 3 seconds
                 }
             };
@@ -273,16 +273,16 @@ function updateGameState(data) {
     }
   } else if (data.type === 'countdown') {
     countdownValue = data.value;
-    console.log('Countdown value:', countdownValue);
+   // console.log('Countdown value:', countdownValue);
     draw();
     
     if (countdownValue === 0) {
-      console.log('Countdown finished, waiting for game start');
+     // console.log('Countdown finished, waiting for game start');
       countdownValue = null;
       draw();
     }
   } else if (data.type === 'game_start') {
-    console.log('Game starting');
+    //console.log('Game starting');
     countdownValue = null;
     gameState = data.initial_state;
     draw();
@@ -316,18 +316,18 @@ window.addEventListener('keyup', (event) => {
 
 function updateSpeeds() {
   let newPlayerSpeed;
-  console.log('Selected game type:', selectedGameType);
+  //console.log('Selected game type:', selectedGameType);
   if (selectedGameType === 'local_1v1') {
     const newPlayer1Speed = (keys['w'] ? -5 : 0) + (keys['s'] ? 5 : 0);
     const newPlayer2Speed = (keys['ArrowUp'] ? -5 : 0) + (keys['ArrowDown'] ? 5 : 0);
 
-    console.log("Web socket :", ws, "player1Speed :", player1Speed, "player2Speed :", player2Speed, "newPlayer1Speed :", newPlayer1Speed, "newPlayer2Speed :", newPlayer2Speed);
+    //console.log("Web socket :", ws, "player1Speed :", player1Speed, "player2Speed :", player2Speed, "newPlayer1Speed :", newPlayer1Speed, "newPlayer2Speed :", newPlayer2Speed);
     if (ws && (newPlayer1Speed !== player1Speed || newPlayer2Speed !== player2Speed)) {
       player1Speed = newPlayer1Speed;
       player2Speed = newPlayer2Speed;
       const requestId = requestIdCounter++;
       requestTimestamps[requestId] = performance.now();
-      console.log('Sending message:', JSON.stringify({ t: 'pi', p1: player1Speed, p2: player2Speed, rid: requestId }));
+      //console.log('Sending message:', JSON.stringify({ t: 'pi', p1: player1Speed, p2: player2Speed, rid: requestId }));
       ws.send(JSON.stringify({ t: 'pi', p1: player1Speed, p2: player2Speed, rid: requestId }));
     }
   } else {
