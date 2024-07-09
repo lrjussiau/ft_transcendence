@@ -7,8 +7,7 @@ from pygame.locals import *
 import ssl
 import signal
 import sys
-
-# Désactiver les avertissements de requêtes HTTPS non vérifiées
+import subprocess
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -23,9 +22,8 @@ display_message = None
 keys = {}
 player1_speed = 0
 player2_speed = 0
-DEBUG_LOG = False  # Set to False to disable debug logs
+DEBUG_LOG = False
 
-# Function to authenticate and retrieve the token
 def authenticate(base_url, username, password):
     try:
         response = requests.post(f'{base_url}/api/authentication/login/', data={
@@ -43,7 +41,6 @@ def authenticate(base_url, username, password):
         print(f'Error during authentication: {e}')
         exit(1)
 
-# Function to fetch user profile
 def fetch_user_profile(base_url, token):
     try:
         headers = {
@@ -56,7 +53,6 @@ def fetch_user_profile(base_url, token):
         print(f'Error fetching user profile: {e}')
         exit(1)
 
-# Function to handle WebSocket communication
 async def handle_websocket(game_type, username, token, websocket_url):
     global latest_game_state, game_over_flag, countdown_value, ws, display_message
     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
@@ -78,7 +74,6 @@ async def handle_websocket(game_type, username, token, websocket_url):
         print(f'Error during WebSocket communication: {e}')
         exit(1)
 
-# Function to handle server messages
 def handle_server_message(data):
     global latest_game_state, game_over_flag, countdown_value, display_message
     if data['type'] == 'update':
@@ -120,20 +115,17 @@ def handle_server_message(data):
         if DEBUG_LOG:
             print(f"Unhandled message type: {data['type']}")
 
-# Function to clear the screen
 def clear_screen():
     screen = pygame.display.get_surface()
     screen.fill((0, 0, 0))
     pygame.display.flip()
 
-# Initialize pygame
 def init_pygame():
     pygame.init()
     screen = pygame.display.set_mode((1280, 720), RESIZABLE)  # Allow resizing
     pygame.display.set_caption('Pong Game')
     return screen
 
-# Main game loop
 async def main_game_loop(screen):
     global game_over_flag, latest_game_state, game_type, display_message, countdown_value
     running = True
@@ -157,18 +149,17 @@ async def main_game_loop(screen):
         if latest_game_state and latest_game_state.get('game_over'):
             running = False
             game_over_flag = True
-
         screen.fill((0, 0, 0))
 
         if latest_game_state:
             if not ball_started_moving and (latest_game_state['ball']['vx'] != 0 or latest_game_state['ball']['vy'] != 0):
                 ball_started_moving = True
                 clear_screen()
-                display_message = None  # Clear display message when the game starts
+                display_message = None
             draw_game_state(screen, latest_game_state)
         else:
             if DEBUG_LOG:
-                print('No game state to draw')  # Debug log
+                print('No game state to draw')
 
         if countdown_value:
             draw_message(screen, display_message)
@@ -178,11 +169,10 @@ async def main_game_loop(screen):
         pygame.display.flip()
         clock.tick(60)
 
-        # Allow other tasks to run
         await asyncio.sleep(0.01)
 
     pygame.quit()
-    sys.exit(0)  # Ensure the program exits
+    sys.exit(0)
 
 # Draw the current game state
 def draw_game_state(screen, game_state):
@@ -196,7 +186,6 @@ def draw_game_state(screen, game_state):
     scale_x = screen_width / 640
     scale_y = screen_height / 360
 
-    # Draw middle line
     draw_middle_line(screen, scale_x, scale_y)
 
     # Draw ball
@@ -218,13 +207,11 @@ def draw_game_state(screen, game_state):
     pygame.draw.rect(screen, (255, 255, 255), (paddle1_x, paddle1_y, 10 * scale_x, 70 * scale_y))
     pygame.draw.rect(screen, (255, 255, 255), (paddle2_x, paddle2_y, 10 * scale_x, 70 * scale_y))
 
-# Draw middle line
 def draw_middle_line(screen, scale_x, scale_y):
     screen_width, screen_height = screen.get_size()
     middle_x = screen_width // 2
     pygame.draw.line(screen, (255, 255, 255), (middle_x, 0), (middle_x, screen_height), int(2 * scale_x))
 
-# Draw messages on the screen
 def draw_message(screen, message):
     screen_width, screen_height = screen.get_size()
     font_size = int(40 * (screen_height / 360))
@@ -233,7 +220,6 @@ def draw_message(screen, message):
     text_rect = text.get_rect(center=(screen_width / 2, screen_height / 2))
     screen.blit(text, text_rect)
 
-# Handle SIGINT (Ctrl + C)
 def signal_handler(sig, frame):
     global game_over_flag
     print('Exiting game...')
@@ -271,30 +257,24 @@ async def update_speeds():
 async def main():
     global AUTH_TOKEN, latest_game_state, game_type
 
-    host = 'c3r5s5.42lausanne.ch'
+    host = subprocess.check_output("hostname", shell=True).decode().strip()
     username = input('Enter your username: ')
     password = input('Enter your password: ')
     game_type = input('Enter the game type (solo, 1v1, local_1v1): ')
-
     base_url = f'https://{host}:4443'
     websocket_url = f'wss://{host}:4443/ws/pong/'
 
     AUTH_TOKEN = authenticate(base_url, username, password)
     user_profile = fetch_user_profile(base_url, AUTH_TOKEN)
     print(f'Logged in as {user_profile["username"]}')
-
-    # Register signal handler for SIGINT
     signal.signal(signal.SIGINT, signal_handler)
-
     screen = init_pygame()
     latest_game_state = None
 
-    # Create tasks for WebSocket and game loop
     websocket_task = asyncio.create_task(handle_websocket(game_type, user_profile['username'], AUTH_TOKEN, websocket_url))
     game_loop_task = asyncio.create_task(main_game_loop(screen))
 
     try:
-        # Wait for both tasks to complete
         await asyncio.gather(websocket_task, game_loop_task)
     except SystemExit:
         pass
