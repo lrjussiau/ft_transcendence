@@ -2,8 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Q
 from db.models import Friend, User
 from friends.serializers import FriendRequestSerializer
+import logging
+
+logger = logging.getLogger(__name__)
 
 class AddFriendView(APIView):
     permission_classes = [IsAuthenticated]
@@ -26,23 +30,25 @@ class AddFriendView(APIView):
 
 class DeleteFriendView(APIView):
     permission_classes = [IsAuthenticated]
-
     def post(self, request):
         friend_id = request.data.get('friend_id')
+        logger.info(f"DeleteFriendView post method called: {friend_id}")
+        user_id = request.user.id
+        logger.info(f"DeleteFriendView post method called:{user_id} ")
         if not friend_id:
             return Response({'error': 'Friend ID not provided'}, status=status.HTTP_400_BAD_REQUEST)
+        friendships = Friend.objects.filter(
+            (Q(user_id=user_id, friend_id=friend_id) | Q(user_id=friend_id, friend_id=user_id))
+        )
 
-        try:
-            friend = User.objects.get(id=friend_id)
-        except User.DoesNotExist:
-            return Response({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-        friendship = Friend.objects.filter(user=request.user, friend=friend).first()
-        if not friendship:
+        if not friendships.exists():
             return Response({'error': 'Friend not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        friendship.delete()
-        return Response({'success': 'Friend deleted successfully'}, status=status.HTTP_200_OK)
+        deleted_count, _ = friendships.delete()
+
+        return Response({
+            'success': f'Friend deleted successfully. {deleted_count} record(s) were deleted.'
+        }, status=status.HTTP_200_OK)
 
 class BlockFriendView(APIView):
     permission_classes = [IsAuthenticated]

@@ -4,16 +4,32 @@ from rest_framework.views import APIView
 from .models import ChatRoom, Message
 from .serializers import ChatRoomSerializer, MessageSerializer
 from django.db.models import Q
-from db.models import User  # Changed import to use User from db.models
+from db.models import User, Friend  # Changed import to use User from db.models
 
 class ChatRoomList(generics.ListAPIView):
     serializer_class = ChatRoomSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     return ChatRoom.objects.filter(Q(user1=user) | Q(user2=user))
     def get_queryset(self):
         user = self.request.user
-        return ChatRoom.objects.filter(Q(user1=user) | Q(user2=user))
-    
+
+        # Get the IDs of blocked users
+        blocked_users = Friend.objects.filter(
+            Q(user=user, status='blocked') | Q(friend=user, status='blocked')
+        ).values_list('user', 'friend')
+
+        # Flatten the list of tuples and remove the user's own ID
+        blocked_ids = set([uid for pair in blocked_users for uid in pair if uid != user.id])
+
+        # Filter ChatRooms
+        return ChatRoom.objects.filter(
+            (Q(user1=user) | Q(user2=user)) &
+            ~Q(user1__in=blocked_ids) &
+            ~Q(user2__in=blocked_ids)
+        )
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)

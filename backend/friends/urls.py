@@ -1,7 +1,7 @@
 from django.urls import path
 #from . import views
-from .views import *
-"""(
+#from .views import *
+from .views import (
     AddFriendView, 
     IncomingFriendRequestsView, 
     OutgoingFriendRequestsView, 
@@ -12,7 +12,7 @@ from .views import *
     BlockFriendView,
     PendingFriendsListView,
     BlockedFriendsListView
-)"""
+)
 
 urlpatterns = [
     path('add/', AddFriendView.as_view(), name='add-friend'),
@@ -24,5 +24,5 @@ urlpatterns = [
     path('requests/respond/<int:request_id>/', RespondFriendRequestView.as_view(), name='respond-friend-request'),
     path('', FriendsListView.as_view(), name='friends-list'),
     path('pending/', PendingFriendsListView.as_view(), name='pending-friends-list'),
-     path('blocked/', BlockedFriendsListView.as_view(), name='blocked-friends-list'),
+    path('blocked/', BlockedFriendsListView.as_view(), name='blocked-friends-list'),
 ]
