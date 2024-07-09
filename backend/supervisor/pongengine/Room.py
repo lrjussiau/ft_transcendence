@@ -78,6 +78,19 @@ class Room:
             'message': 'Waiting for opponent to join...'
         })
 
+        player_info = [
+            {
+                'player_num': p.player_num,
+                'username': p.user.username,
+                'avatar': p.user.avatar.url if p.user.avatar else None
+            } 
+            for p in self.players
+        ]
+
+        await self.broadcast_message({
+            'type': 'player_info',
+            'players': player_info
+        })
 
     def delete_room(self):
         if self.id in Room.rooms:

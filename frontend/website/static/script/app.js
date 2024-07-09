@@ -34,6 +34,8 @@ let countdownValue = null;
 let latestGameState = null;
 let selectedGameType = null;
 let go_next_round = false;
+let player1Info = null;
+let player2Info = null;
 let userData = null;
 let player1Speed = 0;
 let player2Speed = 0;
@@ -96,6 +98,9 @@ async function startGame(gameType) {
                           console.log('Round ended Triggered');
                           navigateToBracketView(data.tournament_details);
                           break;
+                      case 'player_info':
+                          updatePlayerInfo(data.players);
+                          break;
                       default:
                           console.error(`Unsupported data type: ${data.type}`);
                           break;
@@ -156,6 +161,69 @@ function sendPlayerReady() {
   }, 100);
 }
 
+// Add this new function to handle player info updates
+function updatePlayerInfo(players) {
+  players.forEach(player => {
+      if (player.player_num === 1) {
+          player1Info = player;
+      } else if (player.player_num === 2) {
+          player2Info = player;
+      }
+  });
+  displayPlayerInfo();
+}
+
+async function displayPlayerInfo() {
+  const currentUserProfile = await fetchUserProfile();
+  const currentUserName = currentUserProfile.username;
+
+  console.log('Player 1:', player1Info);
+  console.log('Player 2:', player2Info);
+
+  let leftPlayerInfo = player1Info;
+  let rightPlayerInfo = player2Info;
+
+  // Determine if the current user is player 1 or player 2
+  if (player2Info && player2Info.username === currentUserName) {
+      leftPlayerInfo = player2Info;
+      rightPlayerInfo = player1Info;
+  }
+
+  // If the game type is solo, set the right player as AI
+  if (selectedGameType === 'solo') {
+      rightPlayerInfo = {
+          username: 'IA',
+          avatar: 'path/to/default/avatar/for/IA.png' // Set a default avatar for AI
+      };
+  }
+  if (selectedGameType === 'local_1v1') {
+    rightPlayerInfo = {
+        username: 'Player 2',
+        avatar: 'path/to/default/avatar/for/IA.png' // Set a default avatar for AI
+    };
+}
+
+  // Get HTML elements for player info
+  const player1Element = document.getElementById('player-1-img');
+  const player1NameElement = document.getElementById('player-1-name').querySelector('h5');
+  const player2Element = document.getElementById('player-2-img');
+  const player2NameElement = document.getElementById('player-2-name').querySelector('h5');
+
+  // Update HTML elements with player info
+  if (leftPlayerInfo) {
+      player1Element.src = leftPlayerInfo.avatar;
+      player1Element.alt = `Avatar of ${leftPlayerInfo.username}`;
+      player1NameElement.textContent = leftPlayerInfo.username;
+  }
+
+  if (rightPlayerInfo) {
+      player2Element.src = rightPlayerInfo.avatar;
+      player2Element.alt = `Avatar of ${rightPlayerInfo.username}`;
+      player2NameElement.textContent = rightPlayerInfo.username;
+  }
+}
+
+
 //-------------------- RESPONSE LOGIC ----------------------//
 
 function connection(gameType) {
@@ -176,6 +244,8 @@ function stopGame() {
   gameOver = false;
   countdownValue = null;
   playerReadySent = false;
+  player1Info = null;
+  player2Info = null;
 }
 
 function assignPlayer(data) {
