@@ -41,7 +41,7 @@ async function deleteFriend(friendId) {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ friend_id: friendId })
+        body: JSON.stringify({ friend_id: friendId})
     });
 
     if (response.ok) {
@@ -230,8 +230,7 @@ async function displayFriends() {
                 deleteButton.addEventListener('click', () => {
                     // Implement the delete friend functionality here
                     alert("FRiend deleted");
-                    deleteFriend(friend.id)
-                    //deleteFriend(friend.friend.id);
+                    deleteFriend(friend.friend.id)
                 });
 
                 const blockButton = document.createElement('button');

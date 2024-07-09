@@ -230,7 +230,7 @@ function setupSettingsPage() {
     document.getElementById('theme-toggle').addEventListener('change', handleThemeToggle);
     document.getElementById('toggle-2fa').addEventListener('click', handle2FAToggle);
     document.getElementById('apply-notifications').addEventListener('click', handleNotificationSettings);
-    document.getElementById('apply-language').addEventListener('click', handleLanguageChange);
+    //document.getElementById('apply-language').addEventListener('click', handleLanguageChange);
 
     fetch('/api/authentication/user/profile/', {
         headers: {
