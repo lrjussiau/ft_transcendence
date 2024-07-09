@@ -1,12 +1,21 @@
 import json
+from django.utils import timezone
 import requests
 from django.http import JsonResponse
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from django.db.models import Q
+from db.models import Games, User
+from .serializers import GameRetrieveSerializer
+from datetime import datetime
 
-@csrf_exempt   #Use this decorator if you're testing with POST requests from non-browser clients
+@csrf_exempt
 def endpoint_handler(request, operation_requested):
-    if request.content_type == 'application/json': # should be json
+    if request.content_type == 'application/json':
         data = json.loads(request.body)
     if operation_requested == 'record_score':
         return record_score(data.get('game_id'), data.get('score_loser'),data.get('loser'), data.get('winner'))
@@ -14,7 +23,7 @@ def endpoint_handler(request, operation_requested):
         print("should go here")
         return retrieve_score(data.get('game_id'))
     else:
-        return HttpResponse(status=404)  # Not Found
+        return HttpResponse(status=404)
 
 def record_score(game_id, score_loser, loser, winner):
     blockchain_endpoint = "http://blockchain:3000/record_score"
@@ -54,3 +63,38 @@ def retrieve_score(game_id):
 
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+
+class IntegrityCheck(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def check_scores_integrity(self, games):
+        for game in games:
+            if game['is_tournament_game']:
+                response = retrieve_score(game['game_id'])
+                if response.status_code != 200:
+                    return False
+                if not (response.score_loser == game['score_loser'] and 
+                        response.loser == game['loser'] and 
+                        response.winner == game['winner']):
+                    return False
+        return True
+
+    def get(self, request, user_id):
+        matches = Games.objects.filter(Q(winner__id=user_id) | Q(loser__id=user_id))
+        serializer = GameRetrieveSerializer(matches, many=True)
+        games = serializer.data
+        
+        check_time = timezone.now().isoformat()
+        
+        if self.check_scores_integrity(games):
+            return Response({
+                "status": "OK",
+                "message": "DataIntegrityCheckPassed",
+                "check_time": check_time
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({
+                "status": "KO",
+                "message": "DataIntegrityCheckFailed",
+                "check_time": check_time
+            }, status=status.HTTP_200_OK)

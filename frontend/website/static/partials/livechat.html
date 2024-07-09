@@ -1,34 +1,16 @@
 <div class="chat-container">
   <div class="chat-area">
     <div class="chat-header">
-        <h5 class="player-name chat-username"><span id="username">Live Chat</span></h5>
+        <h5 class="player-name chat-username"><span id="username" data-i18n="liveChat">Live Chat</span></h5>
         <div class="img-container chat-img-container" style="display: none">
           <img src="http://localhost:8080/media/avatars/default_avatar.png" alt="player-img" class="chat-img">
         </div>
     </div>
       <div class="messages" id="messages">
-          <!-- <div class="message left">
-              <p class="text">Hi, can you tell me if you have availability next weekend?</p>
-          </div>
-          <div class="message right">
-              <p class="text">Hi Chris! Yes, we have our Deluxe room available. Would you like me to direct you to the booking page?</p>
-          </div>
-          <div class="message left">
-              <p class="text">Yes please</p>
-          </div>
-          <div class="message right">
-              <p class="text"><a class="link" href="https://www.calafellhome.com/bookings" target="_blank">www.calafellhome.com/bookings</a></p>
-          </div>
-          <div class="message left">
-              <p class="text">Thank you</p>
-          </div>
-          <div class="message right">
-              <p class="text">Thanks to you</p>
-          </div> -->
       </div>
       <div class="input-area">
-          <input type="text" placeholder="Type a message..." id="messageInput" class="input-message" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-          <button onclick="sendMessage()" class="send-message">Send</button>
+          <input type="text" data-i18n="[placeholder]typeMessage" placeholder="Type a message..." id="messageInput" class="input-message" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <button onclick="sendMessage()" class="send-message" data-i18n="send">Send</button>
       </div>
   </div>
   <div class="sidebar-chat">
@@ -37,25 +19,9 @@
       <img src="http://localhost:8080/media/avatars/default_avatar.png" alt="User Picture">
   </div>
   <div class="search-bar">
-      <input type="text" placeholder="Search...">
+      <input type="text" data-i18n="[placeholder]search" placeholder="Search...">
   </div>
   <div class="room-history">
-      <!-- <div class="room-preview">
-          <img src="http://localhost:8080/media/avatars/default_avatar.png" alt="Chat Picture" class="chat-picture-online">
-          <p>Val</p>
-      </div>
-      <div class="room-preview">
-          <img src="http://localhost:8080/media/avatars/default_avatar.png" alt="Chat Picture" class="chat-picture">
-          <p>Sabino</p>
-      </div>
-      <div class="room-preview">
-          <img src="http://localhost:8080/media/avatars/default_avatar.png" alt="Chat Picture" class="chat-picture-online">
-          <p>User 2</p>
-      </div>
-      <div class="room-preview">
-        <img src="http://localhost:8080/media/avatars/default_avatar.png" alt="Chat Picture" class="chat-picture">
-        <p>Un guss</p>
-      </div> -->
     </div>
   </div>
 </div>

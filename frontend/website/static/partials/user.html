@@ -1,22 +1,23 @@
-<div class="user">
+<!-- <div class="user">
     <div class="stat-panel">
       <div class="player-card">
         <h4 class="player-name username"><span id="username"></h4>
+        <button class="btn btn-primary modal-trigger" data-modal="integrityModal" data-html="/static/modals/modals.html" id="checkIntegrityBtn" data-i18n="checkTournamentScoresIntegrity">Check Tournament Score Integrity</button>
         <button class="btn-link modal-trigger player-img" data-modal="avatarModal" data-html="/static/modals/modals.html">
           <img src="https://www.w3schools.com/howto/img_avatar.png" alt="player-img" class="img-fluid">
         </button>
       </div>
       <div class="player-stats">
         <div class="stat-win">
-          <h4 class="stat-title linear-title">Wins</h3>
+          <h4 class="stat-title linear-title" data-i18n="wins">Wins</h3>
           <p class="stat-value" id="wins">0</p>
         </div>
         <div class="stat-lose">
-          <h4 class="stat-title linear-title">Losses</h3>
+          <h4 class="stat-title linear-title" data-i18n="losses">Losses</h3>
           <p class="stat-value" id="loses">0</p>
         </div>
         <div class="stat-ratio">
-          <h4 class="stat-title linear-title">Ratio</h3>
+          <h4 class="stat-title linear-title" data-i18n="ratio">Ratio</h3>
           <p class="stat-value" id="ratio">0</p>
         </div>
       </div>
@@ -24,24 +25,25 @@
         <table class="match-stat" id="gameTable">
           <thead>
               <tr>
-                  <th class="header-class opponent">Opponent</th>
-                  <th class="header-class result">Result</th>
-                  <th class="header-class score_game">score</th>
-                  <th class="header-class is_tournament">tournament_game</th>
-                  <th class="header-class date">date/time</th>
+                  <th class="header-class opponent" data-i18n="opponent">Opponent</th>
+                  <th class="header-class result" data-i18n="result">Result</th>
+                  <th class="header-class score_game" data-i18n="score">score</th>
+                  <th class="header-class is_tournament" data-i18n="tournamentGame">tournament_game</th>
+                  <th class="header-class date" data-i18n="datTime">date/time</th>
               </tr>
           </thead>
           <tbody id="gameTableBody">
-              <!-- This will be filled dynamically -->
+
           </tbody>
       </table>
     </div>
     </div>
+    </div>
     <div class="friend-panel">
       <div class="friends">
-        <h4 class="linear-title friend-title">Amis</h2>
+        <h4 class="linear-title friend-title" data-i18n="friends">Tony</h2>
         <div id="pendingRequests" class="pending-requests">
-            <h6>Pending Requests</h6>
+            <h6  data-i18n="pendingRequests">Pending Requests</h6>
             <ul class="friend-list" id="pendingFriendList">
               <li class="pending-friend-item">
                 <img src="null" alt="player-img" class="img-fluid pending-friend-img">
@@ -52,7 +54,7 @@
             </ul>
         </div>
         <div id="acceptedFriends" class="accepted-friends">
-            <h6>Friends</h6>
+            <h6 data-i18n="friends">Friends</h6>
             <ul class="friend-list" id="friendList">
               <li class="accepted-friend-item">
                 <img src="null" alt="player-img" class="img-fluid accepted-friend-img">
@@ -61,12 +63,86 @@
             </ul>
         </div>
         <div class="friend-button">
-            <button class="modal-button modal-trigger" data-modal="friendModal" data-html="/static/modals/modals.html">Ajouter un ami</button>
+            <button class="modal-button modal-trigger" data-modal="friendModal" data-html="/static/modals/modals.html" data-i18n="addFriend">Add a friend</button>
         </div>
       </div>
       <div class="citation">
         <img src="static/img/Arrow2.png" alt="arrow-img" class="img-fluid arrow2">
-        <p class="message-front message-user">Il parait que t'as des potes</p>
+        <p class="message-front message-user" data-i18n="seemsLikeYouHaveFriends">seemsLikeYouHaveFriends</p>
       </div>
+    </div>
+  </div> -->
+
+  <div class="user">
+    <div class="stat-panel">
+      <div class="player-card">
+        <h4 class="player-name username"><span id="username"></h4>
+        <button class="btn-link modal-trigger player-img" data-modal="avatarModal" data-html="/static/modals/modals.html">
+          <img src="https://www.w3schools.com/howto/img_avatar.png" alt="player-img" class="img-fluid">
+        </button>
+      </div>
+      <div class="player-stats">
+        <div class="stat-win">
+          <h4 class="stat-title linear-title" data-i18n="wins">Wins</h3>
+          <p class="stat-value" id="wins">0</p>
+        </div>
+        <div class="stat-lose">
+          <h4 class="stat-title linear-title" data-i18n="losses">Losses</h3>
+          <p class="stat-value" id="loses">0</p>
+        </div>
+        <div class="stat-ratio">
+          <h4 class="stat-title linear-title" data-i18n="ratio">Ratio</h3>
+          <p class="stat-value" id="ratio">0</p>
+        </div>
+      </div>
+      <div class="table-container">
+        <table class="match-stat" id="gameTable">
+          <thead>
+              <tr>
+                  <th class="header-class opponent" data-i18n="opponent">Opponent</th>
+                  <th class="header-class result" data-i18n="result">Result</th>
+                  <th class="header-class score_game" data-i18n="score">score</th>
+                  <th class="header-class is_tournament" data-i18n="tournamentGame">tournament_game</th>
+                  <th class="header-class date" data-i18n="datTime">date/time</th>
+              </tr>
+          </thead>
+          <tbody id="gameTableBody">
+              <!-- This will be filled dynamically -->
+          </tbody>
+      </table>
+    </div>
+    </div>
+    <div class="friend-panel">
+      <div class="friends">
+        <h4 class="linear-title friend-title" data-i18n="friends">Tony</h2>
+        <div id="pendingRequests" class="pending-requests">
+            <h6  data-i18n="pendingRequests">Pending Requests</h6>
+            <ul class="friend-list" id="pendingFriendList">
+              <li class="pending-friend-item">
+                <img src="null" alt="player-img" class="img-fluid pending-friend-img">
+                <div class="pending-friend-name">Sabino</div>
+                <button class="btn-sm btn-success">Accept</button>
+                <button class="btn-sm btn-danger">Reject</button>
+              </li>
+            </ul>
+        </div>
+        <div id="acceptedFriends" class="accepted-friends">
+            <h6 data-i18n="friends">Friends</h6>
+            <ul class="friend-list" id="friendList">
+              <li class="accepted-friend-item">
+                <img src="null" alt="player-img" class="img-fluid accepted-friend-img">
+                <div class="accepted-friend-name">Sabino</div>
+              </li>
+            </ul>
+        </div>
+        <div class="friend-button">
+            <button class="modal-button modal-trigger" data-modal="friendModal" data-html="/static/modals/modals.html" data-i18n="addFriend">Add a friend</button>
+        </div>
+      </div>
+      <div class="citation">
+        <img src="static/img/Arrow2.png" alt="arrow-img" class="img-fluid arrow2">
+        <p class="message-front message-user" data-i18n="seemsLikeYouHaveFriends">seemsLikeYouHaveFriends</p>
+      </div>
+      <button class="modal-button modal-trigger" data-modal="integrityModal" data-html="/static/modals/modals.html" id="checkIntegrityBtn" data-i18n="checkTournamentScoresIntegrity">Check Tournament Score Integrity</button>
     </div>
   </div>

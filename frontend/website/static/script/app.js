@@ -11,7 +11,7 @@ async function fetchUserProfile() {
 
   if (response.ok) {
     const data = await response.json();
-    console.log('Fetched user profile:', data);
+    //console.log('Fetched user profile:', data);
     return data;
   } else {
     throw new Error('Failed to fetch user profile');
@@ -56,7 +56,7 @@ async function startGame(gameType) {
 
       const checkCanvasInterval = setInterval(() => {
           const canvas = document.getElementById('gameCanvas');
-          console.log('Checking for canvas element...');
+          //console.log('Checking for canvas element...');
           if (canvas) {
               clearInterval(checkCanvasInterval);
 
@@ -233,6 +233,12 @@ function updateGameState(data) {
         scoreElements[0].textContent = data.s1;
         scoreElements[1].textContent = data.s2;
     }
+      draw();
+    }
+  if (data.type === 'game_start') {
+    //console.log('Game starting');
+    countdownValue = null;
+    gameState = data.initial_state;
     draw();
     if (data.type === 'countdown') {
         countdownValue = data.value;

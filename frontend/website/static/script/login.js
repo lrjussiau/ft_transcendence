@@ -8,7 +8,7 @@ function setupLoginForm() {
   if (form) {
     form.addEventListener("submit", async function(event) {
       event.preventDefault();
-      console.log("Form submission prevented");
+      //console.log("Form submission prevented");
 
       if (isSubmitting) return;
       isSubmitting = true;
@@ -106,7 +106,7 @@ function setup2FAVerificationForm(username) {
 function handleSuccessfulLogin(data) {
   localStorage.setItem("authToken", data.access);
   localStorage.setItem("refreshToken", data.refresh);
-  console.log("Login successful");
+  //console.log("Login successful");
   
   modalClosedByUser = false;  // Add this line
   
@@ -115,7 +115,7 @@ function handleSuccessfulLogin(data) {
   hideModal('twoFAVerificationModal');
   
   const initialRoute = localStorage.getItem('initialRoute') || '/home';
-  console.log("Navigating to:", initialRoute);  // Debug log
+  //console.log("Navigating to:", initialRoute);  // Debug log
   
   window.history.pushState({}, '', initialRoute);
   handleRoute(initialRoute.split('/')[1]);

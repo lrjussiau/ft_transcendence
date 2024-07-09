@@ -6,18 +6,14 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Example endpoint to send data to the blockchain
 app.post('/record_score', async (req, res) => {
     const { game_id, score_loser, loser, winner} = req.body;
 
     try {
-        // Path to your script
         const scriptPath = path.join(__dirname, 'scripts', 'recordScore.js');
         
-        // Execute the script
         exec(`node ${scriptPath} ${game_id} ${score_loser} ${loser} ${winner}`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error executing script: ${error}`);
@@ -31,15 +27,14 @@ app.post('/record_score', async (req, res) => {
     }
 });
 
-// Example endpoint to get data from the blockchain
+
 app.post('/retrieve_score', async (req, res) => {
     const { game_id } = req.body;
 
     try {
-        // Path to your script
         const scriptPath = path.join(__dirname, 'scripts', 'retrieveScore.js');
 
-        // Execute the script
+
         exec(`node ${scriptPath} ${game_id}`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error executing script: ${error}`);
@@ -53,7 +48,7 @@ app.post('/retrieve_score', async (req, res) => {
     }
 });
 
-// Start the server
+//to change?
 app.listen(port, () => {
     console.log(`Blockchain API server listening at http://localhost:${port}`);
 });

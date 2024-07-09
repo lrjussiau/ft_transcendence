@@ -37,9 +37,9 @@ async function defineStats() {
     
     let win_loss_ratio;
     if (num_losses > 0) {
-        win_loss_ratio = num_wins / num_losses;
+        win_loss_ratio = (num_wins / num_losses).toFixed(2);
     } else {
-        win_loss_ratio = num_wins;
+        win_loss_ratio = num_wins.toFixed(2);
     }
     
     document.getElementById('wins').textContent = num_wins;
@@ -55,7 +55,7 @@ async function gameHistory() {
         const response = await fetchGames(user.id);
         //console.error('Games: ', response);
         if (!response.status === 200) {
-            console.log('Games: ', response.status);
+            //console.log('Games: ', response.status);
             throw new Error('Failed to fetch games');
         }
         //const games = data.matches;
@@ -64,7 +64,7 @@ async function gameHistory() {
 
         response.forEach(game => {
             const row = document.createElement('tr');
-            console.log('Games: ', game.winner.username);
+            //console.log('Games: ', game.winner.username);
             const isWinner = game.winner.id === user.id ? true:false;
             const opponent = isWinner ? game.loser : game.winner;
             const is_tournament = game.is_tournament_game;
@@ -72,18 +72,17 @@ async function gameHistory() {
             const score_winner = 5;
 
             row.innerHTML = `
-                <td class="opponent">
-                    <div class="opponent-card">
-                        <img src="${'https://www.w3schools.com/howto/img_avatar.png'}" alt="player-img" class="img-fluid">
-                        <div class="opponent-name">${opponent.username}</div>
-                    </div>
-                </td>
-                <td class="result">${isWinner ? 'Won' : 'Lost :('}</td>
-                <td class="score_game">${score_loser} - ${score_winner}</td>
-                <td class="is_tournament">${is_tournament ? 'yes->checked by blockchain :)':'Nope'}</td>
-                <td class="data">${formatDate(game.match_date)}</td>
-            `;
-
+            <td class="opponent">
+                <div class="opponent-card">
+                    <img src="${opponent.avatar}" alt="player-img" class="img-fluid">
+                    <div class="opponent-name">${opponent.username}</div>
+                </div>
+            </td>
+            <td class="result" data-i18n="${isWinner ? 'winner' : 'loser'}"></td>
+            <td class="score_game">${score_loser} - ${score_winner}</td>
+            <td class="is_tournament" data-i18n=${is_tournament ? 'isTournament':'isNotTournament'}></td>
+            <td class="data">${formatDate(game.match_date)}</td>
+        `;
             gameTableBody.appendChild(row);
         });
     } catch (error) {

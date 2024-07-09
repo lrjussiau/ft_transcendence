@@ -1,6 +1,6 @@
 function setupAvatarForm() {
     const avatarForm = document.getElementById('avatarForm');
-    console.log('Avatar form loaded:', avatarForm !== null);
+    //console.log('Avatar form loaded:', avatarForm !== null);
 
     if (avatarForm) {
         const fileInput = document.querySelector('.file-input');
@@ -31,7 +31,7 @@ function setupAvatarForm() {
                 }
 
                 const data = await response.json();
-                console.log('Success:', data);
+                //console.log('Success:', data);
                 $('#avatarModal').modal('hide');
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
@@ -123,7 +123,7 @@ function setupChangeAvatar() {
                 }
 
                 const data = await response.json();
-                console.log('Success:', data);
+                //console.log('Success:', data);
                 $('#avatarModal').modal('hide');
                 loadUserProfile();
             } catch (error) {

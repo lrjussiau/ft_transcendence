@@ -1,64 +1,65 @@
 <div class="settings-container">
   <div class="settings-section">
-    <h5>Account Information</h5>
+    <h5 data-i18n="accountInformation">Account Information</h5>
     <div class="account-buttons">
-      <button data-modal="usernameChangeModal" data-html="/static/modals/modals.html" class="setting-account-btn modal-trigger">Change Username</button>
-      <button data-modal="emailChangeModal" data-html="/static/modals/modals.html" class="setting-account-btn modal-trigger">Change Email</button>
-      <button data-modal="passwordChangeModal" data-html="/static/modals/modals.html" class="setting-account-btn modal-trigger">Change Password</button>
+      <button data-modal="usernameChangeModal" data-html="/static/modals/modals.html" class="setting-account-btn modal-trigger" data-i18n="changeUsername">Change Username</button>
+      <button data-modal="emailChangeModal" data-html="/static/modals/modals.html" class="setting-account-btn modal-trigger" data-i18n="changeEmail">Change Email</button>
+      <button data-modal="passwordChangeModal" data-html="/static/modals/modals.html" class="setting-account-btn modal-trigger" data-i18n="changePassword">Change Password</button>
     </div>
   </div>
   <div class="settings-section app-sec">
     <div class="appearance">
-      <h5>Appearance</h5>
+      <h5 data-i18n="appearance">Appearance</h5>
       <div class="theme-toggle">
-        <span>Light</span>
+        <span data-i18n="light">Light</span>
         <label class="switch">
           <input type="checkbox" id="theme-toggle">
           <span class="slider round"></span>
         </label>
-        <span>Dark</span>
+        <span data-i18n="dark">Dark</span>
       </div>
     </div>
 
     <div class="security">
-      <h5>Security</h5>
+      <h5 data-i18n="security">Security</h5>
       <div class="btn-center">
-        <button id="toggle-2fa" class="btn-play validate-btn">Enable 2FA</button>
+        <button id="toggle-2fa" class="btn-play validate-btn" required data-i18n="enable2FA">Enable 2FA</button>
       </div>
     </div>
   </div>
 
   <div class="settings-section">
-    <h5>Notifications</h5>
+    <h5 data-i18n="notifications">Notifications</h5>
     <div class="notifications">
       <div class="checkbox-group">
         <input type="checkbox" id="email-notifications">
-        <label for="email-notifications">Receive email notifications</label>
+        <label for="email-notifications" data-i18n="receiveEmailNotifications">Receive email notifications</label>
       </div>
       <div class="checkbox-group">
         <input type="checkbox" id="push-notifications">
-        <label for="push-notifications">Receive push notifications</label>
+        <label for="push-notifications" data-i18n="receivePushNotifications">Receive push notifications</label>
       </div>
     </div>
     <div class="btn-center">
-      <button id="apply-notifications" class="btn-play validate-btn">Apply Changes</button>
+      <button id="apply-notifications" class="btn-play validate-btn" data-i18n="applyChanges">Apply Changes</button>
     </div>
   </div>
 
   <div class="settings-section">
-    <h5>Language</h5>
+    <h5 data-i18n="language">Language</h5>
     <select id="language-select">
       <option value="en">English</option>
       <option value="fr">Français</option>
       <option value="es">Español</option>
+      <option value="is">íslenska</option>
     </select>
     <div class="btn-center">
-      <button id="apply-language" class="btn-play validate-btn">Apply Changes</button>
+      <button id="apply-language" class="btn-play validate-btn" data-i18n="applyChanges">Apply Changes</button>
     </div>
   </div>
 
   <div class="settings-section danger-zone">
-    <h5>Danger Zone</h5>
-    <button data-modal="deleteAccountModal" data-html="/static/modals/modals.html" class="refuse-btn modal-trigger">Delete Account</button>
+    <h5 data-i18n="dangerZone">Danger Zone</h5>
+    <button data-modal="deleteAccountModal" data-html="/static/modals/modals.html" class="refuse-btn modal-trigger" data-i18n="deleteAccount">Delete Account</button>
   </div>
 </div>

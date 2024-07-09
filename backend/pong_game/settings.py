@@ -9,7 +9,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/staticfiles/'
 
-# Additional locations of static files
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
@@ -27,7 +26,6 @@ if not hostname:
 ALLOWED_HOSTS = ['*']
 
 
-# Cookies sécurisés
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
@@ -174,7 +172,6 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Configuration de logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -200,7 +197,7 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
         },
-        'supervisor.pongengine': {  # Assurez-vous que ce chemin correspond bien au module que vous utilisez
+        'supervisor.pongengine': {
             'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': False,
@@ -212,10 +209,8 @@ LOGGING = {
 # For development (prints emails to console)
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# SendGrid settings
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL') 
 
-# You can keep these email settings as well
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = 587

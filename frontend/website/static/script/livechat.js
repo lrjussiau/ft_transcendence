@@ -44,7 +44,7 @@ async function displayChatRooms() {
 }
 
 async function fetchChatRooms() {
-    const response = await fetch('/api/chat/rooms/', {
+    const response = await fetch('/api/livechat/rooms/', {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }
@@ -74,7 +74,7 @@ function createRoomButton(roomId, otherUser) {
 async function loadChatRoom(roomId) {
     try {
         const room = await fetchChatRoomDetails(roomId);
-        console.log('Room Info : ', room);
+        //console.log('Room Info : ', room);
         const otherUser = room.user1.id === currentUserId ? room.user2 : room.user1;
 
         updateChatHeader(otherUser);
@@ -89,7 +89,7 @@ async function loadChatRoom(roomId) {
 }
 
 async function fetchChatRoomDetails(roomId) {
-    const response = await fetch(`/api/chat/rooms/${roomId}/`, {
+    const response = await fetch(`/api/livechat/rooms/${roomId}/`, {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }
@@ -103,10 +103,10 @@ function updateChatHeader(otherUser) {
     const avatarContainer = document.querySelector('.chat-img-container');
     const avatarImg = document.querySelector('.chat-img');
 
-    console.log('Other User:', otherUser);
+    //console.log('Other User:', otherUser);
     if (otherUser) {
         usernameSpan.textContent = otherUser.username;
-        console.log('Avatar:', otherUser.avatar);
+        //console.log('Avatar:', otherUser.avatar);
         avatarImg.src = otherUser.avatar;
         avatarImg.alt = `${otherUser.username}'s avatar`;
         avatarContainer.style.display = 'block';
@@ -128,7 +128,7 @@ async function loadPreviousMessages(roomId) {
 }
 
 async function fetchMessages(roomId) {
-    const response = await fetch(`/api/chat/rooms/${roomId}/messages/`, {
+    const response = await fetch(`/api/livechat/rooms/${roomId}/messages/`, {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }
@@ -153,7 +153,7 @@ function setupWebSocket(roomId) {
 }
 
 function handleWebSocketMessage(event) {
-    console.log('Received WebSocket message:', event.data);
+    //console.log('Received WebSocket message:', event.data);
     const data = JSON.parse(event.data);
     displayMessage(data.message, data.user_id);
 }
@@ -215,14 +215,14 @@ function clearChat() {
 
 // Start chat function (to be called from other parts of the app)
 async function startChat(friendId, friendName) {
-    console.log(`Starting chat with ${friendName} (ID: ${friendId})`);
+    //console.log(`Starting chat with ${friendName} (ID: ${friendId})`);
     try {
         const chatRoom = await createOrGetChatRoom(friendId);
-        console.log('Chat room created or retrieved:', chatRoom);
+        //console.log('Chat room created or retrieved:', chatRoom);
         
         localStorage.setItem('currentChatRoom', JSON.stringify(chatRoom));
 
-        console.log('Loading chat room:', chatRoom.id);
+        //console.log('Loading chat room:', chatRoom.id);
         
         window.history.pushState({}, '', '/livechat');
         handleRoute('livechat');

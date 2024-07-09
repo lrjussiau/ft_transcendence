@@ -61,7 +61,7 @@ class CreateChatRoom(APIView):
         except User.DoesNotExist:
             return Response({"error": "User2 does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-        # Check if a room already exists
+
         existing_room = ChatRoom.objects.filter(
             (Q(user1_id=user1_id, user2_id=user2_id) |
              Q(user1_id=user2_id, user2_id=user1_id))
@@ -71,7 +71,7 @@ class CreateChatRoom(APIView):
             serializer = ChatRoomSerializer(existing_room)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        # Create new room
+
         new_room = ChatRoom.objects.create(user1_id=user1_id, user2_id=user2_id)
         serializer = ChatRoomSerializer(new_room)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

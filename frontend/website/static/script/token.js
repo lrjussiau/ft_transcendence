@@ -54,7 +54,7 @@ function parseJwt(token) {
   
   // Function to check and refresh the token if needed
   async function checkAndRefreshToken() {
-    console.log('Checking token...');
+    //console.log('Checking token...');
     let token = localStorage.getItem('authToken');
   
     if (isTokenExpired(token)) {

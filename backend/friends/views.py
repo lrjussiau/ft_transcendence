@@ -27,7 +27,7 @@ class AddFriendView(APIView):
 class DeleteFriendView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def delete(self, request):
+    def post(self, request):
         friend_id = request.data.get('friend_id')
         if not friend_id:
             return Response({'error': 'Friend ID not provided'}, status=status.HTTP_400_BAD_REQUEST)
@@ -97,7 +97,6 @@ class RespondFriendRequestView(APIView):
 
         if action == 'accept':
             friend_request.status = 'Accepted'
-            # Create reciprocal relationship
             Friend.objects.create(user=request.user, friend=friend_request.user, status='Accepted')
         elif action == 'reject':
             friend_request.status = 'Rejected'

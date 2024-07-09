@@ -1,3 +1,8 @@
+/*import i18next from 'i18next';
+import HttpBackend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';*/
+
+
 function setupUsernameChangeModal() {
     const form = document.getElementById('username-change-form');
     const errorDiv = document.getElementById('username-change-error');
@@ -103,7 +108,7 @@ function setupPasswordChangeModal() {
 
 function handleThemeToggle(event) {
     const isDarkMode = event.target.checked;
-    console.log('Dark mode enabled:', isDarkMode);
+    //console.log('Dark mode enabled:', isDarkMode);
     if (isDarkMode) {
         document.documentElement.setAttribute('data-theme', 'dark');
     } else {
@@ -114,7 +119,7 @@ function handleThemeToggle(event) {
 
 function setInitialTheme() {
     const savedTheme = localStorage.getItem('theme');
-    console.log('Saved theme:', savedTheme);
+    //console.log('Saved theme:', savedTheme);
     if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.getElementById('theme-toggle').checked = true;
@@ -134,11 +139,11 @@ function handle2FAToggle() {
         if (data.success) {
             const button = document.getElementById('toggle-2fa');
             if (data.is_2fa_enabled) {
-                button.textContent = 'Disable 2FA';
+                button.textContent = i18next.t('disable2FA');
                 button.classList.remove('validate-btn');
                 button.classList.add('refuse-btn');
             } else {
-                button.textContent = 'Enable 2FA';
+                button.textContent = i18next.t('enable2FA');
                 button.classList.remove('refuse-btn');
                 button.classList.add('validate-btn');
             }
@@ -154,14 +159,35 @@ function handleNotificationSettings() {
     const emailNotifications = document.getElementById('email-notifications').checked;
     const pushNotifications = document.getElementById('push-notifications').checked;
     // Implement notification settings update logic here
-    console.log('Notification settings:', { email: emailNotifications, push: pushNotifications });
+    //console.log('Notification settings:', { email: emailNotifications, push: pushNotifications });
 }
 
 function handleLanguageChange() {
     const selectedLanguage = document.getElementById('language-select').value;
-    // Implement language change logic here
-    console.log('Language changed to:', selectedLanguage);
+    
+    i18next.changeLanguage(selectedLanguage, (err, t) => {
+        if (err) {
+            console.error('Error changing language:', err);
+            return;
+        }
+        
+        updateContent();
+        document.documentElement.lang = selectedLanguage;
+        localStorage.setItem('i18nextLng', selectedLanguage);
+        document.body.className = document.body.className.replace(/lang-\w+/, '');
+        document.body.classList.add(`lang-${selectedLanguage}`);
+        //console.log('Language changed to:', selectedLanguage);
+    });
 }
+
+function initializeLanguageSelector() {
+    const languageSelect = document.getElementById('language-select');
+    if (languageSelect) {
+        languageSelect.value = i18next.language;
+        languageSelect.addEventListener('change', handleLanguageChange);
+    }
+}
+
 
 function setupDeleteAccountModal() {
     const form = document.getElementById('delete-account-form');
@@ -227,3 +253,34 @@ function setupSettingsPage() {
     .catch(error => console.error('Error fetching user profile:', error));
 
 }
+
+/*i18next
+  .use(HttpBackend)
+  .use(LanguageDetector)
+  .init({
+    fallbackLng: 'en',
+    backend: {
+      loadPath: '/static/locales/{{lng}}/{{ns}}.json'
+    },
+    detection: {
+      order: ['querystring', 'localStorage', 'navigator'],
+      lookupQuerystring: 'lng',
+      lookupLocalStorage: 'i18nextLng',
+    }
+  });
+
+function updateContent() {
+  document.querySelectorAll('[data-i18n]').forEach(elem => {
+    const key = elem.getAttribute('data-i18n');
+    elem.textContent = i18next.t(key);
+  });
+}
+
+i18next.on('languageChanged', () => {
+  updateContent();
+});
+
+//export default i18next;
+
+// At the end of settings.js, add:
+//export { setupSettingsPage };*/

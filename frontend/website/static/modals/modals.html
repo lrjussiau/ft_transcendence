@@ -4,7 +4,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Se connecter</h5>
+        <h5 class="modal-title" id="loginModalLabel" data-i18n="loginModalLabel">Sign in</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -12,17 +12,17 @@
       <div class="modal-body">
         <form id="login-form">
           <div class="form-group">
-            <label for="login-username">Nom d'utilisateur</label>
-            <input type="text" class="form-control" id="login-username" placeholder="Nom d'utilisateur">
+            <label for="login-username" data-i18n="loginUsernameLabel">Username</label>
+            <input type="text" class="form-control" id="login-username" required data-i18n="[placeholder]loginUsernamePlaceholder" placeholder="Username">
           </div>
           <div class="form-group">
-            <label for="login-password">Mot de passe</label>
-            <input type="password" class="form-control" id="login-password" placeholder="Mot de passe">
+            <label for="login-password" data-i18n="loginPasswordLabel">Password</label>
+            <input type="password" class="form-control" id="login-password" required data-i18n="[placeholder]loginPasswordPlaceholder" placeholder="Password">
           </div>
           <div id="login-error" class="text-danger"></div>
           <div class="buttons">
-            <input type="submit" class="modal-button" value="Se connecter">
-            <button type="button" class="modal-button" id="register-button">S'enregistrer</button>
+            <input type="submit" class="modal-button" value="Register" required data-i18n="[value]loginButton">
+            <button type="button" class="modal-button" id="register-button" data-i18n="registerButton">Register</button>
           </div>
         </form>
       </div>
@@ -36,20 +36,20 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="twoFAVerificationModalLabel">2FA Verification</h5>
+        <h5 class="modal-title" id="twoFAVerificationModalLabel" data-i18n="twoFAVerificationModalLabel">2FA Verification</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>We've sent a 6-digit code to your email. Please enter it below:</p>
+        <p data-i18n="twoFAVerificationMessage">We've sent a 6-digit code to your email. Please enter it below:</p>
         <form id="twoFA-verification-form">
           <div class="form-group">
-            <input type="text" class="form-control" id="twoFA-code" placeholder="Enter 6-digit code">
+            <input type="text" class="form-control" id="twoFA-code" required data-i18n="[placeholder]twoFACodePlaceholder" placeholder="Enter 6-digit code">
           </div>
           <div id="twoFA-error" class="text-danger"></div>
           <div class="buttons">
-            <input type="submit" class="modal-button" value="Verify">
+            <input type="submit" class="modal-button" value="Verify" data-i18n="verifyButton">
           </div>
         </form>
       </div>
@@ -63,7 +63,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="registerModalLabel">S'enregistrer</h5>
+        <h5 class="modal-title" id="registerModalLabel" data-i18n="registerModalLabel">Register</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -71,20 +71,20 @@
       <div class="modal-body">
         <form id="register-form">
           <div class="form-group">
-            <label for="register-username">Nom d'utilisateur</label>
-            <input type="text" class="form-control" id="register-username" placeholder="Nom d'utilisateur">
+            <label for="register-username" data-i18n="registerUsernameLabel">Username</label>
+            <input type="text" class="form-control" id="register-username" required data-i18n="[placeholder]registerUsernamePlaceholder" placeholder="Username">
           </div>
           <div class="form-group">
-            <label for="register-password">Mot de passe</label>
-            <input type="password" class="form-control" id="register-password" placeholder="Mot de passe">
+            <label for="register-password" data-i18n="registerPasswordLabel">Password</label>
+            <input type="password" class="form-control" id="register-password" required data-i18n="[placeholder]registerPasswordPlaceholder" placeholder="Password">
           </div>
           <div class="form-group">
-            <label for="register-email">Email</label>
-            <input type="email" class="form-control" id="register-email" placeholder="Email">
+            <label for="register-email" data-i18n="registerEmailLabel">Email</label>
+            <input type="email" class="form-control" id="register-email" required data-i18n="[placeholder]registerEmailPlaceholder" placeholder="Email">
           </div>
           <div id="register-error" class="text-danger"></div>
           <div class="buttons">
-            <input type="submit" class="modal-button" value="S'enregistrer">
+            <input type="submit" class="modal-button" value="S'enregistrer" data-i18n="registerButton">
           </div>
         </form>
       </div>
@@ -98,25 +98,24 @@
   <div class="modal-dialog avatar">
       <div class="modal-content">
           <div class="modal-header">
-              <h6 class="modal-title">Choose your avatar</h6>
+              <h6 class="modal-title" data-i18n="avatarModalTitle">Choose your avatar</h6>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
           <div class="modal-body avatar-body">
-              <div id="avatarList" class="avatarList">
-              </div>
+              <div id="avatarList" class="avatarList"></div>
               <div class="avatarSelected">
                 <div id="avatarError" class="text-danger"></div>
-                <button id="changeAvatar" class="modal-button changeAvatar-button">Change Avatar</button>
+                <button id="changeAvatar" class="modal-button changeAvatar-button" data-i18n="changeAvatarButton">Change Avatar</button>
               </div>
-              <h5>Upload Avatar</h5>
+              <h5 data-i18n="uploadAvatarTitle">Upload Avatar</h5>
               <form id="avatarForm" class="avatar-form" enctype="multipart/form-data">
                   <div class="file-input-container">
-                    <button class="modal-button select-button">Select File</button>
+                    <button class="modal-button select-button" data-i18n="selectFileButton">Select File</button>
                     <input type="file" name="avatar" class="file-input" required />
-                    <span class="file-name">No file selected</span>
-                    <button type="submit" class="upload-button">Upload</button>
+                    <span class="file-name" data-i18n="noFileSelected">No file selected</span>
+                    <button type="submit" class="upload-button" data-i18n="uploadButton">Upload</button>
                   </div>
               </form>
           </div>
@@ -130,21 +129,21 @@
   <div class="modal-dialog friendModal">
     <div class="modal-content friendModal">
       <div class="modal-header">
-        <h5 class="modal-title">Find Friend</h5>
+        <h5 class="modal-title" data-i18n="friendModalTitle">Find Friend</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body friend-body">
         <div class="form-group">
-          <input type="text" class="form-control" id="searchInput" placeholder="Search for friends">
+          <input type="text" class="form-control" id="searchInput" required data-i18n="[placeholder]searchInputPlaceholder" placeholder="Search for friends">
         </div>
-      <div class="search-results list-group" id="searchResults">
-                            <!-- Search results will be appended here -->
+        <div class="search-results list-group" id="searchResults">
+          <!-- Search results will be appended here -->
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 
 <!-- USERNAME_CHANGE_MODAL -->
@@ -153,7 +152,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title settings-md-title" id="usernameChangeModalLabel">Change Username</h5>
+        <h5 class="modal-title settings-md-title" id="usernameChangeModalLabel" data-i18n="usernameChangeModalLabel">Change Username</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -161,12 +160,12 @@
       <div class="modal-body">
         <form id="username-change-form">
           <div class="form-group">
-            <label for="new-username">New Username</label>
-            <input type="text" class="form-control" id="new-username" placeholder="Enter new username">
+            <label for="new-username" data-i18n="newUsernameLabel">New Username</label>
+            <input type="text" class="form-control" id="new-username" required data-i18n="[placeholder]newUsernamePlaceholder" placeholder="Enter new username">
           </div>
           <div id="username-change-error" class="text-danger"></div>
           <div class="buttons">
-            <input type="submit" class="modal-button" value="Change Username">
+            <input type="submit" class="modal-button" value="Change Username" required data-i18n="[value]changeUsernameButton">
           </div>
         </form>
       </div>
@@ -180,7 +179,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title settings-md-title" id="emailChangeModalLabel">Change Email</h5>
+        <h5 class="modal-title settings-md-title" id="emailChangeModalLabel" data-i18n="emailChangeModalLabel">Change Email</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -188,12 +187,12 @@
       <div class="modal-body">
         <form id="email-change-form">
           <div class="form-group">
-            <label for="new-email">New Email</label>
-            <input type="email" class="form-control" id="new-email" placeholder="Enter new email">
+            <label for="new-email" data-i18n="newEmailLabel">New Email</label>
+            <input type="email" class="form-control" id="new-email" required data-i18n="[placeholder]newEmailPlaceholder" placeholder="Enter new email">
           </div>
           <div id="email-change-error" class="text-danger"></div>
           <div class="buttons">
-            <input type="submit" class="modal-button" value="Change Email">
+            <input type="submit" class="modal-button" value="Change Email"  required data-i18n="[value]changeEmailButton">
           </div>
         </form>
       </div>
@@ -207,7 +206,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title settings-md-title" id="passwordChangeModalLabel">Change Password</h5>
+        <h5 class="modal-title settings-md-title" id="passwordChangeModalLabel" data-i18n="passwordChangeModalLabel">Change Password</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -215,20 +214,20 @@
       <div class="modal-body">
         <form id="password-change-form">
           <div class="form-group">
-            <label for="current-password">Current Password</label>
-            <input type="password" class="form-control" id="current-password" placeholder="Enter current password">
+            <label for="current-password" data-i18n="currentPasswordLabel">Current Password</label>
+            <input type="password" class="form-control" id="current-password" required data-i18n="[placeholder]currentPasswordPlaceholder" placeholder="Enter current password">
           </div>
           <div class="form-group">
-            <label for="new-password">New Password</label>
-            <input type="password" class="form-control" id="new-password" placeholder="Enter new password">
+            <label for="new-password" data-i18n="newPasswordLabel">New Password</label>
+            <input type="password" class="form-control" id="new-password" required data-i18n="[placeholder]newPasswordPlaceholder" placeholder="Enter new password">
           </div>
           <div class="form-group">
-            <label for="confirm-new-password">Confirm New Password</label>
-            <input type="password" class="form-control" id="confirm-new-password" placeholder="Confirm new password">
+            <label for="confirm-new-password" data-i18n="confirmNewPasswordLabel">Confirm New Password</label>
+            <input type="password" class="form-control" id="confirm-new-password" required data-i18n="[placeholder]confirmNewPasswordPlaceholder" placeholder="Confirm new password">
           </div>
           <div id="password-change-error" class="text-danger"></div>
           <div class="buttons">
-            <input type="submit" class="modal-button" value="Change Password">
+            <input type="submit" class="modal-button" value="Change Password"  required data-i18n="[value]changePasswordButton">
           </div>
         </form>
       </div>
@@ -237,29 +236,54 @@
 </div>
 
 <!-- DELETE_ACCOUNT_MODAL -->
- 
+
 <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteAccountModalLabel">Delete Account</h5>
+        <h5 class="modal-title" id="deleteAccountModalLabel" data-i18n="deleteAccountModalLabel">Delete Account</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+        <p data-i18n="deleteAccountMessage">Are you sure you want to delete your account? This action cannot be undone.</p>
         <form id="delete-account-form">
           <div class="form-group">
-            <label for="delete-account-password"><p>Please enter your password to confirm:</p></label>
-            <input type="password" class="form-control" id="delete-account-password" required>
+            <label for="delete-account-password" data-i18n="deleteAccountPasswordLabel"><p>Please enter your password to confirm:</p></label>
+            <input type="password" class="form-control" id="delete-account-password" required data-i18n="[placeholder]deleteAccountPasswordPlaceholder">
           </div>
           <div id="delete-account-error" class="text-danger"></div>
           <div class="buttons">
-            <button type="button" class="modal-button" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="refuse-btn">Delete My Account</button>
+            <button type="button" class="modal-button" data-dismiss="modal" data-i18n="cancelButton">Cancel</button>
+            <button type="submit" class="refuse-btn" data-i18n="deleteAccountButton">Delete My Account</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Integrity Check Modal -->
+<div class="modal fade" id="integrityModal" tabindex="-1" aria-labelledby="integrityModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="integrityModalLabel">Tournament Score Integrity Check</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="integrity-status mb-3">
+          <i class="fas fa-spinner fa-spin me-2"></i>
+          <span id="integrityStatus" data-i18n="checking">Checking...</span>
+        </div>
+        <div class="integrity-details">
+          <p><strong>Check Time:</strong> <span id="integrityCheckTime">-</span></p>
+          <p><strong>Message:</strong> <span id="integrityMessage">-</span></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="close"></button>>Close</button>
       </div>
     </div>
   </div>
