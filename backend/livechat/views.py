@@ -4,32 +4,16 @@ from rest_framework.views import APIView
 from .models import ChatRoom, Message
 from .serializers import ChatRoomSerializer, MessageSerializer
 from django.db.models import Q
-from db.models import User, Friend  # Changed import to use User from db.models
+from db.models import User  # Changed import to use User from db.models
 
 class ChatRoomList(generics.ListAPIView):
     serializer_class = ChatRoomSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     return ChatRoom.objects.filter(Q(user1=user) | Q(user2=user))
     def get_queryset(self):
         user = self.request.user
-
-        # Get the IDs of blocked users
-        blocked_users = Friend.objects.filter(
-            Q(user=user, status='blocked') | Q(friend=user, status='blocked')
-        ).values_list('user', 'friend')
-
-        # Flatten the list of tuples and remove the user's own ID
-        blocked_ids = set([uid for pair in blocked_users for uid in pair if uid != user.id])
-
-        # Filter ChatRooms
-        return ChatRoom.objects.filter(
-            (Q(user1=user) | Q(user2=user)) &
-            ~Q(user1__in=blocked_ids) &
-            ~Q(user2__in=blocked_ids)
-        )
+        return ChatRoom.objects.filter(Q(user1=user) | Q(user2=user))
+    
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
@@ -73,7 +57,7 @@ class CreateChatRoom(APIView):
             return Response({"error": "Cannot create a chat room with yourself"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            user2_id = User.objects.get(id=user2_id)
+            user2 = User.objects.get(id=user2_id)
         except User.DoesNotExist:
             return Response({"error": "User2 does not exist"}, status=status.HTTP_404_NOT_FOUND)
 

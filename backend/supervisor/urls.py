@@ -9,7 +9,7 @@ urlpatterns = [
     path('db/', include('db.urls')),
     path('blockchain/', include('blockchain.urls')),
     path('friends/', include('friends.urls')),
-    path('livechat/', include('livechat.urls')),
+    path('chat/', include('livechat.urls')),
     path('games_history/', include('games_history.urls')),
 ]
 
