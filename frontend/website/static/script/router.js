@@ -106,7 +106,7 @@ async function handleRoute(route) {
     case 'tournament':
     case 'bracket':
       if (isAuthenticated()) {
-        // Apply blur animation
+        const ws = WebSocketManager.getWebSocket();
         applyBlurAnimation();
         await new Promise(resolve => setTimeout(resolve, 50));
         toggleHeaderDisplay(route); 
@@ -182,6 +182,7 @@ function handleLogout() {
   console.log('Logging out...');
   localStorage.removeItem('authToken');
   localStorage.removeItem('refreshToken');
+  WebSocketManager.closeWebSocket();
   window.history.pushState({}, '', '/home');
   handleRoute('home');
 }

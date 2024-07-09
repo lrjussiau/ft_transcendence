@@ -1298,7 +1298,6 @@ input:checked + .slider:before {
 
 .canvas {
   background-color: black;
-  display: none;
   /* width: 100%;
   height: auto; */
 }

@@ -10,7 +10,7 @@ from supervisor.pongengine.TournamentManager import Tournament
 logger = logging.getLogger(__name__)
 
 class Player:
-    def __init__(self, websocket, user: User):
+    def __init__(self, websocket, user):
         self.websocket = websocket
         self.user = user
         self.player_num = None
@@ -41,6 +41,12 @@ class Player:
     
     def get_game_type(self):
         return self.game_type
+
+    async def close(self):
+        try:
+            await self.websocket.close()
+        except Exception as e:
+            logger.error(f"Error closing websocket for player {self.get_username()}: {str(e)}")
 
 class LobbyManager:
     def __init__(self):
@@ -75,24 +81,8 @@ class LobbyManager:
             'message': f'Connected as {user.username}'
         }))
 
-    async def handle_disconnect(self, channel_name):
-        if channel_name in self.players:
-            player = self.players[channel_name]
-            room = Room.find_room_for_player(channel_name)
-            if room:
-                await room.remove_player(player)
-            
-            tournament = Tournament.find_tournament_for_player(channel_name)
-            if tournament:
-                await tournament.remove_player(player)
-            
-            del self.players[channel_name]
-            logger.debug(f"Disconnect handled for player: {player.get_username()}")
-            Room.log_room_state()
-
     async def receive(self, websocket, text_data):
         data = json.loads(text_data)
-        logger.debug(f"Data received: {data}")
         action = data.get('action')
         type = data.get('type')
 
@@ -116,7 +106,10 @@ class LobbyManager:
     async def handle_player_input(self, websocket, data):
         room = Room.find_room_for_player(websocket.channel_name)
         if room:
-            await room.handle_player_input(websocket.channel_name, data)
+            if room.game:
+                await room.game.handle_player_input(data)
+            else:
+                logger.warning(f"Game not found in room {room.id} for player input")
         else:
             logger.warning(f"No room found for player {websocket.channel_name}")
 
@@ -126,8 +119,13 @@ class LobbyManager:
         if player.game_type in ['1v1', 'local_1v1', 'solo']:
             logger.debug(f"Starting game for player: {player.get_username()}, mode: {player.game_type}")
             room = await Room.join_or_create_room(player)
-        elif player.game_type == 'tournament':
-            tournament = await Tournament.join_or_create_tournament(player)
+        elif player.game_type == 'tournament-4' or player.game_type == 'tournament-8':
+            if player.game_type == 'tournament-4':
+                logger.debug(f"Starting tournament for player: {player.get_username()}, mode: {player.game_type}")
+                tournament = await Tournament.join_or_create_tournament(player, 4)
+            else:
+                logger.debug(f"Starting tournament for player: {player.get_username()}, mode: {player.game_type}")
+                tournament = await Tournament.join_or_create_tournament(player, 8)
             await player.send_message({
                 'type': 'message',
                 'tournament_id': tournament.id,
@@ -141,13 +139,47 @@ class LobbyManager:
             })
 
     async def handle_player_ready(self, websocket, data):
-        player = self.players[websocket.channel_name]
-        player.is_ready = data.get('is_ready')
+            player = self.players[websocket.channel_name]
+            player.is_ready = data.get('is_ready')
+            logger.debug(f"Player {player.user.username} is ready: {player.is_ready}")
+
+            tournament = Tournament.find_tournament_for_player(websocket.channel_name)
+            if tournament:
+                await tournament.player_ready(player)
+            else:
+                logger.warning(f"Tournament not found for player {player.user.username}")
 
     async def disconnect(self, websocket):
-        logger.debug(f"Player disconnected: {self.players[websocket.channel_name].get_username()}")
-        await self.handle_disconnect(websocket.channel_name)
+            channel_name = websocket.channel_name
+            if channel_name in self.players:
+                player = self.players[channel_name]
+                logger.debug(f"Player disconnected: {player.get_username()}")
+                await self.handle_disconnect(channel_name)
+            else:
+                logger.warning(f"Disconnect received for unknown channel: {channel_name}")
 
+    async def handle_disconnect(self, channel_name):
+        if channel_name in self.players:
+            player = self.players[channel_name]
+            room = Room.find_room_for_player(channel_name)
+            tournament = Tournament.find_tournament_for_player(channel_name)
+
+            if tournament:
+                try:
+                    await tournament.remove_player(player)
+                except Exception as e:
+                    logger.error(f"Error removing player {player.get_username()} from tournament: {str(e)}")
+
+            if room:
+                try:
+                    await room.remove_player(player)
+                except Exception as e:
+                    logger.error(f"Error closing room for player {player.get_username()}: {str(e)}")
+
+            del self.players[channel_name]
+            logger.debug(f"Disconnect handled for player: {player.get_username()}")
+        else:
+            logger.warning(f"Attempted to handle disconnect for unknown channel: {channel_name}")
 
 
 # Different Input : 

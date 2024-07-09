@@ -31,11 +31,7 @@ async function launchGame() {
         if (selectedGameType) {
           window.history.pushState({}, '', '/canvas');
           handleRoute('canvas');
-          if (selectedGameType === 'tournament-4') {
-            startTournament(4);
-          } else {
-            startGame(selectedGameType);
-          }
+          startGame(selectedGameType);
         } else {
           alert('Please select a game type first.');
         }

@@ -1,5 +1,3 @@
-// utils.js
-// App.js
 
 //--------------------------- INIT ------------------------------//
 
@@ -20,15 +18,22 @@ async function fetchUserProfile() {
   }
 }
 
+async function launchGame() {
+  initializeStartButton();
+  userData = await fetchUserProfile(); 
+  console.log('User name: ', userData.username);
+  displayUsername(userData.username);
+}
 
 //------------------------- DEFINES ----------------------------//
 
-let ws = null;
+let playerReadySent = false;
 let ctx = null;
 let username = '';
 let countdownValue = null;
 let latestGameState = null;
 let selectedGameType = null;
+let go_next_round = false;
 let userData = null;
 let player1Speed = 0;
 let player2Speed = 0;
@@ -40,21 +45,10 @@ const keys = {};
 let gameState = {};
 const requestTimestamps = {};
 
-async function launchGame() {
-  initializeStartButton();
-  userData = await fetchUserProfile(); 
-  console.log('User name: ', userData.username);
-  displayUsername(userData.username);
-}
-
 //--------------- WEBSOCKET & GAME MANAGEMENT  ------------------//
 
 
-
 async function startGame(gameType) {
-  if (ws) {
-      stopGame();
-  }
   try {
       const userData = await fetchUserProfile();
       const username = userData.username;
@@ -71,18 +65,8 @@ async function startGame(gameType) {
 
               ctx = canvas.getContext('2d');
 
-              const host = window.location.hostname;
-              const wsUrl = `wss://${host}:4443/ws/pong/`;
+              ws = WebSocketManager.getWebSocket();
 
-              ws = new WebSocket(wsUrl);
-              ws.onopen = () => {
-                  console.log('WebSocket connection established');
-                  ws.send(JSON.stringify({
-                      type: gameType,
-                      action: 'Connect',
-                      user: { username: username }
-                  }));
-              };
               ws.onmessage = (event) => {
                   const data = JSON.parse(event.data);
                   console.log('Received message:', data);
@@ -105,73 +89,78 @@ async function startGame(gameType) {
                           drawMessage(data.message);
                           break;
                       case 'end_game':
+                          console.log('Game ended Triggered');
                           handleEndGame();
                           break;
-                      // case 'ping':
-                      //     ws.send(JSON.stringify({ action: 'pong' }));
-                      //     break;
-                      // case 'game_ready':
-                      //     console.log('Game is ready!');
-                      //     drawGameReady();
-                      //     updateLastMessage('Game is ready!');
-                      //     ws.send(JSON.stringify({ action: 'StartGame' }));
-                      //     break;
-
-                      // case 'player_disconnected':
-                      //     console.log('A player has disconnected.');
-                      //     updateLastMessage('A player has disconnected.');
-                      //     alert('A player has disconnected.');
-                      //     stopGame();
-                      //     break;
-                      // case 'start_game':
-                      //     console.log('Game has started!');
-                      //     countdownValue = null;
-                      //     draw();
-                      //     break;
-                      // case 'game_over':
-                      //     console.log('Game over');
-                      //     updateLastMessage('Game over!');
-                      //     handleGameOver(data.winner);
-                      //     break;
-                      // case 'error':
-                      //     console.error('Error from server:', data.message);
-                      //     updateLastMessage(`Error: ${data.message}`);
-                      //     alert(`Error: ${data.message}`);
-                      //     break;
-                      // case 'info':
-                      //     console.log(data.message);
-                      //     updateLastMessage(data.message);
-                      //     if (data.message.includes('Tournament created')) {
-                      //         console.log('Tournament created. Waiting for players to join...');
-                      //     }
-                      //     break;
+                      case 'round_ended':
+                          console.log('Round ended Triggered');
+                          navigateToBracketView(data.tournament_details);
+                          break;
                       default:
                           console.error(`Unsupported data type: ${data.type}`);
                           break;
                   }
               };
 
-              ws.onerror = (error) => {
-                  console.error('WebSocket error:', error);
-              };
-              ws.onclose = (event) => {
-                  console.log('WebSocket closed:', event);
-                  if (!gameOver) {
-                      console.log('Unexpected WebSocket closure. Attempting to reconnect...');
-                      setTimeout(() => startGame(selectedGameType), 3000);  // Try to reconnect after 3 seconds
-                  }
-              };
+              // Send the initial connection message
+              if (ws.readyState === WebSocket.OPEN) {
+                  ws.send(JSON.stringify({
+                      type: gameType,
+                      action: 'Connect',
+                      user: { username: username }
+                  }));
+              } else {
+                  ws.addEventListener('open', () => {
+                      ws.send(JSON.stringify({
+                          type: gameType,
+                          action: 'Connect',
+                          user: { username: username }
+                      }));
+                  });
+              }
           } else {
               console.log('Waiting for canvas element...');
           }
-      }, 100); // Check every 100ms
+      }, 100);
   } catch (error) {
       console.error('Error starting game:', error);
   }
 }
 
+function sendPlayerReady() {
+  if (playerReadySent) {
+    console.log('Player ready already sent.');
+    return;
+  }
+
+  window.history.pushState({}, '', '/canvas');
+  handleRoute('canvas');
+
+  const checkCanvasInterval = setInterval(() => {
+    const canvas = document.getElementById('gameCanvas');
+
+    if (canvas) {
+      clearInterval(checkCanvasInterval);
+      if (ws && ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({
+              action: 'player_ready',
+              is_ready: true
+          }));
+          console.log('Player ready message sent.');
+          playerReadySent = true;
+          document.getElementById('readyButton').disabled = true;
+      } else {
+          console.log('WebSocket connection is not open.');
+      }
+    }
+  }, 100);
+}
+
+//-------------------- RESPONSE LOGIC ----------------------//
+
 function connection(gameType) {
   console.log('Connection established:', gameType);
+  const ws = WebSocketManager.getWebSocket();
   ws.send(JSON.stringify({
     type: gameType,
     action: 'StartGame',
@@ -181,6 +170,12 @@ function connection(gameType) {
 function countdown(value) {
   countdownValue = value;
   draw();
+}
+
+function stopGame() {
+  gameOver = false;
+  countdownValue = null;
+  playerReadySent = false;
 }
 
 function assignPlayer(data) {
@@ -194,7 +189,6 @@ function drawMessage(message) {
     console.error('Canvas element not found!');
     return;
   }
-  
   const aspectRatio = 640 / 360;
   const containerWidth = canvas.parentElement.clientWidth;
   const width = (containerWidth * 98) / 100;
@@ -210,60 +204,51 @@ function drawMessage(message) {
   const scaleX = canvas.width / 640;
   const scaleY = canvas.height / 360;
 
-  ctx.font = `${40 * scaleY}px 'Roboto', sans-serif`;
+  ctx.font = `${32 * scaleY}px 'Roboto', sans-serif`;
   ctx.textAlign = 'center';
 
   console.log('Drawing message:', message);
   ctx.fillText(`${message}`, canvas.width / 2, canvas.height / 2);
 }
 
-function handleEndGame() {
-  gameOver = true;
-
+function handleEndGame(data) {
+  stopGame();
   window.history.pushState({}, '', '/game');
   handleRoute('game');
 }
 
-
-
-
-
-
-
-
-
+function navigateToBracketView(tournamentDetails) {
+  console.log('Round ended');
+  go_next_round = true;
+  window.history.pushState({}, '', '/bracket');
+  handleRoute('bracket');
+}
 
 function updateGameState(data) {
   if (data.type === 'update') {
-    gameState = data;
-    
-    // Update scores in HTML
+      gameState = data;
+      // Update scores in HTML
     const scoreElements = document.querySelectorAll('.player-score');
     if (scoreElements.length >= 2) {
-      scoreElements[0].textContent = data.s1;
-      scoreElements[1].textContent = data.s2;
+        scoreElements[0].textContent = data.s1;
+        scoreElements[1].textContent = data.s2;
     }
-
-    // Check for game over condition
-    if (data.s1 === 5 || data.s2 === 5) {
-      const winner = data.s1 === 5 ? 'Player 1' : 'Player 2';
-      handleGameOver(winner);
-    } else {
-      draw();
-    }
-  } else if (data.type === 'countdown') {
-    countdownValue = data.value;
-    console.log('Countdown value:', countdownValue);
     draw();
-    
-    if (countdownValue === 0) {
-      console.log('Countdown finished, waiting for game start');
-      countdownValue = null;
-      draw();
-    }
-  } 
+    if (data.type === 'countdown') {
+        countdownValue = data.value;
+        console.log('Countdown value:', countdownValue);
+        draw();
+        
+      if (countdownValue === 0) {
+        console.log('Countdown finished, waiting for game start');
+        countdownValue = null;
+        draw();
+      }
+    } 
+  }
 }
-//-------------------------- INPUT HANDLING ---------------------//
+
+//-------------------- INPUT HANDLING ---------------------//
 
 window.addEventListener('keydown', (event) => {
   if (['ArrowUp', 'ArrowDown', 'w', 's'].includes(event.key) && window.location.pathname === '/canvas') {
@@ -282,9 +267,11 @@ window.addEventListener('keyup', (event) => {
 });
 
 function updateSpeeds() {
-
-  console.log('Selected game type:', selectedGameType);
-
+  const ws = WebSocketManager.getWebSocket();
+  if (!ws || ws.readyState !== WebSocket.OPEN) {
+    console.log('WebSocket is not open. Cannot send player input.');
+    return;
+  }
   if (selectedGameType === 'local_1v1') {
     const newPlayer1Speed = (keys['w'] ? -5 : 0) + (keys['s'] ? 5 : 0);
     const newPlayer2Speed = (keys['ArrowUp'] ? -5 : 0) + (keys['ArrowDown'] ? 5 : 0);
@@ -323,7 +310,7 @@ function updateSpeeds() {
     }
   }
 }
-//-------------------------- DRAW HANDLING ----------------------//
+//--------------------- DRAW HANDLING ----------------------//
 
 function draw() {
   const canvas = document.getElementById('gameCanvas');
@@ -385,8 +372,6 @@ function drawBall(ctx, x, y, scaleX, scaleY) {
   ctx.arc(x * scaleX, y * scaleY, 5 * scaleX, 0, Math.PI * 2);
   ctx.fill();
 }
-
-
 
 function drawGameReady() {
   const canvas = document.getElementById('gameCanvas');

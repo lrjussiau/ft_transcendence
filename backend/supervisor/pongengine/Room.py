@@ -59,7 +59,7 @@ class Room:
 
     @classmethod
     async def create_tournament_room(cls, player):
-        room = await cls.create_room(player, 'tournament')
+        room = await cls.create_room(player)
         return room
 
     async def add_player(self, player):
@@ -83,6 +83,8 @@ class Room:
         if self.id in Room.rooms:
             del Room.rooms[self.id]
             logger.debug(f"Room {self.id} deleted")
+        else:
+            logger.warning(f"Attempted to delete non-existent room {self.id}")
 
     def is_full(self):
         return len(self.players) == self.get_max_players()
@@ -104,13 +106,7 @@ class Room:
             return
 
         if self.is_full():
-            self.game = PongConsumer(
-                self.players,
-                self.game_type,
-                self.id,
-                self.game_ended,
-                self.tournament_callback if self.game_type == 'tournament' else None
-            )
+            self.game = PongConsumer(self.players, self.game_type, self) 
             await self.game.start_game()
             logger.debug(f"{self.game_type} game started in room {self.id}")
         else:
@@ -118,7 +114,6 @@ class Room:
 
     async def handle_player_input(self, channel_name, data):
         if self.game:
-            logger.debug(f"Handling player input from {channel_name} in room {self.id}")
             await self.game.handle_player_input(data)
         else:
             logger.warning(f"Game not started in room {self.id}, input ignored.")
@@ -132,15 +127,6 @@ class Room:
             logger.debug(f"Sending player disconnection message to {player.get_username()}")
             await player.send_message(disconnect_message)
 
-    @classmethod
-    def log_room_state(cls):
-        logger.debug("Current room state:")
-        for room_id, room in cls.rooms.items():
-            logger.debug(f"  Room ID: {room_id}, Type: {room.game_type}, "
-                         f"  Players: {len(room.players)}/{room.get_max_players()}, Full: {room.is_full()}")
-        for player in room.players:
-            logger.debug(f"  Players: {player.get_username()}")
-
     async def game_ended(self, game, room_id):
         if self.id != room_id:
             logger.warning(f"Received game end signal for room {room_id} in room {self.id}")
@@ -151,36 +137,61 @@ class Room:
         loser = next((player for player in self.players if player.result == 'loser'), None)
         
         if winner and loser:
-            await self.broadcast_message({
-                'type': 'display',
-                'message': f"Game over ! {winner.get_username()} won against {loser.get_username()} !"
-            })
+            end_message = f"Game ended ! {winner.get_username()} won against {loser.get_username()} !"
         elif all(player.result == 'tie' for player in self.players):
-            await self.broadcast_message({
-                'type': 'display',
-                'message': "Game over! It's a tie!"
-            })
+            end_message = "Game over! It's a tie !"
         else:
-            await self.broadcast_message({
-                'type': 'display',
-                'message': "Game over!"
-            })
+            end_message = "Game ended !"
 
+        await self.broadcast_message({
+            'type': 'display',
+            'message': end_message
+        })
+        await asyncio.sleep(5)    
         if self.game_type == 'tournament' and self.tournament_callback:
             if winner:
                 await self.tournament_callback(self, winner)
+            await winner.send_message({
+                'type': 'round_ended',
+                'message': "You won! Waiting for next round.",
+            })
+            await loser.send_message({
+                'type': 'end_game',
+                'message': "You lost. Tournament ended for you.",
+                'winner': winner.get_username()
+            })
         else:
-            # Give players some time to see the result before deleting the room
-            await asyncio.sleep(5)
             await self.broadcast_message({
                 'type': 'end_game',
                 'message': "This Is the end"
             })
-            self.delete_room()
+        
+        self.delete_room()
 
     async def broadcast_message(self, message):
         for player in self.players:
             await player.send_message(message)
 
+    async def remove_player(self, player):
+        if player in self.players:
+            self.players.remove(player)
+            if self.game and not self.game.game_state['game_over']:
+                player_num = 1 if player == self.game.players[1] else 2
+                await self.game.handle_player_disconnect(player_num)
+            logger.debug(f"Player {player.get_username()} removed from room {self.id}")
+
+    async def close(self):
+        for player in self.players:
+            try:
+                await player.close()
+            except Exception as e:
+                logger.error(f"Error closing player in room {self.id}: {str(e)}")
+        if self.game:
+            try:
+                await self.game.close()
+            except Exception as e:
+                logger.error(f"Error closing game in room {self.id}: {str(e)}")
+        self.delete_room()
+        
     def __str__(self):
         return f"Room(id={self.id}, type={self.game_type}, players={len(self.players)}/{self.get_max_players()})"
