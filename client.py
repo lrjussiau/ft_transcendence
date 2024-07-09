@@ -157,7 +157,7 @@ def print_header():
 def init_pygame():
     pygame.init()
     screen = pygame.display.set_mode((1280, 720), RESIZABLE)
-    pygame.display.set_caption('Pong Game')
+    pygame.display.set_caption('🏓 Pong CLI 🏓')
     return screen
 
 # Main game loop
