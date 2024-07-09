@@ -21,6 +21,8 @@ from django.conf import settings
 import os
 from .utils import generate_and_send_2fa_code, verify_2fa_code
 
+logger = logging.getLogger(__name__)
+
 class UserAvatarView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -158,15 +160,19 @@ def change_email(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def change_status(request):
+    
+    logger.debug("Change status request")
     new_status = request.data.get('new_status')
     if not new_status:
+        logger.error("New status is required.")
         return Response({"error": "New status is required."}, status=status.HTTP_400_BAD_REQUEST)
     
     user = request.user
     user.status = new_status
     user.save()
-    
+    logger.debug(f"Status updated successfully to {new_status}")
     return Response({"success": "Status updated successfully."}, status=status.HTTP_200_OK)
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def change_password(request):

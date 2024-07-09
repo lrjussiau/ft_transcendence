@@ -22,5 +22,14 @@ const WebSocketManager = (function() {
         return ws;
     }
 
-    return { getWebSocket };
+
+    function closeWebSocket() {
+        if (ws) {
+            ws.close();
+            ws = null;
+        }
+    }
+
+    return { getWebSocket , closeWebSocket};
 })();
+

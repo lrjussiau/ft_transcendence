@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (logoutButton) {
     logoutButton.addEventListener('click', (event) => {
       event.preventDefault();
-      handleLogout();
+      Logout();
     });
   }
 });
@@ -201,7 +201,7 @@ function initializeStartButton() {
   }
 }
 
-async function handleLogout() {
+async function Logout() {
   try {
     const response = await fetch('/api/authentication/change-status/', {
         method: 'POST',
@@ -216,20 +216,22 @@ async function handleLogout() {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
   } catch (error) {
-      
+      console.error('Error changing user status:', error);
   }
 
   //console.log('Logging out...');
   localStorage.removeItem('authToken');
   localStorage.removeItem('refreshToken');
   WebSocketManager.closeWebSocket();
-  window.history.pushState({}, '', '/home');
+
   try {
       const data = await response.json();
       //console.log(data);
     } catch (error) {
         console.error('Error:', error);
     }
+  disconnectStatus();
+  window.history.pushState({}, '', '/home');
   handleRoute('home');
 }
 

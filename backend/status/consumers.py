@@ -1,4 +1,6 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 from channels.db import database_sync_to_async
 from rest_framework_simplejwt.tokens import AccessToken
 from django.utils import timezone
@@ -33,12 +35,14 @@ class UserActivityConsumer(AsyncWebsocketConsumer):
             return None
 
     @database_sync_to_async
+    @permission_classes([IsAuthenticated])
     def update_user_activity(self):
         self.user.last_active = timezone.now()
         self.user.status = 'online'
         self.user.save(update_fields=['last_active', 'status'])
 
     @database_sync_to_async
+    @permission_classes([IsAuthenticated])
     def update_user_status(self, status):
         self.user.status = status
         self.user.save(update_fields=['status'])

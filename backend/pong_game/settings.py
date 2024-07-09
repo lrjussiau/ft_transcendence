@@ -202,6 +202,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
+        'authentication': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
     },
 }
 # LOGGING = {

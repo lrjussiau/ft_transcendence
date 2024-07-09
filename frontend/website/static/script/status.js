@@ -39,5 +39,11 @@ function sendActivityUpdate() {
     }
 }
 
+function disconnectStatus() {
+    if (webSocket) {
+        webSocket.close();
+    }
+}
+
 // Call this function when your app initializes
 connectToWebSocket();
