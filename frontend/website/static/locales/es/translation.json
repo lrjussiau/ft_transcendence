@@ -94,6 +94,22 @@
     "winner": "Ganado",
     "loser": "Perdido :(",
     "isTournament": "Sí, verificado en la blockchain",
-    "isNotTournament": "No"
+    "isNotTournament": "No",
+    "tournamentScoreIntegrityCheck": "Verificación de la integridad de los puntajes del torneo",
+    "status": "Estado",
+    "checkTime": "Hora de la verificación",
+    "message": "Mensaje",
+    "DataIntegrityCheckFailed": "Fallo en la verificación de la integridad de los datos",
+    "DataIntegrityCheckPassed": "Verificación de la integridad de los datos pasada",
+    "checking": "Verificando ...",
+    "close": "Cerrar",
+    "checkTournamentScoresIntegrity": "Verificar la integridad de los puntajes del torneo",
+    "sendMessage": "Enviar mensaje",
+    "4PLayers": "4 Jugadores",
+    "8Players": "8 Jugadores",
+    "notifications": "Notificaciones",
+    "Accept": "Aceptar",
+    "Reject": "Rechazar",
+    "disable2FA": "Desactivar 2FA"
 
 }

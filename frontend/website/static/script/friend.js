@@ -16,9 +16,9 @@ async function addFriend(friendId) {
     }
 }
 
-function blockFriend(friend_id){
+async function blockFriend(friend_id){
     const token = localStorage.getItem('authToken');
-    fetch(`/api/friends/block/${friend_id}/`, {
+    const response = await fetch(`/api/friends/block/${friend_id}/`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -28,7 +28,7 @@ function blockFriend(friend_id){
     if (response.ok) {
         return response.json();
     } else {
-        throw new Error('Failed to add friend');
+        throw new Error('Failed to block friend');
     }
 }
 
@@ -164,9 +164,10 @@ async function displayIncomingFriendRequests() {
                 nameDiv.className = 'pending-friend-name';
                 nameDiv.textContent = request.user.username;
 
+                const sendMessageBtn = document.createElement('button');
                 const acceptButton = document.createElement('button');
                 acceptButton.className = 'btn btn-sm btn-success';
-                acceptButton.textContent = 'Accept';
+                acceptButton.textContent = i18next.t('Accept');
                 acceptButton.onclick = async () => {
                     await respondFriendRequest(request.id, 'accept');
                     displayIncomingFriendRequests();
@@ -175,7 +176,7 @@ async function displayIncomingFriendRequests() {
 
                 const rejectButton = document.createElement('button');
                 rejectButton.className = 'btn btn-sm btn-danger';
-                rejectButton.textContent = 'Reject';
+                rejectButton.textContent = i18next.t('Reject');
                 rejectButton.onclick = async () => {
                     await respondFriendRequest(request.id, 'reject');
                     displayIncomingFriendRequests();
@@ -318,7 +319,7 @@ function showContextMenu(event, friendId, friendName) {
     contextMenu.style.zIndex = '1000';
 
     const sendMessageBtn = document.createElement('button');
-    sendMessageBtn.textContent = 'Send a message';
+    sendMessageBtn.textContent = i18next.t('sendMessage');
     sendMessageBtn.onclick = async (e) => {
         e.stopPropagation();
         try {
@@ -387,7 +388,7 @@ async function initializeFriendSearch() {
                     $('#searchResults').append(`
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             ${friend.username}
-                            <button class="btn btn-sm modal-button add-friend-btn" data-id="${friend.id} data-i18n="addFriend">Add Friend</button>
+                            <button class="btn btn-sm modal-button add-friend-btn" data-id="${friend.id}" data-i18n="addFriend">Add Friend</button>
                         </div>
                     `);
                 });

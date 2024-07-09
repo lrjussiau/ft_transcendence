@@ -94,5 +94,22 @@
     "winner":"Won",
     "loser" : "Lost :(",
     "isTournament":"Yes, verified on the bloackchain",
-    "isNotTournament" : "Nope"
+    "isNotTournament" : "Nope",
+    "tournamentScoreIntegrityCheck": "Tournament Score Integrity Check",
+    "status": "Status",
+    "checkTime": "Check Time",
+    "message": "Message",
+    "DataIntegrityCheckFailed": "Data Integrity Check Failed",
+    "DataIntegrityCheckPassed": "Data Integrity Check Passed",
+    "checking": "Checking ...",
+    "close": "Close",
+    "checkTournamentScoresIntegrity": "Check tournament scores integrity",
+    "sendMessage": "Send message",
+    "4PLayers": "4 Players",
+    "8Players": "8 Players",
+    "notifications" :"Notifications",
+    "Accept": "Accept",
+    "Reject": "Reject",
+    "disable2FA": "Disable 2FA"
+
 }

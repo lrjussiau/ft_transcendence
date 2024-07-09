@@ -44,7 +44,7 @@ async function displayChatRooms() {
 }
 
 async function fetchChatRooms() {
-    const response = await fetch('/api/chat/rooms/', {
+    const response = await fetch('/api/livechat/rooms/', {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }
@@ -89,7 +89,7 @@ async function loadChatRoom(roomId) {
 }
 
 async function fetchChatRoomDetails(roomId) {
-    const response = await fetch(`/api/chat/rooms/${roomId}/`, {
+    const response = await fetch(`/api/livechat/rooms/${roomId}/`, {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }
@@ -128,7 +128,7 @@ async function loadPreviousMessages(roomId) {
 }
 
 async function fetchMessages(roomId) {
-    const response = await fetch(`/api/chat/rooms/${roomId}/messages/`, {
+    const response = await fetch(`/api/livechat/rooms/${roomId}/messages/`, {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }

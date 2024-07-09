@@ -37,9 +37,9 @@ async function defineStats() {
     
     let win_loss_ratio;
     if (num_losses > 0) {
-        win_loss_ratio = num_wins / num_losses;
+        win_loss_ratio = (num_wins / num_losses).toFixed(2);
     } else {
-        win_loss_ratio = num_wins;
+        win_loss_ratio = num_wins.toFixed(2);
     }
     
     document.getElementById('wins').textContent = num_wins;
@@ -74,7 +74,7 @@ async function gameHistory() {
             row.innerHTML = `
             <td class="opponent">
                 <div class="opponent-card">
-                    <img src="${'https://www.w3schools.com/howto/img_avatar.png'}" alt="player-img" class="img-fluid">
+                    <img src="${opponent.avatar}" alt="player-img" class="img-fluid">
                     <div class="opponent-name">${opponent.username}</div>
                 </div>
             </td>
