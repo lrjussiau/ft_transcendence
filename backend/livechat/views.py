@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from .models import ChatRoom, Message
 from .serializers import ChatRoomSerializer, MessageSerializer
 from django.db.models import Q
-from db.models import User  # Changed import to use User from db.models
+from db.models import User, Friend  # Changed import to use User from db.models
 
 """class ChatRoomList(generics.ListAPIView):
     serializer_class = ChatRoomSerializer

@@ -48,18 +48,18 @@ services:
     networks:
       - mynetwork
 
-  blockchain:
-    build: ./blockchain
-    container_name: blockchain
-    ports:
-    - "3000:3000"
-    networks:
-    - mynetwork
-    env_file:
-    - .env
-    environment:
-      SEPOLIA_URL: ${SEPOLIA_URL}
-      PRIVATE_KEY: ${PRIVATE_KEY}
+  # blockchain:
+  #   build: ./blockchain
+  #   container_name: blockchain
+  #   ports:
+  #   - "3000:3000"
+  #   networks:
+  #   - mynetwork
+  #   env_file:
+  #   - .env
+  #   environment:
+  #     SEPOLIA_URL: ${SEPOLIA_URL}
+  #     PRIVATE_KEY: ${PRIVATE_KEY}
 
   nginx:
     build:
