@@ -26,9 +26,6 @@ player1_speed = 0
 player2_speed = 0
 DEBUG_LOG = False
 
-class GameEndException(Exception):
-    pass
-
 # Function to authenticate and retrieve the token
 def authenticate(base_url, username, password):
     try:
@@ -94,7 +91,7 @@ async def handle_server_message(websocket, data):
             print(f'Updated game state: {latest_game_state}')
     elif data['type'] == 'countdown':
         countdown_value = data['value']
-        display_message = f'Game starts in {countdown_value} seconds'
+        display_message = f'Game starts in {countdown_value}'
         if DEBUG_LOG:
             print(display_message)
     elif data['type'] == 'game_over':
@@ -140,6 +137,21 @@ async def handle_server_message(websocket, data):
     else:
         if DEBUG_LOG:
             print(f"Unhandled message type: {data['type']}")
+
+def print_header():
+    header_lines = [
+        "\n\n"
+        "░▒▓███████▓▒░ ░▒▓██████▓▒░░▒▓███████▓▒░ ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░      ░▒▓█▓▒░ ",
+        "░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░ ",
+        "░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░ ",
+        "░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒▒▓███▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░ ",
+        "░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░ ",
+        "░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░ ",
+        "░▒▓█▓▒░       ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓████████▓▒░▒▓█▓▒░ ",
+        "                                                                                      ",
+        "                                                                                      "
+    ]
+    print("\n".join(header_lines))
 
 # Initialize pygame
 def init_pygame():
@@ -280,6 +292,7 @@ async def update_speeds():
 async def main():
     global AUTH_TOKEN, latest_game_state, game_type
 
+    print_header()
     host = input('Enter the hostname (leave empty to use current hostname): ')
     if not host:
         try:
