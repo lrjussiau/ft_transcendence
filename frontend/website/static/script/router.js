@@ -54,6 +54,7 @@ async function loadPartial(partial) {
         gameHistory();
         defineStats();
         loadUserProfile();
+        tournamenIntegrity();
         displayIncomingFriendRequests();
         displayFriends();
         setupFriendListeners();

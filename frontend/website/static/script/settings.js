@@ -139,11 +139,11 @@ function handle2FAToggle() {
         if (data.success) {
             const button = document.getElementById('toggle-2fa');
             if (data.is_2fa_enabled) {
-                button.textContent = 'Disable 2FA';
+                button.textContent = i18next.t('disable2FA');
                 button.classList.remove('validate-btn');
                 button.classList.add('refuse-btn');
             } else {
-                button.textContent = 'Enable 2FA';
+                button.textContent = i18next.t('enable2FA');
                 button.classList.remove('refuse-btn');
                 button.classList.add('validate-btn');
             }

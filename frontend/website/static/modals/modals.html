@@ -263,3 +263,28 @@
     </div>
   </div>
 </div>
+
+<!-- Integrity Check Modal -->
+<div class="modal fade" id="integrityModal" tabindex="-1" aria-labelledby="integrityModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="integrityModalLabel">Tournament Score Integrity Check</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="integrity-status mb-3">
+          <i class="fas fa-spinner fa-spin me-2"></i>
+          <span id="integrityStatus" data-i18n="checking">Checking...</span>
+        </div>
+        <div class="integrity-details">
+          <p><strong>Check Time:</strong> <span id="integrityCheckTime">-</span></p>
+          <p><strong>Message:</strong> <span id="integrityMessage">-</span></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="close"></button>>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
