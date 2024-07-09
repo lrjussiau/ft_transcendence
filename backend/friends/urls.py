@@ -11,7 +11,8 @@ from .views import (
     IsBlockedView,
     BlockFriendView,
     PendingFriendsListView,
-    BlockedFriendsListView
+    BlockedFriendsListView,
+    UnblockFriendView
 )
 
 urlpatterns = [
@@ -19,6 +20,7 @@ urlpatterns = [
     path('is-blocked/<int:friend_id>/', IsBlockedView.as_view(), name='is-blocked'),
     path('delete/', DeleteFriendView.as_view(), name='delete-friend'),
     path('block/<int:friend_id>/', BlockFriendView.as_view(), name='block-friend'),
+    path('unblock/<int:friend_id>/', UnblockFriendView.as_view(), name='unblock-friend'),
     path('requests/incoming/', IncomingFriendRequestsView.as_view(), name='incoming-friend-requests'),
     path('requests/outgoing/', OutgoingFriendRequestsView.as_view(), name='outgoing-friend-requests'),
     path('requests/respond/<int:request_id>/', RespondFriendRequestView.as_view(), name='respond-friend-request'),

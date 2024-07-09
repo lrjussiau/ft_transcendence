@@ -70,6 +70,26 @@ class BlockFriendView(APIView):
         friendship.save()
         return Response({'success': 'Friend blocked successfully'}, status=status.HTTP_200_OK)
 
+class UnblockFriendView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, friend_id):
+        if not friend_id:
+            return Response({'error': 'Friend ID not provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            friend = User.objects.get(id=friend_id)
+        except User.DoesNotExist:
+            return Response({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        friendship = Friend.objects.filter(user=request.user, friend=friend).first()
+        if not friendship:
+            return Response({'error': 'Friend not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        friendship.status = "Accepted"
+        friendship.save()
+        return Response({'success': 'Friend unblocked successfully'}, status=status.HTTP_200_OK)
+
 
 
 class IncomingFriendRequestsView(APIView):
@@ -115,7 +135,9 @@ class FriendsListView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        friends = Friend.objects.filter(user=request.user, status='Accepted')
+        friends = Friend.objects.filter(
+            Q(user=request.user) & (Q(status='Accepted') | Q(status='blocked'))
+        )
         serializer = FriendRequestSerializer(friends, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

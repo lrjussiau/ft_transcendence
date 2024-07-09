@@ -197,6 +197,73 @@ async function displayIncomingFriendRequests() {
     }
 }
 
+function createFriendButtons(friend) {
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'friend-button delete-friend-button';
+    deleteButton.innerText = i18next.t('Delete');
+    deleteButton.addEventListener('click', async () => {
+        await deleteFriend(friend.friend.id);
+        deleteButton.innerText = i18next.t('Deleted');
+        deleteButton.disabled = true;
+    });
+
+    const blockButton = document.createElement('button');
+    blockButton.className = 'friend-button block-friend-button';
+
+    const token = localStorage.getItem('authToken');
+    
+    const updateBlockButton = (isBlocked) => {
+        if (isBlocked) {
+            blockButton.innerText = i18next.t('Unblock');
+            blockButton.classList.add('blocked');
+        } else {
+            blockButton.innerText = i18next.t('Block');
+            blockButton.classList.remove('blocked');
+        }
+    };
+
+    const toggleBlockStatus = async (isCurrentlyBlocked) => {
+        const endpoint = isCurrentlyBlocked ? 'unblock' : 'block';
+        try {
+            const response = await fetch(`/api/friends/${endpoint}/${friend.friend.id}/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                updateBlockButton(!isCurrentlyBlocked);
+            } else {
+                console.error('Failed to toggle block status');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    blockButton.addEventListener('click', () => {
+        const isCurrentlyBlocked = blockButton.classList.contains('blocked');
+        toggleBlockStatus(isCurrentlyBlocked);
+    });
+
+    // Initial block status check
+    fetch(`/api/friends/is-blocked/${friend.friend.id}/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        updateBlockButton(data.is_blocked);
+    })
+    .catch(error => console.error('Error:', error));
+
+    return { deleteButton, blockButton };
+}
+
 async function displayFriends() {
     try {
         const friends = await fetchFriends();
@@ -207,10 +274,10 @@ async function displayFriends() {
             friends.forEach(friend => {
                 const listItem = document.createElement('li');
                 listItem.className = 'accepted-friend-item';
-                listItem.dataset.friendId = friend.friend.id; // Add this line
+                listItem.dataset.friendId = friend.friend.id;
 
                 const img = document.createElement('img');
-                img.src = friend.friend.avatar
+                img.src = friend.friend.avatar;
                 img.alt = 'player-img';
 
                 // Check friend's status and set the class accordingly
@@ -224,68 +291,20 @@ async function displayFriends() {
                 nameDiv.className = 'accepted-friend-name';
                 nameDiv.textContent = friend.friend.username;
 
-                const deleteButton = document.createElement('button');
-                deleteButton.innerText = 'Delete';
-                deleteButton.className = 'delete-friend-button';
-                deleteButton.addEventListener('click', () => {
-                    // Implement the delete friend functionality here
-                    alert("FRiend deleted");
-                    deleteFriend(friend.friend.id)
-                });
+                // Create block and delete buttons
+                const { blockButton, deleteButton } = createFriendButtons(friend);
 
-                const blockButton = document.createElement('button');
-                blockButton.className = 'block-friend-button';
-            
-                // Check if the friend is blocked
-                const token = localStorage.getItem('authToken');
-                fetch(`/api/friends/is-blocked/${friend.friend.id}/`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.debug("DATA: ", data);
-                    if (data.is_blocked == true) {
-                        blockButton.innerText = 'Blocked';
-                        blockButton.disabled = true;  // Disable the button if the friend is already blocked
-                    } else {
-                        blockButton.innerText = 'Block';
-                        blockButton.addEventListener('click', () => {
-                            blockFriend(friend.friend.id);
-                        });
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            
-                // Append buttons to list item
-                listItem.appendChild(blockButton);
-            
-                // Create play game button
-                // const playButton = document.createElement('button');
-                // playButton.innerText = 'Play Game';
-                // playButton.className = 'play-game-button';
-                // playButton.addEventListener('click', () => {
-                //     // Implement the play game functionality here
-                //     alert("Ask to play game")
-                //     //askToPlayGame(friend.friend.id);
-                // });
-            
                 listItem.appendChild(img);
                 listItem.appendChild(nameDiv);
-
                 listItem.appendChild(blockButton);
-                //listItem.appendChild(playButton);
                 listItem.appendChild(deleteButton);
-
 
                 friendsList.appendChild(listItem);
             });
         } else {
             friendsList.innerHTML = '<li data-i18n="noFriendsFound">* No friends found</li>';
         }
+        
         if (window.initI18next && window.updateContent) {
             window.initI18next().then(() => {
               window.updateContent();
@@ -293,13 +312,67 @@ async function displayFriends() {
                 window.initializeLanguageSelector();
               }
             });
-          } else {
+        } else {
             console.warn('i18next setup functions not found. Make sure i18n-setup.js is loaded.');
-          }
+        }
     } catch (error) {
         console.error('Error fetching friends list:', error);
     }
 }
+
+// async function displayFriends() {
+//     try {
+//         const friends = await fetchFriends();
+//         const friendsList = document.getElementById('friendList');
+//         friendsList.innerHTML = ''; // Clear existing content
+
+//         if (friends.length > 0) {
+//             friends.forEach(friend => {
+//                 const listItem = document.createElement('li');
+//                 listItem.className = 'accepted-friend-item';
+//                 listItem.dataset.friendId = friend.friend.id; // Add this line
+
+//                 const img = document.createElement('img');
+//                 img.src = friend.friend.avatar
+//                 img.alt = 'player-img';
+
+//                 // Check friend's status and set the class accordingly
+//                 if (friend.friend.status === 'online') {
+//                     img.className = 'accepted-friend-img-online';
+//                 } else {
+//                     img.className = 'accepted-friend-img';
+//                 }
+
+//                 const nameDiv = document.createElement('div');
+//                 nameDiv.className = 'accepted-friend-name';
+//                 nameDiv.textContent = friend.friend.username;
+
+                
+            
+//                 listItem.appendChild(img);
+//                 listItem.appendChild(nameDiv);
+//                 listItem.appendChild(blockButton);
+//                 listItem.appendChild(deleteButton);
+
+//                 friendsList.appendChild(listItem);
+//             });
+//         } else {
+//             friendsList.innerHTML = '<li data-i18n="noFriendsFound">* No friends found</li>';
+//         }
+//         if (window.initI18next && window.updateContent) {
+//             window.initI18next().then(() => {
+//               window.updateContent();
+//               if (window.initializeLanguageSelector) {
+//                 window.initializeLanguageSelector();
+//               }
+//             });
+//           } else {
+//             console.warn('i18next setup functions not found. Make sure i18n-setup.js is loaded.');
+//           }
+//     } catch (error) {
+//         console.error('Error fetching friends list:', error);
+//     }
+// }
 
 function showContextMenu(event, friendId, friendName) {
     event.preventDefault();

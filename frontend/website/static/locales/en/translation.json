@@ -110,6 +110,11 @@
     "notifications" :"Notifications",
     "Accept": "Accept",
     "Reject": "Reject",
-    "disable2FA": "Disable 2FA"
+    "disable2FA": "Disable 2FA",
+    "Unblock": "Unblock",
+    "Delete": "Delete",
+    "Block": "Block",
+    "Blocked": "Blocked",
+    "Deketed": "Deleted"
 
 }

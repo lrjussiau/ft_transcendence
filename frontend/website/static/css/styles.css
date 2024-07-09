@@ -732,7 +732,7 @@ th {
 }
 
 .friend-button {
-  width: 100%;
+  /*width: 100%;*/
   text-align: center;
   justify-content: center;
   padding-bottom: 20px;
@@ -2148,4 +2148,56 @@ input:checked + .slider:before {
 .btn-game {
   font-size: 1.5vw;
   padding: 0.5%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.friend-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.delete-friend-button {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.delete-friend-button:hover {
+  background-color: #ff1a1a;
+}
+
+.block-friend-button {
+  background-color: #4d4dff;
+  color: white;
+}
+
+.block-friend-button:hover {
+  background-color: #1a1aff;
+}
+
+.block-friend-button.blocked {
+  background-color: #ff9933;
+}
+
+.block-friend-button.blocked:hover {
+  background-color: #ff8000;
+}
+
+.friend-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
