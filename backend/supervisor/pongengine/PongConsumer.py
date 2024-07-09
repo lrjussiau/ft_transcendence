@@ -9,7 +9,7 @@ from math import cos, sin, radians
 logger = logging.getLogger(__name__)
 
 class PongConsumer:
-    points = 50
+    points = 5
     refresh_rate = 60
     speed_buff = 7 / 6
     paddle_height = 70
