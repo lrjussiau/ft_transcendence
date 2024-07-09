@@ -308,6 +308,7 @@ class Room:
             logger.debug(f"No game to end in room {self.id}")
 
     def determine_winner(self):
+        return
         if not self.game:
             return None
         if self.game.game_state['player1_score'] > self.game.game_state['player2_score']:
