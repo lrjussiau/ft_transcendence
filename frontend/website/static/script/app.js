@@ -317,7 +317,6 @@ function updateSpeeds() {
   }
 }
 //--------------------- DRAW HANDLING ----------------------//
-
 function draw() {
   const canvas = document.getElementById('gameCanvas');
   if (!canvas) {
@@ -325,29 +324,14 @@ function draw() {
     return;
   }
 
-  const aspectRatio = 640 / 360;
-  const containerWidth = canvas.parentElement.clientWidth;
-  const width = (containerWidth * 98) / 100;
-  const height = width / aspectRatio;
-
-  canvas.width = Math.floor(width);
-  canvas.height = Math.floor(height);
-
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = 'white';
-
-  const scaleX = canvas.width / 640;
-  const scaleY = canvas.height / 360;
-
   if (countdownValue !== null) {
     ctx.font = `${40 * scaleY}px 'Roboto', sans-serif`;
     ctx.textAlign = 'center';
-      if (countdownValue > 0) {
-        ctx.fillText(`Game Start in ${countdownValue}`, canvas.width / 2, canvas.height / 2);
-      } else {
-        ctx.fillText(`Game Starting!`, canvas.width / 2, canvas.height / 2);
-      }
+    if (countdownValue > 0) {
+      ctx.fillText(i18next.t('gameStartCountdown', { count: countdownValue }), canvas.width / 2, canvas.height / 2);
+    } else {
+      ctx.fillText(i18next.t('gameStarting'), canvas.width / 2, canvas.height / 2);
+    }
   } else if (gameState && gameState.ball) {
     drawMiddleLine(ctx, scaleX);
 
@@ -355,10 +339,10 @@ function draw() {
     ctx.fillRect(5 * scaleX, gameState.p1.y * scaleY, 10 * scaleX, 70 * scaleY); // Always left
     ctx.fillRect(canvas.width - 15 * scaleX, gameState.p2.y * scaleY, 10 * scaleX, 70 * scaleY); // Always right
 
-  }  else {
+  } else {
     ctx.font = `${20 * scaleY}px 'Roboto', sans-serif`;
     ctx.textAlign = 'center';
-    ctx.fillText('Waiting for game to start...', canvas.width / 2, canvas.height / 2);
+    ctx.fillText(i18next.t('waitingForGameStart'), canvas.width / 2, canvas.height / 2);
   }
 }
 

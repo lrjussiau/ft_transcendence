@@ -115,6 +115,9 @@
     "Delete": "Delete",
     "Block": "Block",
     "Blocked": "Blocked",
-    "Deketed": "Deleted"
+    "Deketed": "Deleted",
+    "gameStartCountdown": "Game Start in {{count}}",
+    "gameStarting": "Game Starting!",
+    "waitingForGameStart": "Waiting for game to start..."
 
 }
