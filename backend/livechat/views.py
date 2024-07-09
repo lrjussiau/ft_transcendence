@@ -57,7 +57,7 @@ class CreateChatRoom(APIView):
             return Response({"error": "Cannot create a chat room with yourself"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            user2 = User.objects.get(id=user2_id)
+            user2_id = User.objects.get(id=user2_id)
         except User.DoesNotExist:
             return Response({"error": "User2 does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
