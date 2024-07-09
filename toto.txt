@@ -4,3 +4,58 @@ play game friends
 
 ! remove .env
 remove print statements from frontend
+
+========================================== TO DO ==========================================
+
+-> livechat                                     | 2 pts :
+    - The user should be able to block other users.
+    - The user should be able to invite other users to play a Pong game...
+    - The tournament system should be able to warn users expected for the next game.
+    - The user should be able to access other players profiles through the chat interface.
+
+-> Blockchain                                   | 2 pts :
+    - Testing Blockchain.
+
+-> AI                                           | 2 pts :
+    - Plug sur main.
+
+-> User and Game Stats Dashboards ?             | 1 pts :
+    - Develop a separate dashboard for game sessions, showing detailed statistics, outcomes...
+
+-> Use a Framework as backend                   | 2 pts:
+    - ok
+
+-> Use a front-end framework                    | 1 pts:
+    - ok
+
+-> Use a database for the backend               | 1 pts:
+    - ok
+
+-> Standard user management                     | 2 pts:
+    - Users can select a unique display name to play the tournaments
+
+-> Remote players                               | 2 pts:
+    - ok
+
+-> Implement Two-Factor Auth (2FA) and JWT.     | 2 pts:
+    - a check mais surment ok
+
+-> Server-Side Pong                             | 2 pts:
+    - ok
+
+-> CLI against Web User                         | 2 pts:
+    - ok
+
+-> Expanding Browser Compatibility              | 1 pts:
+    - Mok (check la navBar)
+
+-> Multiple language supports                   | 2 pts:
+    -ok
+
+---------------------------------------------------------------------------------------------
+
+Totale :                                        | 24 pts
+
+Needed :                                        | 14 pts
+
+Expected score :                                | 150 / 100 

@@ -111,6 +111,8 @@ def handle_server_message(data):
         clear_screen()
         if DEBUG_LOG:
             print('Game has started!')
+    elif data['type'] == 'winner':
+        print('You Win ! :)')
     else:
         if DEBUG_LOG:
             print(f"Unhandled message type: {data['type']}")
