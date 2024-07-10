@@ -12,6 +12,13 @@ from django.db.models import Q
 from db.models import Games, User
 from .serializers import GameRetrieveSerializer
 from datetime import datetime
+import logging
+import requests
+from django.http import JsonResponse
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 @csrf_exempt
 def endpoint_handler(request, operation_requested):
@@ -28,41 +35,48 @@ def endpoint_handler(request, operation_requested):
 def record_score(game_id, score_loser, loser, winner):
     blockchain_endpoint = "http://blockchain:3000/record_score"
 
+    logger.info(f"Attempting to record score for game_id: {game_id}")
+    logger.info(f"Score data - Loser: {loser}, Score: {score_loser}, Winner: {winner}")
+
     try:
         data_to_send = {
             "game_id": game_id,
-            "score_loser" : score_loser,
-            "loser" : loser,
-            "winner" : winner
+            "score_loser": score_loser,
+            "loser": loser,
+            "winner": winner
         }
+
+        logger.info(f"Sending data to blockchain: {data_to_send}")
 
         response = requests.post(blockchain_endpoint, json=data_to_send)
 
+        logger.info(f"Blockchain response status code: {response.status_code}")
+        logger.info(f"Blockchain response content: {response.text}")
+
         if response.status_code == 200:
+            logger.info("Data sent successfully to blockchain")
             return JsonResponse({"message": "Data sent successfully"}, status=200)
         else:
+            logger.error(f"Failed to send data to blockchain. Status code: {response.status_code}")
             return JsonResponse({"error": "Failed to send data to blockchain"}, status=500)
 
     except Exception as e:
+        logger.exception(f"Exception occurred while recording score: {str(e)}")
         return JsonResponse({"error": str(e)}, status=500)
 
 def retrieve_score(game_id):
     blockchain_endpoint = "http://blockchain:3000/retrieve_score"
-
     try:
         data_to_send = {
             "game_id": game_id,
         }
-
         response = requests.post(blockchain_endpoint, json=data_to_send)
-
-        if response.status_code == 200:
-            return JsonResponse(response.json(),  status=200)
-        else:
-            return JsonResponse({"error": "Failed to retrieve data from blockchain"}, status=500)
-
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+        data = response.json()
+        logger.info(f"Response from Node.js server: {data}")  # Log the response
+        return data
+    except requests.RequestException as e:
+        logger.error(f"Error retrieving score: {str(e)}")
+        return {"error": str(e)}
 
 class IntegrityCheck(APIView):
     permission_classes = [IsAuthenticated]
@@ -71,14 +85,15 @@ class IntegrityCheck(APIView):
         for game in games:
             if game['is_tournament_game']:
                 response = retrieve_score(game['game_id'])
-                if response.status_code != 200:
+                logger.info(f"Checking game: {game}")
+                logger.info(f"Response: {response}")
+                if response.get('status_code') != 200:
                     return False
-                if not (response.score_loser == game['score_loser'] and 
-                        response.loser == game['loser'] and 
-                        response.winner == game['winner']):
+                if not (response.get('score_loser') == game['loser_score'] and 
+                        response.get('loser') == game['loser']['username'] and 
+                        response.get('winner') == game['winner']['username']):
                     return False
         return True
-
     def get(self, request, user_id):
         matches = Games.objects.filter(Q(winner__id=user_id) | Q(loser__id=user_id))
         serializer = GameRetrieveSerializer(matches, many=True)

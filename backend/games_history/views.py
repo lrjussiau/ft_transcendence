@@ -10,8 +10,17 @@ from games_history.serializers import GameRetrieveSerializer
 from blockchain.views import record_score, retrieve_score
 from django.db.models import Q, Count
 from rest_framework import status
-from datetime import timedelta
 from django.utils import timezone
+from datetime import timedelta
+import logging
+import requests
+import json
+from django.http import JsonResponse
+
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 @require_GET
@@ -45,7 +54,7 @@ def store_game(score_loser, loser_username, winner_username, tournament_game):
     )
 
     if tournament_game:
-        response = record_score(new_game.game_id, score_loser, loser_username, winner_username)
+        response = record_score(new_game.game_id, score_loser, loser.username, winner.username)
         if response.status_code == 200:
             return JsonResponse({"message": "Data sent successfully"}, status=200)
         else:
@@ -55,19 +64,6 @@ def store_game(score_loser, loser_username, winner_username, tournament_game):
 
 class RetrieveGameData(APIView):
     permission_classes = [IsAuthenticated]
-    def check_scores_integrity(self, data):
-        for game in data:
-            print(f"game: game")
-            if game['is_tournament_game'] == True:
-                response = retrieve_score(game['game_id'])
-                if response.status_code != 200:
-                    return False
-                else:
-                    if (response.score_loser == game.score_loser and response.loser == game.loser and response.winner == game.winner):
-                        continue
-                    else:
-                        return False
-        return True
 
     def get(self, request, user_id):
         matches = Games.objects.filter(
@@ -75,9 +71,5 @@ class RetrieveGameData(APIView):
         )
         
         serializer = GameRetrieveSerializer(matches, many=True)
-        games = serializer.data
+        return Response(serializer.data, status=status.HTTP_200_OK)
         
-        if self.check_scores_integrity(games):
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response({"error": "Data integrity check failed."}, status=status.HTTP_400_BAD_REQUEST)

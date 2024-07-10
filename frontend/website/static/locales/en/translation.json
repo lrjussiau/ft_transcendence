@@ -115,9 +115,13 @@
     "Delete": "Delete",
     "Block": "Block",
     "Blocked": "Blocked",
-    "Deketed": "Deleted",
-    "gameStartCountdown": "Game Start in {{count}}",
-    "gameStarting": "Game Starting!",
-    "waitingForGameStart": "Waiting for game to start..."
+    "Deleted": "Deleted",
+    "waitingForGameStart": "Waiting for game to start...",
+    "youWon" : "You Won !",
+    "youLose" : "You Lose !",
+    "waitingForOpponent" :  "Waiting for opponent to join...",
+    "playerDisconnect" : "A player has disconnected. The game will end.",
+    "wonAgainst": " won against ",
+    "gameEnded": "Game ended ! "
 
 }

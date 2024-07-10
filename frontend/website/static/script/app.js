@@ -88,7 +88,7 @@ async function startGame(gameType) {
                           assignPlayer(data);
                           break;
                       case 'display':
-                          drawMessage(data.message);
+                          drawMessage(data);
                           break;
                       case 'end_game':
                           console.log('Game ended Triggered');
@@ -253,7 +253,82 @@ function assignPlayer(data) {
   window.localPlayerNumber = data.player_num;
 }
 
-function drawMessage(message) {
+// function drawMessage(message) {
+//   const canvas = document.getElementById('gameCanvas');
+//   if (!canvas) {
+//     console.error('Canvas element not found!');
+//     return;
+//   }
+//   const aspectRatio = 640 / 360;
+//   const containerWidth = canvas.parentElement.clientWidth;
+//   const width = (containerWidth * 98) / 100;
+//   const height = width / aspectRatio;
+
+//   canvas.width = Math.floor(width);
+//   canvas.height = Math.floor(height);
+
+//   const ctx = canvas.getContext('2d');
+//   ctx.clearRect(0, 0, canvas.width, canvas.height);
+//   ctx.fillStyle = 'white';
+
+//   const scaleX = canvas.width / 640;
+//   const scaleY = canvas.height / 360;
+
+//   ctx.font = `${32 * scaleY}px 'Roboto', sans-serif`;
+//   ctx.textAlign = 'center';
+
+//   console.log('Drawing message:', message);
+//   ctx.fillText(`${message}`, canvas.width / 2, canvas.height / 2);
+// }
+
+// function drawMessage(data) {
+
+//   console.log("Data to draw :", data);
+//   messageKey = data.message;
+//   if (data.winner && data.loser) {
+//     winner = data.winner;
+//     loser = data.loser;
+//   }
+//   const canvas = document.getElementById('gameCanvas');
+//   if (!canvas) {
+//     console.error('Canvas element not found!');
+//     return;
+//   }
+//   const aspectRatio = 640 / 360;
+//   const containerWidth = canvas.parentElement.clientWidth;
+//   const width = (containerWidth * 98) / 100;
+//   const height = width / aspectRatio;
+
+//   canvas.width = Math.floor(width);
+//   canvas.height = Math.floor(height);
+
+//   const ctx = canvas.getContext('2d');
+//   ctx.clearRect(0, 0, canvas.width, canvas.height);
+//   ctx.fillStyle = 'white';
+
+//   const scaleX = canvas.width / 640;
+//   const scaleY = canvas.height / 360;
+
+//   ctx.font = `${32 * scaleY}px 'Roboto', sans-serif`;
+//   ctx.textAlign = 'center';
+
+//   if (messageKey == "gameEnded"){
+//     const translatedMessage = window.i18next.t(messageKey) +  winner + window.i18next.t("wonAgainst") + loser;
+//   }
+//   else{
+//     const translatedMessage = window.i18next.t(messageKey);
+//   }
+
+//   console.log('Drawing message:', translatedMessage);
+//   ctx.fillText(translatedMessage, canvas.width / 2, canvas.height / 2);
+// }
+
+function drawMessage(data) {
+  console.log("Data to draw :", data);
+  const messageKey = data.message;
+  const winner = data.winner || '';
+  const loser = data.loser || '';
+
   const canvas = document.getElementById('gameCanvas');
   if (!canvas) {
     console.error('Canvas element not found!');
@@ -277,8 +352,15 @@ function drawMessage(message) {
   ctx.font = `${32 * scaleY}px 'Roboto', sans-serif`;
   ctx.textAlign = 'center';
 
-  console.log('Drawing message:', message);
-  ctx.fillText(`${message}`, canvas.width / 2, canvas.height / 2);
+  let translatedMessage;
+  if (messageKey === "gameEnded") {
+    translatedMessage = `${window.i18next.t(messageKey)} ${winner} ${window.i18next.t("wonAgainst")} ${loser}`;
+  } else {
+    translatedMessage = window.i18next.t(messageKey);
+  }
+
+  console.log('Drawing message:', translatedMessage);
+  ctx.fillText(translatedMessage, canvas.width / 2, canvas.height / 2);
 }
 
 function handleEndGame(data) {
