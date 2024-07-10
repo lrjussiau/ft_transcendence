@@ -247,60 +247,6 @@ async function displayFriends() {
     }
 }
 
-// async function displayFriends() {
-//     try {
-//         const friends = await fetchFriends();
-//         const friendsList = document.getElementById('friendList');
-//         friendsList.innerHTML = ''; // Clear existing content
-
-//         if (friends.length > 0) {
-//             friends.forEach(friend => {
-//                 const listItem = document.createElement('li');
-//                 listItem.className = 'accepted-friend-item';
-//                 listItem.dataset.friendId = friend.friend.id; // Add this line
-
-//                 const img = document.createElement('img');
-//                 img.src = friend.friend.avatar
-//                 img.alt = 'player-img';
-
-//                 // Check friend's status and set the class accordingly
-//                 if (friend.friend.status === 'online') {
-//                     img.className = 'accepted-friend-img-online';
-//                 } else {
-//                     img.className = 'accepted-friend-img';
-//                 }
-
-//                 const nameDiv = document.createElement('div');
-//                 nameDiv.className = 'accepted-friend-name';
-//                 nameDiv.textContent = friend.friend.username;
-
-                
-            
-//                 listItem.appendChild(img);
-//                 listItem.appendChild(nameDiv);
-//                 listItem.appendChild(blockButton);
-//                 listItem.appendChild(deleteButton);
-
-//                 friendsList.appendChild(listItem);
-//             });
-//         } else {
-//             friendsList.innerHTML = '<li data-i18n="noFriendsFound">* No friends found</li>';
-//         }
-//         if (window.initI18next && window.updateContent) {
-//             window.initI18next().then(() => {
-//               window.updateContent();
-//               if (window.initializeLanguageSelector) {
-//                 window.initializeLanguageSelector();
-//               }
-//             });
-//           } else {
-//             console.warn('i18next setup functions not found. Make sure i18n-setup.js is loaded.');
-//           }
-//     } catch (error) {
-//         console.error('Error fetching friends list:', error);
-//     }
-// }
-
 
 async function showContextMenu(event, friendId, friendName) {
     event.preventDefault();
@@ -411,25 +357,35 @@ async function showContextMenu(event, friendId, friendName) {
         console.error('Error checking block status:', error);
         updateBlockButton(false); // Default to unblocked if check fails
     }
-
     const showStatButton = document.createElement('button');
     showStatButton.className = 'modal-trigger';
     showStatButton.setAttribute('data-modal', 'UserModal');
     showStatButton.setAttribute('data-html', '/static/modals/modals.html');
     showStatButton.setAttribute('data-i18n', 'UserModal');
+    showStatButton.setAttribute('data-friend-id', friendId);
     showStatButton.textContent = i18next.t('Show Stat');
-    showStatButton.addEventListener('click', async (e) => {
+    $(showStatButton).on('click', async function(e) {
         e.stopPropagation();
-        contextMenu.remove();
-        // try {
-        //     console.log('Showing user modal:', friendId);
-        //     await showModal('UserModal', '/static/modals/modals.html');
-        // } catch (error) {
-        //     console.error('Error showing user modal:', error);
-        // }
+        $(contextMenu).remove();
+    
+        try {
+            console.log('Showing user modal:', friendId);
+            const userData = await updateUserModalContent(friendId);
+    
+            // Use the showModal function from modal.js
+            await window.showModal('UserModal', '/static/modals/modals.html');
+    
+            // Update the modal content after it's shown
+            updateModalContent(userData);
+    
+            console.log('Modal show method called and content updated');
+        } catch (error) {
+            console.error('Error showing user modal:', error);
+        }
     });
-
+    
     contextMenu.appendChild(showStatButton);
+   
     contextMenu.appendChild(sendMessageBtn);
     contextMenu.appendChild(deleteButton);
     contextMenu.appendChild(blockButton);
@@ -443,7 +399,6 @@ async function showContextMenu(event, friendId, friendName) {
     });
 }
 
-// Add this function to the friend.js file
 function setupFriendListeners() {
     const friendList = document.getElementById('friendList');
     if (friendList) {
@@ -515,31 +470,56 @@ async function initializeFriendSearch() {
         });
     });
 }
+function updateModalContent(userData) {
+    const statsHtml = `
+        <div class="stat-win">
+            <h4 class="stat-title linear-title" data-i18n="wins">Wins</h4>
+            <p class="stat-value" id="wins-id">${userData.wins}</p>
+        </div>
+        <div class="stat-lose">
+            <h4 class="stat-title linear-title" data-i18n="losses">Losses</h4>
+            <p class="stat-value" id="loses-id">${userData.losses}</p>
+        </div>
+        <div class="stat-ratio">
+            <h4 class="stat-title linear-title" data-i18n="ratio">Ratio</h4>
+            <p class="stat-value" id="ratio-id">${userData.ratio}</p>
+        </div>
+    `;
 
-async function initializeUserModal(friendId, modalElement) {
-    try {
-        console.log('Initializing user modal:', friendId);
-        const userInfo = await getUserInfo(friendId);
-        const userStats = await getUserStats(friendId);
+    $('#displayStats').html(statsHtml);
 
-        // Update modal content
-        modalElement.querySelector('#username-id').textContent = userInfo.username;
-        const avatarImg = modalElement.querySelector('.img-fluid-id');
-        avatarImg.src = userInfo.avatar || 'https://www.w3schools.com/howto/img_avatar.png';
-        avatarImg.alt = `${userInfo.username}'s avatar`;
-        modalElement.querySelector('#wins-id').textContent = userStats.wins;
-        modalElement.querySelector('#loses-id').textContent = userStats.losses;
+    // Update other modal content
+    $('#username-id').text(userData.username);
+    $('.img-fluid-id').attr('src', userData.avatar || 'https://www.w3schools.com/howto/img_avatar.png')
+                      .attr('alt', `${userData.username}'s avatar`);
 
-        // Calculate and update ratio
-        const totalGames = userStats.wins + userStats.losses;
-        const ratio = totalGames > 0 ? (userStats.wins / totalGames).toFixed(2) : '0.00';
-        modalElement.querySelector('#ratio-id').textContent = ratio;
-
-    } catch (error) {
-        console.error('Error loading user stats:', error);
-        alert('Failed to load user stats. Please try again.');
+    // Trigger i18next translation update if needed
+    if (window.i18next) {
+        window.i18next.reloadResources().then(() => {
+            $('#UserModal').localize();
+        });
     }
 }
-
+async function updateUserModalContent(friendId) {
+    try {
+        const userInfo = await getUserInfo(friendId);
+        const userStats = await fetchUserStats(friendId);
+        
+        // Calculate ratio
+        const totalGames = userStats.wins + userStats.losses;
+        const ratio = totalGames > 0 ? (userStats.wins / totalGames).toFixed(2) : '0.00';
+        
+        return {
+            username: userInfo.username,
+            avatar: userInfo.avatar,
+            wins: userStats.wins,
+            losses: userStats.losses,
+            ratio: ratio
+        };
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        throw error;
+    }
+}
 
 document.addEventListener('DOMContentLoaded', setupFriendListeners);
