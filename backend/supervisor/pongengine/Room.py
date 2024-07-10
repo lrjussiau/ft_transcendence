@@ -150,14 +150,14 @@ class Room:
         loser = next((player for player in self.players if player.result == 'loser'), None)
         
         if winner and loser:
-            winner = winner.get_username()
-            loser = loser.get_username()
+            winner_name = winner.get_username()
+            loser_name = loser.get_username()
             end_message = "gameEnded"
             await self.broadcast_message({
                 'type': 'display',
                 'message': end_message,
-                'winner': winner,
-                'loser': loser
+                'winner': winner_name,
+                'loser': loser_name
             })
         else:
             end_message = "gameEnded"
@@ -170,10 +170,16 @@ class Room:
         if self.game_type == 'tournament' and self.tournament_callback:
             if winner:
                 await self.tournament_callback(self, winner)
-            await winner.send_message({
-                'type': 'round_ended',
-                'message': "You won! Waiting for next round.",
-            })
+            if winner.is_last_round == True:
+                await winner.send_message({
+                    'type': 'end_game',
+                    'message': "This Is the end"
+                })
+            else:
+                await winner.send_message({
+                    'type': 'round_ended',
+                    'message': "You won! Waiting for next round.",
+                })
             await loser.send_message({
                 'type': 'end_game',
                 'message': "You lost. Tournament ended for you.",
