@@ -93,7 +93,7 @@
     "deleteAccountButton": "Delete My Account",
     "winner":"Won",
     "loser" : "Lost :(",
-    "isTournament":"Yes, verified on the bloackchain",
+    "isTournament":"Yes",
     "isNotTournament" : "Nope",
     "tournamentScoreIntegrityCheck": "Tournament Score Integrity Check",
     "status": "Status",
@@ -122,6 +122,12 @@
     "waitingForOpponent" :  "Waiting for opponent to join...",
     "playerDisconnect" : "A player has disconnected. The game will end.",
     "wonAgainst": " won against ",
-    "gameEnded": "Game ended ! "
+    "gameEnded": "Game ended ! ",
+    "YouWon" : "You Won !",
+    "YouLose" : "You Lose !",
+    "WaitingForOpponent" :  "Waiting for opponent to join...",
+    "PlayerDisconnect" : "Your adversaire disconnect" ,
+    "ImReady" : "I'm ready !"
+
 
 }

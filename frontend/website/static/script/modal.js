@@ -25,55 +25,73 @@ function setupModalTriggers() {
 
 function showModal(modalName, modalHtmlPath) {
   return new Promise((resolve, reject) => {
-    //console.log(`Loading modal: ${modalName}`);
+      fetch(modalHtmlPath)
+          .then(response => response.text())
+          .then(html => {
+              const modalContainer = document.getElementById('modal-container');
+              if (modalContainer) {
+                  modalContainer.innerHTML = html;
+                  const modalElement = $(`#${modalName}`);
+                  modalElement.modal('show');
+                  
+                  // Bind close events
+                  bindCloseEvents(modalName);
 
-    fetch(modalHtmlPath)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.text();
-      })
-      .then(html => {
-        const modalContainer = document.getElementById('modal-container');
+                  if (window.updateContent) {
+                      window.updateContent(document.getElementById(modalName));
+                  }
 
-        if (modalContainer) {
-          modalContainer.innerHTML = html;
-          const modalElement = $(`#${modalName}`);
-          modalElement.modal('show');
-          if (window.updateContent) {
-            window.updateContent(document.getElementById(modalName));
-          } else {
-          console.warn('updateContent function not found. Make sure i18n-setup.js is loaded.');
-          }
-          //console.log(`${modalName} is now shown`);
+                  modalElement.on('shown.bs.modal', () => {
+                      initializeModal(modalName);
+                      resolve();
+                  });
 
-          modalElement.on('shown.bs.modal', () => {
-            initializeModal(modalName);
-            resolve();
+                  modalElement.on('hidden.bs.modal', () => handleModalHidden(modalName));
+              } else {
+                  reject(new Error('#modal-container element not found'));
+              }
+          })
+          .catch(error => {
+              console.error('Failed to load modal:', error);
+              reject(error);
           });
-
-          modalElement.on('hidden.bs.modal', () => handleModalHidden(modalName));
-        } else {
-          reject(new Error('#modal-container element not found'));
-        }
-      })
-      .catch(error => {
-        console.error('Failed to load modal:', error);
-        reject(error);
-      });
   });
-
 }
 
+function bindCloseEvents(modalName) {
+  const modalElement = $(`#${modalName}`);
+  
+  // Bind close button
+  modalElement.find('.close').off('click').on('click', function() {
+      window.hideModal(modalName);
+  });
+
+  // Bind backdrop click
+  modalElement.off('click').on('click', function(event) {
+      if ($(event.target).is(modalElement)) {
+          window.hideModal(modalName);
+      }
+  });
+
+  // Bind ESC key
+  $(document).off('keydown.modalClose').on('keydown.modalClose', function(event) {
+      if (event.key === "Escape") {
+          window.hideModal(modalName);
+      }
+  });
+}
 function hideModal(modalName) {
   return new Promise((resolve) => {
-    const modalElement = $(`#${modalName}`);
-    modalElement.modal('hide');
-    modalElement.on('hidden.bs.modal', function () {
-      $(this).off('hidden.bs.modal');
-      resolve();
-    });
+      const modalElement = $(`#${modalName}`);
+      modalElement.modal('hide');
+      modalElement.on('hidden.bs.modal', function () {
+          $(this).off('hidden.bs.modal');
+          // Remove the modal from DOM after hiding
+          modalElement.remove();
+          $('.modal-backdrop').remove();
+          $('body').removeClass('modal-open').css('overflow', '');
+          resolve();
+      });
   });
 }
 

@@ -93,7 +93,7 @@
     "deleteAccountButton": "Supprimer mon compte",
     "winner": "Gagné",
     "loser": "Perdu :(",
-    "isTournament": "Oui, vérifié sur la blockchain",
+    "isTournament": "Oui",
     "isNotTournament": "Non",
     "tournamentScoreIntegrityCheck": "Vérification de l'intégrité des scores du tournoi",
     "status": "Statut",
@@ -122,6 +122,11 @@
     "waitingForOpponent" :  "En attente que l'adversaire se joigne...",
     "playerDisconnect" : "Un joueur s'est déconnecté. Le jeu va se terminer.",
     "wonAgainst": " a gagné contre ",
-    "gameEnded": "Jeu terminé !"
+    "gameEnded": "Jeu terminé !",
+    "YouWon" : "Vous avez gagné !",
+    "YouLose" : "Vous avez perdu !",
+    "WaitingForOpponent" : "En attente de l'adversaire...",
+    "PlayerDisconnect" : "Votre adversaire s'est déconnecté",
+    "ImReady" : "Je suis prêt !"
 
 }

@@ -93,7 +93,7 @@
     "deleteAccountButton": "Eyða reikningnum mínum",
     "winner": "Vann",
     "loser": "Tapað :(",
-    "isTournament": "Já, staðfest á blockchain",
+    "isTournament": "Já",
     "isNotTournament": "Nei",
     "tournamentScoreIntegrityCheck": "Staðfesting á heilindum mótsskorar",
     "status": "Staða",
@@ -122,6 +122,11 @@
     "waitingForOpponent" :  "Bíð eftir að andstæðingur gangi í lið...",
     "playerDisconnect" : "Leikmaður hefur aftengt. Leikurinn mun enda.",
     "wonAgainst": " vann gegn ",
-    "gameEnded": "Leik lokið!"
+    "gameEnded": "Leik lokið!",
+    "YouWon" : "Þú vannst!",
+    "YouLose" : "Þú tapaðir!",
+    "WaitingForOpponent" : "Bíð eftir andstæðingi...",
+    "PlayerDisconnect" : "Andstæðingur þinn aftengdist",
+    "ImReady" : "Ég er tilbúinn!"
 
 }
