@@ -193,13 +193,13 @@ async function displayPlayerInfo() {
   if (selectedGameType === 'solo') {
       rightPlayerInfo = {
           username: 'IA',
-          avatar: 'path/to/default/avatar/for/IA.png' // Set a default avatar for AI
+          avatar: ' /media/avatars/ai.png' // Set a default avatar for AI
       };
   }
   if (selectedGameType === 'local_1v1') {
     rightPlayerInfo = {
         username: 'Player 2',
-        avatar: 'path/to/default/avatar/for/IA.png' // Set a default avatar for AI
+        avatar: '' // Set a default avatar for AI
     };
 }
 
