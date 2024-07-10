@@ -74,7 +74,6 @@ function createRoomButton(roomId, otherUser) {
 async function loadChatRoom(roomId) {
     try {
         const room = await fetchChatRoomDetails(roomId);
-        //console.log('Room Info : ', room);
         const otherUser = room.user1.id === currentUserId ? room.user2 : room.user1;
 
         updateChatHeader(otherUser);
@@ -87,6 +86,7 @@ async function loadChatRoom(roomId) {
         console.error('Error loading chat room:', error);
     }
 }
+
 
 async function fetchChatRoomDetails(roomId) {
     const response = await fetch(`/api/livechat/rooms/${roomId}/`, {
@@ -103,11 +103,14 @@ function updateChatHeader(otherUser) {
     const avatarContainer = document.querySelector('.chat-img-container');
     const avatarImg = document.querySelector('.chat-img');
 
-    //console.log('Other User:', otherUser);
+    if (!usernameSpan || !avatarContainer || !avatarImg) {
+        console.error('Required elements are missing in the DOM');
+        return;
+    }
+
     if (otherUser) {
         usernameSpan.textContent = otherUser.username;
-        //console.log('Avatar:', otherUser.avatar);
-        avatarImg.src = otherUser.avatar;
+        avatarImg.src = otherUser.avatar || '/static/img/default-avatar.png';
         avatarImg.alt = `${otherUser.username}'s avatar`;
         avatarContainer.style.display = 'block';
     } else {
@@ -115,6 +118,7 @@ function updateChatHeader(otherUser) {
         avatarContainer.style.display = 'none';
     }
 }
+
 
 async function loadPreviousMessages(roomId) {
     try {
@@ -218,8 +222,6 @@ async function startChat(friendId, friendName) {
     //console.log(`Starting chat with ${friendName} (ID: ${friendId})`);
     try {
         const chatRoom = await createOrGetChatRoom(friendId);
-        //console.log('Chat room created or retrieved:', chatRoom);
-        
         localStorage.setItem('currentChatRoom', JSON.stringify(chatRoom));
 
         //console.log('Loading chat room:', chatRoom.id);

@@ -17,10 +17,10 @@ remove print statements from frontend
     - Testing Blockchain.
 
 -> AI                                           | 2 pts :
-    - Plug sur main.
+    - ok
 
 -> User and Game Stats Dashboards ?             | 1 pts :
-    - Develop a separate dashboard for game sessions, showing detailed statistics, outcomes...
+    - ok
 
 -> Use a Framework as backend                   | 2 pts:
     - ok
@@ -32,13 +32,13 @@ remove print statements from frontend
     - ok
 
 -> Standard user management                     | 2 pts:
-    - Users can select a unique display name to play the tournaments
+    - ok
 
 -> Remote players                               | 2 pts:
     - ok
 
 -> Implement Two-Factor Auth (2FA) and JWT.     | 2 pts:
-    - a check mais surment ok
+    - ok
 
 -> Server-Side Pong                             | 2 pts:
     - ok

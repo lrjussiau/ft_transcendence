@@ -32,7 +32,6 @@ async function blockFriend(friend_id){
     }
 }
 
-
 async function deleteFriend(friendId) {
     const token = localStorage.getItem('authToken');
     const response = await fetch('/api/friends/delete/', {
@@ -43,12 +42,12 @@ async function deleteFriend(friendId) {
         },
         body: JSON.stringify({ friend_id: friendId})
     });
-
     if (response.ok) {
         return response.json();
     } else {
         throw new Error('Failed to delete friend');
     }
+    displayFriends();
 }
 
 async function fetchUsers() {
@@ -197,72 +196,6 @@ async function displayIncomingFriendRequests() {
     }
 }
 
-function createFriendButtons(friend) {
-    const deleteButton = document.createElement('button');
-    deleteButton.className = 'friend-button delete-friend-button';
-    deleteButton.innerText = i18next.t('Delete');
-    deleteButton.addEventListener('click', async () => {
-        await deleteFriend(friend.friend.id);
-        deleteButton.innerText = i18next.t('Deleted');
-        deleteButton.disabled = true;
-    });
-
-    const blockButton = document.createElement('button');
-    blockButton.className = 'friend-button block-friend-button';
-
-    const token = localStorage.getItem('authToken');
-    
-    const updateBlockButton = (isBlocked) => {
-        if (isBlocked) {
-            blockButton.innerText = i18next.t('Unblock');
-            blockButton.classList.add('blocked');
-        } else {
-            blockButton.innerText = i18next.t('Block');
-            blockButton.classList.remove('blocked');
-        }
-    };
-
-    const toggleBlockStatus = async (isCurrentlyBlocked) => {
-        const endpoint = isCurrentlyBlocked ? 'unblock' : 'block';
-        try {
-            const response = await fetch(`/api/friends/${endpoint}/${friend.friend.id}/`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                updateBlockButton(!isCurrentlyBlocked);
-            } else {
-                console.error('Failed to toggle block status');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
-    blockButton.addEventListener('click', () => {
-        const isCurrentlyBlocked = blockButton.classList.contains('blocked');
-        toggleBlockStatus(isCurrentlyBlocked);
-    });
-
-    // Initial block status check
-    fetch(`/api/friends/is-blocked/${friend.friend.id}/`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        updateBlockButton(data.is_blocked);
-    })
-    .catch(error => console.error('Error:', error));
-
-    return { deleteButton, blockButton };
-}
 
 async function displayFriends() {
     try {
@@ -291,14 +224,8 @@ async function displayFriends() {
                 nameDiv.className = 'accepted-friend-name';
                 nameDiv.textContent = friend.friend.username;
 
-                // Create block and delete buttons
-                const { blockButton, deleteButton } = createFriendButtons(friend);
-
                 listItem.appendChild(img);
                 listItem.appendChild(nameDiv);
-                listItem.appendChild(blockButton);
-                listItem.appendChild(deleteButton);
-
                 friendsList.appendChild(listItem);
             });
         } else {
@@ -374,7 +301,8 @@ async function displayFriends() {
 //     }
 // }
 
-function showContextMenu(event, friendId, friendName) {
+
+async function showContextMenu(event, friendId, friendName) {
     event.preventDefault();
     event.stopPropagation();
     
@@ -390,6 +318,9 @@ function showContextMenu(event, friendId, friendName) {
     contextMenu.style.top = `${event.pageY}px`;
     contextMenu.style.zIndex = '1000';
 
+    const token = localStorage.getItem('authToken');
+
+    // Send Message Button
     const sendMessageBtn = document.createElement('button');
     sendMessageBtn.textContent = i18next.t('sendMessage');
     sendMessageBtn.onclick = async (e) => {
@@ -403,7 +334,110 @@ function showContextMenu(event, friendId, friendName) {
         contextMenu.remove();
     };
 
+    // Delete Friend Button
+    const deleteButton = document.createElement('button');
+    deleteButton.innerText = i18next.t('Delete');
+    deleteButton.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        try {
+            await deleteFriend(friendId);
+            deleteButton.innerText = i18next.t('Deleted');
+            deleteButton.disabled = true;
+            setTimeout(() => {
+                contextMenu.remove();
+                displayFriends(); // Call displayFriends after deleting a friend
+            }, 1000);
+        } catch (error) {
+            console.error('Error deleting friend:', error);
+            alert('Failed to delete friend. Please try again.');
+        }
+    });
+
+    // Block/Unblock Button
+    const blockButton = document.createElement('button');
+
+    const updateBlockButton = (isBlocked) => {
+        if (isBlocked) {
+            blockButton.innerText = i18next.t('Unblock');
+            blockButton.classList.add('blocked');
+        } else {
+            blockButton.innerText = i18next.t('Block');
+            blockButton.classList.remove('blocked');
+        }
+    };
+
+    const toggleBlockStatus = async (isCurrentlyBlocked) => {
+        const endpoint = isCurrentlyBlocked ? 'unblock' : 'block';
+        try {
+            const response = await fetch(`/api/friends/${endpoint}/${friendId}/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                updateBlockButton(!isCurrentlyBlocked);
+            } else {
+                console.error('Failed to toggle block status');
+                alert('Failed to update block status. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    };
+
+    blockButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isCurrentlyBlocked = blockButton.classList.contains('blocked');
+        toggleBlockStatus(isCurrentlyBlocked);
+    });
+
+    // Initial block status check (changed back to POST)
+    fetch(`/api/friends/is-blocked/${friendId}/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        updateBlockButton(data.is_blocked);
+    })
+    .catch(error => {
+        console.error('Error checking block status:', error);
+        updateBlockButton(false); // Default to unblocked if check fails
+    });
+
+
+    blockButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isCurrentlyBlocked = blockButton.classList.contains('blocked');
+        toggleBlockStatus(isCurrentlyBlocked);
+    });
+
+    // Initial block status check
+    fetch(`/api/friends/is-blocked/${friendId}/`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        updateBlockButton(data.is_blocked);
+    })
+    .catch(error => {
+        console.error('Error checking block status:', error);
+        updateBlockButton(false); // Default to unblocked if check fails
+    });
+
     contextMenu.appendChild(sendMessageBtn);
+    contextMenu.appendChild(deleteButton);
+    contextMenu.appendChild(blockButton);
     document.body.appendChild(contextMenu);
 
     document.addEventListener('click', function closeMenu(e) {
@@ -413,6 +447,8 @@ function showContextMenu(event, friendId, friendName) {
         }
     });
 }
+
+
 // Add this function to the friend.js file
 function setupFriendListeners() {
     const friendList = document.getElementById('friendList');
@@ -475,7 +511,7 @@ async function initializeFriendSearch() {
             addFriend(friendId)
                 .then(() => {
                     button.replaceWith(`
-                        <button class="btn btn-sm modal-button btn-success" data-i18n="added">Added</button>
+                        <button class="btn btn-sm modal-button btn-success added-btn" data-i18n="added">Added</button>
                     `);
                 })
                 .catch(error => {
