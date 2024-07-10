@@ -4,14 +4,12 @@ WORKDIR /app
 
 COPY requirements.txt /app/requirements.txt
 COPY tools/script.sh /app/script.sh
+COPY media/avatars/. /app/media/avatars/
 
 RUN pip install --no-cache-dir -r requirements.txt
 RUN chmod +x /app/script.sh
-RUN sh /app/script.sh
 
 COPY . /app
-RUN mkdir -p /app/media/avatars/ && mv default_avatar.png ai.png /app/media/avatars/
-
 
 EXPOSE 8000
 
