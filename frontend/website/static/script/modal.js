@@ -89,6 +89,7 @@ function handleModalHidden(modalName) {
 }
 
 function initializeModal(modalId) {
+  console.log(`Initializing modal: ${modalId}`);
   switch (modalId) {
     case 'avatarModal':
       setupAvatarForm();

@@ -4,6 +4,9 @@ async function launchGame() {
 
   function initializeGameButtons() {
     const startButton = document.getElementById('startButton');
+    if (!startButton) {
+      return;
+    }
     const gameButtons = {
       'solo': document.getElementById('solo'),
       '1v1': document.getElementById('1v1'),

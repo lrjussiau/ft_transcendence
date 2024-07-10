@@ -414,7 +414,7 @@ function draw() {
     ctx.font = `${40 * scaleY}px 'Roboto', sans-serif`;
     ctx.textAlign = 'center';
       if (countdownValue > 0) {
-        ctx.fillText(`Game Start in ${countdownValue}`, canvas.width / 2, canvas.height / 2);
+        ctx.fillText(`${countdownValue}`, canvas.width / 2, canvas.height / 2);
       } else {
         ctx.fillText(`Game Starting!`, canvas.width / 2, canvas.height / 2);
       }

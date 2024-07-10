@@ -288,3 +288,36 @@
     </div>
   </div>
 </div>
+
+<!-- User Modal -->
+<div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="UserModalLabel" aria-hidden="true">
+  <div class="modal-dialog-user">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="player-card">
+          <h4 class="player-name username"><span id="username-id"></h4>
+          <div class="btn-link player-img" data-modal="avatarModal" data-html="/static/modals/modals.html">
+            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="player-img" class="img-fluid-id">
+          </div>
+        </div>
+        <div class="player-stats">
+          <div class="stat-win">
+            <h4 class="stat-title linear-title" data-i18n="wins">Wins</h3>
+            <p class="stat-value" id="wins-id">0</p>
+          </div>
+          <div class="stat-lose">
+            <h4 class="stat-title linear-title" data-i18n="losses">Losses</h3>
+            <p class="stat-value" id="loses-id">0</p>
+          </div>
+          <div class="stat-ratio">
+            <h4 class="stat-title linear-title" data-i18n="ratio">Ratio</h3>
+            <p class="stat-value" id="ratio-id">0</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

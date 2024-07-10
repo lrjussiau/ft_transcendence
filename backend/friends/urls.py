@@ -12,7 +12,8 @@ from .views import (
     BlockFriendView,
     PendingFriendsListView,
     BlockedFriendsListView,
-    UnblockFriendView
+    UnblockFriendView,
+    UserInfoView
 )
 
 urlpatterns = [
@@ -27,4 +28,5 @@ urlpatterns = [
     path('', FriendsListView.as_view(), name='friends-list'),
     path('pending/', PendingFriendsListView.as_view(), name='pending-friends-list'),
     path('blocked/', BlockedFriendsListView.as_view(), name='blocked-friends-list'),
+    path('user_stats/<int:user_id>/', UserInfoView.as_view(), name='user_stats'),
 ]

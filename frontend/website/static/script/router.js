@@ -151,8 +151,6 @@ async function handleRoute(route) {
 // Initialize the router
 document.addEventListener('DOMContentLoaded', () => {
   let route = getCurrentRoute();
-  //console.log("Initial route:", route);
-  // Redirect to /home if the route is empty (i.e., root path)
   if (route === '') {
     window.history.pushState({}, '', '/home');
     route = 'home';
@@ -160,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   handleRoute(route);
 
-  // Add event listeners to buttons for client-side routing
   document.querySelectorAll('button[data-route]').forEach(button => {
     button.addEventListener('click', event => {
       event.preventDefault();
@@ -179,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Handle browser navigation events
+
 window.addEventListener('popstate', () => {
   const route = getCurrentRoute();
   handleRoute(route);
@@ -219,14 +216,12 @@ async function Logout() {
       console.error('Error changing user status:', error);
   }
 
-  //console.log('Logging out...');
   localStorage.removeItem('authToken');
   localStorage.removeItem('refreshToken');
   WebSocketManager.closeWebSocket();
 
   try {
       const data = await response.json();
-      //console.log(data);
     } catch (error) {
         console.error('Error:', error);
     }

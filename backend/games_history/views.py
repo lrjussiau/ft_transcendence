@@ -10,6 +10,8 @@ from games_history.serializers import GameRetrieveSerializer
 from blockchain.views import record_score, retrieve_score
 from django.db.models import Q, Count
 from rest_framework import status
+from datetime import timedelta
+from django.utils import timezone
 
 
 @require_GET
@@ -17,11 +19,6 @@ def user_stats(request, user_id):
     wins = Games.objects.filter(winner_id=user_id).count()
     losses = Games.objects.filter(loser_id=user_id).count()
     return JsonResponse({'wins': wins, 'losses': losses})
-
-from django.utils import timezone
-from django.db.models import Q
-from datetime import timedelta
-from django.http import JsonResponse
 
 @sync_to_async
 def store_game(score_loser, loser_username, winner_username, tournament_game):

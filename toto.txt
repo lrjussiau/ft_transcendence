@@ -8,7 +8,6 @@ remove print statements from frontend
 ========================================== TO DO ==========================================
 
 -> livechat                                     | 2 pts :
-    - The user should be able to block other users.
     - The user should be able to invite other users to play a Pong game...
     - The tournament system should be able to warn users expected for the next game.
     - The user should be able to access other players profiles through the chat interface.

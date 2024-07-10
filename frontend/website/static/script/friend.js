@@ -324,6 +324,7 @@ async function showContextMenu(event, friendId, friendName) {
     const sendMessageBtn = document.createElement('button');
     sendMessageBtn.textContent = i18next.t('sendMessage');
     sendMessageBtn.onclick = async (e) => {
+        contextMenu.remove();
         e.stopPropagation();
         try {
             await startChat(friendId, friendName);
@@ -352,6 +353,7 @@ async function showContextMenu(event, friendId, friendName) {
             alert('Failed to delete friend. Please try again.');
         }
     });
+
 
     // Block/Unblock Button
     const blockButton = document.createElement('button');
@@ -394,47 +396,40 @@ async function showContextMenu(event, friendId, friendName) {
         toggleBlockStatus(isCurrentlyBlocked);
     });
 
-    // Initial block status check (changed back to POST)
-    fetch(`/api/friends/is-blocked/${friendId}/`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        updateBlockButton(data.is_blocked);
-    })
-    .catch(error => {
-        console.error('Error checking block status:', error);
-        updateBlockButton(false); // Default to unblocked if check fails
-    });
-
-
-    blockButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isCurrentlyBlocked = blockButton.classList.contains('blocked');
-        toggleBlockStatus(isCurrentlyBlocked);
-    });
-
     // Initial block status check
-    fetch(`/api/friends/is-blocked/${friendId}/`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
+    try {
+        const response = await fetch(`/api/friends/is-blocked/${friendId}/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
         updateBlockButton(data.is_blocked);
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Error checking block status:', error);
         updateBlockButton(false); // Default to unblocked if check fails
+    }
+
+    const showStatButton = document.createElement('button');
+    showStatButton.className = 'modal-trigger';
+    showStatButton.setAttribute('data-modal', 'UserModal');
+    showStatButton.setAttribute('data-html', '/static/modals/modals.html');
+    showStatButton.setAttribute('data-i18n', 'UserModal');
+    showStatButton.textContent = i18next.t('Show Stat');
+    showStatButton.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        contextMenu.remove();
+        // try {
+        //     console.log('Showing user modal:', friendId);
+        //     await showModal('UserModal', '/static/modals/modals.html');
+        // } catch (error) {
+        //     console.error('Error showing user modal:', error);
+        // }
     });
 
+    contextMenu.appendChild(showStatButton);
     contextMenu.appendChild(sendMessageBtn);
     contextMenu.appendChild(deleteButton);
     contextMenu.appendChild(blockButton);
@@ -447,7 +442,6 @@ async function showContextMenu(event, friendId, friendName) {
         }
     });
 }
-
 
 // Add this function to the friend.js file
 function setupFriendListeners() {
@@ -522,6 +516,30 @@ async function initializeFriendSearch() {
     });
 }
 
+async function initializeUserModal(friendId, modalElement) {
+    try {
+        console.log('Initializing user modal:', friendId);
+        const userInfo = await getUserInfo(friendId);
+        const userStats = await getUserStats(friendId);
+
+        // Update modal content
+        modalElement.querySelector('#username-id').textContent = userInfo.username;
+        const avatarImg = modalElement.querySelector('.img-fluid-id');
+        avatarImg.src = userInfo.avatar || 'https://www.w3schools.com/howto/img_avatar.png';
+        avatarImg.alt = `${userInfo.username}'s avatar`;
+        modalElement.querySelector('#wins-id').textContent = userStats.wins;
+        modalElement.querySelector('#loses-id').textContent = userStats.losses;
+
+        // Calculate and update ratio
+        const totalGames = userStats.wins + userStats.losses;
+        const ratio = totalGames > 0 ? (userStats.wins / totalGames).toFixed(2) : '0.00';
+        modalElement.querySelector('#ratio-id').textContent = ratio;
+
+    } catch (error) {
+        console.error('Error loading user stats:', error);
+        alert('Failed to load user stats. Please try again.');
+    }
+}
 
 
 document.addEventListener('DOMContentLoaded', setupFriendListeners);
