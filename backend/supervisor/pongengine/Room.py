@@ -75,7 +75,7 @@ class Room:
 
         await player.send_message({
             'type': 'display',
-            'message': 'Waiting for opponent to join...'
+            'message': 'waitingForOpponent'
         })
 
 
@@ -121,7 +121,7 @@ class Room:
     async def notify_player_disconnection(self):
         disconnect_message = json.dumps({
             'type': 'player_disconnected',
-            'message': 'A player has disconnected. The game will end.'
+            'message': ' playerDisconnect'
         })
         for player in self.players:
             logger.debug(f"Sending player disconnection message to {player.get_username()}")
@@ -137,16 +137,22 @@ class Room:
         loser = next((player for player in self.players if player.result == 'loser'), None)
         
         if winner and loser:
-            end_message = f"Game ended ! {winner.get_username()} won against {loser.get_username()} !"
-        elif all(player.result == 'tie' for player in self.players):
-            end_message = "Game over! It's a tie !"
+            winner = winner.get_username()
+            loser = loser.get_username()
+            end_message = "gameEnded"
+            await self.broadcast_message({
+                'type': 'display',
+                'message': end_message,
+                'winner': winner,
+                'loser': loser
+            })
         else:
-            end_message = "Game ended !"
+            end_message = "gameEnded"
+            await self.broadcast_message({
+                'type': 'display',
+                'message': end_message
+            })
 
-        await self.broadcast_message({
-            'type': 'display',
-            'message': end_message
-        })
         await asyncio.sleep(5)    
         if self.game_type == 'tournament' and self.tournament_callback:
             if winner:

@@ -110,6 +110,18 @@
     "notifications": "Notifications",
     "Accept": "Accepter",
     "Reject": "Rejeter",
-    "disable2FA": "Désactiver 2FA"
+    "disable2FA": "Désactiver 2FA",
+    "Unblock": "Débloquer",
+    "Delete": "Supprimer",
+    "Block": "Bloquer",
+    "Blocked": "Bloqué",
+    "Deleted": "Supprimé",
+    "waitingForGameStart": "En attente du début du jeu...",
+    "youWon" : "Vous avez gagné !",
+    "youLose" : "Vous avez perdu !",
+    "waitingForOpponent" :  "En attente que l'adversaire se joigne...",
+    "playerDisconnect" : "Un joueur s'est déconnecté. Le jeu va se terminer.",
+    "wonAgainst": " a gagné contre ",
+    "gameEnded": "Jeu terminé !"
 
 }

@@ -110,6 +110,18 @@
     "notifications": "Tilkynningar",
     "Accept": "Samþykkja",
     "Reject": "Hafna",
-    "disable2FA": "Óvirkja 2FA"
+    "disable2FA": "Óvirkja 2FA",
+    "Unblock": "Aftengja",
+    "Delete": "Eyða",
+    "Block": "Loka",
+    "Blocked": "Lokað",
+    "Deleted": "Eytt",
+    "waitingForGameStart": "Bíð eftir að leikurinn byrji...",
+    "youWon" : "Þú vannst!",
+    "youLose" : "Þú tapaðir!",
+    "waitingForOpponent" :  "Bíð eftir að andstæðingur gangi í lið...",
+    "playerDisconnect" : "Leikmaður hefur aftengt. Leikurinn mun enda.",
+    "wonAgainst": " vann gegn ",
+    "gameEnded": "Leik lokið!"
 
 }
