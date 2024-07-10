@@ -21,6 +21,7 @@ class Player:
         self.room_id = None
         self.is_ready = False
         self.on_game_end = None
+        self.is_last_round = False
 
     async def send_message(self, message):
         if isinstance(message, dict):

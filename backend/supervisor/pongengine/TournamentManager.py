@@ -22,8 +22,8 @@ class Tournament:
 
     @classmethod
     async def join_or_create_tournament(cls, player, player_count):
-        if player_count not in [4, 8]:
-            raise ValueError("Tournament must have 4 or 8 players")
+        if player_count not in [4]:
+            raise ValueError("Tournament must have 4 players")
 
         logger.debug(f"Player {player.user.username} wants to join a {player_count}-player tournament")
         available_tournament = next((t for t in cls.tournaments.values()
@@ -58,7 +58,6 @@ class Tournament:
         logger.info(f"Starting tournament {self.id} with {self.player_count} players")
         self.current_round = 1
         await self.create_matches()
-        await self.broadcast_tournament_started()
 
     async def create_matches(self):
         self.rooms = []
@@ -80,18 +79,6 @@ class Tournament:
             f'{new_player.user.username} has joined the tournament.'
         )
         await self.broadcast_to_all_players(message)
-
-    async def broadcast_tournament_started(self):
-        message = self.build_message('message', 'The tournament has started!')
-        await self.broadcast_to_all_players(message)
-
-    async def broadcast_round_start(self):
-        message = self.build_message('message', f'Round {self.current_round} has started.')
-        await self.broadcast_to_all_players(message)
-
-    async def broadcast_tournament_ended(self, winner):
-        end_message = self.build_message('message', f'The tournament has ended. Winner: {winner.user.username}', winner=winner.user.username)
-        await self.broadcast_to_all_players(end_message)
 
     async def broadcast_to_all_players(self, message):
         for player in self.players:
@@ -167,6 +154,29 @@ class Tournament:
         except Exception as e:
             logger.error(f"Error in handle_match_end: {str(e)}")
 
+    async def end_tournament(self, winner):
+        logger.info(f"Tournament {self.id} ended. Winner: {winner.user.username}")
+        await winner.send_message({
+            'type': 'display',
+            'winner': winner.user.username,
+            'message': f"You win the tournament!",
+            'is_final_round': True
+        })
+        await asyncio.sleep(5)
+        await winner.send_message({
+            'type': 'end_game',
+            'message': "You won the tournament.",
+            'is_final_round': True
+        })
+        await self.broadcast_tournament_ended(winner)
+        for room in self.rooms:
+            try:
+                await room.close()
+            except Exception as e:
+                logger.error(f"Error closing room in tournament {self.id}: {str(e)}")
+        logger.debug(f"Deleting tournament {self.id}")
+        del Tournament.tournaments[self.id]
+
     async def prepare_next_round(self):
             if len(self.winners) == 1:
                 await self.end_tournament(self.winners[0])
@@ -200,35 +210,22 @@ class Tournament:
         if len(self.winners) == 1:
             await self.end_tournament(self.winners[0])
         else:
+            if len(self.winners) == 2:
+                for winner in self.winners:
+                    winner.is_last_round = True
             self.current_round += 1
             self.players = self.winners
             self.winners = []
             self.ready_players = []
             await self.create_matches()
-            await self.broadcast_round_start()
 
 
     async def end_tournament(self, winner):
         logger.info(f"Tournament {self.id} ended. Winner: {winner.user.username}")
-        await self.broadcast_tournament_ended(winner)
         for room in self.rooms:
             try:
                 await room.close()
             except Exception as e:
                 logger.error(f"Error closing room in tournament {self.id}: {str(e)}")
-        for winner in self.winners:
-            await winner.send_message({
-                'type': 'display',
-                'winner': winner.user.username,
-                'message': f"You win the tournament !"
-            })
-        for player in self.players:
-            try:
-                await player.send_message({
-                    'type': 'tournament_ended',
-                    'winner': winner.user.username,
-                    'message': f"Tournament ended. Winner: {winner.user.username}"
-                })
-            except Exception as e:
-                logger.error(f"Error sending final message to player {player.get_username()}: {str(e)}")
+        logger.debug(f"Deleting tournament {self.id}")
         del Tournament.tournaments[self.id]
