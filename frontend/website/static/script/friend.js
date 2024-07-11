@@ -251,7 +251,8 @@ async function displayFriends() {
 async function showContextMenu(event, friendId, friendName) {
     event.preventDefault();
     event.stopPropagation();
-    
+
+    // Remove any existing context menu
     const existingMenu = document.querySelector('.friend-context-menu');
     if (existingMenu) {
         existingMenu.remove();
@@ -270,15 +271,14 @@ async function showContextMenu(event, friendId, friendName) {
     const sendMessageBtn = document.createElement('button');
     sendMessageBtn.textContent = i18next.t('sendMessage');
     sendMessageBtn.onclick = async (e) => {
-        contextMenu.remove();
         e.stopPropagation();
+        contextMenu.remove();
         try {
             await startChat(friendId, friendName);
         } catch (error) {
             console.error('Error starting chat:', error);
             alert('Failed to start chat. Please try again.');
         }
-        contextMenu.remove();
     };
 
     // Delete Friend Button
@@ -300,10 +300,8 @@ async function showContextMenu(event, friendId, friendName) {
         }
     });
 
-
     // Block/Unblock Button
     const blockButton = document.createElement('button');
-
     const updateBlockButton = (isBlocked) => {
         if (isBlocked) {
             blockButton.innerText = i18next.t('Unblock');
@@ -357,6 +355,8 @@ async function showContextMenu(event, friendId, friendName) {
         console.error('Error checking block status:', error);
         updateBlockButton(false); // Default to unblocked if check fails
     }
+
+    // Show Stats Button
     const showStatButton = document.createElement('button');
     showStatButton.className = 'modal-trigger';
     showStatButton.setAttribute('data-modal', 'UserModal');
@@ -366,26 +366,20 @@ async function showContextMenu(event, friendId, friendName) {
     showStatButton.textContent = i18next.t('Show Stat');
     $(showStatButton).on('click', async function(e) {
         e.stopPropagation();
-        $(contextMenu).remove();
-    
+        contextMenu.remove();
         try {
             console.log('Showing user modal:', friendId);
             const userData = await updateUserModalContent(friendId);
-    
-            // Use the showModal function from modal.js
             await window.showModal('UserModal', '/static/modals/modals.html');
-    
-            // Update the modal content after it's shown
             updateModalContent(userData);
-    
             console.log('Modal show method called and content updated');
         } catch (error) {
             console.error('Error showing user modal:', error);
         }
     });
-    
+
+    // Append buttons to context menu
     contextMenu.appendChild(showStatButton);
-   
     contextMenu.appendChild(sendMessageBtn);
     contextMenu.appendChild(deleteButton);
     contextMenu.appendChild(blockButton);

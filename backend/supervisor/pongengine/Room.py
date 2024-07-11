@@ -63,6 +63,7 @@ class Room:
         return room
 
     async def add_player(self, player):
+        player.in_game = True
         player.player_num = len(self.players) + 1
         self.players.append(player)
         logger.debug(f"Player {player.get_username()} added to room: {self.id}. Player number: {player.player_num}")

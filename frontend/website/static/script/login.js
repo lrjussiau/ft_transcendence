@@ -25,7 +25,12 @@ function setupLoginForm() {
       } catch (Error) {
         console.error("Login error:", Error);
         if (errorDiv) {
-          errorDiv.textContent = Error.message;
+          if (Error.message === "Invalid username or password") {
+            errorDiv.textContent = "Invalid username or password";
+          }
+          else {
+            errorDiv.textContent = "Login failed";
+          }
         }
       } finally {
         isSubmitting = false;
@@ -61,7 +66,6 @@ async function handleLogin(username, password) {
       // Normal login flow
       handleSuccessfulLogin(data);
     }
-
   } catch (error) {
     console.error("Login error:", error);
     throw error; // Re-throw the error to be caught in setupLoginForm

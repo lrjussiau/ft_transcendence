@@ -240,6 +240,10 @@ function clearChat() {
 }
 
 async function startChat(friendId, friendName) {
+    const existingMenu = document.querySelector('.friend-context-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
     try {
         const chatRoom = await createOrGetChatRoom(friendId);
         localStorage.setItem('currentChatRoom', JSON.stringify(chatRoom));
