@@ -352,3 +352,290 @@ DEBUG 2024-07-11 13:56:22,806 PongConsumer Game loop started for game G1291
 DEBUG 2024-07-11 13:56:36,713 PongConsumer End Game condition met for game G1291
 DEBUG 2024-07-11 13:56:36,733 PongConsumer Game G1291 ended
 DEBUG 2024-07-11 13:56:41,738 Room Room R5042 deleted
+DEBUG 2024-07-11 14:00:42,866 LobbyManager Player disconnected: Louis
+DEBUG 2024-07-11 14:00:42,870 LobbyManager Disconnect handled for player: Louis
+DEBUG 2024-07-11 14:01:12,324 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:01:12,339 LobbyManager Player connected: Louis, with websocket: specific.e479e9e303504523abfc2680ee07934a!ca1160703a8a4a198af4d012a9471207
+DEBUG 2024-07-11 14:01:12,341 LobbyManager Starting game for player: Louis, mode: 1v1
+DEBUG 2024-07-11 14:01:12,341 Room Room created: ID R7628, type 1v1
+DEBUG 2024-07-11 14:01:12,342 Room Player Louis is in game: True
+DEBUG 2024-07-11 14:01:12,342 Room Player Louis added to room: R7628. Player number: 1
+DEBUG 2024-07-11 14:01:15,136 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:01:15,145 LobbyManager Player connected: Louis, with websocket: specific.e479e9e303504523abfc2680ee07934a!ca1160703a8a4a198af4d012a9471207
+DEBUG 2024-07-11 14:01:15,147 LobbyManager Player Louis is already in a game. Removing from current game.
+DEBUG 2024-07-11 14:01:15,148 LobbyManager Starting game for player: Louis, mode: local_1v1
+DEBUG 2024-07-11 14:01:15,148 Room Creating single player room for Louis
+DEBUG 2024-07-11 14:01:15,148 Room Room created: ID R3170, type local_1v1
+DEBUG 2024-07-11 14:01:15,148 Room Player Louis is in game: True
+DEBUG 2024-07-11 14:01:15,149 Room Player Louis added to room: R3170. Player number: 1
+DEBUG 2024-07-11 14:01:15,149 PongConsumer Countdown: 3 for game G8723
+DEBUG 2024-07-11 14:01:16,154 PongConsumer Countdown: 2 for game G8723
+DEBUG 2024-07-11 14:01:17,162 PongConsumer Countdown: 1 for game G8723
+DEBUG 2024-07-11 14:01:18,169 PongConsumer Countdown finished for game G8723
+DEBUG 2024-07-11 14:01:18,170 PongConsumer Game G8723 started with players: Louis
+DEBUG 2024-07-11 14:01:18,170 Room local_1v1 game started in room R3170
+DEBUG 2024-07-11 14:01:18,171 PongConsumer Game loop started for game G8723
+WARNING 2024-07-11 14:01:18,475 LobbyManager Game not found in room R7628 for player input
+WARNING 2024-07-11 14:01:18,864 LobbyManager Game not found in room R7628 for player input
+WARNING 2024-07-11 14:01:18,973 LobbyManager Game not found in room R7628 for player input
+WARNING 2024-07-11 14:01:19,106 LobbyManager Game not found in room R7628 for player input
+WARNING 2024-07-11 14:01:19,255 LobbyManager Game not found in room R7628 for player input
+WARNING 2024-07-11 14:01:19,543 LobbyManager Game not found in room R7628 for player input
+WARNING 2024-07-11 14:01:19,691 LobbyManager Game not found in room R7628 for player input
+WARNING 2024-07-11 14:01:19,813 LobbyManager Game not found in room R7628 for player input
+DEBUG 2024-07-11 14:01:41,621 PongConsumer End Game condition met for game G8723
+DEBUG 2024-07-11 14:01:41,645 PongConsumer Game G8723 ended
+DEBUG 2024-07-11 14:01:46,656 Room Room R3170 deleted
+DEBUG 2024-07-11 14:05:26,846 LobbyManager Player disconnected: Louis
+DEBUG 2024-07-11 14:05:26,849 LobbyManager Disconnect handled for player: Louis
+DEBUG 2024-07-11 14:05:58,926 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:05:58,935 LobbyManager Player connected: Louis, with websocket: specific.b61467d437b7449d934295afd84c0886!56d7afc6f81c4393839643b951fb9abf
+DEBUG 2024-07-11 14:05:58,937 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:05:58,938 LobbyManager Starting game for player: Louis, mode: 1v1
+DEBUG 2024-07-11 14:05:58,938 Room Room created: ID R7098, type 1v1
+DEBUG 2024-07-11 14:05:58,938 Room Player Louis is in game: True
+DEBUG 2024-07-11 14:05:58,938 Room Player Louis added to room: R7098. Player number: 1
+DEBUG 2024-07-11 14:06:01,438 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:06:01,446 LobbyManager Player connected: Louis, with websocket: specific.b61467d437b7449d934295afd84c0886!56d7afc6f81c4393839643b951fb9abf
+DEBUG 2024-07-11 14:06:01,448 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:06:01,448 LobbyManager Player Louis is in room R7098
+DEBUG 2024-07-11 14:06:03,091 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:06:03,100 LobbyManager Player connected: Louis, with websocket: specific.b61467d437b7449d934295afd84c0886!56d7afc6f81c4393839643b951fb9abf
+DEBUG 2024-07-11 14:06:03,102 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:06:03,102 LobbyManager Player Louis is in room R7098
+DEBUG 2024-07-11 14:06:04,816 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:06:04,825 LobbyManager Player connected: Louis, with websocket: specific.b61467d437b7449d934295afd84c0886!56d7afc6f81c4393839643b951fb9abf
+DEBUG 2024-07-11 14:06:04,827 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:06:04,827 LobbyManager Player Louis is in room R7098
+DEBUG 2024-07-11 14:06:06,344 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:06:06,353 LobbyManager Player connected: Louis, with websocket: specific.b61467d437b7449d934295afd84c0886!56d7afc6f81c4393839643b951fb9abf
+DEBUG 2024-07-11 14:06:06,355 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:06:06,355 LobbyManager Player Louis is in room R7098
+DEBUG 2024-07-11 14:07:08,212 LobbyManager Player disconnected: Louis
+DEBUG 2024-07-11 14:07:08,215 LobbyManager Disconnect handled for player: Louis
+DEBUG 2024-07-11 14:07:33,674 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:07:33,684 LobbyManager Player connected: Louis, with websocket: specific.03c131c37bff46a78b9a2e581680373f!de22966ae3e14392a342be7f952d4507
+DEBUG 2024-07-11 14:07:33,686 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:07:33,686 LobbyManager Starting game for player: Louis, mode: 1v1
+DEBUG 2024-07-11 14:07:33,686 Room Room created: ID R4132, type 1v1
+DEBUG 2024-07-11 14:07:33,687 Room Player Louis is in game: True
+DEBUG 2024-07-11 14:07:33,687 Room Player Louis added to room: R4132. Player number: 1
+DEBUG 2024-07-11 14:07:37,283 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:07:37,292 LobbyManager Player connected: Louis, with websocket: specific.03c131c37bff46a78b9a2e581680373f!de22966ae3e14392a342be7f952d4507
+DEBUG 2024-07-11 14:07:37,294 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:07:37,295 LobbyManager Player Louis is in room R4132
+DEBUG 2024-07-11 14:07:37,295 Room Room R4132 deleted
+DEBUG 2024-07-11 14:07:39,405 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:07:39,417 LobbyManager Player connected: Louis, with websocket: specific.03c131c37bff46a78b9a2e581680373f!de22966ae3e14392a342be7f952d4507
+DEBUG 2024-07-11 14:07:39,421 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:07:39,423 LobbyManager Starting game for player: Louis, mode: local_1v1
+DEBUG 2024-07-11 14:07:39,424 Room Creating single player room for Louis
+DEBUG 2024-07-11 14:07:39,425 Room Room created: ID R5042, type local_1v1
+DEBUG 2024-07-11 14:07:39,426 Room Player Louis is in game: True
+DEBUG 2024-07-11 14:07:39,426 Room Player Louis added to room: R5042. Player number: 1
+DEBUG 2024-07-11 14:07:39,427 PongConsumer Countdown: 3 for game G4332
+DEBUG 2024-07-11 14:07:40,431 PongConsumer Countdown: 2 for game G4332
+DEBUG 2024-07-11 14:07:41,436 PongConsumer Countdown: 1 for game G4332
+DEBUG 2024-07-11 14:07:42,440 PongConsumer Countdown finished for game G4332
+DEBUG 2024-07-11 14:07:42,441 PongConsumer Game G4332 started with players: Louis
+DEBUG 2024-07-11 14:07:42,441 Room local_1v1 game started in room R5042
+DEBUG 2024-07-11 14:07:42,442 PongConsumer Game loop started for game G4332
+DEBUG 2024-07-11 14:07:42,692 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 5, 'p2': 0, 'rid': 0}
+DEBUG 2024-07-11 14:07:42,693 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:43,067 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 0, 'p2': 0, 'rid': 1}
+DEBUG 2024-07-11 14:07:43,068 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:43,160 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': -5, 'p2': 0, 'rid': 2}
+DEBUG 2024-07-11 14:07:43,161 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:43,397 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 0, 'p2': 0, 'rid': 3}
+DEBUG 2024-07-11 14:07:43,397 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:43,532 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 5, 'p2': 0, 'rid': 4}
+DEBUG 2024-07-11 14:07:43,533 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:44,565 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 0, 'p2': 0, 'rid': 5}
+DEBUG 2024-07-11 14:07:44,566 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:44,715 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': -5, 'p2': 0, 'rid': 6}
+DEBUG 2024-07-11 14:07:44,716 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:45,121 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 0, 'p2': 0, 'rid': 7}
+DEBUG 2024-07-11 14:07:45,122 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:45,256 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 5, 'p2': 0, 'rid': 8}
+DEBUG 2024-07-11 14:07:45,257 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:45,662 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 0, 'p2': 0, 'rid': 9}
+DEBUG 2024-07-11 14:07:45,663 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:45,767 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': -5, 'p2': 0, 'rid': 10}
+DEBUG 2024-07-11 14:07:45,768 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:46,083 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 0, 'p2': 0, 'rid': 11}
+DEBUG 2024-07-11 14:07:46,085 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:46,203 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 5, 'p2': 0, 'rid': 12}
+DEBUG 2024-07-11 14:07:46,204 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:46,657 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 0, 'p2': 0, 'rid': 13}
+DEBUG 2024-07-11 14:07:46,658 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:46,740 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': -5, 'p2': 0, 'rid': 14}
+DEBUG 2024-07-11 14:07:46,741 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = -5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:47,163 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 0, 'p2': 0, 'rid': 15}
+DEBUG 2024-07-11 14:07:47,164 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:47,281 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 5, 'p2': 0, 'rid': 16}
+DEBUG 2024-07-11 14:07:47,282 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:47,747 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 5, 'p2': 5, 'rid': 17}
+DEBUG 2024-07-11 14:07:47,748 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 5
+DEBUG 2024-07-11 14:07:48,229 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 5, 'p2': 0, 'rid': 18}
+DEBUG 2024-07-11 14:07:48,230 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 5, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:48,347 PongConsumer Game G4332: Local 1v1 input received : {'action': 'PlayerInput', 'p1': 0, 'p2': 0, 'rid': 19}
+DEBUG 2024-07-11 14:07:48,348 PongConsumer Game G4332: Local 1v1 input: Player 1 speed = 0, Player 2 speed = 0
+DEBUG 2024-07-11 14:07:55,601 PongConsumer End Game condition met for game G4332
+DEBUG 2024-07-11 14:07:55,623 PongConsumer Game G4332 ended
+DEBUG 2024-07-11 14:08:00,634 Room Room R5042 deleted
+DEBUG 2024-07-11 14:08:05,151 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:08:05,160 LobbyManager Player connected: Louis, with websocket: specific.03c131c37bff46a78b9a2e581680373f!de22966ae3e14392a342be7f952d4507
+DEBUG 2024-07-11 14:08:05,163 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:08:05,163 LobbyManager Starting game for player: Louis, mode: solo
+DEBUG 2024-07-11 14:08:05,163 Room Creating single player room for Louis
+DEBUG 2024-07-11 14:08:05,164 Room Room created: ID R1994, type solo
+DEBUG 2024-07-11 14:08:05,164 Room Player Louis is in game: True
+DEBUG 2024-07-11 14:08:05,164 Room Player Louis added to room: R1994. Player number: 1
+DEBUG 2024-07-11 14:08:05,164 PongConsumer Countdown: 3 for game G8017
+DEBUG 2024-07-11 14:08:06,169 PongConsumer Countdown: 2 for game G8017
+DEBUG 2024-07-11 14:08:07,174 PongConsumer Countdown: 1 for game G8017
+DEBUG 2024-07-11 14:08:08,180 PongConsumer Countdown finished for game G8017
+DEBUG 2024-07-11 14:08:08,181 PongConsumer Game G8017 started with players: Louis
+DEBUG 2024-07-11 14:08:08,181 Room solo game started in room R1994
+DEBUG 2024-07-11 14:08:08,182 PongConsumer Game loop started for game G8017
+DEBUG 2024-07-11 14:08:23,032 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:08:23,045 LobbyManager Player connected: Frog, with websocket: specific.03c131c37bff46a78b9a2e581680373f!b11284c15ae141418d154161fe04d80a
+DEBUG 2024-07-11 14:08:23,049 LobbyManager check if player is in game: Frog.
+DEBUG 2024-07-11 14:08:23,049 LobbyManager Starting game for player: Frog, mode: 1v1
+DEBUG 2024-07-11 14:08:23,049 Room Room created: ID R1974, type 1v1
+DEBUG 2024-07-11 14:08:23,050 Room Player Frog is in game: True
+DEBUG 2024-07-11 14:08:23,050 Room Player Frog added to room: R1974. Player number: 1
+DEBUG 2024-07-11 14:08:25,406 PongConsumer End Game condition met for game G8017
+DEBUG 2024-07-11 14:08:25,426 PongConsumer Game G8017 ended
+WARNING 2024-07-11 14:08:25,606 LobbyManager Game not found in room R1994 for player input
+DEBUG 2024-07-11 14:08:30,430 Room Room R1994 deleted
+DEBUG 2024-07-11 14:08:32,203 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:08:32,213 LobbyManager Player connected: Louis, with websocket: specific.03c131c37bff46a78b9a2e581680373f!de22966ae3e14392a342be7f952d4507
+DEBUG 2024-07-11 14:08:32,215 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:08:32,215 LobbyManager Starting game for player: Louis, mode: 1v1
+DEBUG 2024-07-11 14:08:32,215 Room Player Louis is in game: True
+DEBUG 2024-07-11 14:08:32,216 Room Player Louis added to room: R1974. Player number: 2
+DEBUG 2024-07-11 14:08:32,216 PongConsumer Countdown: 3 for game G5069
+DEBUG 2024-07-11 14:08:33,224 PongConsumer Countdown: 2 for game G5069
+DEBUG 2024-07-11 14:08:34,230 PongConsumer Countdown: 1 for game G5069
+DEBUG 2024-07-11 14:08:35,237 PongConsumer Countdown finished for game G5069
+DEBUG 2024-07-11 14:08:35,238 PongConsumer Game G5069 started with players: Frog
+DEBUG 2024-07-11 14:08:35,238 PongConsumer Game G5069 started with players: Louis
+DEBUG 2024-07-11 14:08:35,239 Room 1v1 game started in room R1974
+DEBUG 2024-07-11 14:08:35,239 PongConsumer Game loop started for game G5069
+DEBUG 2024-07-11 14:08:45,101 PongConsumer End Game condition met for game G5069
+DEBUG 2024-07-11 14:08:45,123 PongConsumer In End_game Store into DB
+DEBUG 2024-07-11 14:08:45,164 PongConsumer Game G5069: player1: Frog : loser , player2: Louis : winner
+DEBUG 2024-07-11 14:08:45,164 PongConsumer Game G5069 ended
+DEBUG 2024-07-11 14:08:50,166 Room Room R1974 deleted
+DEBUG 2024-07-11 14:09:00,617 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:09:00,629 LobbyManager Player connected: Frog, with websocket: specific.03c131c37bff46a78b9a2e581680373f!b11284c15ae141418d154161fe04d80a
+DEBUG 2024-07-11 14:09:00,631 LobbyManager check if player is in game: Frog.
+DEBUG 2024-07-11 14:09:00,632 LobbyManager Starting tournament for player: Frog, mode: tournament-4
+DEBUG 2024-07-11 14:09:00,632 TournamentManager Player Frog wants to join a 4-player tournament
+DEBUG 2024-07-11 14:09:00,632 TournamentManager Tournament created: ID 75add805, players 4
+DEBUG 2024-07-11 14:09:00,632 TournamentManager Created new tournament: <supervisor.pongengine.TournamentManager.Tournament object at 0xffff897d2e50>
+DEBUG 2024-07-11 14:09:00,633 TournamentManager Player Frog added to tournament 75add805. Total players: 1/4
+DEBUG 2024-07-11 14:09:05,121 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:09:05,133 LobbyManager Player connected: Louis, with websocket: specific.03c131c37bff46a78b9a2e581680373f!de22966ae3e14392a342be7f952d4507
+DEBUG 2024-07-11 14:09:05,135 LobbyManager check if player is in game: Louis.
+DEBUG 2024-07-11 14:09:05,135 LobbyManager Starting tournament for player: Louis, mode: tournament-4
+DEBUG 2024-07-11 14:09:05,136 TournamentManager Player Louis wants to join a 4-player tournament
+DEBUG 2024-07-11 14:09:05,136 TournamentManager Player Louis added to tournament 75add805. Total players: 2/4
+WARNING 2024-07-11 14:09:25,236 LobbyManager Disconnect received for unknown channel: specific.03c131c37bff46a78b9a2e581680373f!444cc1fad30b4ec8b07491bc9c007f5e
+WARNING 2024-07-11 14:09:29,905 LobbyManager Disconnect received for unknown channel: specific.03c131c37bff46a78b9a2e581680373f!e95cc15dfffa4542a572e77bbff8b2c4
+DEBUG 2024-07-11 14:09:32,484 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:09:32,497 LobbyManager Player connected: Val, with websocket: specific.03c131c37bff46a78b9a2e581680373f!79d34407e55d486b89e0fbcf83834f81
+DEBUG 2024-07-11 14:09:32,499 LobbyManager check if player is in game: Val.
+DEBUG 2024-07-11 14:09:32,499 LobbyManager Starting tournament for player: Val, mode: tournament-4
+DEBUG 2024-07-11 14:09:32,500 TournamentManager Player Val wants to join a 4-player tournament
+DEBUG 2024-07-11 14:09:32,500 TournamentManager Player Val added to tournament 75add805. Total players: 3/4
+DEBUG 2024-07-11 14:09:48,312 LobbyManager Connection attempt...
+DEBUG 2024-07-11 14:09:48,329 LobbyManager Player connected: Sab, with websocket: specific.03c131c37bff46a78b9a2e581680373f!19582def981e464f9f9450af71d6e915
+DEBUG 2024-07-11 14:09:48,331 LobbyManager check if player is in game: Sab.
+DEBUG 2024-07-11 14:09:48,332 LobbyManager Starting tournament for player: Sab, mode: tournament-4
+DEBUG 2024-07-11 14:09:48,332 TournamentManager Player Sab wants to join a 4-player tournament
+DEBUG 2024-07-11 14:09:48,332 TournamentManager Player Sab added to tournament 75add805. Total players: 4/4
+DEBUG 2024-07-11 14:09:48,333 TournamentManager Tournament 75add805 is full. Starting tournament.
+INFO 2024-07-11 14:09:48,333 TournamentManager Starting tournament 75add805 with 4 players
+DEBUG 2024-07-11 14:09:48,334 Room Room created: ID R6920, type tournament
+DEBUG 2024-07-11 14:09:48,334 Room Player Frog is in game: True
+DEBUG 2024-07-11 14:09:48,335 Room Player Frog added to room: R6920. Player number: 1
+DEBUG 2024-07-11 14:09:48,336 Room Player Louis is in game: True
+DEBUG 2024-07-11 14:09:48,336 Room Player Louis added to room: R6920. Player number: 2
+DEBUG 2024-07-11 14:09:48,336 PongConsumer Countdown: 3 for game G1943
+DEBUG 2024-07-11 14:09:49,343 PongConsumer Countdown: 2 for game G1943
+DEBUG 2024-07-11 14:09:50,349 PongConsumer Countdown: 1 for game G1943
+DEBUG 2024-07-11 14:09:51,354 PongConsumer Countdown finished for game G1943
+DEBUG 2024-07-11 14:09:51,355 PongConsumer Game G1943 started with players: Frog
+DEBUG 2024-07-11 14:09:51,355 PongConsumer Game G1943 started with players: Louis
+DEBUG 2024-07-11 14:09:51,355 Room tournament game started in room R6920
+DEBUG 2024-07-11 14:09:51,356 Room Room created: ID R4264, type tournament
+DEBUG 2024-07-11 14:09:51,356 Room Player Val is in game: True
+DEBUG 2024-07-11 14:09:51,357 Room Player Val added to room: R4264. Player number: 1
+DEBUG 2024-07-11 14:09:51,358 Room Player Sab is in game: True
+DEBUG 2024-07-11 14:09:51,359 Room Player Sab added to room: R4264. Player number: 2
+DEBUG 2024-07-11 14:09:51,360 PongConsumer Countdown: 3 for game G2284
+DEBUG 2024-07-11 14:09:51,361 PongConsumer Game loop started for game G1943
+DEBUG 2024-07-11 14:09:52,366 PongConsumer Countdown: 2 for game G2284
+DEBUG 2024-07-11 14:09:53,369 PongConsumer Countdown: 1 for game G2284
+DEBUG 2024-07-11 14:09:54,372 PongConsumer Countdown finished for game G2284
+DEBUG 2024-07-11 14:09:54,373 PongConsumer Game G2284 started with players: Val
+DEBUG 2024-07-11 14:09:54,374 PongConsumer Game G2284 started with players: Sab
+DEBUG 2024-07-11 14:09:54,374 Room tournament game started in room R4264
+DEBUG 2024-07-11 14:09:54,375 TournamentManager Created 2 matches for round 1
+DEBUG 2024-07-11 14:09:54,376 PongConsumer Game loop started for game G2284
+DEBUG 2024-07-11 14:10:03,477 PongConsumer End Game condition met for game G1943
+DEBUG 2024-07-11 14:10:03,498 PongConsumer In End_game Store into DB
+DEBUG 2024-07-11 14:10:03,557 PongConsumer Game G1943: player1: Frog : winner , player2: Louis : loser
+DEBUG 2024-07-11 14:10:03,558 PongConsumer Game G1943 ended
+DEBUG 2024-07-11 14:10:03,560 TournamentManager Match ended in room R6920. Winner: Frog
+DEBUG 2024-07-11 14:10:03,561 TournamentManager Waiting for other matches to finish.
+DEBUG 2024-07-11 14:10:08,564 TournamentManager Match end already processed for room R6920. Ignoring.
+DEBUG 2024-07-11 14:10:08,565 Room Room R6920 deleted
+DEBUG 2024-07-11 14:10:09,022 PongConsumer End Game condition met for game G2284
+DEBUG 2024-07-11 14:10:09,041 PongConsumer In End_game Store into DB
+DEBUG 2024-07-11 14:10:09,077 PongConsumer Game G2284: player1: Val : winner , player2: Sab : loser
+DEBUG 2024-07-11 14:10:09,077 PongConsumer Game G2284 ended
+DEBUG 2024-07-11 14:10:09,078 TournamentManager Match ended in room R4264. Winner: Val
+DEBUG 2024-07-11 14:10:09,078 TournamentManager All matches finished for this round.
+DEBUG 2024-07-11 14:10:09,079 TournamentManager Waiting for all players to be ready for the next round.
+DEBUG 2024-07-11 14:10:14,082 TournamentManager Match end already processed for room R4264. Ignoring.
+DEBUG 2024-07-11 14:10:14,084 Room Room R4264 deleted
+DEBUG 2024-07-11 14:10:18,024 LobbyManager Player Val is ready: True
+DEBUG 2024-07-11 14:10:18,025 TournamentManager Player Val marked as ready. Total ready players: 1/2
+DEBUG 2024-07-11 14:10:30,380 LobbyManager Player Frog is ready: True
+DEBUG 2024-07-11 14:10:30,381 TournamentManager Player Frog marked as ready. Total ready players: 2/2
+DEBUG 2024-07-11 14:10:30,381 Room Room created: ID R2858, type tournament
+DEBUG 2024-07-11 14:10:30,381 Room Player Frog is in game: True
+DEBUG 2024-07-11 14:10:30,382 Room Player Frog added to room: R2858. Player number: 1
+DEBUG 2024-07-11 14:10:30,382 Room Player Val is in game: True
+DEBUG 2024-07-11 14:10:30,382 Room Player Val added to room: R2858. Player number: 2
+DEBUG 2024-07-11 14:10:30,383 PongConsumer Countdown: 3 for game G5173
+DEBUG 2024-07-11 14:10:31,391 PongConsumer Countdown: 2 for game G5173
+DEBUG 2024-07-11 14:10:32,398 PongConsumer Countdown: 1 for game G5173
+DEBUG 2024-07-11 14:10:33,404 PongConsumer Countdown finished for game G5173
+DEBUG 2024-07-11 14:10:33,405 PongConsumer Game G5173 started with players: Frog
+DEBUG 2024-07-11 14:10:33,406 PongConsumer Game G5173 started with players: Val
+DEBUG 2024-07-11 14:10:33,406 Room tournament game started in room R2858
+DEBUG 2024-07-11 14:10:33,407 TournamentManager Created 1 matches for round 2
+DEBUG 2024-07-11 14:10:33,407 TournamentManager All winners are ready. Starting next round.
+DEBUG 2024-07-11 14:10:33,407 PongConsumer Game loop started for game G5173
+DEBUG 2024-07-11 14:10:56,767 PongConsumer End Game condition met for game G5173
+DEBUG 2024-07-11 14:10:56,791 PongConsumer In End_game Store into DB
+DEBUG 2024-07-11 14:10:56,826 PongConsumer Game G5173: player1: Frog : winner , player2: Val : loser
+DEBUG 2024-07-11 14:10:56,826 PongConsumer Game G5173 ended
+DEBUG 2024-07-11 14:10:56,827 TournamentManager Match ended in room R2858. Winner: Frog
+DEBUG 2024-07-11 14:10:56,827 TournamentManager All matches finished for this round.
+INFO 2024-07-11 14:10:56,828 TournamentManager Tournament 75add805 ended. Winner: Frog
+DEBUG 2024-07-11 14:10:56,828 TournamentManager Deleting tournament 75add805
+DEBUG 2024-07-11 14:11:01,834 TournamentManager Match end already processed for room R2858. Ignoring.
+DEBUG 2024-07-11 14:11:01,835 Room Room R2858 deleted
+DEBUG 2024-07-11 14:11:06,698 LobbyManager Player disconnected: Val
+DEBUG 2024-07-11 14:11:06,702 LobbyManager Disconnect handled for player: Val
+DEBUG 2024-07-11 14:11:08,098 LobbyManager Player disconnected: Frog
+DEBUG 2024-07-11 14:11:08,104 LobbyManager Disconnect handled for player: Frog
+DEBUG 2024-07-11 14:11:12,252 LobbyManager Player disconnected: Louis
+DEBUG 2024-07-11 14:11:12,252 LobbyManager Disconnect handled for player: Louis
+DEBUG 2024-07-11 14:11:14,887 LobbyManager Player disconnected: Sab
+DEBUG 2024-07-11 14:11:14,890 LobbyManager Disconnect handled for player: Sab
