@@ -131,7 +131,7 @@
     "emailAlreadyRegistred": "Þessi tölvupóstur er þegar skráður.",
     "usernameAlreadyTaken": "Þetta notendanafn er þegar í notkun.",
     "showStat": "Sýna tölfræði",
-    "flemmBracket": "Of latur til að búa til bracketið, smelltu hér.",
+    "flemmeBracket": "Of latur til að búa til bracketið, smelltu hér.",
     "blockedChat": "Þú getur ekki sent skilaboð til þessa notanda þar sem þér hefur verið lokað.",
     "invalidPassword": "Rangt lykilorð.",
     "loginFailed": "Innskráning mistókst.",

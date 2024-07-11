@@ -195,14 +195,17 @@ class LobbyManager:
     def is_player_in_active_game(self, player):
         # Check rooms
         for room in Room.rooms.values():
-            logger.debug(f"Checking room {room.id} : {room.players}")
             if player.get_username() in [p.get_username() for p in room.players]:
+                logger.debug(f"Player {player.get_username()} is in room {room.id}")
+                room.remove_player(player)
+                room.delete_room()
                 return True
         
         # Check tournaments
         for tournament in Tournament.tournaments.values():
-            logger.debug(f"Checking tournament {tournament.id} : {tournament.players}")
             if player.get_username() in [p.get_username() for p in tournament.players]:
+                logger.debug(f"Player {player.get_username()} is in tournament {tournament.id}")
+                tournament.remove_player(player)
                 return True
         
         return False

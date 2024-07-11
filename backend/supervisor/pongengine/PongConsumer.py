@@ -203,10 +203,6 @@ class PongConsumer:
 
 
     async def end_game(self):
-        if self.players[1]:
-            self.players[1].in_game = False
-        if self.players[2]:
-            self.players[2].in_game = False
         if self.game_type == "1v1" or self.game_type == "tournament":
             p1 = self.players[1]
             p2 = self.players[2]
