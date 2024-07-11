@@ -254,12 +254,13 @@ LOGGING = {
 # For development (prints emails to console)
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL') 
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
-EMAIL_HOST = os.getenv('EMAIL_HOST')
+DEFAULT_FROM_EMAIL = 'ljussiau@student.42lausanne.ch'
+
+# You can keep these email settings as well
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.smtp2go.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_USER = 'student.42lausanne.ch'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
-print(f"======================================\n{DEFAULT_FROM_EMAIL}\n{EMAIL_BACKEND}\n{EMAIL_HOST}\n{EMAIL_HOST_USER}\n{EMAIL_HOST_PASSWORD}\n======================================\n")

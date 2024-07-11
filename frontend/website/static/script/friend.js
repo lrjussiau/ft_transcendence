@@ -503,7 +503,7 @@ async function updateUserModalContent(friendId) {
         
         // Calculate ratio
         const totalGames = userStats.wins + userStats.losses;
-        const ratio = userStats.wins > 0 ? (userStats.wins / userStats.losses).toFixed(2) : '0.00';
+        const ratio = userStats.losses > 0 ? (userStats.wins / userStats.losses).toFixed(2) : '0.00';
         
         return {
             username: userInfo.username,

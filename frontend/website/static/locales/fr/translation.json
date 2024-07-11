@@ -131,7 +131,7 @@
     "emailAlreadyRegistred": "Cet email est déjà enregistré.",
     "usernameAlreadyTaken": "Ce nom d'utilisateur est déjà pris.",
     "showStat": "Afficher les statistiques",
-    "flemmBracket": "Flemme de faire le bracket, cliques ici.",
+    "flemmeBracket": "Flemme de faire le bracket, cliques ici.",
     "blockedChat": "Vous ne pouvez pas envoyer de messages à cet utilisateur car vous avez été bloqué.",
     "invalidPassword": "Mot de passe invalide.",
     "loginFailed": "Échec de la connexion.",
