@@ -12,21 +12,12 @@ class ChatRoomList(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-
-        # Get the IDs of blocked users
-        blocked_users = Friend.objects.filter(
-            Q(user=user, status='blocked') | Q(friend=user, status='blocked')
-        ).values_list('user', 'friend')
-
-        # Flatten the list of tuples and remove the user's own ID
-        blocked_ids = set([uid for pair in blocked_users for uid in pair if uid != user.id])
-
-        # Filter ChatRooms
-        return ChatRoom.objects.filter(
-            (Q(user1=user) | Q(user2=user)) &
-            ~Q(user1__in=blocked_ids) &
-            ~Q(user2__in=blocked_ids)
-        )
+        return ChatRoom.objects.filter(Q(user1=user) | Q(user2=user))
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 class ChatRoomDetail(generics.RetrieveAPIView):
     queryset = ChatRoom.objects.all()

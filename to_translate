@@ -7,3 +7,10 @@ voir login
 
 bracket.html
     - "Flemme de faire le bracket, appuie ici."
+
+setting.html 
+    - data-i18n="disableNotification">Disable notifications</label> l. 44
+
+tournament.html
+    - data-i18n="readyForTournament">Ready For a tournament</div>
+
