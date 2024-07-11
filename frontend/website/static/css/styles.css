@@ -296,13 +296,11 @@ color: #F6F6F6;
 
 /* --FRIEND MODAL-- */
 
-.modal-dialog-user {
-  display: flex;
-  height: 90vh;
-  width: 50%;
-  justify-content: center;
-  align-items: center;
-  margin: 1.75rem auto;
+@media (min-width: 576px) {
+  .user-modal {
+      max-width: 40%;
+      margin: 1.75rem auto;
+  }
 }
 
 .friendModal {

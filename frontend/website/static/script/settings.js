@@ -22,7 +22,7 @@ function setupUsernameChangeModal() {
             if (response.ok) {
                 hideModal('usernameChangeModal');
             } else {
-                errorDiv.textContent = data.error || 'An error occurred while changing the username.';
+                errorDiv.textContent = i18next.t('usernameAlreadyTaken');
             }
         } catch (error) {
             errorDiv.textContent = 'An error occurred. Please try again.';
@@ -52,9 +52,8 @@ function setupEmailChangeModal() {
 
             if (response.ok) {
                 hideModal('emailChangeModal');
-                // Update UI or show success message
             } else {
-                errorDiv.textContent = data.error || 'An error occurred while changing the email.';
+                errorDiv.textContent = i18next.t('emailAlreadyRegistred');
             }
         } catch (error) {
             errorDiv.textContent = 'An error occurred. Please try again.';
@@ -73,7 +72,7 @@ function setupPasswordChangeModal() {
         const confirmNewPassword = document.getElementById('confirm-new-password').value;
 
         if (newPassword !== confirmNewPassword) {
-            errorDiv.textContent = 'New passwords do not match.';
+            errorDiv.textContent = i18next.t("passwordNoMatch");
             return;
         }
 
@@ -93,7 +92,7 @@ function setupPasswordChangeModal() {
                 hideModal('passwordChangeModal');
                 // Update UI or show success message
             } else {
-                errorDiv.textContent = data.error || 'An error occurred while changing the password.';
+                errorDiv.textContent = i18next.t("wrongPassword");
             }
         } catch (error) {
             errorDiv.textContent = 'An error occurred. Please try again.';

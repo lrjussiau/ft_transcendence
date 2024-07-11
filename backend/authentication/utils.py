@@ -7,6 +7,8 @@ from django.conf import settings
 
 
 def generate_and_send_2fa_code(user):
+    logging.info(f"Generating 2FA code for user {user.username}")
+    logging.info(f"user email : {user.email}")
     code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
     user.two_factor_code = code
     user.two_factor_code_timestamp = timezone.now()

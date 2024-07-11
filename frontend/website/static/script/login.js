@@ -25,7 +25,12 @@ function setupLoginForm() {
       } catch (Error) {
         console.error("Login error:", Error);
         if (errorDiv) {
-          errorDiv.textContent =  i18next.t(Error.message);
+          if (Error.message === "Invalid username or password") {
+            errorDiv.textContent = i18next.t("invalidPassword");
+          }
+          else {
+            errorDiv.textContent = i18next.t("loginFailed");
+          }
         }
       } finally {
         isSubmitting = false;
@@ -61,7 +66,6 @@ async function handleLogin(username, password) {
       // Normal login flow
       handleSuccessfulLogin(data);
     }
-
   } catch (error) {
     console.error("Login error:", error);
     throw error; // Re-throw the error to be caught in setupLoginForm
@@ -97,7 +101,7 @@ function setup2FAVerificationForm(username) {
     } catch (error) {
       console.error("2FA verification error:", error);
       if (errorDiv) {
-        errorDiv.textContent = error.message;
+        errorDiv.textContent = i18next.t("expiredCode");
       }
     }
   });

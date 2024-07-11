@@ -131,6 +131,14 @@
     "emailAlreadyRegistred": "Cet email est déjà enregistré.",
     "usernameAlreadyTaken": "Ce nom d'utilisateur est déjà pris.",
     "showStat": "Afficher les statistiques",
-    "flemmBracket": "Flemme de faire le bracket, cliques ici."
+    "flemmBracket": "Flemme de faire le bracket, cliques ici.",
+    "blockedChat": "Vous ne pouvez pas envoyer de messages à cet utilisateur car vous avez été bloqué.",
+    "invalidPassword": "Mot de passe invalide.",
+    "loginFailed": "Échec de la connexion.",
+    "readyForTournament": "Prêt pour un tournoi",
+    "disableNotification": "Désactiver les notifications.",
+    "wrongPassword": "Le mot de passe actuel est incorrect.",
+    "passwordNoMatch": "Les nouveaux mots de passe ne correspondent pas.",
+    "expiredCode": "Code invalide ou expiré."
 
 }

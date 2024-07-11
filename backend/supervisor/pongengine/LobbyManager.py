@@ -22,6 +22,7 @@ class Player:
         self.is_ready = False
         self.on_game_end = None
         self.is_last_round = False
+        self.in_game = False
 
     async def send_message(self, message):
         if isinstance(message, dict):
@@ -116,6 +117,15 @@ class LobbyManager:
 
     async def start_game(self, websocket, type):
         player = self.players[websocket.channel_name]
+        
+        # Check if the player is already in a game
+        if player.in_game:
+            logger.warning(f"Player {player.get_username()} is already in a game")
+            await player.send_message({
+                'type': 'end_game',
+                'message': 'You are already in a game. Please finish or leave your current game before starting a new one.'
+            })
+            return
         player.game_type = type
         if player.game_type in ['1v1', 'local_1v1', 'solo']:
             logger.debug(f"Starting game for player: {player.get_username()}, mode: {player.game_type}")
@@ -127,11 +137,12 @@ class LobbyManager:
             else:
                 logger.debug(f"Starting tournament for player: {player.get_username()}, mode: {player.game_type}")
                 tournament = await Tournament.join_or_create_tournament(player, 8)
-            await player.send_message({
-                'type': 'message',
-                'tournament_id': tournament.id,
-                'message': 'You have joined a tournament. Waiting for other players.',
-            })
+            if tournament:
+                await player.send_message({
+                    'type': 'message',
+                    'tournament_id': tournament.id,
+                    'message': 'You have joined a tournament. Waiting for other players.',
+                })
         else:
             logger.error(f"Unsupported game type: {player.game_type}")
             await player.send_message({
@@ -177,6 +188,7 @@ class LobbyManager:
                 except Exception as e:
                     logger.error(f"Error closing room for player {player.get_username()}: {str(e)}")
 
+            player.in_game = False  # Reset the in_game status
             del self.players[channel_name]
             logger.debug(f"Disconnect handled for player: {player.get_username()}")
         else:

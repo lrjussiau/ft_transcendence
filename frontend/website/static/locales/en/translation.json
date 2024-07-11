@@ -132,7 +132,13 @@
     "usernameAlreadyTaken": "This username is already taken.",
     "showStat": "Show stats",
     "flemmBracket": "Too lazy to make the bracket, click here.",
-    "add": "add"
-
-
+    "add": "add",
+    "blockedChat": "You cannot send messages to this user as you have been blocked.",
+    "invalidPassword" : "Invalid password.",
+    "loginFailed" : "Login failed.",
+    "readyForTournament": "Ready For a tournament",
+    "disableNotification": "Disable notifications",
+    "wrongPassword": "Current password is incorrect.",
+    "passwordNoMatch": "New passwords do not match.",
+    "expiredCode": "Invalid or expired code"
 }

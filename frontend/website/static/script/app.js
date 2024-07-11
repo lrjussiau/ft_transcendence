@@ -283,7 +283,7 @@ function drawMessage(data) {
   ctx.textAlign = 'center';
 
   let translatedMessage;
-  if (messageKey === "gameEnded") {
+  if (messageKey === "gameEnded" && winner && loser) {
     translatedMessage = `${window.i18next.t(messageKey)} ${winner} ${window.i18next.t("wonAgainst")} ${loser}`;
   } else {
     translatedMessage = window.i18next.t(messageKey);

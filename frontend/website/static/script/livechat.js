@@ -240,6 +240,10 @@ function clearChat() {
 }
 
 async function startChat(friendId, friendName) {
+    const existingMenu = document.querySelector('.friend-context-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
     try {
         const chatRoom = await createOrGetChatRoom(friendId);
         localStorage.setItem('currentChatRoom', JSON.stringify(chatRoom));
@@ -280,7 +284,7 @@ function displayBlockedMessage(message) {
     
     const textP = document.createElement('p');
     textP.className = 'text';
-    textP.textContent = message;
+    textP.textContent = i18next.t('blockedChat');
     
     messageDiv.appendChild(textP);
     messagesDiv.appendChild(messageDiv);
