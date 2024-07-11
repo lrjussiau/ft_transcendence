@@ -118,11 +118,10 @@ class LobbyManager:
     async def start_game(self, websocket, type):
         player = self.players[websocket.channel_name]
         
-        # Check if the player is already in a game
-        if player.in_game:
-            logger.warning(f"Player {player.get_username()} is already in a game")
+        logger.debug(f"check if player is in game: {player.get_username()}.")
+        if player.in_game or self.is_player_in_active_game(player):
             await player.send_message({
-                'type': 'end_game',
+                'type': 'error',
                 'message': 'You are already in a game. Please finish or leave your current game before starting a new one.'
             })
             return
@@ -188,11 +187,25 @@ class LobbyManager:
                 except Exception as e:
                     logger.error(f"Error closing room for player {player.get_username()}: {str(e)}")
 
-            player.in_game = False  # Reset the in_game status
             del self.players[channel_name]
             logger.debug(f"Disconnect handled for player: {player.get_username()}")
         else:
             logger.warning(f"Attempted to handle disconnect for unknown channel: {channel_name}")
+
+    def is_player_in_active_game(self, player):
+        # Check rooms
+        for room in Room.rooms.values():
+            logger.debug(f"Checking room {room.id} : {room.players}")
+            if player.get_username() in [p.get_username() for p in room.players]:
+                return True
+        
+        # Check tournaments
+        for tournament in Tournament.tournaments.values():
+            logger.debug(f"Checking tournament {tournament.id} : {tournament.players}")
+            if player.get_username() in [p.get_username() for p in tournament.players]:
+                return True
+        
+        return False
 
 
 # Different Input : 

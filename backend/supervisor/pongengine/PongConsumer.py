@@ -203,6 +203,10 @@ class PongConsumer:
 
 
     async def end_game(self):
+        if self.players[1]:
+            self.players[1].in_game = False
+        if self.players[2]:
+            self.players[2].in_game = False
         if self.game_type == "1v1" or self.game_type == "tournament":
             p1 = self.players[1]
             p2 = self.players[2]
@@ -224,8 +228,7 @@ class PongConsumer:
                 await store_game(self.game_state['player1_score'], p1_username, p2_username, is_tournament_game)
 
             # Reset in_game status for both players
-            p1.in_game = False
-            p2.in_game = False
+
 
             logger.debug(f"Game {self.game_id}: player1: {p1.get_username()} : {p1.result} , player2: {p2.get_username()} : {p2.result}")
 
