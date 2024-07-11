@@ -121,7 +121,7 @@ class LobbyManager:
         logger.debug(f"check if player is in game: {player.get_username()}.")
         if player.in_game or self.is_player_in_active_game(player):
             await player.send_message({
-                'type': 'error',
+                'type': 'end_game',
                 'message': 'You are already in a game. Please finish or leave your current game before starting a new one.'
             })
             return

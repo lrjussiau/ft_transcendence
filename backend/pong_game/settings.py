@@ -23,7 +23,7 @@ hostname = os.getenv('HOSTNAME_VAR')
 if not hostname:
     raise ValueError("La variable d'environnement HOSTNAME_VAR n'est pas définie")
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [hostname]
 
 
 SESSION_COOKIE_SECURE = True

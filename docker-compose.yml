@@ -34,6 +34,12 @@ services:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@db:5432/${DB_NAME}
       REDIS_URL: redis://redis:6379/0
       DJANGO_SETTINGS_MODULE: pong_game.settings
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL}
+      EMAIL_BACKEND: ${EMAIL_BACKEND}
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
+      HOSTNAME_VAR: ${HOSTNAME_VAR}
     env_file:
       - .env
     depends_on:
