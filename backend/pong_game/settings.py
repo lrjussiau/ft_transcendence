@@ -23,7 +23,7 @@ hostname = os.getenv('HOSTNAME_VAR')
 if not hostname:
     raise ValueError("La variable d'environnement HOSTNAME_VAR n'est pas définie")
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [hostname]
 
 
 SESSION_COOKIE_SECURE = True
@@ -255,10 +255,11 @@ LOGGING = {
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL') 
-
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWOR')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+print(f"======================================\n{DEFAULT_FROM_EMAIL}\n{EMAIL_BACKEND}\n{EMAIL_HOST}\n{EMAIL_HOST_USER}\n{EMAIL_HOST_PASSWORD}\n======================================\n")
