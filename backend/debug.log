@@ -680,3 +680,120 @@ DEBUG 2024-07-11 14:11:12,252 LobbyManager Disconnect handled for player: Louis
 DEBUG 2024-07-11 14:11:14,887 LobbyManager Player disconnected: Sab
 DEBUG 2024-07-11 14:11:14,890 LobbyManager Disconnect handled for player: Sab
 >>>>>>> d2664098410498c289740230a155cc2b9c209ee0
+WARNING 2024-07-11 14:36:06,769 LobbyManager Disconnect received for unknown channel: specific.627a1d53e11c4f99b91afd8499522f6c!1ca7bb56aca1423e9dafd7c107bdd316
+WARNING 2024-07-11 14:36:20,296 LobbyManager Disconnect received for unknown channel: specific.627a1d53e11c4f99b91afd8499522f6c!45d6f134ad8a4a16b108139329ec71b6
+WARNING 2024-07-11 14:36:30,672 LobbyManager Disconnect received for unknown channel: specific.627a1d53e11c4f99b91afd8499522f6c!bb1116568e964fb3a990dec74d4227b3
+WARNING 2024-07-11 14:41:02,538 LobbyManager Disconnect received for unknown channel: specific.627a1d53e11c4f99b91afd8499522f6c!a16649c3acf8442dbfb81c21128c4d6e
+WARNING 2024-07-11 14:41:37,283 LobbyManager Disconnect received for unknown channel: specific.627a1d53e11c4f99b91afd8499522f6c!6526cc0c87ac4eeabe9d487095a441b8
+DEBUG 2024-07-11 15:13:13,078 views Change status request
+DEBUG 2024-07-11 15:13:13,096 views Status updated successfully to offline
+WARNING 2024-07-11 15:13:13,102 LobbyManager Disconnect received for unknown channel: specific.2e7e3b2152984f0bb22b6ad7707401d4!c512a9ef944d4994a4ab2413c367b684
+DEBUG 2024-07-11 15:14:59,944 LobbyManager Connection attempt...
+DEBUG 2024-07-11 15:14:59,955 LobbyManager Player connected: aa, with websocket: specific.2e7e3b2152984f0bb22b6ad7707401d4!5afa79e8a5294e07a6350cd939357284
+DEBUG 2024-07-11 15:14:59,957 LobbyManager check if player is in game: aa.
+DEBUG 2024-07-11 15:14:59,957 LobbyManager Starting tournament for player: aa, mode: tournament-4
+DEBUG 2024-07-11 15:14:59,957 TournamentManager Player aa wants to join a 4-player tournament
+DEBUG 2024-07-11 15:14:59,957 TournamentManager Tournament created: ID 8cdb2b97, players 4
+DEBUG 2024-07-11 15:14:59,958 TournamentManager Created new tournament: <supervisor.pongengine.TournamentManager.Tournament object at 0x7ce3840af3d0>
+DEBUG 2024-07-11 15:14:59,958 TournamentManager Player aa added to tournament 8cdb2b97. Total players: 1/4
+DEBUG 2024-07-11 15:15:03,409 LobbyManager Connection attempt...
+DEBUG 2024-07-11 15:15:03,419 LobbyManager Player connected: cc, with websocket: specific.2e7e3b2152984f0bb22b6ad7707401d4!64915bd1c74f4c59a88b50f49579d531
+DEBUG 2024-07-11 15:15:03,421 LobbyManager check if player is in game: cc.
+DEBUG 2024-07-11 15:15:03,421 LobbyManager Starting tournament for player: cc, mode: tournament-4
+DEBUG 2024-07-11 15:15:03,421 TournamentManager Player cc wants to join a 4-player tournament
+DEBUG 2024-07-11 15:15:03,421 TournamentManager Player cc added to tournament 8cdb2b97. Total players: 2/4
+DEBUG 2024-07-11 15:15:06,312 LobbyManager Connection attempt...
+DEBUG 2024-07-11 15:15:06,324 LobbyManager Player connected: bb, with websocket: specific.2e7e3b2152984f0bb22b6ad7707401d4!2f42346b8a5346268cc6dbbb1f33ab92
+DEBUG 2024-07-11 15:15:06,326 LobbyManager check if player is in game: bb.
+DEBUG 2024-07-11 15:15:06,326 LobbyManager Starting tournament for player: bb, mode: tournament-4
+DEBUG 2024-07-11 15:15:06,326 TournamentManager Player bb wants to join a 4-player tournament
+DEBUG 2024-07-11 15:15:06,326 TournamentManager Player bb added to tournament 8cdb2b97. Total players: 3/4
+DEBUG 2024-07-11 15:15:09,269 LobbyManager Connection attempt...
+DEBUG 2024-07-11 15:15:09,281 LobbyManager Player connected: dd, with websocket: specific.2e7e3b2152984f0bb22b6ad7707401d4!55cbd22a38b7416eb4f0d776499b470d
+DEBUG 2024-07-11 15:15:09,282 LobbyManager check if player is in game: dd.
+DEBUG 2024-07-11 15:15:09,282 LobbyManager Starting tournament for player: dd, mode: tournament-4
+DEBUG 2024-07-11 15:15:09,282 TournamentManager Player dd wants to join a 4-player tournament
+DEBUG 2024-07-11 15:15:09,283 TournamentManager Player dd added to tournament 8cdb2b97. Total players: 4/4
+DEBUG 2024-07-11 15:15:09,283 TournamentManager Tournament 8cdb2b97 is full. Starting tournament.
+INFO 2024-07-11 15:15:09,283 TournamentManager Starting tournament 8cdb2b97 with 4 players
+DEBUG 2024-07-11 15:15:09,283 Room Room created: ID R6745, type tournament
+DEBUG 2024-07-11 15:15:09,283 Room Player aa is in game: True
+DEBUG 2024-07-11 15:15:09,283 Room Player aa added to room: R6745. Player number: 1
+DEBUG 2024-07-11 15:15:09,283 Room Player cc is in game: True
+DEBUG 2024-07-11 15:15:09,283 Room Player cc added to room: R6745. Player number: 2
+DEBUG 2024-07-11 15:15:09,284 PongConsumer Countdown: 3 for game G7211
+DEBUG 2024-07-11 15:15:10,285 PongConsumer Countdown: 2 for game G7211
+DEBUG 2024-07-11 15:15:11,287 PongConsumer Countdown: 1 for game G7211
+DEBUG 2024-07-11 15:15:12,289 PongConsumer Countdown finished for game G7211
+DEBUG 2024-07-11 15:15:12,289 PongConsumer Game G7211 started with players: aa
+DEBUG 2024-07-11 15:15:12,289 PongConsumer Game G7211 started with players: cc
+DEBUG 2024-07-11 15:15:12,289 Room tournament game started in room R6745
+DEBUG 2024-07-11 15:15:12,289 Room Room created: ID R6655, type tournament
+DEBUG 2024-07-11 15:15:12,290 Room Player bb is in game: True
+DEBUG 2024-07-11 15:15:12,290 Room Player bb added to room: R6655. Player number: 1
+DEBUG 2024-07-11 15:15:12,290 Room Player dd is in game: True
+DEBUG 2024-07-11 15:15:12,290 Room Player dd added to room: R6655. Player number: 2
+DEBUG 2024-07-11 15:15:12,290 PongConsumer Countdown: 3 for game G6464
+DEBUG 2024-07-11 15:15:12,291 PongConsumer Game loop started for game G7211
+DEBUG 2024-07-11 15:15:13,291 PongConsumer Countdown: 2 for game G6464
+DEBUG 2024-07-11 15:15:14,293 PongConsumer Countdown: 1 for game G6464
+DEBUG 2024-07-11 15:15:15,294 PongConsumer Countdown finished for game G6464
+DEBUG 2024-07-11 15:15:15,294 PongConsumer Game G6464 started with players: bb
+DEBUG 2024-07-11 15:15:15,294 PongConsumer Game G6464 started with players: dd
+DEBUG 2024-07-11 15:15:15,294 Room tournament game started in room R6655
+DEBUG 2024-07-11 15:15:15,294 TournamentManager Created 2 matches for round 1
+DEBUG 2024-07-11 15:15:15,294 PongConsumer Game loop started for game G6464
+DEBUG 2024-07-11 15:15:29,504 PongConsumer End Game condition met for game G6464
+DEBUG 2024-07-11 15:15:29,521 PongConsumer In End_game Store into DB
+DEBUG 2024-07-11 15:15:31,149 PongConsumer Game G6464: player1: bb : loser , player2: dd : winner
+DEBUG 2024-07-11 15:15:31,149 PongConsumer Game G6464 ended
+DEBUG 2024-07-11 15:15:31,149 TournamentManager Match ended in room R6655. Winner: dd
+DEBUG 2024-07-11 15:15:31,150 TournamentManager Waiting for other matches to finish.
+DEBUG 2024-07-11 15:15:36,151 TournamentManager Match end already processed for room R6655. Ignoring.
+DEBUG 2024-07-11 15:15:36,151 Room Room R6655 deleted
+DEBUG 2024-07-11 15:15:36,802 PongConsumer End Game condition met for game G7211
+DEBUG 2024-07-11 15:15:36,820 PongConsumer In End_game Store into DB
+DEBUG 2024-07-11 15:15:38,384 PongConsumer Game G7211: player1: aa : loser , player2: cc : winner
+DEBUG 2024-07-11 15:15:38,384 PongConsumer Game G7211 ended
+DEBUG 2024-07-11 15:15:38,384 TournamentManager Match ended in room R6745. Winner: cc
+DEBUG 2024-07-11 15:15:38,384 TournamentManager All matches finished for this round.
+DEBUG 2024-07-11 15:15:38,384 TournamentManager Waiting for all players to be ready for the next round.
+DEBUG 2024-07-11 15:15:43,386 TournamentManager Match end already processed for room R6745. Ignoring.
+DEBUG 2024-07-11 15:15:43,386 Room Room R6745 deleted
+DEBUG 2024-07-11 15:17:34,319 LobbyManager Player dd is ready: True
+DEBUG 2024-07-11 15:17:34,320 TournamentManager Player dd marked as ready. Total ready players: 1/2
+DEBUG 2024-07-11 15:17:37,402 LobbyManager Player cc is ready: True
+DEBUG 2024-07-11 15:17:37,403 TournamentManager Player cc marked as ready. Total ready players: 2/2
+DEBUG 2024-07-11 15:17:37,403 Room Room created: ID R3603, type tournament
+DEBUG 2024-07-11 15:17:37,403 Room Player dd is in game: True
+DEBUG 2024-07-11 15:17:37,403 Room Player dd added to room: R3603. Player number: 1
+DEBUG 2024-07-11 15:17:37,403 Room Player cc is in game: True
+DEBUG 2024-07-11 15:17:37,403 Room Player cc added to room: R3603. Player number: 2
+DEBUG 2024-07-11 15:17:37,404 PongConsumer Countdown: 3 for game G9678
+DEBUG 2024-07-11 15:17:38,404 PongConsumer Countdown: 2 for game G9678
+DEBUG 2024-07-11 15:17:39,405 PongConsumer Countdown: 1 for game G9678
+DEBUG 2024-07-11 15:17:40,406 PongConsumer Countdown finished for game G9678
+DEBUG 2024-07-11 15:17:40,407 PongConsumer Game G9678 started with players: dd
+DEBUG 2024-07-11 15:17:40,407 PongConsumer Game G9678 started with players: cc
+DEBUG 2024-07-11 15:17:40,407 Room tournament game started in room R3603
+DEBUG 2024-07-11 15:17:40,407 TournamentManager Created 1 matches for round 2
+DEBUG 2024-07-11 15:17:40,407 TournamentManager All winners are ready. Starting next round.
+DEBUG 2024-07-11 15:17:40,407 PongConsumer Game loop started for game G9678
+DEBUG 2024-07-11 15:17:58,048 PongConsumer End Game condition met for game G9678
+DEBUG 2024-07-11 15:17:58,065 PongConsumer In End_game Store into DB
+DEBUG 2024-07-11 15:17:59,618 PongConsumer Game G9678: player1: dd : loser , player2: cc : winner
+DEBUG 2024-07-11 15:17:59,618 PongConsumer Game G9678 ended
+DEBUG 2024-07-11 15:17:59,618 TournamentManager Match ended in room R3603. Winner: cc
+DEBUG 2024-07-11 15:17:59,618 TournamentManager All matches finished for this round.
+INFO 2024-07-11 15:17:59,618 TournamentManager Tournament 8cdb2b97 ended. Winner: cc
+DEBUG 2024-07-11 15:17:59,618 TournamentManager Deleting tournament 8cdb2b97
+DEBUG 2024-07-11 15:18:04,620 TournamentManager Match end already processed for room R3603. Ignoring.
+DEBUG 2024-07-11 15:18:04,621 Room Room R3603 deleted
+DEBUG 2024-07-11 15:25:07,776 LobbyManager Player disconnected: dd
+DEBUG 2024-07-11 15:25:07,777 LobbyManager Disconnect handled for player: dd
+DEBUG 2024-07-11 15:25:07,777 LobbyManager Player disconnected: aa
+DEBUG 2024-07-11 15:25:07,777 LobbyManager Disconnect handled for player: aa
+DEBUG 2024-07-11 15:25:07,778 LobbyManager Player disconnected: cc
+DEBUG 2024-07-11 15:25:07,778 LobbyManager Disconnect handled for player: cc
+DEBUG 2024-07-11 15:25:07,778 LobbyManager Player disconnected: bb
+DEBUG 2024-07-11 15:25:07,778 LobbyManager Disconnect handled for player: bb

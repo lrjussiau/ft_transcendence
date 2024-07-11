@@ -19,9 +19,16 @@ nuke:
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down --remove-orphans
 	@if [ -n "$$(docker images -q $$(docker-compose -f $(DOCKER_COMPOSE_FILE) config | grep 'image:' | awk '{print $$2}'))" ]; then docker rmi -f $$(docker images -q $$(docker-compose -f $(DOCKER_COMPOSE_FILE) config | grep 'image:' | awk '{print $$2}')); fi
 
-clear_db:  
-	docker exec -it db psql -U val -d pongdatabase -c "DO \$\$ DECLARE r RECORD; BEGIN FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) LOOP EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE'; END LOOP; END \$\$;"
-
+clear_db:
+	@docker exec -it db psql -U val -d pongdatabase -c "\
+	DO \$$\$$ \
+	DECLARE r RECORD; \
+	BEGIN \
+		FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) \
+		LOOP \
+			EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE'; \
+		END LOOP; \
+	END \$$\$$;"
 
 ww3: clear_db
 	@echo "Arrêt et suppression des conteneurs..."

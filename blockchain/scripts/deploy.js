@@ -3,9 +3,8 @@ const fs = require("fs");
 
 async function main() {
 
-        //const   provider = new ethers.JsonRpcProvider(process.env.SEPOLIA_URL);          
-        //const   wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-        //const   factory = new ethers.ContractFactory(abi, bytecode, wallet);
+        // const   provider = new ethers.JsonRpcProvider(process.env.SEPOLIA_URL);          
+        // const   wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
         const   provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545");
         const   signer = await provider.getSigner();
 
@@ -14,6 +13,7 @@ async function main() {
         const   bytecode = contractJSON.bytecode;
 
         const   factory = new ethers.ContractFactory(abi, bytecode, signer);
+        //const   factory = new ethers.ContractFactory(abi, bytecode, wallet);
         const   contract = await factory.deploy();
 
         console.log("Contract deployed at:", contract.target);
