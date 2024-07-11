@@ -1,7 +1,3 @@
-/*import i18next from 'i18next';
-import HttpBackend from 'i18next-http-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';*/
-
 
 function setupUsernameChangeModal() {
     const form = document.getElementById('username-change-form');
@@ -252,34 +248,3 @@ function setupSettingsPage() {
     .catch(error => console.error('Error fetching user profile:', error));
 
 }
-
-/*i18next
-  .use(HttpBackend)
-  .use(LanguageDetector)
-  .init({
-    fallbackLng: 'en',
-    backend: {
-      loadPath: '/static/locales/{{lng}}/{{ns}}.json'
-    },
-    detection: {
-      order: ['querystring', 'localStorage', 'navigator'],
-      lookupQuerystring: 'lng',
-      lookupLocalStorage: 'i18nextLng',
-    }
-  });
-
-function updateContent() {
-  document.querySelectorAll('[data-i18n]').forEach(elem => {
-    const key = elem.getAttribute('data-i18n');
-    elem.textContent = i18next.t(key);
-  });
-}
-
-i18next.on('languageChanged', () => {
-  updateContent();
-});
-
-//export default i18next;
-
-// At the end of settings.js, add:
-//export { setupSettingsPage };*/

@@ -127,7 +127,12 @@
     "YouLose" : "You Lose !",
     "WaitingForOpponent" :  "Waiting for opponent to join...",
     "PlayerDisconnect" : "Your adversaire disconnect" ,
-    "ImReady" : "I'm ready !"
+    "ImReady" : "I'm ready !",
+    "emailAlreadyRegistred": "This email is already registered.",
+    "usernameAlreadyTaken": "This username is already taken.",
+    "showStat": "Show stats",
+    "flemmBracket": "Too lazy to make the bracket, click here.",
+    "add": "add"
 
 
 }

@@ -127,6 +127,10 @@
     "YouLose" : "¡Perdiste!",
     "WaitingForOpponent" : "Esperando a que se una el oponente...",
     "PlayerDisconnect" : "Tu adversario se ha desconectado",
-    "ImReady" : "¡Estoy listo!"
+    "ImReady" : "¡Estoy listo!",
+    "emailAlreadyRegistred": "Este correo electrónico ya está registrado.",
+    "usernameAlreadyTaken": "Este nombre de usuario ya está tomado.",
+    "showStat": "Mostrar estadísticas",
+    "flemmBracket": "Demasiado perezoso para hacer el bracket, haz clic aquí."
 
 }

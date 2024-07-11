@@ -127,6 +127,10 @@
     "YouLose" : "Þú tapaðir!",
     "WaitingForOpponent" : "Bíð eftir andstæðingi...",
     "PlayerDisconnect" : "Andstæðingur þinn aftengdist",
-    "ImReady" : "Ég er tilbúinn!"
+    "ImReady" : "Ég er tilbúinn!",
+    "emailAlreadyRegistred": "Þessi tölvupóstur er þegar skráður.",
+    "usernameAlreadyTaken": "Þetta notendanafn er þegar í notkun.",
+    "showStat": "Sýna tölfræði",
+    "flemmBracket": "Of latur til að búa til bracketið, smelltu hér."
 
 }

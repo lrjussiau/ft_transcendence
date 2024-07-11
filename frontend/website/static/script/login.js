@@ -25,7 +25,7 @@ function setupLoginForm() {
       } catch (Error) {
         console.error("Login error:", Error);
         if (errorDiv) {
-          errorDiv.textContent = Error.message;
+          errorDiv.textContent =  i18next.t(Error.message);
         }
       } finally {
         isSubmitting = false;
