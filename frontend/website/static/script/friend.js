@@ -363,7 +363,7 @@ async function showContextMenu(event, friendId, friendName) {
     showStatButton.setAttribute('data-html', '/static/modals/modals.html');
     showStatButton.setAttribute('data-i18n', 'UserModal');
     showStatButton.setAttribute('data-friend-id', friendId);
-    showStatButton.textContent = i18next.t('Show Stat');
+    showStatButton.textContent = i18next.t('showStat');
     $(showStatButton).on('click', async function(e) {
         e.stopPropagation();
         contextMenu.remove();
@@ -439,12 +439,13 @@ async function initializeFriendSearch() {
                     $('#searchResults').append(`
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             ${friend.username}
-                            <button class="btn btn-sm modal-button add-friend-btn" data-id="${friend.id}" data-i18n="addFriend">Add Friend</button>
+                                    <button class="btn btn-sm modal-button add-friend-btn" data-id="${friend.id}" >${i18next.t('addFriend')}</button>
+
                         </div>
                     `);
                 });
             } else {
-                $('#searchResults').append('<div class="list-group-item"  data-i18n="noFriendsFound">No friends found</div>');
+                $('#searchResults').append(`<div class="list-group-item">${i18next.t('noFriendsFound')}</div>`);
             }
         });
         $('#searchResults').on('click', '.add-friend-btn', function() {
@@ -454,7 +455,7 @@ async function initializeFriendSearch() {
             addFriend(friendId)
                 .then(() => {
                     button.replaceWith(`
-                        <button class="btn btn-sm modal-button btn-success added-btn" data-i18n="added">Added</button>
+                        <button class="btn btn-sm modal-button btn-success added-btn">${i18next.t('added')}</button>
                     `);
                 })
                 .catch(error => {
@@ -462,20 +463,21 @@ async function initializeFriendSearch() {
                     alert('Failed to add friend. Please try again.');
                 });
         });
+        $('#searchResults').i18n();
     });
 }
 function updateModalContent(userData) {
     const statsHtml = `
         <div class="stat-win">
-            <h4 class="stat-title linear-title" data-i18n="wins">Wins</h4>
+            <h4 class="stat-title linear-title" data-i18n="wins">${i18next.t('wins')}</h4>
             <p class="stat-value" id="wins-id">${userData.wins}</p>
         </div>
         <div class="stat-lose">
-            <h4 class="stat-title linear-title" data-i18n="losses">Losses</h4>
+            <h4 class="stat-title linear-title" data-i18n="losses">${i18next.t('losses')}</h4>
             <p class="stat-value" id="loses-id">${userData.losses}</p>
         </div>
         <div class="stat-ratio">
-            <h4 class="stat-title linear-title" data-i18n="ratio">Ratio</h4>
+            <h4 class="stat-title linear-title" data-i18n="ratio">${i18next.t('ratio')}</h4>
             <p class="stat-value" id="ratio-id">${userData.ratio}</p>
         </div>
     `;
@@ -501,7 +503,7 @@ async function updateUserModalContent(friendId) {
         
         // Calculate ratio
         const totalGames = userStats.wins + userStats.losses;
-        const ratio = totalGames > 0 ? (userStats.wins / totalGames).toFixed(2) : '0.00';
+        const ratio = userStats.wins > 0 ? (userStats.wins / userStats.losses).toFixed(2) : '0.00';
         
         return {
             username: userInfo.username,

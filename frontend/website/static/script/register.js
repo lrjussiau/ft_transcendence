@@ -38,10 +38,10 @@ function setupRegisterForm() {
         console.error("Registration error:", error);
         if (errorDiv) {
           if (error.message === "This email is already registered.") {
-            errorDiv.textContent = "This email is already registered.";
+            errorDiv.textContent = i18next.t('emailAlreadyRegistred');
           }
           else if (error.message === "This username is already taken.") {
-            errorDiv.textContent = "This username is already taken.";
+            errorDiv.textContent = i18next.t('usernameAlreadyTaken');
           }
           else {
             errorDiv.textContent = "Registration failed";

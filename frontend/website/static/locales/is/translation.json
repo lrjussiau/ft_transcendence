@@ -127,6 +127,18 @@
     "YouLose" : "Þú tapaðir!",
     "WaitingForOpponent" : "Bíð eftir andstæðingi...",
     "PlayerDisconnect" : "Andstæðingur þinn aftengdist",
-    "ImReady" : "Ég er tilbúinn!"
+    "ImReady" : "Ég er tilbúinn!",
+    "emailAlreadyRegistred": "Þessi tölvupóstur er þegar skráður.",
+    "usernameAlreadyTaken": "Þetta notendanafn er þegar í notkun.",
+    "showStat": "Sýna tölfræði",
+    "flemmBracket": "Of latur til að búa til bracketið, smelltu hér.",
+    "blockedChat": "Þú getur ekki sent skilaboð til þessa notanda þar sem þér hefur verið lokað.",
+    "invalidPassword": "Rangt lykilorð.",
+    "loginFailed": "Innskráning mistókst.",
+    "readyForTournament": "Tilbúinn fyrir mót",
+    "disableNotification": "Slökkva á tilkynningum.",
+    "wrongPassword": "Núverandi lykilorð er rangt.",
+    "passwordNoMatch": "Nýju lykilorðin passa ekki saman.",
+    "expiredCode": "Ógiltur eða útrunninn kóði."
 
 }

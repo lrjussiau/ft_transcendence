@@ -26,10 +26,10 @@ function setupLoginForm() {
         console.error("Login error:", Error);
         if (errorDiv) {
           if (Error.message === "Invalid username or password") {
-            errorDiv.textContent = "Invalid username or password";
+            errorDiv.textContent = i18next.t("invalidPassword");
           }
           else {
-            errorDiv.textContent = "Login failed";
+            errorDiv.textContent = i18next.t("loginFailed");
           }
         }
       } finally {
@@ -101,7 +101,7 @@ function setup2FAVerificationForm(username) {
     } catch (error) {
       console.error("2FA verification error:", error);
       if (errorDiv) {
-        errorDiv.textContent = error.message;
+        errorDiv.textContent = i18next.t("expiredCode");
       }
     }
   });

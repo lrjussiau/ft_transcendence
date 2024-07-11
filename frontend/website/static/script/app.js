@@ -256,8 +256,8 @@ function assignPlayer(data) {
 function drawMessage(data) {
   console.log("Data to draw :", data);
   const messageKey = data.message;
-  const winner = data.winner || '';
-  const loser = data.loser || '';
+  const winner = data.winner;
+  const loser = data.loser;
 
   const canvas = document.getElementById('gameCanvas');
   if (!canvas) {

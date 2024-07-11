@@ -284,7 +284,7 @@ function displayBlockedMessage(message) {
     
     const textP = document.createElement('p');
     textP.className = 'text';
-    textP.textContent = message;
+    textP.textContent = i18next.t('blockedChat');
     
     messageDiv.appendChild(textP);
     messagesDiv.appendChild(messageDiv);

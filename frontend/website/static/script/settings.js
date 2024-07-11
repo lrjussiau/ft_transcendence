@@ -1,7 +1,3 @@
-/*import i18next from 'i18next';
-import HttpBackend from 'i18next-http-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';*/
-
 
 function setupUsernameChangeModal() {
     const form = document.getElementById('username-change-form');
@@ -26,7 +22,7 @@ function setupUsernameChangeModal() {
             if (response.ok) {
                 hideModal('usernameChangeModal');
             } else {
-                errorDiv.textContent = data.error || 'An error occurred while changing the username.';
+                errorDiv.textContent = i18next.t('usernameAlreadyTaken');
             }
         } catch (error) {
             errorDiv.textContent = 'An error occurred. Please try again.';
@@ -56,9 +52,8 @@ function setupEmailChangeModal() {
 
             if (response.ok) {
                 hideModal('emailChangeModal');
-                // Update UI or show success message
             } else {
-                errorDiv.textContent = data.error || 'An error occurred while changing the email.';
+                errorDiv.textContent = i18next.t('emailAlreadyRegistred');
             }
         } catch (error) {
             errorDiv.textContent = 'An error occurred. Please try again.';
@@ -77,7 +72,7 @@ function setupPasswordChangeModal() {
         const confirmNewPassword = document.getElementById('confirm-new-password').value;
 
         if (newPassword !== confirmNewPassword) {
-            errorDiv.textContent = 'New passwords do not match.';
+            errorDiv.textContent = i18next.t("passwordNoMatch");
             return;
         }
 
@@ -97,7 +92,7 @@ function setupPasswordChangeModal() {
                 hideModal('passwordChangeModal');
                 // Update UI or show success message
             } else {
-                errorDiv.textContent = data.error || 'An error occurred while changing the password.';
+                errorDiv.textContent = i18next.t("wrongPassword");
             }
         } catch (error) {
             errorDiv.textContent = 'An error occurred. Please try again.';
@@ -252,34 +247,3 @@ function setupSettingsPage() {
     .catch(error => console.error('Error fetching user profile:', error));
 
 }
-
-/*i18next
-  .use(HttpBackend)
-  .use(LanguageDetector)
-  .init({
-    fallbackLng: 'en',
-    backend: {
-      loadPath: '/static/locales/{{lng}}/{{ns}}.json'
-    },
-    detection: {
-      order: ['querystring', 'localStorage', 'navigator'],
-      lookupQuerystring: 'lng',
-      lookupLocalStorage: 'i18nextLng',
-    }
-  });
-
-function updateContent() {
-  document.querySelectorAll('[data-i18n]').forEach(elem => {
-    const key = elem.getAttribute('data-i18n');
-    elem.textContent = i18next.t(key);
-  });
-}
-
-i18next.on('languageChanged', () => {
-  updateContent();
-});
-
-//export default i18next;
-
-// At the end of settings.js, add:
-//export { setupSettingsPage };*/
