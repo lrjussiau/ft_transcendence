@@ -68,13 +68,10 @@ Check final :
 
     - Ratio Show-Stats user pas Bon 
     - Retour upload ?
-
-    - Search bar livechat
+            
     - Nettoyer code !
     - Send Message -> hide context
-    - Size reponsive : 
-        - Tchat 
-        - Settings (notification, slider)
+
     - Traduction manquante, voir to_translate
 
 

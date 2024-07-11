@@ -58,6 +58,11 @@ p {
 
 }
 
+label {
+  font-size: 0.8vw;
+  font-weight: 500;
+}
+
 /* --RECURENT OBJECT-- */
 
 .content {
@@ -378,6 +383,7 @@ footer {
         linear-gradient(#fff 0 0) content-box, 
         linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
     z-index: -1;
     animation: 5s ease 0s infinite normal none running nav-animation;
 }
@@ -1308,6 +1314,10 @@ input:checked + .slider:before {
     font-weight: 600;
 }
 
+.room-preview:hover {
+  background-color: #bababa5a;
+}
+
 /* --GAME-- */
 
 .canvas {
@@ -1332,7 +1342,6 @@ input:checked + .slider:before {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    background-color: #ffffff6a;
     color: #1a1a1a;
     }
 
@@ -1351,8 +1360,8 @@ input:checked + .slider:before {
     position: relative;
     width: 30%;
     margin: 2%;
-    border: 2px solid #00ff0080;
-    color: #00ff0080;
+    border: 2px solid #f7f7f7;
+    color: #f7f7f7;
     border-radius: 20px;
     z-index: 1; /* Ensure the wrapper is on a lower z-index than the button */
   }
@@ -1393,8 +1402,6 @@ input:checked + .slider:before {
     border-bottom: 1px solid #bababa;
     color: rgb(255, 255, 255, 0.87);
   }
-
-/* live chatGPT */
 
 /* Chat container */
 .chat-container {

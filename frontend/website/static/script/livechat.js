@@ -8,6 +8,7 @@ async function setupLiveChat() {
     await displayChatRooms();
     setupMessageInput();
     await loadLastChat();
+    setupSearch();
 }
 
 // User and chat room functions
@@ -38,6 +39,8 @@ async function displayChatRooms() {
             const roomButton = createRoomButton(room.id, otherUser);
             roomHistoryDiv.appendChild(roomButton);
         });
+
+        setupSearch();
     } catch (error) {
         console.error('Error displaying chat rooms:', error);
     }
@@ -57,6 +60,7 @@ function createRoomButton(roomId, otherUser) {
     const roomButton = document.createElement('button');
     roomButton.className = 'room-preview';
     roomButton.onclick = () => loadChatRoom(roomId);
+    roomButton.setAttribute('data-username', otherUser.username.toLowerCase());
 
     const userImg = document.createElement('img');
     userImg.src = otherUser.avatar;
@@ -68,6 +72,11 @@ function createRoomButton(roomId, otherUser) {
 
     roomButton.append(userImg, userName);
     return roomButton;
+}
+
+function setupSearch() {
+    const searchInput = document.querySelector('.search-bar input');
+    searchInput.addEventListener('input', filterRooms);
 }
 
 // Chat room loading and management
@@ -87,6 +96,20 @@ async function loadChatRoom(roomId) {
     }
 }
 
+function filterRooms() {
+    const searchInput = document.querySelector('.search-bar input');
+    const searchTerm = searchInput.value.toLowerCase();
+    const roomPreviews = document.querySelectorAll('.room-preview');
+
+    roomPreviews.forEach(roomPreview => {
+        const username = roomPreview.getAttribute('data-username');
+        if (username.includes(searchTerm)) {
+            roomPreview.style.display = 'flex';
+        } else {
+            roomPreview.style.display = 'none';
+        }
+    });
+}
 
 async function fetchChatRoomDetails(roomId) {
     const response = await fetch(`/api/livechat/rooms/${roomId}/`, {
@@ -156,7 +179,11 @@ function setupWebSocket(roomId) {
 
 function handleWebSocketMessage(event) {
     const data = JSON.parse(event.data);
-    displayMessage(data.message, data.user_id);
+    if (data.error === 'blocked') {
+        displayBlockedMessage(data.message);
+    } else {
+        displayMessage(data.message, data.user_id);
+    }
 }
 
 function displayMessage(message, userId) {
@@ -173,7 +200,6 @@ function displayMessage(message, userId) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
-// Message input handling
 function setupMessageInput() {
     const sendButton = document.querySelector('.send-message');
     const messageInput = document.getElementById('messageInput');
@@ -197,7 +223,6 @@ function sendMessage() {
     }
 }
 
-// Last chat loading
 async function loadLastChat() {
     const lastChatUser = JSON.parse(localStorage.getItem('lastChatUser'));
     const lastChatRoomId = localStorage.getItem('lastChatRoomId');
@@ -247,3 +272,18 @@ async function createOrGetChatRoom(user2Id) {
         throw error;
     }
 }
+
+function displayBlockedMessage(message) {
+    const messagesDiv = document.getElementById('messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message system';
+    
+    const textP = document.createElement('p');
+    textP.className = 'text';
+    textP.textContent = message;
+    
+    messageDiv.appendChild(textP);
+    messagesDiv.appendChild(messageDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+

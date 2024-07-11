@@ -2,7 +2,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import ChatRoom, Message
-from db.models import User
+from db.models import User, Friend
 import logging
 
 logger = logging.getLogger(__name__)
@@ -47,6 +47,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
         except User.DoesNotExist:
             return None
 
+    @database_sync_to_async
+    def check_blocked_status(self, user1, user2):
+        try:
+            friend = Friend.objects.get(user=user1, friend=user2)
+            logger.info(f"Friend status: {friend.status}")
+            return friend.status == 'blocked'
+        except Friend.DoesNotExist:
+            return False
+
+    @database_sync_to_async
+    def get_room(self, room_id):
+        return ChatRoom.objects.get(id=room_id)
+
+    @database_sync_to_async
+    def get_other_user(self, room, user):
+        return room.user1 if room.user1.id != user.id else room.user2
+
     async def receive(self, text_data):
         logger.info(f"Received message in room {self.room_id}: {text_data}")
         try:
@@ -61,6 +78,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 logger.error(f"User with id {user_id} not found")
                 return
 
+            # Check if the user is blocked
+            room = await self.get_room(self.room_id)
+            other_user = await self.get_other_user(room, user)
+            is_blocked = await self.check_blocked_status(other_user, user)
+            logger.info(f"Is blocked: {is_blocked}")
+
+            if is_blocked:
+                await self.send(text_data=json.dumps({
+                    'error': 'blocked',
+                    'message': 'You cannot send messages to this user as you have been blocked.'
+                }))
+                logger.info("User is blocked, sending error message to WebSocket")
+                return
+
             logger.info(f"User from database: {user.id}")
             saved_message = await self.save_message(user, self.room_id, message)
             
@@ -69,20 +100,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             else:
                 logger.warning("Message was not saved to the database")
 
-        
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'chat_message',
-                    'message': message,
-                    'user_id': user.id
-                }
-            )
-            logger.info(f"Message sent to group {self.room_group_name}")
         except Exception as e:
             logger.error(f"Error processing message: {str(e)}")
             logger.exception(e)
-
+    
     @database_sync_to_async
     def save_message(self, user, room_id, message):
         try:
