@@ -1740,10 +1740,6 @@ input:checked + .slider:before {
   }
 }
 
-
-
-
-
 .accepted-friend-item {
   display: flex;
   align-items: center;
@@ -1755,7 +1751,7 @@ input:checked + .slider:before {
 }
 
 .accepted-friend-item:hover {
-  background-color: #4a4a4a;
+  background-color: #4a4a4a6e;
 }
 
 .accepted-friend-img, .accepted-friend-img-online {

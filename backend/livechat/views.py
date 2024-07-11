@@ -6,19 +6,6 @@ from .serializers import ChatRoomSerializer, MessageSerializer
 from django.db.models import Q
 from db.models import User, Friend  # Changed import to use User from db.models
 
-"""class ChatRoomList(generics.ListAPIView):
-    serializer_class = ChatRoomSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        return ChatRoom.objects.filter(Q(user1=user) | Q(user2=user))
-    
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)"""
-
 class ChatRoomList(generics.ListAPIView):
     serializer_class = ChatRoomSerializer
     permission_classes = [permissions.IsAuthenticated]

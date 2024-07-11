@@ -4,7 +4,6 @@ function tournamenIntegrity(){
     
     if (checkIntegrityBtn) {
       checkIntegrityBtn.addEventListener('click', async () => {
-        // Call the function from integrity.js to check and display the integrity information
         checkTournamentScoreIntegrity();
       });
     }

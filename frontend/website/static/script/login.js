@@ -22,10 +22,10 @@ function setupLoginForm() {
 
       try {
         await handleLogin(username, password);
-      } catch (error) {
-        console.error("Login error:", error);
+      } catch (Error) {
+        console.error("Login error:", Error);
         if (errorDiv) {
-          errorDiv.textContent = error.message;
+          errorDiv.textContent = Error.message;
         }
       } finally {
         isSubmitting = false;
@@ -106,20 +106,14 @@ function setup2FAVerificationForm(username) {
 function handleSuccessfulLogin(data) {
   localStorage.setItem("authToken", data.access);
   localStorage.setItem("refreshToken", data.refresh);
-  //console.log("Login successful");
-  
-  modalClosedByUser = false;  // Add this line
-  
-  // Hide both modals to ensure we're starting from a clean slate
+  modalClosedByUser = false;
   hideModal('loginModal');
   hideModal('twoFAVerificationModal');
   
   const initialRoute = localStorage.getItem('initialRoute') || '/home';
-  //console.log("Navigating to:", initialRoute);  // Debug log
   
   window.history.pushState({}, '', initialRoute);
   handleRoute(initialRoute.split('/')[1]);
   
-  // Clear the stored initial route
   localStorage.removeItem('initialRoute');
 }

@@ -1,23 +1,16 @@
-//console.log("modal.js loaded");
-
 let modalClosedByUser = true;
 
 document.addEventListener("DOMContentLoaded", () => {
-  //console.log("DOM fully loaded and parsed");
   setupModalTriggers();
 });
 
 function setupModalTriggers() {
-  //console.log("Setting up modal triggers");
 
   const modalTriggers = document.querySelectorAll('.modal-trigger');
-  //console.log(`Found ${modalTriggers.length} modal triggers`);
-
   modalTriggers.forEach(trigger => {
     trigger.addEventListener('click', () => {
       const modalName = trigger.getAttribute('data-modal');
       const modalHtmlPath = trigger.getAttribute('data-html');
-      //console.log(`Modal trigger clicked: ${modalName}, ${modalHtmlPath}`);
       showModal(modalName, modalHtmlPath);
     });
   });
@@ -34,7 +27,6 @@ function showModal(modalName, modalHtmlPath) {
                   const modalElement = $(`#${modalName}`);
                   modalElement.modal('show');
                   
-                  // Bind close events
                   bindCloseEvents(modalName);
 
                   if (window.updateContent) {
@@ -61,19 +53,16 @@ function showModal(modalName, modalHtmlPath) {
 function bindCloseEvents(modalName) {
   const modalElement = $(`#${modalName}`);
   
-  // Bind close button
   modalElement.find('.close').off('click').on('click', function() {
       window.hideModal(modalName);
   });
 
-  // Bind backdrop click
   modalElement.off('click').on('click', function(event) {
       if ($(event.target).is(modalElement)) {
           window.hideModal(modalName);
       }
   });
 
-  // Bind ESC key
   $(document).off('keydown.modalClose').on('keydown.modalClose', function(event) {
       if (event.key === "Escape") {
           window.hideModal(modalName);
@@ -86,7 +75,6 @@ function hideModal(modalName) {
       modalElement.modal('hide');
       modalElement.on('hidden.bs.modal', function () {
           $(this).off('hidden.bs.modal');
-          // Remove the modal from DOM after hiding
           modalElement.remove();
           $('.modal-backdrop').remove();
           $('body').removeClass('modal-open').css('overflow', '');
@@ -98,7 +86,6 @@ function hideModal(modalName) {
 function handleModalHidden(modalName) {
   if (modalClosedByUser && (modalName === 'loginModal' || modalName === 'registerModal')) {
     if (!document.querySelector('.modal.show') && !localStorage.getItem('authToken')) {
-      //console.log(`Modal ${modalName} hidden, redirecting to home`);
       window.history.pushState({}, '', '/home');
       handleRoute('home');
     }
@@ -147,7 +134,6 @@ function transitionToModal(currentModal, targetModal, targetModalPath) {
   });
 }
 
-// Export functions that need to be accessed by other modules
 window.showModal = showModal;
 window.hideModal = hideModal;
 window.transitionToModal = transitionToModal;

@@ -1,9 +1,3 @@
-//import { setupSettingsPage } from './settings.js';
-//import { setupSettingsPage } from '.';
-//console.log("router.js loaded");
-
-
-
 // Script to set initial theme based on localStorage
 document.addEventListener('DOMContentLoaded', (event) => {
     const savedTheme = localStorage.getItem('theme');
@@ -38,28 +32,20 @@ async function loadPartial(partial) {
         newScript.text = script.text;
         document.body.appendChild(newScript).parentNode.removeChild(newScript);
       });
-
-      //console.log(`Loaded partial: ${partial}`);
-
       connectToWebSocket();
-      //console.log("Connected to WebSocket");
 
       if (partial === 'game' || partial === 'tournament') {
         launchGame();
       }
-
       if (partial !== 'livechat') {
         setupModalTriggers();
       }
-
       if (partial === 'bracket') {
         loadBracketView();
       }
-
       if (partial === 'livechat') {
         setupLiveChat();
       }
-
       if (partial === 'user') {
         gameHistory();
         defineStats();
@@ -69,13 +55,10 @@ async function loadPartial(partial) {
         displayFriends();
         setupFriendListeners();
       }
-
       if (partial === 'settings') {
         setupSettingsPage();
         setInitialTheme();
       }
-
-      // Call updateContent to translate the newly loaded partial
       if (window.initI18next && window.updateContent) {
         window.initI18next().then(() => {
           window.updateContent();
@@ -92,16 +75,15 @@ async function loadPartial(partial) {
     }
   } catch (error) {
     console.error('Failed to load partial:', error);
-    loadPartial('404'); // Load 404 page in case of an error
+    loadPartial('404');
   }
 }
 
-// Function to check authentication
+
 function isAuthenticated() {
   return localStorage.getItem('authToken') !== null && localStorage.getItem('authToken') !== undefined;
 }
 
-// Function to display the header based on the route
 function toggleHeaderDisplay(route) {
   const header = document.querySelector('header');
   if (route === 'home') {
@@ -111,15 +93,12 @@ function toggleHeaderDisplay(route) {
   }
 }
 
-// Function to handle routes
 async function handleRoute(route) {
-  //console.log("Handling route:", route);
 
   switch (route) {
     case 'home':
       toggleHeaderDisplay(route); 
       await loadPartial('home');
-      //console.log("Loaded home partial");
       break;
     case 'game':
     case 'user':
@@ -145,7 +124,7 @@ async function handleRoute(route) {
       await loadPartial('404');
       break;
   }
-  setActiveNavItem(route); // Set the active nav item
+  setActiveNavItem(route);
 }
 
 // Initialize the router
@@ -182,7 +161,6 @@ window.addEventListener('popstate', () => {
   handleRoute(route);
 });
 
-// Helper function to initialize the start button event listener
 function initializeStartButton() {
   const startButton = document.getElementById('startButton');
   if (startButton) {

@@ -25,7 +25,6 @@ function setupUsernameChangeModal() {
 
             if (response.ok) {
                 hideModal('usernameChangeModal');
-                // Update UI or show success message
             } else {
                 errorDiv.textContent = data.error || 'An error occurred while changing the username.';
             }

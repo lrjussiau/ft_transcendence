@@ -7,7 +7,6 @@ function setupRegisterForm() {
   if (form) {
     form.addEventListener("submit", async function(event) {
       event.preventDefault();
-      //console.log("Form submission prevented");
 
       if (isSubmitting) return;
       isSubmitting = true;
@@ -34,14 +33,20 @@ function setupRegisterForm() {
         if (!response.ok) {
           throw new Error(data.error || "Registration failed");
         }
-
-        //console.log("Registration successful");
         window.transitionToModal('registerModal', 'loginModal', '/static/modals/modals.html');
-
       } catch (error) {
         console.error("Registration error:", error);
         if (errorDiv) {
-          errorDiv.textContent = error.message;
+          if (error.message === "This email is already registered.") {
+            errorDiv.textContent = "This email is already registered.";
+          }
+          else if (error.message === "This username is already taken.") {
+            errorDiv.textContent = "This username is already taken.";
+          }
+          else {
+            errorDiv.textContent = "Registration failed";
+            console.error("Registration failed : ", error.message);
+          }
         }
       } finally {
         isSubmitting = false;
@@ -57,7 +62,6 @@ function setupRegisterButton() {
   if (registerButton) {
     registerButton.addEventListener('click', (event) => {
       event.preventDefault();
-      //console.log('Register button clicked');
       window.transitionToModal('loginModal', 'registerModal', '/static/modals/modals.html');
     });
   } else {

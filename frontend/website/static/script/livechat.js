@@ -149,15 +149,12 @@ function setupWebSocket(roomId) {
     const host = window.location.hostname;
     chatSocket = new WebSocket(`${wsScheme}://${host}:4443/ws/chat/${roomId}/`);
 
-    // const wsUrl = `wss://${host}:4443/ws/pong/`;
-
     chatSocket.onmessage = handleWebSocketMessage;
     chatSocket.onclose = () => console.warn('Chat socket closed');
     chatSocket.onerror = (error) => console.error('WebSocket error:', error);
 }
 
 function handleWebSocketMessage(event) {
-    //console.log('Received WebSocket message:', event.data);
     const data = JSON.parse(event.data);
     displayMessage(data.message, data.user_id);
 }
@@ -217,14 +214,10 @@ function clearChat() {
     document.getElementById('messages').innerHTML = '';
 }
 
-// Start chat function (to be called from other parts of the app)
 async function startChat(friendId, friendName) {
-    //console.log(`Starting chat with ${friendName} (ID: ${friendId})`);
     try {
         const chatRoom = await createOrGetChatRoom(friendId);
         localStorage.setItem('currentChatRoom', JSON.stringify(chatRoom));
-
-        //console.log('Loading chat room:', chatRoom.id);
         
         window.history.pushState({}, '', '/livechat');
         handleRoute('livechat');

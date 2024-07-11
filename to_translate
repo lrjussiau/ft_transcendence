@@ -1,0 +1,9 @@
+register.js l 36 - l 40
+    - "Registration failed"    
+    - "This username is already taken."
+    - "This email is already registered."
+
+voir login
+
+bracket.html
+    - "Flemme de faire le bracket, appuie ici."

@@ -9,19 +9,14 @@ function connectToWebSocket() {
     webSocket = new WebSocket(`wss://${window.location.host}/ws/activity/?token=${accessToken}`);
 
     webSocket.addEventListener('open', () => {
-        //console.log('WebSocket connection established');
         setupActivityTracking();
     });
 
     webSocket.addEventListener('message', (event) => {
         const data = JSON.parse(event.data);
-        /*if (data.type === 'activity_recorded') {
-            console.log('Activity recorded');
-        }*/
     });
 
     webSocket.addEventListener('close', (event) => {
-        //console.log('WebSocket connection closed', event);
         setTimeout(connectToWebSocket, 5000);
     });
 }
@@ -45,5 +40,4 @@ function disconnectStatus() {
     }
 }
 
-// Call this function when your app initializes
 connectToWebSocket();
